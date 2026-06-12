@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__lark-mcp__bitable_v1_appTableRecord_create",
+      "Bash(npx playwright *)"
+    ]
+  }
+}

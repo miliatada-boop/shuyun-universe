@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shuyun Universe — Visual Identity System</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Core Palette */
+    --chalk:       #F5F2EE;
+    --sand-veil:   #E8E2D8;
+    --warm-drift:  #C4B49A;
+    --mist:        #9EA8B2;
+    --sage-tide:   #7B8E82;
+    --deep-current:#4A5C6B;
+    --abyssal:     #1C2B35;
+
+    /* Warm Accent Palette — used as inlay, never as base */
+    --lacquer:     #6B2737;   /* 漆红 · deep wine-red, Chinese lacquerware */
+    --cinnabar:    #9B3A40;   /* 朱砂 · lighter, warmer red for small accents */
+    --antique-gold:#B8955A;   /* 古金 · aged gold, not bright */
+    --pale-gold:   #D4BA7E;   /* 浅金 · champagne gold for large-area warmth */
+
+    /* Typography */
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans:  'DM Sans', system-ui, sans-serif;
+    --track-wide: 0.18em;
+    --track-title: 0.35em;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--chalk);
+    color: var(--abyssal);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .section {
+    padding: 96px 80px;
+    border-bottom: 1px solid var(--sand-veil);
+  }
+  .section:last-child { border-bottom: none; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+  /* ── Labels ── */
+  .label {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .label::after { content: ''; flex: 1; height: 1px; background: var(--sand-veil); }
+
+  /* ── Hero ── */
+  .hero {
+    background: var(--abyssal);
+    color: var(--chalk);
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 30% 60%, rgba(74,92,107,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 70% 30%, rgba(123,142,130,0.15) 0%, transparent 50%);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 48px;
+  }
+  .hero-logo {
+    font-family: var(--serif);
+    font-size: clamp(60px, 8vw, 110px);
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--chalk);
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    font-weight: 300;
+    margin-bottom: 80px;
+  }
+  .hero-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 300;
+    color: var(--sand-veil);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--deep-current);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--deep-current), transparent);
+  }
+
+  /* ── Philosophy ── */
+  .philosophy-text {
+    font-family: var(--serif);
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--abyssal);
+    max-width: 760px;
+  }
+  .philosophy-text em { font-style: italic; color: var(--deep-current); }
+
+  .pillar {
+    padding: 32px 0;
+    border-top: 1px solid var(--sand-veil);
+  }
+  .pillar:last-child { border-bottom: 1px solid var(--sand-veil); }
+  .pillar-num {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: var(--track-wide);
+    color: var(--mist);
+    margin-bottom: 12px;
+  }
+  .pillar-name {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    color: var(--abyssal);
+  }
+  .pillar-desc {
+    font-size: 14px;
+    color: var(--deep-current);
+    max-width: 360px;
+  }
+
+  /* ── Logo ── */
+  .logo-demo {
+    background: var(--abyssal);
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 64px;
+    margin-bottom: 40px;
+  }
+  .logo-primary {
+    text-align: center;
+  }
+  .logo-wordmark {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--chalk);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .logo-universe {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+    color: var(--mist);
+    display: block;
+    text-align: center;
+  }
+  .logo-mark {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    margin: 0 auto 6px;
+  }
+  .logo-mark svg { width: 100%; height: 100%; }
+  .logo-light {
+    background: var(--chalk);
+    border: 1px solid var(--sand-veil);
+    padding: 40px 64px;
+    text-align: center;
+  }
+  .logo-wordmark-dark {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--abyssal);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .logo-universe-dark {
+    font-family: var(--sans);
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.55em;
+    text-transform: uppercase;
+    color: var(--mist);
+    display: block;
+  }
+  .logo-construction {
+    margin-top: 48px;
+    padding: 40px;
+    border: 1px solid var(--sand-veil);
+  }
+  .logo-construction h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  .logo-rules { list-style: none; }
+  .logo-rules li {
+    font-size: 13px;
+    color: var(--deep-current);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--sand-veil);
+    display: flex;
+    gap: 16px;
+  }
+  .logo-rules li::before { content: '—'; color: var(--mist); flex-shrink: 0; }
+
+  /* ── Color ── */
+  .color-swatch-primary {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+  }
+  .swatch-name {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .swatch-role {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 4px;
+  }
+  .swatch-hex {
+    font-family: monospace;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+  .color-dark .swatch-name,
+  .color-dark .swatch-role,
+  .color-dark .swatch-hex { color: var(--chalk); }
+  .color-light .swatch-name,
+  .color-light .swatch-role,
+  .color-light .swatch-hex { color: var(--abyssal); }
+
+  .color-usage {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .usage-card {
+    padding: 32px;
+    border: 1px solid var(--sand-veil);
+  }
+  .usage-card h4 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .usage-card p { font-size: 13px; color: var(--deep-current); line-height: 1.7; }
+
+  /* ── Typography ── */
+  .type-specimen {
+    padding: 48px;
+    border: 1px solid var(--sand-veil);
+    margin-bottom: 24px;
+  }
+  .type-label {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: var(--track-wide);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 24px;
+  }
+  .type-display {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .type-display-italic {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(36px, 4.5vw, 64px);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--deep-current);
+    margin-bottom: 16px;
+  }
+  .type-heading {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin-bottom: 12px;
+  }
+  .type-subheading {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 12px;
+  }
+  .type-body {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--deep-current);
+    max-width: 600px;
+    margin-bottom: 12px;
+  }
+  .type-caption {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--mist);
+    letter-spacing: 0.05em;
+  }
+  .type-pull {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 26px;
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--deep-current);
+    border-left: 2px solid var(--antique-gold);
+    padding-left: 32px;
+    margin: 32px 0;
+  }
+
+  /* ── Gold Inlay Elements ── */
+  .gold-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--antique-gold), transparent);
+    margin: 0;
+  }
+  .gold-rule-left {
+    width: 48px;
+    height: 1px;
+    background: var(--antique-gold);
+    display: inline-block;
+  }
+  .seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid var(--antique-gold);
+    font-family: var(--serif);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--antique-gold);
+  }
+  .seal-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--antique-gold);
+    font-family: var(--serif);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: var(--antique-gold);
+  }
+  .lacquer-line {
+    width: 2px;
+    background: linear-gradient(to bottom, var(--lacquer), var(--cinnabar));
+    align-self: stretch;
+    flex-shrink: 0;
+  }
+  .font-anatomy {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .font-card {
+    padding: 40px;
+    border: 1px solid var(--sand-veil);
+  }
+  .font-card-name {
+    font-size: 10px;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 20px;
+  }
+  .font-big {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .font-big-sans {
+    font-family: var(--sans);
+    font-size: 40px;
+    font-weight: 200;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .font-chars {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--deep-current);
+    line-height: 2;
+  }
+  .font-chars-sans {
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--deep-current);
+    line-height: 2;
+  }
+
+  /* ── Moodboard ── */
+  .moodboard {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 180px);
+    gap: 3px;
+    margin-bottom: 48px;
+  }
+  .mood-block { overflow: hidden; }
+  .mood-block-1 { grid-column: 1/5; grid-row: 1/3; }
+  .mood-block-2 { grid-column: 5/8; grid-row: 1/2; }
+  .mood-block-3 { grid-column: 8/13; grid-row: 1/2; }
+  .mood-block-4 { grid-column: 5/9; grid-row: 2/4; }
+  .mood-block-5 { grid-column: 9/13; grid-row: 2/3; }
+  .mood-block-6 { grid-column: 1/5; grid-row: 3/4; }
+  .mood-block-7 { grid-column: 9/13; grid-row: 3/4; }
+  .mood-fill { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .mood-text {
+    font-family: var(--serif);
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    line-height: 1.4;
+  }
+  .mood-text-dark {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--abyssal);
+    font-size: 18px;
+    text-align: center;
+    padding: 20px;
+    line-height: 1.4;
+  }
+  .mood-word {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-top: 8px;
+  }
+
+  /* ── Photography ── */
+  .photo-rule {
+    padding: 40px;
+    border: 1px solid var(--sand-veil);
+    margin-bottom: 16px;
+  }
+  .photo-rule-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .photo-rule-num {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--sand-veil);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .photo-rule-title {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .photo-rule-body { font-size: 13px; color: var(--deep-current); line-height: 1.75; padding-left: 52px; }
+  .photo-palette {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-left: 52px;
+  }
+  .photo-tone {
+    height: 24px;
+    flex: 1;
+    border-radius: 2px;
+  }
+
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .do-card { padding: 32px; background: var(--abyssal); color: var(--chalk); }
+  .dont-card { padding: 32px; border: 1px solid var(--sand-veil); }
+  .do-card h4 { font-family: var(--serif); font-size: 16px; font-weight: 400; letter-spacing: 0.05em; margin-bottom: 16px; color: var(--mist); }
+  .dont-card h4 { font-family: var(--serif); font-size: 16px; font-weight: 400; letter-spacing: 0.05em; margin-bottom: 16px; color: var(--mist); }
+  .do-card ul, .dont-card ul { list-style: none; }
+  .do-card li, .dont-card li { font-size: 13px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; gap: 12px; line-height: 1.5; }
+  .dont-card li { border-bottom-color: var(--sand-veil); }
+  .do-card li::before { content: '↗'; color: var(--sage-tide); flex-shrink: 0; }
+  .dont-card li::before { content: '×'; color: var(--warm-drift); flex-shrink: 0; }
+
+  /* ── Social ── */
+  .social-template {
+    border: 1px solid var(--sand-veil);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .social-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--sand-veil);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .social-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--abyssal);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 12px;
+    color: var(--chalk);
+    letter-spacing: 0.05em;
+  }
+  .social-handle { font-size: 12px; font-weight: 400; }
+  .social-handle small { display: block; font-size: 11px; color: var(--mist); font-weight: 300; }
+  .social-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--abyssal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .social-img-text {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--chalk);
+    font-size: clamp(16px, 3vw, 28px);
+    text-align: center;
+    padding: 24px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+  .social-caption {
+    padding: 16px 20px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--deep-current);
+  }
+  .social-caption strong { color: var(--abyssal); font-weight: 400; }
+
+  .grid-posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+  .post-thumb {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+    padding: 16px;
+    line-height: 1.4;
+  }
+
+  /* ── Website ── */
+  .web-wireframe {
+    border: 1px solid var(--sand-veil);
+    overflow: hidden;
+  }
+  .web-nav {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--sand-veil);
+  }
+  .web-nav-logo { font-family: var(--serif); font-size: 16px; letter-spacing: 0.12em; }
+  .web-nav-links { display: flex; gap: 32px; }
+  .web-nav-links span { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--deep-current); }
+  .web-hero {
+    background: var(--abyssal);
+    padding: 120px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .web-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 40% at 50% 60%, rgba(74,92,107,0.5) 0%, transparent 70%);
+  }
+  .web-hero-content { position: relative; z-index: 1; }
+  .web-hero h1 {
+    font-family: var(--serif);
+    font-size: 60px;
+    font-weight: 300;
+    color: var(--chalk);
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+  .web-hero p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--mist);
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+  }
+  .web-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border: 1px solid var(--mist);
+    color: var(--chalk);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-family: var(--sans);
+    font-weight: 300;
+  }
+  .web-grid {
+    padding: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  .web-card h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin-bottom: 8px; }
+  .web-card p { font-size: 13px; color: var(--deep-current); line-height: 1.7; }
+  .web-card-img {
+    height: 180px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--chalk);
+  }
+
+  /* ── Retreat ── */
+  .retreat-card {
+    padding: 56px;
+    border: 1px solid var(--sand-veil);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    margin-bottom: 24px;
+  }
+  .retreat-type {
+    font-size: 10px;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 20px;
+  }
+  .retreat-title { font-family: var(--serif); font-size: 36px; font-weight: 300; margin-bottom: 12px; line-height: 1.2; }
+  .retreat-sub { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--deep-current); margin-bottom: 24px; }
+  .retreat-details { list-style: none; }
+  .retreat-details li { font-size: 12px; color: var(--mist); padding: 8px 0; border-bottom: 1px solid var(--sand-veil); display: flex; gap: 12px; }
+  .retreat-details li::before { content: '·'; color: var(--warm-drift); }
+  .retreat-desc { font-size: 14px; color: var(--deep-current); line-height: 1.8; }
+  .retreat-tag {
+    display: inline-block;
+    border: 1px solid var(--sand-veil);
+    padding: 6px 14px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--deep-current);
+    margin-right: 8px;
+    margin-top: 16px;
+  }
+
+  /* ── Packaging ── */
+  .package-item {
+    border: 1px solid var(--sand-veil);
+    padding: 40px;
+    margin-bottom: 16px;
+  }
+  .package-item h3 { font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+  .package-item .sub { font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--deep-current); margin-bottom: 20px; }
+  .package-spec { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px; }
+  .spec-item { font-size: 12px; color: var(--mist); }
+  .spec-item strong { display: block; font-family: var(--sans); font-size: 11px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--abyssal); margin-bottom: 6px; }
+
+  /* ── Editorial ── */
+  .spread {
+    border: 1px solid var(--sand-veil);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .spread-left { padding: 64px; border-right: 1px solid var(--sand-veil); }
+  .spread-right { padding: 64px; }
+  .spread-img { height: 300px; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--chalk); margin-bottom: 0; }
+  .page-num {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--mist);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+  .spread-chapter { font-family: var(--serif); font-size: 40px; font-weight: 300; line-height: 1.2; margin-bottom: 24px; }
+  .spread-intro { font-size: 14px; color: var(--deep-current); line-height: 1.8; max-width: 380px; }
+  .spread-pull {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--deep-current);
+    border-top: 1px solid #B8955A;
+    border-bottom: 1px solid #B8955A;
+    padding: 24px 0;
+    margin: 32px 0;
+  }
+  .spread-body { font-size: 13px; color: var(--deep-current); line-height: 1.85; columns: 2; column-gap: 32px; }
+
+  /* ── Voice ── */
+  .voice-example {
+    padding: 40px;
+    border-left: 2px solid var(--abyssal);
+    margin-bottom: 24px;
+  }
+  .voice-label { font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 16px; }
+  .voice-text { font-family: var(--serif); font-size: 18px; font-weight: 300; line-height: 1.6; }
+  .voice-note { font-size: 12px; color: var(--deep-current); margin-top: 12px; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--abyssal);
+    color: var(--chalk);
+    padding: 80px;
+  }
+  .toc h2 { font-family: var(--serif); font-size: 11px; font-weight: 300; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 48px; }
+  .toc-list { list-style: none; }
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    text-decoration: none;
+    color: var(--chalk);
+    transition: color 0.2s;
+  }
+  .toc-item:hover { color: var(--mist); }
+  .toc-left { display: flex; align-items: baseline; gap: 24px; }
+  .toc-n { font-family: var(--serif); font-size: 13px; color: var(--deep-current); }
+  .toc-title { font-family: var(--serif); font-size: 22px; font-weight: 300; }
+  .toc-pg { font-size: 11px; color: var(--deep-current); }
+  a { text-decoration: none; }
+
+  /* ── Trilingual ── */
+  .tri-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .tri-en {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--abyssal);
+  }
+  .tri-cn {
+    font-family: var(--serif);
+    font-weight: 300;
+    color: var(--deep-current);
+    letter-spacing: 0.08em;
+  }
+  .tri-fr {
+    font-family: var(--sans);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--mist);
+    letter-spacing: 0.03em;
+  }
+  .label-tri {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: var(--track-title);
+    text-transform: uppercase;
+    color: var(--mist);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .label-tri::after { content: ''; flex: 1; height: 1px; background: var(--sand-veil); min-width: 40px; }
+  .label-tri .l-en { color: var(--abyssal); }
+  .label-tri .l-cn { color: var(--deep-current); letter-spacing: 0.05em; font-size: 11px; }
+  .label-tri .l-fr { color: var(--mist); font-style: italic; text-transform: none; letter-spacing: 0.05em; }
+  .label-tri .l-sep { color: var(--sand-veil); font-size: 8px; }
+  .quote-tri {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-left: 2px solid var(--antique-gold);
+    padding-left: 28px;
+    margin: 36px 0;
+  }
+  .quote-tri .q-en {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 300;
+    line-height: 1.45;
+    color: var(--abyssal);
+  }
+  .quote-tri .q-cn {
+    font-family: var(--serif);
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--deep-current);
+    letter-spacing: 0.05em;
+  }
+  .quote-tri .q-fr {
+    font-family: var(--sans);
+    font-style: italic;
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--mist);
+  }
+  .pillar-name-tri {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .pillar-name-tri .p-en {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--abyssal);
+  }
+  .pillar-name-tri .p-cn {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--deep-current);
+    letter-spacing: 0.05em;
+  }
+  .pillar-name-tri .p-fr {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mist);
+  }
+
+  @media (max-width: 900px) {
+    .section { padding: 64px 32px; }
+    .grid-2, .grid-3, .grid-4, .font-anatomy, .do-dont, .web-grid, .spread, .retreat-card { grid-template-columns: 1fr; gap: 32px; }
+    .moodboard { grid-template-columns: 1fr 1fr; grid-template-rows: unset; }
+    .mood-block-1, .mood-block-2, .mood-block-3, .mood-block-4, .mood-block-5, .mood-block-6, .mood-block-7 { grid-column: unset; grid-row: unset; height: 200px; }
+    .spread-left { border-right: none; border-bottom: 1px solid var(--sand-veil); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ░░ HERO ░░ -->
+<section class="hero" id="top">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Visual Identity System · 品牌视觉体系 · Système d'Identité Visuelle · 2025</p>
+    <div class="logo-mark" style="margin-bottom: 24px;">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="17" cy="24" r="13" stroke="#9EA8B2" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <circle cx="31" cy="24" r="13" stroke="#9EA8B2" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <ellipse cx="24" cy="24" rx="4" ry="13" stroke="#C4B49A" stroke-width="0.8" fill="none" opacity="0.8"/>
+      </svg>
+    </div>
+    <span class="hero-logo">Shuyun</span>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 8px;">
+      <span style="font-family: var(--serif); font-size: 18px; font-weight: 300; letter-spacing: 0.15em; color: #B8955A;">抒云宇宙</span>
+      <span style="width: 1px; height: 16px; background: rgba(158,168,178,0.3); display: inline-block;"></span>
+      <span style="font-family: var(--sans); font-size: 11px; font-weight: 200; font-style: italic; color: var(--mist); letter-spacing: 0.08em;">L'Univers Shuyun</span>
+    </div>
+    <span class="hero-sub" style="margin-bottom: 48px;">Universe</span>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; max-width: 600px; margin: 0 auto;">
+      <p class="hero-tagline">A spiritual lifestyle civilization for conscious modern nomads.</p>
+      <p style="font-family: var(--serif); font-size: clamp(14px, 1.6vw, 17px); font-weight: 300; color: var(--deep-current); letter-spacing: 0.06em; line-height: 1.7;">意识游牧者的精神生活文明</p>
+      <p style="font-family: var(--sans); font-size: clamp(11px, 1.2vw, 14px); font-weight: 200; font-style: italic; color: var(--mist); line-height: 1.6;">Une civilisation de vie spirituelle pour les nomades conscients.</p>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ░░ TABLE OF CONTENTS ░░ -->
+<section class="toc">
+  <h2>Contents</h2>
+  <ul class="toc-list">
+    <a href="#philosophy" class="toc-item"><div class="toc-left"><span class="toc-n">01</span><span class="toc-title">Brand Philosophy</span></div><span class="toc-pg">↓</span></a>
+    <a href="#logo" class="toc-item"><div class="toc-left"><span class="toc-n">02</span><span class="toc-title">Logo System</span></div><span class="toc-pg">↓</span></a>
+    <a href="#color" class="toc-item"><div class="toc-left"><span class="toc-n">03</span><span class="toc-title">Color Palette</span></div><span class="toc-pg">↓</span></a>
+    <a href="#typography" class="toc-item"><div class="toc-left"><span class="toc-n">04</span><span class="toc-title">Typography System</span></div><span class="toc-pg">↓</span></a>
+    <a href="#moodboard" class="toc-item"><div class="toc-left"><span class="toc-n">05</span><span class="toc-title">Moodboard</span></div><span class="toc-pg">↓</span></a>
+    <a href="#photography" class="toc-item"><div class="toc-left"><span class="toc-n">06</span><span class="toc-title">Photography Direction</span></div><span class="toc-pg">↓</span></a>
+    <a href="#social" class="toc-item"><div class="toc-left"><span class="toc-n">07</span><span class="toc-title">Social Media</span></div><span class="toc-pg">↓</span></a>
+    <a href="#website" class="toc-item"><div class="toc-left"><span class="toc-n">08</span><span class="toc-title">Website Aesthetic</span></div><span class="toc-pg">↓</span></a>
+    <a href="#retreat" class="toc-item"><div class="toc-left"><span class="toc-n">09</span><span class="toc-title">Retreat & Event Branding</span></div><span class="toc-pg">↓</span></a>
+    <a href="#packaging" class="toc-item"><div class="toc-left"><span class="toc-n">10</span><span class="toc-title">Packaging</span></div><span class="toc-pg">↓</span></a>
+    <a href="#editorial" class="toc-item"><div class="toc-left"><span class="toc-n">11</span><span class="toc-title">Editorial Layout</span></div><span class="toc-pg">↓</span></a>
+    <a href="#voice" class="toc-item"><div class="toc-left"><span class="toc-n">12</span><span class="toc-title">Brand Voice</span></div><span class="toc-pg">↓</span></a>
+  </ul>
+</section>
+
+<!-- ░░ 01 PHILOSOPHY ░░ -->
+<section class="section" id="philosophy">
+  <div class="label-tri"><span class="l-en">01 — Brand Philosophy</span><span class="l-sep">·</span><span class="l-cn">品牌哲学</span><span class="l-sep">·</span><span class="l-fr">Philosophie de Marque</span></div>
+  <div class="grid-2">
+    <div>
+      <p class="philosophy-text">
+        Shuyun Universe exists at the intersection of <em>freedom and depth</em>. It is not a brand that sells wellness — it embodies a way of being: rooted in consciousness, moving without borders, gathering without noise.
+      </p>
+      <div style="height: 40px;"></div>
+      <p class="type-body">
+        The name holds its own cosmology. 舒 — to unfurl, to ease into. 云 — cloud, the formless that holds form. Universe — the container of all possibility. Together: a civilization that lives lightly but thinks deeply.
+      </p>
+      <div style="margin-top: 32px;">
+        <div class="gold-rule" style="margin-bottom: 32px;"></div>
+        <div class="quote-tri">
+          <div class="q-en">"We do not escape the world. We move through it more consciously."</div>
+          <div class="q-cn">「我们不是逃离世界，而是以更清醒的方式穿行其中。」</div>
+          <div class="q-fr">« Nous n'échappons pas au monde. Nous le traversons avec plus de conscience. »</div>
+        </div>
+        <div class="gold-rule" style="margin-top: 32px;"></div>
+      </div>
+    </div>
+    <div>
+      <div class="pillar">
+        <div class="pillar-num">01</div>
+        <div class="pillar-name-tri"><span class="p-en">Flow</span><span class="p-cn">流</span><span class="p-fr">Le Flux</span></div>
+        <div class="pillar-desc">The state of being fully present in motion — work, travel, conversation, creation.<br><span style="font-size:12px;color:var(--mist);font-style:italic;">在流动中完全临在的状态。</span></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02</div>
+        <div class="pillar-name-tri"><span class="p-en">Gathering</span><span class="p-cn">聚</span><span class="p-fr">Le Rassemblement</span></div>
+        <div class="pillar-desc">Intentional human connection across cultures, disciplines, and time zones.<br><span style="font-size:12px;color:var(--mist);font-style:italic;">跨越文化与时区的有意相聚。</span></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03</div>
+        <div class="pillar-name-tri"><span class="p-en">Atmosphere</span><span class="p-cn">氛围</span><span class="p-fr">L'Atmosphère</span></div>
+        <div class="pillar-desc">Environments designed for depth — the table, the room, the digital space.<br><span style="font-size:12px;color:var(--mist);font-style:italic;">为深度而设计的场域。</span></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">04</div>
+        <div class="pillar-name-tri"><span class="p-en">Gentle Power</span><span class="p-cn">柔力</span><span class="p-fr">La Puissance Douce</span></div>
+        <div class="pillar-desc">Influence that comes from presence and clarity, never performance or urgency.<br><span style="font-size:12px;color:var(--mist);font-style:italic;">源于临在与清醒的影响力，不依赖表演。</span></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">05</div>
+        <div class="pillar-name-tri"><span class="p-en">Borderless Living</span><span class="p-cn">无界</span><span class="p-fr">La Vie Sans Frontières</span></div>
+        <div class="pillar-desc">A civilizational stance: home is practice, not place.<br><span style="font-size:12px;color:var(--mist);font-style:italic;">家是一种修行，而非一个地点。</span></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">06</div>
+        <div class="pillar-name-tri"><span class="p-en">Spiritual Ecology</span><span class="p-cn">精神生态</span><span class="p-fr">L'Écologie Spirituelle</span></div>
+        <div class="pillar-desc">Inner life tended as carefully as outer life. The unseen as infrastructure.<br><span style="font-size:12px;color:var(--mist);font-style:italic;">内在生命，与外在生命同等精心打理。</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 02 LOGO ░░ -->
+<section class="section" id="logo">
+  <div class="label-tri"><span class="l-en">02 — Logo System</span><span class="l-sep">·</span><span class="l-cn">标志系统</span><span class="l-sep">·</span><span class="l-fr">Système de Logo</span></div>
+  <div class="logo-demo">
+    <!-- Primary: Dark bg -->
+    <div class="logo-primary">
+      <div class="logo-mark">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="17" cy="24" r="13" stroke="#9EA8B2" stroke-width="0.8" fill="none" opacity="0.6"/>
+          <circle cx="31" cy="24" r="13" stroke="#9EA8B2" stroke-width="0.8" fill="none" opacity="0.6"/>
+          <ellipse cx="24" cy="24" rx="4" ry="13" stroke="#C4B49A" stroke-width="0.8" fill="none" opacity="0.8"/>
+        </svg>
+      </div>
+      <span class="logo-wordmark">SHUYUN</span>
+      <span class="logo-universe">Universe</span>
+    </div>
+    <!-- Horizontal lockup -->
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+        <circle cx="17" cy="24" r="13" stroke="#9EA8B2" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <circle cx="31" cy="24" r="13" stroke="#9EA8B2" stroke-width="0.8" fill="none" opacity="0.6"/>
+        <ellipse cx="24" cy="24" rx="4" ry="13" stroke="#C4B49A" stroke-width="0.8" fill="none" opacity="0.8"/>
+      </svg>
+      <div style="width: 1px; height: 32px; background: rgba(158,168,178,0.3);"></div>
+      <div>
+        <span style="font-family: var(--serif); font-size: 22px; font-weight: 300; letter-spacing: 0.16em; color: var(--chalk);">SHUYUN</span>
+        <span style="font-family: var(--sans); font-size: 9px; font-weight: 300; letter-spacing: 0.4em; text-transform: uppercase; color: var(--mist); display: block; margin-top: 3px;">Universe</span>
+      </div>
+    </div>
+    <!-- Monogram -->
+    <div style="text-align: center;">
+      <div style="font-family: var(--serif); font-size: 48px; font-weight: 300; letter-spacing: 0.05em; color: var(--chalk); line-height: 1;">SY</div>
+      <div style="font-family: var(--sans); font-size: 9px; letter-spacing: 0.4em; color: var(--deep-current); text-transform: uppercase; margin-top: 6px;">Monogram</div>
+    </div>
+    <!-- Gold inlay variant -->
+    <div style="text-align: center; border-top: 1px solid rgba(184,149,90,0.2); padding-top: 48px; width: 100%;">
+      <div style="font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8955A; margin-bottom: 32px; opacity: 0.8;">Gold Inlay Version — Special Occasions Only</div>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+        <!-- Gold mark -->
+        <svg width="56" height="56" viewBox="0 0 48 48" fill="none">
+          <circle cx="17" cy="24" r="13" stroke="#B8955A" stroke-width="0.8" fill="none" opacity="0.9"/>
+          <circle cx="31" cy="24" r="13" stroke="#B8955A" stroke-width="0.8" fill="none" opacity="0.9"/>
+          <ellipse cx="24" cy="24" rx="4" ry="13" stroke="#D4BA7E" stroke-width="1" fill="none"/>
+        </svg>
+        <span style="font-family: var(--serif); font-size: 36px; font-weight: 300; letter-spacing: 0.18em; color: #B8955A; line-height: 1;">SHUYUN</span>
+        <span style="font-family: var(--sans); font-size: 8px; font-weight: 300; letter-spacing: 0.55em; text-transform: uppercase; color: #D4BA7E;">Universe</span>
+      </div>
+      <div style="margin-top: 20px; font-size: 11px; color: rgba(184,149,90,0.5);">Used on: membership kits, event invitations, seal/stamp</div>
+    </div>
+  </div>
+  <!-- Light version -->
+  <div class="grid-2" style="margin-bottom: 40px;">
+    <div class="logo-light">
+      <span class="logo-wordmark-dark">SHUYUN</span>
+      <span class="logo-universe-dark">Universe</span>
+      <div style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); margin-top: 20px;">Light Background Version</div>
+    </div>
+    <div style="background: var(--sand-veil); padding: 40px 64px; text-align: center;">
+      <span style="font-family: var(--serif); font-size: 40px; font-weight: 300; letter-spacing: 0.18em; color: var(--abyssal); display: block; line-height: 1; margin-bottom: 6px;">SHUYUN</span>
+      <span style="font-family: var(--sans); font-size: 9px; font-weight: 300; letter-spacing: 0.55em; text-transform: uppercase; color: var(--deep-current); display: block;">Universe</span>
+      <div style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); margin-top: 20px;">Warm Neutral Version</div>
+    </div>
+  </div>
+  <!-- Rules -->
+  <div class="logo-construction">
+    <h3>Logo Construction Rules</h3>
+    <ul class="logo-rules">
+      <li>The mark (two overlapping circles with inner ellipse) represents the intersection of worlds — cloud + cosmos + self</li>
+      <li>SHUYUN is set in Cormorant Garamond Light, tracked at +180 — never compressed, never bolded</li>
+      <li>Universe is set in DM Sans Light, tracked at +550 — the contrast between serif and sans is intentional</li>
+      <li>Minimum clear space = cap height of the wordmark on all sides</li>
+      <li>Minimum size: 80px wide digital / 20mm print — never smaller</li>
+      <li>Approved backgrounds: Abyssal (#1C2B35), Chalk (#F5F2EE), Sand Veil (#E8E2D8) only</li>
+      <li>Never: drop shadows, outlines, gradient fills, rotation, or color variations outside the palette</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ░░ 03 COLOR ░░ -->
+<section class="section" id="color">
+  <div class="label-tri"><span class="l-en">03 — Color Palette</span><span class="l-sep">·</span><span class="l-cn">色彩体系</span><span class="l-sep">·</span><span class="l-fr">Palette de Couleurs</span></div>
+  <!-- Palette overview strip -->
+  <div style="display: flex; height: 10px; border-radius: 2px; overflow: hidden; margin-bottom: 48px;">
+    <div style="flex: 2; background: #F5F2EE;"></div>
+    <div style="flex: 1.5; background: #E8E2D8;"></div>
+    <div style="flex: 1; background: #C4B49A;"></div>
+    <div style="flex: 0.5; background: #D4BA7E;"></div>
+    <div style="flex: 0.4; background: #B8955A;"></div>
+    <div style="flex: 0.4; background: #6B2737;"></div>
+    <div style="flex: 1; background: #9EA8B2;"></div>
+    <div style="flex: 1; background: #7B8E82;"></div>
+    <div style="flex: 1.5; background: #4A5C6B;"></div>
+    <div style="flex: 2; background: #1C2B35;"></div>
+  </div>
+  <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 24px;">Core Ocean Palette</div>
+  <div class="grid-4" style="margin-bottom: 48px;">
+    <div>
+      <div class="color-swatch-primary color-light" style="background: #F5F2EE;">
+        <div class="swatch-name">Chalk</div>
+        <div class="swatch-role">Primary Background</div>
+        <div class="swatch-hex">#F5F2EE</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-light" style="background: #E8E2D8;">
+        <div class="swatch-name">Sand Veil</div>
+        <div class="swatch-role">Secondary Surface</div>
+        <div class="swatch-hex">#E8E2D8</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-light" style="background: #C4B49A;">
+        <div class="swatch-name">Warm Drift</div>
+        <div class="swatch-role">Accent / Dividers</div>
+        <div class="swatch-hex">#C4B49A</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-light" style="background: #9EA8B2;">
+        <div class="swatch-name">Mist</div>
+        <div class="swatch-role">Labels / Captions</div>
+        <div class="swatch-hex">#9EA8B2</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-light" style="background: #7B8E82;">
+        <div class="swatch-name">Sage Tide</div>
+        <div class="swatch-role">Secondary Accent</div>
+        <div class="swatch-hex">#7B8E82</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #4A5C6B;">
+        <div class="swatch-name">Deep Current</div>
+        <div class="swatch-role">Body Text / Mid</div>
+        <div class="swatch-hex">#4A5C6B</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #2A3B47;">
+        <div class="swatch-name">Ocean Floor</div>
+        <div class="swatch-role">Dark Emphasis</div>
+        <div class="swatch-hex">#2A3B47</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #1C2B35;">
+        <div class="swatch-name">Abyssal</div>
+        <div class="swatch-role">Primary Dark / Hero</div>
+        <div class="swatch-hex">#1C2B35</div>
+      </div>
+    </div>
+  </div>
+  <!-- Warm Accent Palette -->
+  <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 24px;">Warm Inlay Palette — Accent Use Only</div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px;">
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #6B2737; height: 160px;">
+        <div class="swatch-name">Lacquer</div>
+        <div class="swatch-role">漆红 · Deep Wine Red</div>
+        <div class="swatch-hex">#6B2737</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #9B3A40; height: 160px;">
+        <div class="swatch-name">Cinnabar</div>
+        <div class="swatch-role">朱砂 · Chinese Red Accent</div>
+        <div class="swatch-hex">#9B3A40</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #B8955A; height: 160px;">
+        <div class="swatch-name">Antique Gold</div>
+        <div class="swatch-role">古金 · Aged Gold Inlay</div>
+        <div class="swatch-hex">#B8955A</div>
+      </div>
+    </div>
+    <div>
+      <div class="color-swatch-primary color-dark" style="background: #D4BA7E; height: 160px;">
+        <div class="swatch-name">Pale Gold</div>
+        <div class="swatch-role">浅金 · Champagne Surface</div>
+        <div class="swatch-hex">#D4BA7E</div>
+      </div>
+    </div>
+  </div>
+  <!-- Warm accent usage rules -->
+  <div style="padding: 40px; background: var(--abyssal); margin-bottom: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+    <div>
+      <div style="font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8955A; margin-bottom: 20px;">Inlay Rule</div>
+      <div style="font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--chalk); margin-bottom: 16px; line-height: 1.4;">Gold and red are used the way<br>a seal is used on a letter.</div>
+      <div style="font-size: 13px; color: var(--mist); line-height: 1.75;">They appear once per composition, at a point of significance. They are never backgrounds. Never fills. They are the detail that rewards close attention — a hairline rule, an embossed circle, a single letterpress impression.</div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      <!-- Demo inlay elements -->
+      <div style="padding: 24px; border: 1px solid rgba(184,149,90,0.3); position: relative;">
+        <div style="position: absolute; top: -1px; left: 24px; width: 48px; height: 2px; background: var(--antique-gold);"></div>
+        <div style="font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--chalk);">"The right table at the right hour."</div>
+        <div style="font-size: 10px; color: rgba(184,149,90,0.6); margin-top: 8px;">↑ gold top-rule on pull quote</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="seal-sm" style="border-color: #B8955A; color: #B8955A; font-size: 7px; letter-spacing: 0.1em;">SY</div>
+        <div style="font-size: 12px; color: var(--mist);">Gold seal — membership kit, event invite, packaging wax</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="width: 3px; height: 48px; background: linear-gradient(to bottom, #6B2737, #9B3A40);"></div>
+        <div style="font-size: 12px; color: var(--mist);">Lacquer rule — used on special edition covers and gathering materials only</div>
+      </div>
+    </div>
+  </div>
+  <!-- Color combinations -->
+  <div style="margin-bottom: 32px;">
+    <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 24px;">Approved Combinations</div>
+    <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <div style="flex: 1; min-width: 180px; height: 100px; background: #1C2B35; display: flex; align-items: center; justify-content: center; padding: 16px; text-align: center;">
+        <div><div style="font-family: var(--serif); font-size: 16px; color: #F5F2EE; letter-spacing: 0.1em;">SHUYUN</div><div style="font-size: 10px; color: #9EA8B2; letter-spacing: 0.1em; margin-top: 4px;">Abyssal + Chalk</div></div>
+      </div>
+      <div style="flex: 1; min-width: 180px; height: 100px; background: #F5F2EE; display: flex; align-items: center; justify-content: center; padding: 16px; text-align: center; border: 1px solid #E8E2D8;">
+        <div><div style="font-family: var(--serif); font-size: 16px; color: #1C2B35; letter-spacing: 0.1em;">SHUYUN</div><div style="font-size: 10px; color: #9EA8B2; letter-spacing: 0.1em; margin-top: 4px;">Chalk + Abyssal</div></div>
+      </div>
+      <div style="flex: 1; min-width: 180px; height: 100px; background: #E8E2D8; display: flex; align-items: center; justify-content: center; padding: 16px; text-align: center;">
+        <div><div style="font-family: var(--serif); font-size: 16px; color: #1C2B35; letter-spacing: 0.1em;">SHUYUN</div><div style="font-size: 10px; color: #7B8E82; letter-spacing: 0.1em; margin-top: 4px;">Sand Veil + Abyssal</div></div>
+      </div>
+      <div style="flex: 1; min-width: 180px; height: 100px; background: #4A5C6B; display: flex; align-items: center; justify-content: center; padding: 16px; text-align: center;">
+        <div><div style="font-family: var(--serif); font-size: 16px; color: #F5F2EE; letter-spacing: 0.1em;">SHUYUN</div><div style="font-size: 10px; color: #9EA8B2; letter-spacing: 0.1em; margin-top: 4px;">Deep Current + Chalk</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="color-usage">
+    <div class="usage-card">
+      <h4>Digital Usage</h4>
+      <p>Hero backgrounds: Abyssal only. Page backgrounds: Chalk. Section dividers: Sand Veil. Never use gradient overlays — depth comes from opacity, not color mixing.</p>
+    </div>
+    <div class="usage-card">
+      <h4>Print Usage</h4>
+      <p>Paper stock should read Chalk or warmer. Abyssal prints as deep navy — acceptable. Mist and Warm Drift as Pantone 7543 C and 7527 C respectively.</p>
+    </div>
+    <div class="usage-card">
+      <h4>Photography Toning</h4>
+      <p>Edit toward the Mist and Deep Current range. Reduce saturation, lift shadows slightly, cool highlights. The palette should feel as if filtered through ocean light.</p>
+    </div>
+    <div class="usage-card">
+      <h4>What to Avoid</h4>
+      <p>Pure white (#FFFFFF) feels clinical. Pure black (#000000) is too harsh. Saturated colors, warm yellows, or social-media brights break the atmosphere entirely.</p>
+    </div>
+    <div class="usage-card" style="border-left: 2px solid #B8955A;">
+      <h4>Gold Usage Rules</h4>
+      <p>Antique Gold appears as hairline rules, seal outlines, and single typographic accents — never as fill or large background. Max one gold element per layout. Pale Gold can appear as a very subtle surface warm on packaging only.</p>
+    </div>
+    <div class="usage-card" style="border-left: 2px solid #6B2737;">
+      <h4>Lacquer Usage Rules</h4>
+      <p>Lacquer and Cinnabar are reserved for physical materials and ceremonies: wax seals, gathering invitations, cover edition rules, and the inner spine of the printed journal. Never used on the website or social media as a color block.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 04 TYPOGRAPHY ░░ -->
+<section class="section" id="typography">
+  <div class="label-tri"><span class="l-en">04 — Typography System</span><span class="l-sep">·</span><span class="l-cn">字体系统</span><span class="l-sep">·</span><span class="l-fr">Système Typographique</span></div>
+  <div class="font-anatomy">
+    <div class="font-card">
+      <div class="font-card-name">Display · Cormorant Garamond</div>
+      <div class="font-big">Aa</div>
+      <div class="font-chars">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 &amp; . , : ; — " "</div>
+      <div style="margin-top: 24px; font-size: 12px; color: var(--deep-current); line-height: 1.7;">
+        Used for: headlines, pull quotes, hero text, display numerals.<br>
+        Weights: Light (300), Regular (400).<br>
+        <em style="font-family: var(--serif);">Italic for emotional emphasis and pull quotes only.</em>
+      </div>
+    </div>
+    <div class="font-card">
+      <div class="font-card-name">Body · DM Sans</div>
+      <div class="font-big-sans">Aa</div>
+      <div class="font-chars-sans">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 &amp; . , : ; — " "</div>
+      <div style="margin-top: 24px; font-size: 12px; color: var(--deep-current); line-height: 1.7;">
+        Used for: body copy, labels, navigation, captions, UI elements.<br>
+        Weights: ExtraLight (200), Light (300), Regular (400).<br>
+        Tracking: wide for labels (+180), standard for body.
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 48px;">
+    <div class="type-specimen">
+      <div class="type-label">Display · 72pt · Light · Cormorant — Trilingual Usage</div>
+      <div class="type-display">The art of living<br>consciously.</div>
+      <div style="font-family: var(--serif); font-size: clamp(28px, 3.5vw, 52px); font-weight: 300; line-height: 1.15; color: var(--deep-current); margin-bottom: 12px; letter-spacing: 0.06em;">有意识地生活，是一门艺术。</div>
+      <div style="font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.5vw, 36px); font-weight: 300; line-height: 1.2; color: var(--mist);">L'art de vivre consciemment.</div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-label">Section Header / Pull Quote — Trilingual Stack</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px; margin-bottom: 8px;">
+        <div><div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); margin-bottom: 10px;">English</div><div class="type-heading" style="font-size: 20px;">Gathering with intention.</div></div>
+        <div><div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); margin-bottom: 10px;">中文</div><div style="font-family: var(--serif); font-size: 20px; font-weight: 400; letter-spacing: 0.06em; color: var(--abyssal);">有意相聚。</div></div>
+        <div><div style="font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mist); margin-bottom: 10px;">Français</div><div style="font-family: var(--serif); font-size: 20px; font-weight: 300; font-style: italic; color: var(--deep-current);">Se rassembler avec intention.</div></div>
+      </div>
+      <div class="quote-tri" style="margin-top: 32px;">
+        <div class="q-en">"There are people who change the atmosphere of a room just by entering it. That is the practice."</div>
+        <div class="q-cn">「有些人，进入房间的那一刻，空气便已不同。这，就是修行。」</div>
+        <div class="q-fr">« Certaines personnes changent l'atmosphère d'une pièce rien qu'en y entrant. C'est cela, la pratique. »</div>
+      </div>
+    </div>
+    <div class="type-specimen">
+      <div class="type-label">Label / Subheading · DM Sans Light</div>
+      <div class="type-subheading">01 — Cloud Civilization</div>
+      <div style="margin-top: 24px;"></div>
+      <div class="type-label">Body Text · 15pt / 1.75 leading</div>
+      <div class="type-body">
+        Shuyun Universe does not offer a program. It offers an orientation — a way of moving through the world that is at once lighter and more deeply rooted. The people drawn here are already on the edge of something. We simply create the atmosphere for what is trying to emerge.
+      </div>
+      <div class="type-caption">Shuyun Universe · Visual Identity System 2025 · Confidential</div>
+    </div>
+  </div>
+  <div style="margin-top: 48px; padding: 40px; border: 1px solid var(--sand-veil);">
+    <div class="type-label">Type Scale</div>
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+      <tr style="border-bottom: 1px solid var(--sand-veil);">
+        <td style="padding: 12px 0; color: var(--mist); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Role</td>
+        <td style="padding: 12px 0; color: var(--mist); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Font</td>
+        <td style="padding: 12px 0; color: var(--mist); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Size</td>
+        <td style="padding: 12px 0; color: var(--mist); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Weight</td>
+        <td style="padding: 12px 0; color: var(--mist); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;">Leading</td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--sand-veil);"><td style="padding: 14px 0;">Hero Display</td><td>Cormorant Garamond</td><td>72–110px</td><td>Light 300</td><td>1.0–1.1</td></tr>
+      <tr style="border-bottom: 1px solid var(--sand-veil);"><td style="padding: 14px 0;">Chapter Title</td><td>Cormorant Garamond</td><td>40–64px</td><td>Light 300</td><td>1.2</td></tr>
+      <tr style="border-bottom: 1px solid var(--sand-veil);"><td style="padding: 14px 0;">Section Heading</td><td>Cormorant Garamond</td><td>28–36px</td><td>Regular 400</td><td>1.3</td></tr>
+      <tr style="border-bottom: 1px solid var(--sand-veil);"><td style="padding: 14px 0;">Pull Quote</td><td>Cormorant Garamond Italic</td><td>22–28px</td><td>Light 300</td><td>1.4</td></tr>
+      <tr style="border-bottom: 1px solid var(--sand-veil);"><td style="padding: 14px 0;">Body Copy</td><td>DM Sans</td><td>14–16px</td><td>Light 300</td><td>1.75</td></tr>
+      <tr style="border-bottom: 1px solid var(--sand-veil);"><td style="padding: 14px 0;">Caption / Label</td><td>DM Sans</td><td>10–12px</td><td>Light 300</td><td>1.5</td></tr>
+      <tr><td style="padding: 14px 0;">Navigation</td><td>DM Sans</td><td>11px</td><td>Regular 400</td><td>—</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ░░ 05 MOODBOARD ░░ -->
+<section class="section" id="moodboard">
+  <div class="label-tri"><span class="l-en">05 — Moodboard</span><span class="l-sep">·</span><span class="l-cn">情绪板</span><span class="l-sep">·</span><span class="l-fr">Planche d'Inspiration</span></div>
+  <div class="moodboard">
+    <div class="mood-block mood-block-1">
+      <div class="mood-fill" style="background: #1C2B35;">
+        <div>
+          <div class="mood-text">"The ocean does not<br>rush. Neither should you."</div>
+          <div class="mood-word" style="text-align: center; color: var(--deep-current);">Deep Current</div>
+        </div>
+      </div>
+    </div>
+    <div class="mood-block mood-block-2">
+      <div class="mood-fill" style="background: #E8E2D8;">
+        <div>
+          <div class="mood-text-dark" style="font-size: 14px;">Kinfolk · Monocle<br>The Gentlewoman</div>
+          <div class="mood-word" style="text-align: center; color: var(--mist);">Editorial Reference</div>
+        </div>
+      </div>
+    </div>
+    <div class="mood-block mood-block-3">
+      <div class="mood-fill" style="background: #2A3B47;">
+        <div class="mood-text">Nordic silence.<br>Cinematic depth.</div>
+      </div>
+    </div>
+    <div class="mood-block mood-block-4">
+      <div class="mood-fill" style="background: #F5F2EE; border: 1px solid #E8E2D8;">
+        <div style="text-align: center; padding: 32px;">
+          <div style="font-family: var(--serif); font-size: 52px; font-weight: 300; color: var(--abyssal); letter-spacing: 0.12em; line-height: 1; margin-bottom: 12px;">SHUYUN</div>
+          <div style="font-family: var(--sans); font-size: 9px; letter-spacing: 0.5em; color: var(--mist); text-transform: uppercase;">UNIVERSE</div>
+          <div style="width: 1px; height: 40px; background: var(--sand-veil); margin: 24px auto;"></div>
+          <div style="font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--deep-current);">Slow. Global. Conscious.</div>
+        </div>
+      </div>
+    </div>
+    <div class="mood-block mood-block-5">
+      <div class="mood-fill" style="background: #7B8E82;">
+        <div>
+          <div class="mood-text">Coastal.<br>Moss. Tide.</div>
+          <div class="mood-word" style="text-align: center; color: rgba(245,242,238,0.5);">Sage Tide</div>
+        </div>
+      </div>
+    </div>
+    <div class="mood-block mood-block-6">
+      <div class="mood-fill" style="background: #6B2737; position: relative; overflow: hidden;">
+        <!-- Gold line inlay -->
+        <div style="position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(184,149,90,0.4), transparent);"></div>
+        <div style="text-align: center; padding: 20px;">
+          <div class="mood-text" style="font-size: 13px; line-height: 1.6;">漆红 · Lacquer<br>Wine. Seal. Ceremony.</div>
+          <div style="width: 24px; height: 1px; background: #B8955A; margin: 12px auto 0;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="mood-block mood-block-7">
+      <div class="mood-fill" style="background: #1C2B35; position: relative; overflow: hidden;">
+        <div style="position: absolute; inset: 12px; border: 1px solid rgba(184,149,90,0.3); pointer-events: none;"></div>
+        <div style="text-align: center; padding: 24px; position: relative; z-index: 1;">
+          <div style="font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: #B8955A; margin-bottom: 8px;">古金</div>
+          <div style="font-family: var(--serif); font-weight: 300; color: #D4BA7E; font-size: 16px; line-height: 1.5;">Gold as detail.<br>Not decoration.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 32px;">
+    <div style="padding: 24px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 12px;">Texture References</div>
+      <div style="font-family: var(--serif); font-size: 15px; line-height: 1.7; color: var(--deep-current);">Unbleached linen · Handmade paper · Weathered stone · Still water · Frosted glass</div>
+    </div>
+    <div style="padding: 24px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 12px;">Light Quality</div>
+      <div style="font-family: var(--serif); font-size: 15px; line-height: 1.7; color: var(--deep-current);">Overcast Nordic light · Pre-dawn blue hour · Diffused afternoon · Low winter sun</div>
+    </div>
+    <div style="padding: 24px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 12px;">Material World</div>
+      <div style="font-family: var(--serif); font-size: 15px; line-height: 1.7; color: var(--deep-current);">Ceramic · Bone · Cork · Driftwood · Heavyweight cotton · Cold metal</div>
+    </div>
+    <div style="padding: 24px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 12px;">Cinematic Refs</div>
+      <div style="font-family: var(--serif); font-size: 15px; line-height: 1.7; color: var(--deep-current);">Scenes from Patagonia · Norwegian coastlines · Kyoto in rain · Lisbon rooftops at dusk</div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 06 PHOTOGRAPHY ░░ -->
+<section class="section" id="photography">
+  <div class="label-tri"><span class="l-en">06 — Photography Direction</span><span class="l-sep">·</span><span class="l-cn">摄影方向</span><span class="l-sep">·</span><span class="l-fr">Direction Photographique</span></div>
+  <div class="photo-rule">
+    <div class="photo-rule-header">
+      <div class="photo-rule-num">01</div>
+      <div class="photo-rule-title">Light as Atmosphere</div>
+    </div>
+    <div class="photo-rule-body">
+      Shoot in diffused, directional light only. No direct sun. Prefer overcast Nordic skies, blue hour, or interior light from large windows. Highlights should breathe — never blown. Shadows should hold detail. Think: a photograph taken through slightly fogged glass.
+      <div class="photo-tone" style="margin-top: 16px; display: flex; gap: 4px;">
+        <div class="photo-tone" style="background: #F5F2EE; flex: 1;"></div>
+        <div class="photo-tone" style="background: #C4B49A; flex: 1;"></div>
+        <div class="photo-tone" style="background: #9EA8B2; flex: 1;"></div>
+        <div class="photo-tone" style="background: #4A5C6B; flex: 1;"></div>
+        <div class="photo-tone" style="background: #1C2B35; flex: 1;"></div>
+      </div>
+    </div>
+  </div>
+  <div class="photo-rule">
+    <div class="photo-rule-header">
+      <div class="photo-rule-num">02</div>
+      <div class="photo-rule-title">Human Presence Without Performance</div>
+    </div>
+    <div class="photo-rule-body">
+      People appear as atmosphere, not subject. They are reading, looking away, in conversation, in motion. Never posed. Never looking at camera. Never performing happiness. The feeling: you have stepped into someone's real life, not their curated moment.
+    </div>
+  </div>
+  <div class="photo-rule">
+    <div class="photo-rule-header">
+      <div class="photo-rule-num">03</div>
+      <div class="photo-rule-title">Negative Space as Meaning</div>
+    </div>
+    <div class="photo-rule-body">
+      Compositions favor breathing room. A cup on a window sill. A hand resting on a book. One object on a vast surface. The emptiness is not empty — it carries the weight of the unsaid. Ratio: minimum 40% negative space in hero images.
+    </div>
+  </div>
+  <div class="photo-rule">
+    <div class="photo-rule-header">
+      <div class="photo-rule-num">04</div>
+      <div class="photo-rule-title">Geography as Character</div>
+    </div>
+    <div class="photo-rule-body">
+      Locations should feel borderless — recognizable as a state of being, not a country. Coast. Mountain. Old city. New interior. The recurring thread: places where time moves differently. Architecture that has been lived in. Nature that is indifferent to the viewer.
+    </div>
+  </div>
+  <div class="photo-rule">
+    <div class="photo-rule-header">
+      <div class="photo-rule-num">05</div>
+      <div class="photo-rule-title">Post-Processing Signature</div>
+    </div>
+    <div class="photo-rule-body">
+      Desaturate to 60–70% of original. Lift shadows by +15–20. Cool highlights toward blue-grey. Add subtle grain (15–25%) for materiality. Reduce contrast slightly — the world should feel soft at the edges. Final tone: always warmer in shadows, cooler in highlights.
+    </div>
+  </div>
+  <div class="do-dont">
+    <div class="do-card">
+      <h4>Photograph These</h4>
+      <ul>
+        <li>Hands around a ceramic bowl in morning light</li>
+        <li>A coastline at blue hour, no horizon line cliché</li>
+        <li>Interior: single light source, objects mid-use</li>
+        <li>Two people in conversation, faces soft-focus</li>
+        <li>Open book, no face. Hands, not face.</li>
+        <li>Architecture: doorways, passages, thresholds</li>
+        <li>Natural materials: stone, water, linen, wood</li>
+      </ul>
+    </div>
+    <div class="dont-card">
+      <h4>Avoid These</h4>
+      <ul>
+        <li>Staged flat-lays (unless for packaging only)</li>
+        <li>High-saturation nature shots (Instagram travel)</li>
+        <li>People smiling directly at camera</li>
+        <li>Yoga poses or meditation clichés</li>
+        <li>Golden hour lens flare</li>
+        <li>Stock photo "diversity" compositions</li>
+        <li>Motivational quote overlaid on landscape</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 07 SOCIAL MEDIA ░░ -->
+<section class="section" id="social">
+  <div class="label-tri"><span class="l-en">07 — Social Media</span><span class="l-sep">·</span><span class="l-cn">社交媒体方向</span><span class="l-sep">·</span><span class="l-fr">Direction Médias Sociaux</span></div>
+  <div class="grid-2" style="margin-bottom: 48px;">
+    <div>
+      <div style="font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 16px;">Grid as Magazine</div>
+      <p class="type-body" style="margin-bottom: 24px;">The Instagram grid reads as a single editorial layout. Every 9 posts should function as a magazine spread: alternating text-cards and photography, with consistent tonal range. Never post two text-cards or two high-contrast images consecutively.</p>
+      <div class="grid-posts">
+        <div class="post-thumb" style="background: #1C2B35; color: var(--chalk); font-size: 12px;">"Gather slowly"</div>
+        <div class="post-thumb" style="background: #9EA8B2;"><span style="font-size: 11px; color: #1C2B35;">[coastal morning]</span></div>
+        <div class="post-thumb" style="background: #E8E2D8; font-size: 12px; color: var(--abyssal);">01 — Flow</div>
+        <div class="post-thumb" style="background: #4A5C6B;"><span style="font-size: 11px; color: var(--chalk);">[interior light]</span></div>
+        <div class="post-thumb" style="background: #F5F2EE; border: 1px solid #E8E2D8; font-size: 12px; color: var(--mist);">SHUYUN<br>UNIVERSE</div>
+        <div class="post-thumb" style="background: #2A3B47;"><span style="font-size: 11px; color: var(--chalk);">[hands, book]</span></div>
+        <div class="post-thumb" style="background: #C4B49A; font-size: 12px; color: var(--abyssal);">"Borderless"</div>
+        <div class="post-thumb" style="background: #7B8E82;"><span style="font-size: 11px; color: var(--chalk);">[sage coastline]</span></div>
+        <div class="post-thumb" style="background: #1C2B35; color: var(--chalk); font-size: 12px;">Next gathering →</div>
+      </div>
+    </div>
+    <div>
+      <div class="social-template">
+        <div class="social-header">
+          <div class="social-avatar">SY</div>
+          <div class="social-handle">shuyun.universe <small>Borderless Living · Next gathering: Lisbon</small></div>
+        </div>
+        <div class="social-img" style="background: #1C2B35; position: relative;">
+          <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 60% 40% at 40% 60%, rgba(74,92,107,0.4), transparent);"></div>
+          <div class="social-img-text">There are rooms<br>that hold you<br>before you sit down.</div>
+        </div>
+        <div class="social-caption">
+          <strong>shuyun.universe</strong> The right space is the first conversation. #ShuyunUniverse #ConsciousNomad #CloudCivilization
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 40px; border: 1px solid var(--sand-veil);">
+    <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 32px;">Post Templates</div>
+    <div class="grid-3">
+      <div>
+        <div style="font-family: var(--serif); font-size: 16px; font-weight: 400; margin-bottom: 8px;">The Quote Card</div>
+        <div style="font-size: 12px; color: var(--deep-current); line-height: 1.7; margin-bottom: 16px;">Dark background (#1C2B35). Serif italic text in Chalk. One line, maximum. No attribution visible. Feels like a found object.</div>
+        <div style="height: 120px; background: #1C2B35; display: flex; align-items: center; justify-content: center; padding: 20px;">
+          <span style="font-family: var(--serif); font-style: italic; color: var(--chalk); font-size: 14px; text-align: center; line-height: 1.5;">"Flow is not the absence<br>of direction."</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family: var(--serif); font-size: 16px; font-weight: 400; margin-bottom: 8px;">The Concept Card</div>
+        <div style="font-size: 12px; color: var(--deep-current); line-height: 1.7; margin-bottom: 16px;">Chalk background. Section number in Mist. Title in Cormorant. One short body paragraph. Feels like a page from a field guide.</div>
+        <div style="height: 120px; background: var(--chalk); border: 1px solid var(--sand-veil); display: flex; align-items: center; padding: 20px;">
+          <div>
+            <div style="font-size: 9px; letter-spacing: 0.2em; color: var(--mist); margin-bottom: 6px;">03 —</div>
+            <div style="font-family: var(--serif); font-size: 18px; color: var(--abyssal); margin-bottom: 6px;">Atmosphere</div>
+            <div style="font-size: 11px; color: var(--deep-current);">The quality of presence that changes a room.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-family: var(--serif); font-size: 16px; font-weight: 400; margin-bottom: 8px;">The Gathering Announce</div>
+        <div style="font-size: 12px; color: var(--deep-current); line-height: 1.7; margin-bottom: 16px;">Deep Current background. Event name in Chalk serif. Location and date in Mist sans. Sparse. No decorative elements.</div>
+        <div style="height: 120px; background: #4A5C6B; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; gap: 6px;">
+          <div style="font-size: 9px; letter-spacing: 0.2em; color: var(--mist); text-transform: uppercase;">Shuyun Gathering</div>
+          <div style="font-family: var(--serif); font-size: 20px; color: var(--chalk);">Lisbon</div>
+          <div style="font-size: 10px; color: var(--mist);">September · 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 08 WEBSITE ░░ -->
+<section class="section" id="website">
+  <div class="label-tri"><span class="l-en">08 — Website Aesthetic</span><span class="l-sep">·</span><span class="l-cn">网站美学</span><span class="l-sep">·</span><span class="l-fr">Esthétique du Site Web</span></div>
+  <div class="web-wireframe" style="margin-bottom: 40px;">
+    <div class="web-nav">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none"><circle cx="17" cy="24" r="13" stroke="#1C2B35" stroke-width="0.8" fill="none" opacity="0.6"/><circle cx="31" cy="24" r="13" stroke="#1C2B35" stroke-width="0.8" fill="none" opacity="0.6"/><ellipse cx="24" cy="24" rx="4" ry="13" stroke="#C4B49A" stroke-width="0.8" fill="none" opacity="0.8"/></svg>
+        <div class="web-nav-logo">SHUYUN</div>
+      </div>
+      <div class="web-nav-links">
+        <span>Universe</span><span>Gatherings</span><span>Journal</span><span>Apply</span>
+      </div>
+    </div>
+    <div class="web-hero">
+      <div class="web-hero-content">
+        <h1>A civilization<br>for those who<br>live consciously.</h1>
+        <p>Gatherings. Community. Editorial.<br>A practice for the borderless life.</p>
+        <div class="web-btn">Enter the Universe</div>
+      </div>
+    </div>
+    <div class="web-grid">
+      <div class="web-card">
+        <div class="web-card-img" style="background: #4A5C6B;">Gatherings</div>
+        <h3>Next Gathering</h3>
+        <p>Lisbon · September 2025. An intimate gathering for 24 conscious nomads.</p>
+      </div>
+      <div class="web-card">
+        <div class="web-card-img" style="background: #2A3B47;">Journal</div>
+        <h3>Cloud Journal</h3>
+        <p>Essays, conversations, and field notes from the borderless life.</p>
+      </div>
+      <div class="web-card">
+        <div class="web-card-img" style="background: #1C2B35;">Community</div>
+        <h3>The Universe</h3>
+        <p>An applied community for people who move with intention.</p>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 40px; border: 1px solid var(--sand-veil);">
+    <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 24px;">Web Principles</div>
+    <div class="grid-3">
+      <div>
+        <div style="font-family: var(--serif); font-size: 18px; margin-bottom: 8px;">No Clutter</div>
+        <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">One action per page. Navigation is minimal — 4 items maximum. No banners, no pop-ups, no countdown timers.</div>
+      </div>
+      <div>
+        <div style="font-family: var(--serif); font-size: 18px; margin-bottom: 8px;">Slow Scroll</div>
+        <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Pages breathe. Sections are separated by generous white space. Animation is subtle — fade in, never slide or bounce.</div>
+      </div>
+      <div>
+        <div style="font-family: var(--serif); font-size: 18px; margin-bottom: 8px;">Editorial Layout</div>
+        <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Content is presented like a magazine — mixing full-bleed imagery with text-heavy sections. No card grids with uniform sizes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 09 RETREAT ░░ -->
+<section class="section" id="retreat">
+  <div class="label-tri"><span class="l-en">09 — Retreat & Event Branding</span><span class="l-sep">·</span><span class="l-cn">静修与活动品牌</span><span class="l-sep">·</span><span class="l-fr">Image des Retraites & Événements</span></div>
+  <div class="retreat-card">
+    <div>
+      <div class="retreat-type">Flagship Gathering</div>
+      <div class="retreat-title">Shuyun<br>Gathering</div>
+      <div class="retreat-sub">A 5-day immersion for conscious nomads.</div>
+      <ul class="retreat-details">
+        <li>24 participants maximum</li>
+        <li>Annual · rotating location</li>
+        <li>Application-based access</li>
+        <li>Full-board, curated stay</li>
+      </ul>
+    </div>
+    <div>
+      <div class="retreat-desc">
+        The Shuyun Gathering is not a retreat in the conventional sense. There are no fixed programs, no speakers with slides, no morning routines imposed on everyone. It is a curated context — the right people, the right place, the right amount of structure — within which something important can happen.
+        <br><br>
+        Mornings belong to individuals. Afternoons are for conversations that began at dinner and continued. Evenings are for sitting with what emerged.
+      </div>
+      <div>
+        <span class="retreat-tag">Consciousness</span>
+        <span class="retreat-tag">Creative Practice</span>
+        <span class="retreat-tag">Borderless Living</span>
+        <span class="retreat-tag">Deep Work</span>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3" style="margin-top: 8px;">
+    <div style="padding: 32px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 16px;">Event Identity</div>
+      <div style="font-family: var(--serif); font-size: 16px; margin-bottom: 12px;">Location-based naming</div>
+      <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Each event takes the location as a secondary title: <em style="font-family: var(--serif);">Shuyun Gathering — Lisbon</em>. The brand stays constant; the place is the content.</div>
+    </div>
+    <div style="padding: 32px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 16px;">Materials</div>
+      <div style="font-family: var(--serif); font-size: 16px; margin-bottom: 12px;">Welcome package</div>
+      <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Unbleached card envelope. Single folded schedule. One object related to location. A handwritten note. No swag, no tote bags.</div>
+    </div>
+    <div style="padding: 32px; border: 1px solid var(--sand-veil);">
+      <div style="font-size: 10px; letter-spacing: var(--track-wide); text-transform: uppercase; color: var(--mist); margin-bottom: 16px;">Post-Event</div>
+      <div style="font-family: var(--serif); font-size: 16px; margin-bottom: 12px;">The gathering journal</div>
+      <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">A 20-page editorial document, printed and mailed. Photos, excerpts from conversations, a map of the place. No social media recap.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 10 PACKAGING ░░ -->
+<section class="section" id="packaging">
+  <div class="label-tri"><span class="l-en">10 — Packaging</span><span class="l-sep">·</span><span class="l-cn">包装体系</span><span class="l-sep">·</span><span class="l-fr">Design d'Emballage</span></div>
+  <div class="package-item">
+    <h3>Membership Kit</h3>
+    <div class="sub">For new members joining the Shuyun Universe community</div>
+    <div style="font-size: 13px; color: var(--deep-current); line-height: 1.8; max-width: 680px;">
+      A heavyweight unbleached kraft box, sealed with a single strip of Chalk-colored tape. Inside: a folded welcome letter on laid paper (100gsm, Chalk), a small ceramic or stone object (varies), and a handwritten note. The letterhead uses Cormorant Garamond at 11pt, maximum.
+    </div>
+    <div class="package-spec">
+      <div class="spec-item"><strong>Material</strong>Unbleached kraft, 2mm board</div>
+      <div class="spec-item"><strong>Print Method</strong>Letterpress or deboss only</div>
+      <div class="spec-item"><strong>Ink Colors</strong>Abyssal (#1C2B35) + blind deboss</div>
+    </div>
+  </div>
+  <div class="package-item">
+    <h3>Editorial Publication</h3>
+    <div class="sub">Cloud Journal — seasonal printed publication</div>
+    <div style="font-size: 13px; color: var(--deep-current); line-height: 1.8; max-width: 680px;">
+      A perfect-bound journal, A5 format. Cover: a single photograph, full-bleed, desaturated. Title in Cormorant Garamond Light, white, bottom-left. Inside: 60gsm off-white paper, two-column layout, generous margins. No ads. No brand mentions inside the editorial content.
+    </div>
+    <div class="package-spec">
+      <div class="spec-item"><strong>Format</strong>A5 · 80–100 pages</div>
+      <div class="spec-item"><strong>Paper</strong>60gsm natural offset inside · 300gsm cover</div>
+      <div class="spec-item"><strong>Binding</strong>Perfect bound · spine title only</div>
+    </div>
+  </div>
+  <div class="package-item">
+    <h3>Gathering Materials</h3>
+    <div class="sub">Printed materials for in-person events</div>
+    <div style="font-size: 13px; color: var(--deep-current); line-height: 1.8; max-width: 680px;">
+      All printed materials for events use Chalk or Sand Veil paper stocks only. Schedule cards: unfolded, single-sided, DL format. Name cards: 85×55mm, letterpress, name in Cormorant Garamond, role in DM Sans 9pt tracked.
+    </div>
+    <div class="package-spec">
+      <div class="spec-item"><strong>Paper</strong>Crane's Lettra, 110lb cover</div>
+      <div class="spec-item"><strong>Process</strong>Letterpress preferred</div>
+      <div class="spec-item"><strong>Finish</strong>No gloss, no UV, no foil</div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 11 EDITORIAL ░░ -->
+<section class="section" id="editorial">
+  <div class="label-tri"><span class="l-en">11 — Editorial Layout</span><span class="l-sep">·</span><span class="l-cn">编辑排版系统</span><span class="l-sep">·</span><span class="l-fr">Mise en Page Éditoriale</span></div>
+  <div class="spread">
+    <div class="spread-left">
+      <div class="page-num">Cloud Journal · Issue 01</div>
+      <div class="spread-chapter">On the Art of<br>Unhurried Arrival</div>
+      <div style="font-family: var(--serif); font-size: 20px; font-weight: 300; color: var(--deep-current); letter-spacing: 0.06em; margin-bottom: 6px;">论不慌不忙的抵达之道</div>
+      <div style="font-family: var(--sans); font-size: 11px; font-style: italic; color: var(--mist); margin-bottom: 24px;">De l'art d'arriver sans se presser</div>
+      <div class="spread-intro">There is a particular quality of consciousness that becomes available only when you stop trying to make something happen. This is not passivity — it is a different kind of engagement. The Shuyun way is to arrive before you are needed.</div>
+      <div class="spread-pull">
+        "The most interesting conversations happen in the spaces between the agenda."<br>
+        <span style="font-family: var(--serif); font-size: 16px; font-weight: 300; letter-spacing: 0.05em; color: var(--mist);">「最有意思的对话，发生在议程的空隙里。」</span><br>
+        <span style="font-family: var(--sans); font-size: 12px; font-style: italic; font-weight: 300; color: var(--mist); opacity: 0.8;">« Les conversations les plus intéressantes naissent dans les interstices de l'agenda. »</span>
+      </div>
+    </div>
+    <div class="spread-right">
+      <div class="spread-img" style="background: #1C2B35; height: 260px;">[ full-bleed image ]</div>
+      <div style="margin-top: 24px; font-size: 12px; color: var(--mist);">Photography: arriving light over coastline, blue hour</div>
+    </div>
+  </div>
+  <div class="spread">
+    <div class="spread-left">
+      <div class="spread-img" style="background: #4A5C6B; height: 200px;">[ portrait, looking away ]</div>
+      <div style="margin-top: 16px; font-size: 11px; color: var(--mist);">Participant, Shuyun Gathering — Lisbon 2024</div>
+    </div>
+    <div class="spread-right">
+      <div class="page-num">Essay</div>
+      <div class="spread-body">
+        We do not talk about wellness here. The word has become so saturated with commerce, so distorted by the industry that emerged around it, that it no longer points to anything real.
+        <br><br>
+        What we talk about instead is condition. The condition you are in when you are most yourself. When you are not performing, not optimizing, not documenting. Just present — in the full weight of that word.
+        <br><br>
+        The question Shuyun Universe asks is simple: what creates that condition? For some it is solitude and sea. For others it is the right table at the right hour with the right two people. For most, it is some version of both.
+        <br><br>
+        We are in the business of creating conditions. Not outcomes. Not transformations. Just the quality of space and gathering that allows people to meet themselves more fully.
+      </div>
+    </div>
+  </div>
+  <div style="padding: 40px; border: 1px solid var(--sand-veil);">
+    <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: var(--mist); margin-bottom: 24px;">Grid System</div>
+    <div class="grid-3">
+      <div>
+        <div style="font-family: var(--serif); font-size: 16px; margin-bottom: 8px;">Margins</div>
+        <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Print: 20mm all sides. Digital: 80px desktop / 24px mobile. Inner margin always wider than outer.</div>
+      </div>
+      <div>
+        <div style="font-family: var(--serif); font-size: 16px; margin-bottom: 8px;">Columns</div>
+        <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Editorial: 2 columns for body, 1 column for full-width display. Never 3 columns — too dense for this brand.</div>
+      </div>
+      <div>
+        <div style="font-family: var(--serif); font-size: 16px; margin-bottom: 8px;">Image / Text Ratio</div>
+        <div style="font-size: 13px; color: var(--deep-current); line-height: 1.7;">Print: 60% image, 40% text. Digital: flexible, but never less than 30% white space in any section.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ 12 BRAND VOICE ░░ -->
+<section class="section" id="voice">
+  <div class="label-tri"><span class="l-en">12 — Brand Voice & Language</span><span class="l-sep">·</span><span class="l-cn">品牌语气与语言</span><span class="l-sep">·</span><span class="l-fr">Voix & Langage de Marque</span></div>
+  <div class="grid-2" style="margin-bottom: 48px;">
+    <div>
+      <div style="font-family: var(--serif); font-size: 22px; font-weight: 400; margin-bottom: 24px;">The Shuyun Tone</div>
+      <p class="type-body" style="margin-bottom: 16px;">Write as if you are a thoughtful person speaking to another thoughtful person — not a brand talking to a customer. No urgency. No FOMO. No superlatives. The writing earns trust by being precise, not persuasive.</p>
+      <div style="margin-top: 32px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="padding: 20px; border: 1px solid var(--sand-veil);">
+            <div style="font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage-tide); margin-bottom: 12px;">Is</div>
+            <div style="font-size: 13px; color: var(--deep-current); line-height: 2;">Precise · Quiet · Warm<br>Philosophical · Grounded<br>Curious · Unhurried<br>Specific · Poetic</div>
+          </div>
+          <div style="padding: 20px; border: 1px solid var(--sand-veil);">
+            <div style="font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-drift); margin-bottom: 12px;">Is Not</div>
+            <div style="font-size: 13px; color: var(--deep-current); line-height: 2;">Urgent · Loud · Spiritual™<br>Coach-y · Promotional<br>Vague · Trendy<br>Exclusive · Performative</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="voice-example">
+        <div class="voice-label">Bio / About · 品牌简介 · À Propos</div>
+        <div class="voice-text">Shuyun Universe is a gathering point for people who have chosen to live consciously, move freely, and build something that matters — regardless of where they are.</div>
+        <div style="font-family: var(--serif); font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--deep-current); letter-spacing: 0.04em; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--sand-veil);">抒云宇宙，是一个聚集地——属于那些选择有意识地生活、自由流动、并认真创造的人。无论他们身在何处。</div>
+        <div style="font-family: var(--sans); font-size: 12px; font-weight: 200; font-style: italic; line-height: 1.7; color: var(--mist); margin-top: 8px;">Shuyun Universe est un lieu de rassemblement pour ceux qui ont choisi de vivre consciemment, de se déplacer librement et de construire quelque chose qui compte — où qu'ils soient.</div>
+        <div class="voice-note">Note: no promises, no claims, no lifestyle buzzwords. A statement of fact about who is here.</div>
+      </div>
+      <div class="voice-example">
+        <div class="voice-label">Event Invite · 活动邀请 · Invitation</div>
+        <div class="voice-text">Lisbon. September. 24 people. If you have been thinking it is time to gather with people who understand what you are building — this might be the right room.</div>
+        <div style="font-family: var(--serif); font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--deep-current); letter-spacing: 0.04em; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--sand-veil);">里斯本。九月。24个人。如果你一直觉得是时候与真正懂你的人相聚——这里，或许就是那个房间。</div>
+        <div style="font-family: var(--sans); font-size: 12px; font-weight: 200; font-style: italic; line-height: 1.7; color: var(--mist); margin-top: 8px;">Lisbonne. Septembre. 24 personnes. Si vous avez pensé qu'il était temps de vous rassembler avec des personnes qui comprennent ce que vous construisez — c'est peut-être la bonne salle.</div>
+        <div class="voice-note">Note: soft invitation, specific details, leaves space for the reader to self-select.</div>
+      </div>
+      <div class="voice-example">
+        <div class="voice-label">Caption · 文案 · Légende</div>
+        <div class="voice-text">The conversation started at 11pm and ended somewhere around the question of what we are actually doing with our lives. This is what we come for.</div>
+        <div style="font-family: var(--serif); font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--deep-current); letter-spacing: 0.04em; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--sand-veil);">对话从晚上11点开始，结束在某个关于"我们究竟在做什么"的问题上。这就是我们来这里的原因。</div>
+        <div style="font-family: var(--sans); font-size: 12px; font-weight: 200; font-style: italic; line-height: 1.7; color: var(--mist); margin-top: 8px;">La conversation a commencé à 23h et s'est terminée quelque part autour de la question de ce que nous faisons vraiment de nos vies. C'est pour cela que nous venons.</div>
+        <div class="voice-note">Note: present-tense, specific, no hashtag energy in the writing itself.</div>
+      </div>
+    </div>
+  </div>
+  <!-- Final statement -->
+  <div style="background: var(--abyssal); padding: 80px; text-align: center; position: relative; overflow: hidden;">
+    <!-- Subtle lacquer corner marks -->
+    <div style="position: absolute; top: 32px; left: 32px; width: 24px; height: 24px; border-top: 1px solid rgba(107,39,55,0.6); border-left: 1px solid rgba(107,39,55,0.6);"></div>
+    <div style="position: absolute; top: 32px; right: 32px; width: 24px; height: 24px; border-top: 1px solid rgba(107,39,55,0.6); border-right: 1px solid rgba(107,39,55,0.6);"></div>
+    <div style="position: absolute; bottom: 32px; left: 32px; width: 24px; height: 24px; border-bottom: 1px solid rgba(107,39,55,0.6); border-left: 1px solid rgba(107,39,55,0.6);"></div>
+    <div style="position: absolute; bottom: 32px; right: 32px; width: 24px; height: 24px; border-bottom: 1px solid rgba(107,39,55,0.6); border-right: 1px solid rgba(107,39,55,0.6);"></div>
+    <div style="font-size: 10px; letter-spacing: var(--track-title); text-transform: uppercase; color: #B8955A; margin-bottom: 40px; opacity: 0.7;">The Brand in One Sentence · 品牌定义 · La Marque en Une Phrase</div>
+    <!-- Gold top rule -->
+    <div style="width: 48px; height: 1px; background: linear-gradient(to right, transparent, #B8955A, transparent); margin: 0 auto 40px;"></div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 820px; margin: 0 auto 48px;">
+      <div style="font-family: var(--serif); font-size: clamp(20px, 2.8vw, 38px); font-weight: 300; color: var(--chalk); line-height: 1.4; text-align: center;">
+        "A spiritual lifestyle civilization<br>for conscious modern nomads."
+      </div>
+      <div style="width: 24px; height: 1px; background: rgba(184,149,90,0.4);"></div>
+      <div style="font-family: var(--serif); font-size: clamp(16px, 2.2vw, 28px); font-weight: 300; color: #B8955A; line-height: 1.5; text-align: center; letter-spacing: 0.06em;">
+        「意识游牧者的精神生活文明」
+      </div>
+      <div style="width: 24px; height: 1px; background: rgba(184,149,90,0.4);"></div>
+      <div style="font-family: var(--sans); font-size: clamp(12px, 1.4vw, 18px); font-weight: 200; font-style: italic; color: var(--mist); line-height: 1.6; text-align: center;">
+        « Une civilisation de vie spirituelle pour les nomades conscients. »
+      </div>
+    </div>
+    <!-- Gold bottom rule -->
+    <div style="width: 1px; height: 60px; background: linear-gradient(to bottom, #B8955A, transparent); margin: 0 auto 40px;"></div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+      <!-- Gold mark version -->
+      <svg width="24" height="24" viewBox="0 0 48 48" fill="none"><circle cx="17" cy="24" r="13" stroke="#B8955A" stroke-width="0.8" fill="none" opacity="0.9"/><circle cx="31" cy="24" r="13" stroke="#B8955A" stroke-width="0.8" fill="none" opacity="0.9"/><ellipse cx="24" cy="24" rx="4" ry="13" stroke="#D4BA7E" stroke-width="1" fill="none"/></svg>
+      <span style="font-family: var(--serif); font-size: 18px; letter-spacing: 0.15em; color: #B8955A;">SHUYUN</span>
+      <span style="font-family: var(--sans); font-size: 9px; letter-spacing: 0.5em; text-transform: uppercase; color: #D4BA7E; opacity: 0.8;">UNIVERSE</span>
+    </div>
+    <div style="margin-top: 40px; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(184,149,90,0.4);">
+      Visual Identity System · 2025 · Confidential
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

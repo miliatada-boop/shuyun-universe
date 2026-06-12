@@ -1,0 +1,4 @@
+interface:
+  display_name: "Shuyun Visual System"
+  short_description: "Use the Shuyun Universe VI across creative work"
+  default_prompt: "Use $shuyun-visual-system to design this in the Shuyun Universe visual identity."

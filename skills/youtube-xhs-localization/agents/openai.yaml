@@ -1,0 +1,4 @@
+interface:
+  display_name: "YouTube XHS Localization"
+  short_description: "Translate YouTube videos and create XHS assets"
+  default_prompt: "Use $youtube-xhs-localization to translate this YouTube video, add bilingual subtitles, and create a Shuyun Universe-style XHS poster."
