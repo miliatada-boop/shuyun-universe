@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<title>文文 · 海报重设计</title>
+<style>
+@import url('https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#C8C2B8;display:flex;gap:40px;padding:48px;font-family:'Noto Sans SC',sans-serif;align-items:flex-start;}
+
+/* ── 海报容器 9:16 = 450×800 ── */
+.poster{
+  width:450px;height:800px;
+  position:relative;overflow:hidden;
+  flex-shrink:0;
+}
+
+/* ════════════
+   海报A · 群招募
+   黑底 + 抠图人像
+════════════ */
+.pa{
+  background:#111110;
+}
+.pa::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 85% 10%, rgba(107,30,42,0.22) 0%,transparent 55%),
+    radial-gradient(ellipse 50% 40% at 10% 85%, rgba(184,149,74,0.06) 0%,transparent 50%);
+}
+
+/* 人像 */
+.pa .photo{
+  position:absolute;right:-10px;bottom:170px;
+  width:58%;
+  object-fit:contain;object-position:bottom right;
+  z-index:1;
+}
+
+/* 内容 */
+.pa .content{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  padding:38px 32px 24px;
+  display:flex;flex-direction:column;
+  z-index:2;
+}
+.pa .tag{
+  font-size:9px;letter-spacing:0.32em;text-transform:uppercase;
+  color:#B8954A;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.pa .tag::before{content:'';width:20px;height:1px;background:#B8954A;opacity:.6;}
+.pa .h1{
+  font-size:48px;font-weight:900;color:#F5F0E8;
+  line-height:1.05;letter-spacing:-0.01em;
+}
+.pa .h2{
+  font-size:30px;font-weight:900;color:#B8954A;
+  line-height:1.1;margin-bottom:6px;
+}
+.pa .divider{width:28px;height:2px;background:#6B1E2A;margin:16px 0;}
+.pa .questions{margin-bottom:auto;}
+.pa .q{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:400;color:rgba(245,240,232,0.75);
+  padding:7px 0;border-bottom:1px solid rgba(245,240,232,0.06);
+  line-height:1.4;
+}
+.pa .q:last-child{border-bottom:none;}
+.pa .q-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#6B1E2A;flex-shrink:0;
+}
+.pa .cta{
+  display:inline-block;
+  background:#6B1E2A;
+  color:#F5F0E8;font-size:13px;font-weight:700;
+  padding:10px 24px;margin-top:16px;
+  letter-spacing:0.06em;
+  align-self:flex-start;
+}
+
+/* 底部卡片 */
+.pa .footer{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(17,17,16,0.92);
+  border-top:1px solid rgba(245,240,232,0.08);
+  padding:14px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:3;
+  backdrop-filter:blur(8px);
+}
+.pa .foot-left{display:flex;align-items:center;gap:12px;}
+.pa .avatar{
+  width:40px;height:40px;border-radius:50%;
+  overflow:hidden;border:1.5px solid rgba(184,149,74,0.5);
+  flex-shrink:0;
+}
+.pa .avatar img{width:100%;height:100%;object-fit:cover;}
+.pa .foot-info{}
+.pa .foot-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:300;color:#F5F0E8;line-height:1.1;
+}
+.pa .foot-sub{font-size:9px;color:#B8954A;letter-spacing:0.08em;margin-top:2px;}
+.pa .foot-right{text-align:center;}
+.pa .qr-label{
+  font-size:9px;color:rgba(245,240,232,0.5);
+  letter-spacing:0.12em;margin-bottom:5px;
+}
+.pa .qr-wrap{
+  width:72px;height:72px;
+  background:#fff;padding:4px;
+}
+.pa .qr-wrap img{width:100%;height:100%;object-fit:contain;}
+
+/* ════════════
+   海报B · 钩子宣言
+   象牙底 + 大字冲击
+════════════ */
+.pb{
+  background:linear-gradient(160deg,#F8F3EA 0%,#EEE5D5 100%);
+}
+.pb::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 65% 45% at 75% 5%, rgba(107,30,42,0.07) 0%,transparent 55%);
+}
+
+.pb .photo{
+  position:absolute;right:-8px;bottom:155px;
+  width:55%;
+  object-fit:contain;object-position:bottom right;
+  z-index:1;
+}
+
+.pb .content{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  padding:32px 30px 22px;
+  display:flex;flex-direction:column;
+  z-index:2;
+}
+.pb .tag{
+  font-size:9px;letter-spacing:0.3em;text-transform:uppercase;
+  color:#B8954A;margin-bottom:18px;
+}
+.pb .h1{
+  font-size:32px;font-weight:900;color:#111110;
+  line-height:1.2;
+}
+.pb .h1 span{color:#6B1E2A;}
+.pb .divider{width:24px;height:2px;background:#6B1E2A;opacity:.6;margin:14px 0;}
+.pb .body{
+  font-size:13px;font-weight:400;color:#6E6E6A;
+  line-height:1.7;margin-bottom:16px;
+}
+.pb .body strong{color:#111110;font-weight:700;}
+.pb .section-label{
+  font-size:11px;font-weight:700;color:#111110;
+  letter-spacing:0.04em;margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.pb .section-label::after{content:'';flex:0 0 20px;height:1.5px;background:#B8954A;opacity:.6;}
+.pb .checks{}
+.pb .check{
+  display:flex;align-items:flex-start;gap:9px;
+  font-size:12px;color:#3E3E3C;
+  padding:5px 0;border-bottom:1px solid rgba(17,17,16,0.06);
+  line-height:1.5;
+}
+.pb .check:last-child{border-bottom:none;}
+.pb .check-icon{
+  width:16px;height:16px;flex-shrink:0;
+  background:#4A3728;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.pb .check-icon::after{
+  content:'✓';font-size:9px;color:#F5F0E8;font-weight:700;
+}
+
+/* 底部卡片 象牙版 */
+.pb .footer{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(245,240,232,0.95);
+  border-top:1px solid rgba(17,17,16,0.08);
+  padding:14px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:3;
+}
+.pb .foot-left{display:flex;align-items:center;gap:12px;}
+.pb .avatar{
+  width:40px;height:40px;border-radius:50%;
+  overflow:hidden;border:1.5px solid rgba(184,149,74,0.6);
+  flex-shrink:0;
+}
+.pb .avatar img{width:100%;height:100%;object-fit:cover;}
+.pb .foot-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:300;color:#111110;line-height:1.1;
+}
+.pb .foot-sub{font-size:9px;color:#B8954A;letter-spacing:0.08em;margin-top:2px;}
+.pb .qr-label{
+  font-size:9px;color:#9A9892;
+  letter-spacing:0.12em;margin-bottom:5px;text-align:center;
+}
+.pb .qr-wrap{
+  width:72px;height:72px;
+  background:#fff;padding:4px;
+  border:1px solid rgba(17,17,16,0.08);
+}
+.pb .qr-wrap img{width:100%;height:100%;object-fit:contain;}
+</style>
+</head>
+<body>
+
+<!-- 海报 A：群招募 -->
+<div class="poster pa">
+  <img class="photo" src="wenwen-cut-2.png" alt="文文"/>
+  <div class="content">
+    <div class="tag">AI 时代 · 与孩子共同成长</div>
+    <div class="h1">文文</div>
+    <div class="h2">AI 亲子群</div>
+    <div class="divider"></div>
+    <div class="questions">
+      <div class="q"><span class="q-dot"></span>几岁能用 AI？</div>
+      <div class="q"><span class="q-dot"></span>用什么工具？</div>
+      <div class="q"><span class="q-dot"></span>怎么防止沉迷？</div>
+      <div class="q"><span class="q-dot"></span>会不会依赖？</div>
+    </div>
+    <div class="cta">纯交流学习群</div>
+  </div>
+  <div class="footer">
+    <div class="foot-left">
+      <div class="avatar"><img src="wenwen-cut-2.png"/></div>
+      <div class="foot-info">
+        <div class="foot-name">文文</div>
+        <div class="foot-sub">AI 亲子学习交流群</div>
+      </div>
+    </div>
+    <div class="foot-right">
+      <div class="qr-label">扫码进来</div>
+      <div class="qr-wrap"><img src="qrcode.png"/></div>
+    </div>
+  </div>
+</div>
+
+<!-- 海报 B：钩子宣言 -->
+<div class="poster pb">
+  <img class="photo" src="wenwen-cut-3.png" alt="文文"/>
+  <div class="content">
+    <div class="tag">AI 时代 · 与孩子共同成长</div>
+    <div class="h1">最危险的，<br>不是孩子<span>不会 AI</span><br>而是父母<span>不懂 AI</span></div>
+    <div class="divider"></div>
+    <div class="body">
+      与其担心孩子<strong>用错</strong><br>
+      不如陪他一起<strong>用对</strong>
+    </div>
+    <div class="section-label">我们一起</div>
+    <div class="checks">
+      <div class="check"><span class="check-icon"></span>探索适合孩子的 AI 工具</div>
+      <div class="check"><span class="check-icon"></span>分享真实使用体验</div>
+      <div class="check"><span class="check-icon"></span>交流如何正确引导</div>
+      <div class="check"><span class="check-icon"></span>拿到工具清单和使用指南</div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="foot-left">
+      <div class="avatar"><img src="wenwen-cut-3.png"/></div>
+      <div class="foot-info">
+        <div class="foot-name">文文</div>
+        <div class="foot-sub">AI 亲子学习交流群</div>
+      </div>
+    </div>
+    <div class="foot-right">
+      <div class="qr-label">扫码进来</div>
+      <div class="qr-wrap"><img src="qrcode.png"/></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

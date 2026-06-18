@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>文文 · 海报参考稿 v3</title>
+<style>
+@import url('https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+:root{
+  --black:#111110;
+  --ivory:#F5F0E8;
+  --cream:#F2EDE3;
+  --sand:#EDE5D5;
+  --wine:#6B1E2A;
+  --bronze:#4A3728;
+  --gold:#B8954A;
+  --g3:#6E6E6A; --g4:#9A9892;
+  --serif:'Cormorant Garamond',serif;
+  --heavy:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  --sans:'Inter','PingFang SC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#D8D2C8;padding:40px 48px;font-family:var(--sans);}
+h1{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--black);margin-bottom:6px;}
+.sub{font-size:11px;color:var(--g4);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:48px;}
+
+.row{display:flex;gap:28px;margin-bottom:56px;align-items:flex-start;overflow-x:auto;padding-bottom:12px;}
+.col{flex-shrink:0;}
+.lbl{font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g3);margin-bottom:10px;}
+.note{font-size:10px;color:var(--g4);margin-top:8px;max-width:280px;line-height:1.6;}
+
+/* ── 海报尺寸 9:16 ── */
+.p{width:280px;aspect-ratio:9/16;position:relative;overflow:hidden;}
+
+/* ══════════════════════════════
+   版式 I · 编辑大字
+   参考图2：奶油底 + 大字标题 + 右下人像
+══════════════════════════════ */
+.pi{background:linear-gradient(160deg,#FAFAF4 0%,#F2ECE0 100%);}
+.pi img{
+  position:absolute;bottom:0;right:-8px;
+  width:78%;
+  object-fit:contain;object-position:bottom right;
+}
+.pi .z{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  padding:26px 22px 20px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  z-index:2;
+}
+.pi .en{font-size:7px;letter-spacing:0.32em;text-transform:uppercase;color:var(--g4);}
+.pi .big{font-family:var(--heavy);font-size:42px;font-weight:900;color:var(--black);line-height:1.05;margin-top:12px;}
+.pi .sess{font-size:11px;font-weight:500;color:var(--bronze);margin-top:6px;}
+.pi .vbar{width:2px;height:28px;background:var(--gold);opacity:.55;margin:14px 0;}
+.pi .sub2{font-size:13px;font-weight:400;color:var(--black);line-height:1.5;}
+.pi .buls{margin-top:10px;}
+.pi .b{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;}
+.pi .bn{width:16px;height:16px;flex-shrink:0;background:var(--black);border-radius:50%;font-size:8px;font-weight:700;color:var(--ivory);display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.pi .bt{font-size:10px;color:var(--g3);line-height:1.5;}
+.pi .foot{display:flex;align-items:center;justify-content:space-between;}
+.pi .fn{font-family:var(--serif);font-size:15px;font-weight:300;color:var(--black);}
+.pi .fr{font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--g4);}
+
+/* ══════════════════════════════
+   版式 J · 金圈列表
+   参考图3：沙米底 + 左文 + 右侧人像 + 金色编号
+══════════════════════════════ */
+.pj{background:linear-gradient(150deg,#F3EDE3 0%,#EAE0CC 100%);}
+.pj img{
+  position:absolute;right:-6px;bottom:48px;
+  width:68%;
+  object-fit:contain;object-position:bottom right;
+}
+.pj .z{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  padding:20px 18px 18px;
+  display:flex;flex-direction:column;
+  z-index:2;
+}
+.pj .top{display:flex;justify-content:space-between;font-size:7px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin-bottom:14px;}
+.pj .h1{font-family:var(--heavy);font-size:22px;font-weight:900;color:var(--black);line-height:1.2;}
+.pj .h2{font-family:var(--serif);font-size:16px;font-weight:400;font-style:italic;color:var(--gold);line-height:1.3;margin-top:4px;}
+.pj .list{margin-top:auto;margin-bottom:14px;}
+.pj .li{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(74,55,40,0.1);}
+.pj .li:last-child{border-bottom:none;}
+.pj .lnum{width:20px;height:20px;flex-shrink:0;border:1.5px solid var(--gold);border-radius:50%;font-size:9px;font-weight:700;color:var(--gold);display:flex;align-items:center;justify-content:center;}
+.pj .lt strong{display:block;font-size:12px;font-weight:700;color:var(--black);}
+.pj .lt span{font-size:10px;color:var(--g4);}
+.pj .dayfoot{display:flex;align-items:center;gap:10px;padding-top:10px;border-top:1px solid rgba(74,55,40,0.15);}
+.pj .dnum{font-family:var(--serif);font-size:30px;font-weight:300;color:var(--bronze);line-height:1;}
+.pj .dlbl{font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:var(--bronze);}
+.pj .dsep{width:1px;height:26px;background:rgba(74,55,40,0.18);}
+.pj .dsub{font-size:10px;color:var(--g3);line-height:1.5;}
+
+/* ══════════════════════════════
+   版式 K · 暗底竖排资历
+   参考图1：深色背景 + 竖向资历 + 粗体钩子
+══════════════════════════════ */
+.pk{background:var(--black);}
+.pk::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 15%,rgba(74,55,40,0.4) 0%,transparent 55%);}
+.pk img.cutout{
+  position:absolute;right:-6px;bottom:88px;
+  width:72%;
+  object-fit:contain;object-position:bottom right;
+}
+.pk .cred{
+  position:absolute;left:14px;top:52px;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  font-size:8px;letter-spacing:0.14em;color:rgba(245,240,232,0.28);
+  line-height:1.8;z-index:3;
+}
+.pk .cred strong{color:rgba(245,240,232,0.7);font-weight:600;}
+.pk .stag{position:absolute;top:16px;right:16px;background:var(--wine);padding:4px 10px;font-size:8px;font-weight:700;color:var(--ivory);letter-spacing:0.1em;z-index:5;}
+.pk .low{position:absolute;bottom:0;left:0;right:0;padding:0 18px 18px;z-index:3;}
+.pk .hb{font-family:var(--heavy);font-size:22px;font-weight:900;color:var(--ivory);line-height:1.2;margin-bottom:8px;}
+.pk .wline{width:32px;height:2px;background:var(--wine);margin-bottom:9px;}
+.pk .ks{font-size:10px;color:rgba(245,240,232,0.42);line-height:1.6;margin-bottom:10px;}
+.pk .kf{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid rgba(245,240,232,0.08);}
+.pk .kfn{font-family:var(--serif);font-size:13px;color:var(--ivory);}
+.pk .kfc{font-size:8px;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);opacity:.65;}
+
+/* ══════════════════════════════
+   版式 L · 左文右人
+   图3变体：分栏 + 点列表
+══════════════════════════════ */
+.pl{background:linear-gradient(145deg,#F5F0E8 0%,#EDE5D5 100%);}
+.pl img{
+  position:absolute;right:0;bottom:0;
+  width:62%;
+  object-fit:contain;object-position:bottom right;
+}
+.pl .z{
+  position:absolute;top:0;left:0;width:60%;height:100%;
+  padding:22px 0 18px 16px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  z-index:2;
+}
+.pl .ptag{font-size:7px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.pl .ph1{font-family:var(--heavy);font-size:19px;font-weight:900;color:var(--black);line-height:1.2;}
+.pl .ph2{font-family:var(--serif);font-size:13px;font-style:italic;color:var(--gold);margin-top:4px;line-height:1.3;}
+.pl .pb{width:18px;height:2px;background:var(--bronze);opacity:.45;margin:12px 0;}
+.pl .plist .pi2{display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;}
+.pl .plist .pdot{width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0;margin-top:4px;}
+.pl .plist .ptx{font-size:10px;color:var(--g3);line-height:1.5;}
+.pl .plist .ptx strong{color:var(--black);display:block;font-size:11px;font-weight:700;}
+.pl .pfoot .pd{font-family:var(--serif);font-size:24px;font-weight:300;color:var(--bronze);line-height:1;}
+.pl .pfoot .pdl{font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:var(--g4);margin-top:2px;}
+.pl .pfoot .pfn{font-family:var(--serif);font-size:13px;color:var(--bronze);margin-top:6px;}
+
+/* ══════════════════════════════
+   版式 M · 暗底四格要点
+══════════════════════════════ */
+.pm{background:var(--black);}
+.pm::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 45% at 20% 80%,rgba(184,149,74,0.07) 0%,transparent 55%),radial-gradient(ellipse 55% 40% at 85% 12%,rgba(107,30,42,0.22) 0%,transparent 50%);}
+.pm img{
+  position:absolute;top:0;left:0;right:0;
+  width:100%;height:56%;
+  object-fit:cover;object-position:center 15%;
+}
+.pm .overlay{
+  position:absolute;top:0;left:0;right:0;height:58%;
+  background:linear-gradient(180deg,rgba(17,17,16,0.08) 0%,rgba(17,17,16,0) 35%,rgba(17,17,16,0.9) 82%,var(--black) 100%);
+  z-index:1;
+}
+.pm .nametag{
+  position:absolute;top:28%;left:50%;transform:translateX(-50%);
+  font-family:var(--serif);font-size:12px;font-weight:300;color:var(--gold);
+  letter-spacing:0.4em;z-index:2;
+  background:rgba(17,17,16,0.35);padding:3px 12px;
+  backdrop-filter:blur(3px);white-space:nowrap;
+}
+.pm .low{position:absolute;bottom:0;left:0;right:0;padding:0 18px 18px;z-index:3;}
+.pm .ptag2{font-size:7px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:9px;}
+.pm .ph{font-family:var(--heavy);font-size:18px;font-weight:900;color:var(--ivory);line-height:1.2;margin-bottom:3px;}
+.pm .ph2{font-family:var(--heavy);font-size:12px;font-weight:400;color:rgba(245,240,232,0.45);margin-bottom:10px;}
+.pm .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.pm .card{background:rgba(245,240,232,0.05);padding:7px 8px;border-left:2px solid var(--wine);}
+.pm .ct{font-size:9px;font-weight:700;color:var(--ivory);margin-bottom:2px;}
+.pm .cs{font-size:8px;color:rgba(245,240,232,0.38);line-height:1.4;}
+.pm .pf{display:flex;justify-content:space-between;align-items:center;padding-top:9px;border-top:1px solid rgba(245,240,232,0.07);}
+.pm .pfn{font-family:var(--serif);font-size:13px;color:var(--ivory);}
+.pm .pfc{font-size:8px;letter-spacing:0.15em;color:var(--gold);opacity:.6;}
+
+.notebox{background:#fff;padding:18px 22px;border-left:3px solid var(--gold);margin-top:40px;max-width:720px;}
+.notebox h3{font-size:13px;font-weight:600;color:var(--black);margin-bottom:6px;}
+.notebox p{font-size:12px;color:var(--g3);line-height:1.8;}
+</style>
+</head>
+<body>
+
+<h1>文文 · 海报参考稿</h1>
+<div class="sub">v3 · AI 抠图版 · 5 个版式</div>
+
+<div class="row">
+
+  <!-- 版式 I：编辑大字，奶油底，参考图2 -->
+  <div class="col">
+    <div class="lbl">版式 I · 编辑大字 · 参考图2</div>
+    <div class="p pi">
+      <img src="wenwen-cut-2.png" alt="文文"/>
+      <div class="z">
+        <div>
+          <div class="en">AI CULTURE · 旗舰课程</div>
+          <div class="big">12周<br>判断力</div>
+          <div class="sess">重建思考框架 · 第 1 课</div>
+          <div class="vbar"></div>
+          <div class="sub2">AI 时代，家庭认知升级指南</div>
+          <div class="buls">
+            <div class="b"><div class="bn">1</div><div class="bt">为什么工具学习不是答案</div></div>
+            <div class="b"><div class="bn">2</div><div class="bt">判断力如何在家庭中培养</div></div>
+          </div>
+        </div>
+        <div class="foot">
+          <span class="fn">文文</span>
+          <span class="fr">AI 亲子群</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">奶油底 + 超大粗体 + 抠图人像右下</div>
+  </div>
+
+  <!-- 版式 J：金圈列表，沙米底，参考图3 -->
+  <div class="col">
+    <div class="lbl">版式 J · 金圈列表 · 参考图3</div>
+    <div class="p pj">
+      <img src="wenwen-cut-3.png" alt="文文"/>
+      <div class="z">
+        <div class="top"><span>AI 认知课程 · 2026</span><span>第 2 课</span></div>
+        <div>
+          <div class="h1">家长懂 AI<br>才是起跑线</div>
+          <div class="h2">不是孩子，是父母需要升级</div>
+        </div>
+        <div class="list">
+          <div class="li">
+            <div class="lnum">1</div>
+            <div class="lt"><strong>认知升级</strong><span>先于工具学习</span></div>
+          </div>
+          <div class="li">
+            <div class="lnum">2</div>
+            <div class="lt"><strong>判断力建立</strong><span>AI 时代唯一护城河</span></div>
+          </div>
+          <div class="li">
+            <div class="lnum">3</div>
+            <div class="lt"><strong>家庭共学</strong><span>同频父母的成长路径</span></div>
+          </div>
+        </div>
+        <div class="dayfoot">
+          <div><div class="dlbl">DAY</div><div class="dnum">02</div></div>
+          <div class="dsep"></div>
+          <div class="dsub">从认知基础<br>到实践框架</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">金色编号 + DAY 底部，最接近知识付费主流范式</div>
+  </div>
+
+  <!-- 版式 K：暗底竖排资历，参考图1 -->
+  <div class="col">
+    <div class="lbl">版式 K · 暗底竖资历 · 参考图1</div>
+    <div class="p pk">
+      <img class="cutout" src="wenwen-cut-2.png" alt="文文"/>
+      <div class="cred">
+        <strong>文文</strong>
+        「AI 家庭认知升级」课程创始人
+        百万家庭认知导师
+        《判断力》系列作者
+      </div>
+      <div class="stag">第 4 课</div>
+      <div class="low">
+        <div class="hb">父母不懂 AI<br>才是最大风险</div>
+        <div class="wline"></div>
+        <div class="ks">认知升级，先于工具学习。<br>这才是真正的起跑线。</div>
+        <div class="kf">
+          <span class="kfn">文文</span>
+          <span class="kfc">AI 亲子群</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">暗底 + 竖向资历文字 + 粗体钩子</div>
+  </div>
+
+  <!-- 版式 L：左文右人 -->
+  <div class="col">
+    <div class="lbl">版式 L · 左文右人分栏</div>
+    <div class="p pl">
+      <img src="wenwen-cut-3.png" alt="文文"/>
+      <div class="z">
+        <div>
+          <div class="ptag">AI 认知课 · 旗舰</div>
+          <div class="ph1">家长懂AI<br>孩子才能<br>真正赢</div>
+          <div class="ph2">Not tools. Judgment.</div>
+          <div class="pb"></div>
+          <div class="plist">
+            <div class="pi2"><div class="pdot"></div><div class="ptx"><strong>认知框架</strong>比工具更持久</div></div>
+            <div class="pi2"><div class="pdot"></div><div class="ptx"><strong>判断力</strong>才是护城河</div></div>
+            <div class="pi2"><div class="pdot"></div><div class="ptx"><strong>家庭共学</strong>同频成长</div></div>
+          </div>
+        </div>
+        <div class="pfoot">
+          <div class="pd">DAY<span style="font-size:13px;color:var(--gold);">01</span></div>
+          <div class="pdl">AI Culture · 文文</div>
+          <div class="pfn">文文</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">左文右人，最接近图3排版逻辑</div>
+  </div>
+
+  <!-- 版式 M：暗底四格 -->
+  <div class="col">
+    <div class="lbl">版式 M · 暗底四格要点</div>
+    <div class="p pm">
+      <img src="wenwen-cut.png" alt="文文"/>
+      <div class="overlay"></div>
+      <div class="nametag">文 文</div>
+      <div class="low">
+        <div class="ptag2">AI 时代 · 家庭认知升级</div>
+        <div class="ph">12 周重建判断力</div>
+        <div class="ph2">不是工具课，是思维课</div>
+        <div class="grid">
+          <div class="card"><div class="ct">认知先行</div><div class="cs">工具之前建框架</div></div>
+          <div class="card"><div class="ct">判断力</div><div class="cs">AI 不可替代的核心</div></div>
+          <div class="card"><div class="ct">家庭共学</div><div class="cs">同频父母共成长</div></div>
+          <div class="card"><div class="ct">12 周</div><div class="cs">系统升级路径</div></div>
+        </div>
+        <div class="pf">
+          <span class="pfn">文文</span>
+          <span class="pfc">AI Culture · 旗舰课</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">暗底 + 真实人像 + 四格要点</div>
+  </div>
+
+</div>
+
+<div class="notebox">
+  <h3>照片说明</h3>
+  <p>
+    版式 I / J：使用参考图2抠图（黑色上衣版），奶油底效果最佳<br>
+    版式 K：使用参考图1抠图（深色西装版），暗底直接可用<br>
+    版式 L：使用参考图3抠图（红色礼服版），配沙米底最协调<br>
+    版式 M：使用原始照片抠图，暗底直接可用
+  </p>
+</div>
+
+</body>
+</html>

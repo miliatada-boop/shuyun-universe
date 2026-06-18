@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Founder 增长瓶颈诊断 — Shuyun Universe</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-font-smoothing:antialiased}
+:root{
+  --abyssal:#1C2B35;--deep-current:#4A5C6B;--chalk:#F5F2EE;
+  --sand-veil:#E8E2D8;--warm-drift:#C4B49A;--mist:#9EA8B2;
+  --sage-tide:#7B8E82;--lacquer:#6B2737;--cinnabar:#9B3A40;
+  --antique-gold:#B8955A;--pale-gold:#D4BA7E;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+body{background:var(--abyssal);color:var(--chalk);font-family:var(--sans);font-weight:300;min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+.container{width:100%;max-width:680px;padding:0 24px;flex:1;display:flex;flex-direction:column;}
+.screen{display:none;flex-direction:column;flex:1;padding:48px 0 80px;animation:fadeIn 0.35s ease;}
+.screen.active{display:flex;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.label{font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--mist);font-family:var(--sans);font-weight:400;}
+.gold-line{width:40px;height:1px;background:var(--antique-gold);margin-bottom:40px;opacity:0.6;}
+
+/* INTRO */
+.intro-title{font-family:var(--serif);font-size:clamp(36px,6vw,52px);font-weight:300;line-height:1.2;letter-spacing:0.01em;color:var(--chalk);margin-bottom:16px;}
+.intro-title em{font-style:italic;color:var(--pale-gold);}
+.intro-sub{font-size:15px;color:var(--mist);line-height:1.7;max-width:480px;margin-bottom:40px;}
+.intro-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px;}
+.meta-item .label{margin-bottom:6px;}
+.meta-item .val{font-family:var(--serif);font-size:18px;color:var(--pale-gold);}
+.btn-start{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--antique-gold);color:var(--chalk);font-family:var(--sans);font-size:13px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;padding:14px 32px;cursor:pointer;transition:all 0.25s;}
+.btn-start:hover{background:rgba(184,149,90,0.1);border-color:var(--pale-gold);}
+.btn-start::after{content:'→';font-size:14px;}
+
+/* PROGRESS */
+.progress-area{margin-bottom:40px;}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.progress-count{font-size:12px;color:var(--mist);letter-spacing:0.05em;}
+.cat-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--antique-gold);opacity:0.8;}
+.progress-bar{height:1px;background:rgba(255,255,255,0.08);}
+.progress-fill{height:100%;background:var(--antique-gold);opacity:0.7;transition:width 0.4s ease;}
+
+/* SCREENER */
+.screener-title{font-family:var(--serif);font-size:26px;font-weight:300;line-height:1.4;margin-bottom:10px;}
+.screener-sub{font-size:14px;color:var(--mist);margin-bottom:36px;line-height:1.6;}
+
+/* QUESTIONS */
+.q-num{font-size:13px;color:var(--antique-gold);letter-spacing:0.1em;margin-bottom:8px;}
+.q-title{font-family:var(--serif);font-size:clamp(20px,3.5vw,26px);font-weight:300;line-height:1.5;margin-bottom:36px;color:var(--chalk);}
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:40px;}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:all 0.2s;background:transparent;text-align:left;width:100%;color:var(--chalk);font-family:var(--sans);font-size:14px;font-weight:300;line-height:1.5;}
+.opt:hover{border-color:rgba(184,149,90,0.4);background:rgba(184,149,90,0.04);}
+.opt.selected{border-color:var(--antique-gold);background:rgba(184,149,90,0.08);}
+.opt-dot{width:6px;height:6px;border:1px solid var(--mist);border-radius:50%;flex-shrink:0;margin-top:5px;transition:all 0.2s;}
+.opt.selected .opt-dot{background:var(--antique-gold);border-color:var(--antique-gold);}
+
+/* NAV */
+.nav{display:flex;align-items:center;gap:16px;margin-top:auto;padding-top:20px;}
+.btn-prev{background:transparent;border:none;color:var(--mist);font-size:13px;font-family:var(--sans);cursor:pointer;padding:0;letter-spacing:0.05em;}
+.btn-prev:hover{color:var(--chalk);}
+.btn-next{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.3);font-family:var(--sans);font-size:12px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;padding:11px 24px;cursor:not-allowed;transition:all 0.25s;}
+.btn-next.on{border-color:var(--antique-gold);color:var(--chalk);cursor:pointer;}
+.btn-next.on:hover{background:rgba(184,149,90,0.1);}
+
+/* RESULTS */
+.results-header{margin-bottom:60px;}
+.results-title{font-family:var(--serif);font-size:clamp(32px,5vw,44px);font-weight:300;line-height:1.2;margin-bottom:16px;margin-top:16px;}
+.results-sub{font-size:14px;color:var(--mist);line-height:1.7;}
+
+/* SCORES */
+.scores-section{margin-bottom:64px;}
+.scores-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;}
+.scores-legend{font-size:10px;color:var(--mist);letter-spacing:0.04em;text-align:right;line-height:1.9;}
+.scores-legend span{color:var(--pale-gold);}
+.score-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.score-label{font-size:12px;color:var(--mist);width:84px;flex-shrink:0;letter-spacing:0.02em;}
+.score-bar-wrap{flex:1;height:3px;background:rgba(255,255,255,0.06);}
+.score-bar-fill{height:100%;transition:width 0.8s ease;}
+.score-bar-fill.s-primary{background:var(--lacquer);}
+.score-bar-fill.s-ok{background:var(--antique-gold);opacity:0.55;}
+.score-bar-fill.s-good{background:var(--sage-tide);}
+.score-val{font-size:12px;color:var(--mist);width:28px;text-align:right;flex-shrink:0;}
+.score-tag{font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--mist);width:48px;text-align:right;flex-shrink:0;}
+.score-tag.t-primary{color:var(--cinnabar);}
+
+/* GAP */
+.gap-section{margin-bottom:48px;padding:32px;border:1px solid rgba(107,39,55,0.35);position:relative;}
+.gap-section::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:var(--lacquer);opacity:0.6;}
+.gap-num{font-size:10px;letter-spacing:0.3em;color:var(--lacquer);text-transform:uppercase;margin-bottom:10px;opacity:0.8;}
+.gap-title{font-family:var(--serif);font-size:clamp(22px,4vw,30px);font-weight:300;margin-bottom:6px;color:var(--chalk);}
+.gap-en{font-size:11px;letter-spacing:0.2em;color:var(--mist);text-transform:uppercase;margin-bottom:20px;}
+.gap-hl{font-size:15px;line-height:1.7;color:var(--sand-veil);margin-bottom:14px;}
+.gap-desc{font-size:14px;line-height:1.8;color:var(--mist);}
+.benchmark{font-size:12px;color:var(--antique-gold);opacity:0.75;letter-spacing:0.03em;margin-top:16px;padding:10px 0;border-top:1px solid rgba(184,149,90,0.15);line-height:1.7;}
+
+/* CHAIN */
+.chain-section{margin-bottom:48px;padding:24px 28px;background:rgba(28,43,53,0.5);border:1px solid rgba(184,149,90,0.15);}
+.chain-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--antique-gold);opacity:0.7;margin-bottom:16px;}
+.chain-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px;color:var(--mist);line-height:1.5;}
+.chain-item:last-child{border-bottom:none;color:rgba(155,58,64,0.85);}
+.chain-arrow{color:var(--antique-gold);opacity:0.45;flex-shrink:0;font-size:11px;padding-top:2px;}
+
+/* SECONDARY GAP */
+.secondary-gap{margin-bottom:48px;padding:20px 24px;border:1px solid rgba(255,255,255,0.06);}
+.secondary-gap-title{font-family:var(--serif);font-size:18px;color:var(--warm-drift);margin-bottom:8px;}
+.secondary-gap-desc{font-size:13px;color:var(--mist);line-height:1.7;}
+
+/* SECTIONS */
+.section{margin-bottom:48px;}
+.section-label{font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--antique-gold);opacity:0.7;margin-bottom:14px;}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:300;color:var(--chalk);margin-bottom:16px;}
+.divider{height:1px;background:rgba(184,149,90,0.15);margin:48px 0;}
+
+/* RISKS */
+.risk-item{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:14px;color:var(--mist);line-height:1.6;}
+.risk-item:last-child{border-bottom:none;}
+.risk-dot{width:4px;height:4px;border-radius:50%;background:var(--lacquer);flex-shrink:0;margin-top:8px;opacity:0.7;}
+
+/* BUILD PATH */
+.build-path{background:rgba(74,92,107,0.12);border-left:2px solid var(--deep-current);padding:16px 20px;margin-bottom:20px;font-size:14px;color:var(--sand-veil);line-height:1.8;font-style:italic;font-family:var(--serif);}
+
+/* ACTIONS */
+.action-item{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid rgba(255,255,255,0.06);margin-bottom:10px;}
+.action-tag{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;flex-shrink:0;padding:3px 8px;font-weight:400;margin-top:2px;}
+.action-tag.week{border:1px solid var(--antique-gold);color:var(--antique-gold);}
+.action-tag.month{border:1px solid rgba(158,168,178,0.3);color:var(--mist);}
+.action-text{font-size:14px;color:var(--chalk);line-height:1.6;flex:1;}
+
+/* STRENGTHS */
+.strength-item{display:flex;gap:14px;align-items:flex-start;padding:12px 16px;border:1px solid rgba(123,142,130,0.2);margin-bottom:10px;}
+.strength-dot{width:6px;height:6px;border-radius:50%;background:var(--sage-tide);flex-shrink:0;margin-top:6px;}
+.strength-text{font-size:14px;color:var(--chalk);line-height:1.6;}
+
+/* SERVICE */
+.service-section{margin-bottom:48px;padding:32px;background:rgba(74,92,107,0.08);border:1px solid rgba(184,149,90,0.2);}
+.service-en{font-size:10px;letter-spacing:0.35em;text-transform:uppercase;color:var(--antique-gold);opacity:0.8;margin-bottom:8px;}
+.service-cn{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--chalk);margin-bottom:12px;}
+.service-desc{font-size:14px;color:var(--mist);line-height:1.8;margin-bottom:16px;}
+.btn-cta{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--antique-gold);color:var(--chalk);font-family:var(--sans);font-size:12px;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;padding:12px 28px;cursor:pointer;text-decoration:none;transition:all 0.25s;}
+.btn-cta:hover{background:rgba(184,149,90,0.1);}
+.btn-cta::after{content:'→';}
+
+/* RETEST */
+.retest-section{padding:24px;border:1px solid rgba(255,255,255,0.04);text-align:center;margin-bottom:48px;}
+.retest-title{font-family:var(--serif);font-size:16px;color:var(--mist);margin-bottom:8px;}
+.retest-desc{font-size:12px;color:rgba(158,168,178,0.6);line-height:1.7;}
+
+/* FOOTER */
+.results-footer{display:flex;justify-content:space-between;align-items:center;padding-top:32px;border-top:1px solid rgba(255,255,255,0.06);}
+.footer-brand{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);opacity:0.5;}
+.btn-print{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--mist);font-family:var(--sans);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;padding:8px 18px;cursor:pointer;transition:all 0.2s;}
+.btn-print:hover{border-color:rgba(255,255,255,0.2);color:var(--chalk);}
+
+@media print{
+  body{background:#fff;color:#1C2B35;}
+  .screen:not(.active){display:none!important;}
+  .btn-print,.btn-cta,.btn-start,.btn-prev,.btn-next,.nav{display:none!important;}
+  .gap-section{border-color:#6B2737;}
+  .chain-section{background:#f5f2ee;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- INTRO -->
+<div class="screen active" id="s-intro">
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
+    <div class="label" style="margin-bottom:20px;">SHUYUN UNIVERSE</div>
+    <div class="gold-line"></div>
+    <h1 class="intro-title">Founder<br>增长瓶颈<em>诊断</em></h1>
+    <p class="intro-sub">你已经走过了最难的阶段。<br>现在阻碍你继续扩大影响力的，往往不是努力不够，而是某个系统性短板悄悄拖慢了一切。</p>
+    <div class="intro-meta">
+      <div class="meta-item"><div class="label">维度</div><div class="val">7 个</div></div>
+      <div class="meta-item"><div class="label">题目</div><div class="val">21 题</div></div>
+      <div class="meta-item"><div class="label">时间</div><div class="val">8 分钟</div></div>
+    </div>
+    <button class="btn-start" onclick="showScreen('s-screener')">开始诊断</button>
+  </div>
+  <div class="label" style="margin-top:auto;padding-top:24px;opacity:0.4;">FOUNDER GROWTH BOTTLENECK AUDIT · PHASE II</div>
+</div>
+
+<!-- SCREENER -->
+<div class="screen" id="s-screener">
+  <div class="progress-area">
+    <div class="progress-top"><span class="label">准备开始</span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+  </div>
+  <div class="screener-title">在开始之前——<br>你的业务目前是什么规模？</div>
+  <p class="screener-sub">这将帮助我们为你定制部分问题，使结果更精准。</p>
+  <div class="options" id="screener-opts">
+    <button class="opt" onclick="selectTeam(this,'solo')"><span class="opt-dot"></span><span>独立创始人，目前单打独斗</span></button>
+    <button class="opt" onclick="selectTeam(this,'small')"><span class="opt-dot"></span><span>小团队，1–3 人（含外包/兼职）</span></button>
+    <button class="opt" onclick="selectTeam(this,'medium')"><span class="opt-dot"></span><span>正式团队，3 人以上</span></button>
+  </div>
+  <div class="nav">
+    <button class="btn-prev" onclick="showScreen('s-intro')">← 返回</button>
+    <button class="btn-next" id="btn-scr-next" onclick="if(teamSize)goQ(0)">继续 →</button>
+  </div>
+</div>
+
+<!-- QUESTION SCREENS (built by JS) -->
+<div id="q-screens"></div>
+
+<!-- RESULTS -->
+<div class="screen" id="s-results">
+  <div id="results-content"></div>
+</div>
+
+</div>
+
+<script>
+const CATS = [
+  {
+    cn:"品牌定位",num:"01",gap:"Brand Clarity Gap",
+    hl:{critical:"你的品牌定位模糊——用户无法清晰说出你是谁、为谁解决什么问题。",moderate:"你的品牌方向初步成型，但在用户心中还不够清晰锐利。"},
+    desc:"品牌定位是整个增长体系的锚点。没有清晰的定位，你的内容、产品、服务都在向不同方向用力，积累无法形成复利。",
+    chain:["品牌定位模糊，内容无法精准触达目标用户","内容触达失准，私域沉淀的用户质量下降","私域质量下降，成交转化率持续走低","转化困难，迫使依赖关系成交或陷入价格战"],
+    risks:["内容创作方向持续摇摆，缺乏累积效应","不同渠道传递的品牌信息不一致","理想客户看不到你，而你不想要的人却一直找来","价格提不上去，因为用户心智里你是「泛化」的"],
+    build:"从一句精准的品牌语句开始：你为谁、解决什么、为何只有你能做。",
+    benchmark:"大多数同阶段创始人在品牌定位维度得分在 3–5 分。",
+    delay:"按现在轨迹，12个月后你的流量可能继续增长，但转化率不会跟上——你将拥有更多听众，却无法稳定变现他们。",
+    actions:["写下你的品牌一句话定位：我帮助[具体人群]实现[具体转变]","审查最近10条内容，确认它们是否都指向同一个核心主题","访谈3位理想客户，问他们怎么向朋友介绍你","暂停与核心定位无关的内容方向，聚焦主线"],
+    svc:{en:"Strategic Advisory",cn:"品牌与定位咨询",desc:"在2次深度对话内，帮你提炼清晰的品牌定位框架，输出可直接使用的品牌语言体系和用户沟通话术。"},
+    str:"清晰的品牌定位与用户认知"
+  },
+  {
+    cn:"产品结构",num:"02",gap:"Product Architecture Gap",
+    hl:{critical:"你的变现高度依赖单一产品或一对一服务，没有形成完整的价值阶梯。",moderate:"你的产品已初步形成层级，但各层之间的转化逻辑还不够清晰。"},
+    desc:"没有结构的产品线就像没有目录的书——用户不知道从哪里开始，也不知道往哪里走。每次成交都是孤立的事件。",
+    chain:["产品结构缺失，用户进入后找不到升级路径","升级路径不清，客单价难以自然提升","客单价低，需要持续吸引大量新客户","依赖新客，品牌势能和口碑无法形成复利"],
+    risks:["所有收入都来自同一个产品，风险过度集中","用户无法自然升级，每次成交都需要从零建立信任","高价值服务因缺少铺垫而难以直接销售","个人精力被分散，无法专注于高价值交付"],
+    build:"设计三层产品：入门体验层 → 核心价值层 → 深度合作层，每层都有清晰的升级触发点。",
+    benchmark:"大多数同阶段创始人产品结构得分在 3–5 分，有产品但缺完整阶梯和转化机制。",
+    delay:"按现在轨迹，12个月后你的时间和精力将成为最主要的瓶颈，因为没有产品可以在你不在场的情况下持续变现。",
+    actions:["列出你所有产品/服务，按价格和深度排序，找出缺失的层级","为每个产品写一句「下一步是什么」的升级引导语","如果缺少低门槛入口产品，本月设计并上线一个","统计每个产品的销售比例，识别你过度依赖的那一个"],
+    svc:{en:"Your Best Offer Session",cn:"商业模式与产品结构咨询",desc:"梳理你的产品矩阵，设计清晰的价值阶梯和成交路径，让每一个客户都能找到适合自己的入口，并自然走向更深的合作。"},
+    str:"已有核心产品与基础变现路径"
+  },
+  {
+    cn:"私域用户关系",num:"03",gap:"Community Depth Gap",
+    hl:{critical:"你的私域是一个流量池，而不是一个社群——用户没有归属感，关系停留在单向信息传递。",moderate:"你有一定私域积累，但用户粘性和互动深度还有明显提升空间。"},
+    desc:"私域的本质不是圈人，而是建立持续的信任关系。没有深度关系，私域就只是另一个朝不保夕的流量渠道。",
+    chain:["私域关系浅薄，用户停留但长期不转化","转化依赖促销驱动，品牌调性被持续拉低","品牌调性下降，高净值用户逐渐流失","高净值用户流失，成交均价持续承压下降"],
+    risks:["私域用户活跃度低，需要频繁发内容维持存在感","成交转化率低，需要用折扣驱动购买","口碑传播弱，老用户不主动推荐新客户","用户沉默后很难再激活，沉没成本越来越高"],
+    build:"从「频道」思维转向「关系」思维——建立有仪式感的用户旅程，让每一个用户都感到被看见、被记录。",
+    benchmark:"大多数同阶段创始人私域关系得分在 3–4 分，有积累但缺乏深度互动机制。",
+    delay:"按现在轨迹，12个月后你的私域池可能更大，但转化率可能更低——因为早期的温度已随时间稀释。",
+    actions:["本周给5位沉默用户发个性化消息，真诚问他们现在在忙什么","画出你的用户旅程：从第一次接触到深度合作，每个关键节点有什么动作","创建一个只属于付费用户的空间，哪怕只是一个小群","每月做一次「用户故事」内容，让用户感到被记录和尊重"],
+    svc:{en:"Community Architecture",cn:"社群与增长体系设计",desc:"帮你从零设计或重构私域用户关系体系，建立有温度、可持续的社群运营框架和用户旅程。"},
+    str:"有一定用户沉淀与信任基础"
+  },
+  {
+    cn:"团队与组织",num:"04",gap:"Team Leverage Gap",
+    hl:{critical:"你是团队里的所有人——创作、销售、交付、运营全部压在你身上，这个模式已经触及增长天花板。",moderate:"你有初步分工，但核心事务仍过度依赖你个人的判断和执行。"},
+    desc:"当你是团队里的单点故障，你就无法在保持品质的同时扩大规模。每一次增长都会消耗更多你本人的资源。",
+    chain:["创始人成为业务单点，所有决策等待一人","决策积压，执行速度落后于机会窗口","错失时机，团队执行积极性持续下降","核心协作者流失，重回单人困局"],
+    soloChain:["所有工作由一人承担，体力和注意力成为硬天花板","重复性工作占据创作和策略时间","创意和高价值工作被日常运营持续挤压","没有任何冗余，任何意外都会导致全面暂停"],
+    risks:["你无法休假，因为业务会随之停下来","增长依赖你的体力和注意力，而非系统","团队执行力弱，因为没有清晰的流程和标准","你花太多时间在运营上，无法聚焦于最高价值的工作"],
+    soloRisks:["你无法休假，因为业务会随之停下来","增长依赖你的体力和注意力，而非系统","所有重复性工作都由你手动完成，效率极低","创意创作时间被日常运营持续挤压"],
+    build:"识别三件你正在做但应该由别人做的事，本周把其中一件系统化并交出去。",
+    benchmark:"大多数同阶段创始人团队/组织得分在 2–4 分，这是最普遍的短板之一。",
+    delay:"按现在轨迹，12个月后你的个人产能将成为全业务唯一的增长上限，而这个上限已经不够用了。",
+    actions:["列出你每天花超过1小时的重复性工作","为其中一项创建SOP（标准操作流程），本周完成","确定第一个可以外包或工具化的任务并落实","设立每周「复盘15分钟」机制，让工作进度可以自我汇报"],
+    svc:{en:"Operating Partnership",cn:"IP增长合伙计划",desc:"作为你的「虚拟COO」，帮你建立团队协作框架和业务运营系统，让业务不再依赖你一个人。"},
+    str:"有基本的团队分工与协作机制"
+  },
+  {
+    cn:"Founder 状态",num:"05",gap:"Founder Energy Gap",
+    hl:{critical:"你的个人状态已经成为业务增长的主要障碍——疲惫、失焦或内耗正在悄悄拖慢一切。",moderate:"你的状态总体可控，但已经出现一些值得关注的疲惫或失焦信号。"},
+    desc:"作为IP型创始人，你就是产品。你的状态直接影响内容质量、用户信任和团队氛围——没有例外。",
+    chain:["Founder状态下滑，内容质量和输出频率下降","内容下滑，流量和用户信任减弱","信任减弱，销售更费力、转化更差","销售压力增加，进一步消耗Founder能量，形成恶性循环"],
+    risks:["创作灵感枯竭，靠意志力硬撑","重要决策因为疲惫而延迟或质量下降","向用户和团队传递焦虑，影响整体氛围","长期透支后可能需要完全暂停来强制恢复"],
+    build:"状态管理不是奢侈品，是核心业务基础设施。从「能量审计」开始：什么在给你能量，什么在消耗你。",
+    benchmark:"大多数同阶段创始人Founder状态得分在 4–6 分，大多数人处于「勉强撑着」的阶段。",
+    delay:"按现在轨迹，12个月后你将面临一次强制「重启」——不是因为业务出了问题，而是因为你的身体和精神需要它。",
+    actions:["做一次「能量审计」：列出过去一周给你能量和消耗能量的各5件事","把最消耗能量且非核心的1件事本周委托出去或暂停","建立一个「恢复仪式」：每天固定30分钟完全不处理工作","写下你下一个90天最想完成的一件事，贴在你能看到的地方"],
+    svc:{en:"Operating Partnership",cn:"IP增长合伙计划",desc:"不只是业务策略，也帮你建立可持续的工作节奏和个人边界系统，让增长不以燃尽自己为代价。"},
+    str:"有自我觉察与基本的能量管理意识"
+  },
+  {
+    cn:"品牌势能",num:"06",gap:"Brand Momentum Gap",
+    hl:{critical:"你的品牌还没有独立的势能——离开你的主动运营，品牌无法自动吸引和转化用户。",moderate:"你的品牌已有一定积累，但口碑传播和自然增长还未形成稳定的飞轮。"},
+    desc:"品牌势能是你所有努力的复利——当势能足够强，用户会主动寻找你，而不是你追着用户跑。",
+    chain:["品牌势能不足，每次获客都需要主动付出","持续主动获客，Founder精力被销售占据","销售占据创作时间，内容质量和频次下降","内容下降，势能进一步削弱，形成反飞轮"],
+    risks:["增长完全依赖你主动发内容，一旦暂停就停滞","没有稳定的口碑转介绍，每个新客户都从零开始","品牌在同行中没有清晰的差异化标签","无法进行跨界合作，因为对方看不到你的势能价值"],
+    build:"势能来自持续的高质量内容积累、标志性的用户成果、和他人无法复制的独特视角。",
+    benchmark:"大多数同阶段创始人品牌势能得分在 3–5 分，势能构建往往被日常运营挤掉。",
+    delay:"按现在轨迹，12个月后你将需要花更多精力才能维持现有的曝光量，因为没有飞轮效应支撑。",
+    actions:["整理你过去最好的5个用户成果，做成案例故事发布","确定你的「品牌标签」：别人提到你时，他们应该想到什么","本月安排一次跨界合作或媒体露出的机会","建立「内容资产库」：把你最有价值的观点系统整理归档"],
+    svc:{en:"Curatorial & Experience Design",cn:"高端文化体验与场域设计",desc:"帮你设计具有传播力的品牌体验，从线下活动到内容策展，建立你独特的场域势能。"},
+    str:"有一定内容积累与品牌辨识度"
+  },
+  {
+    cn:"成交与转化",num:"07",gap:"Conversion System Gap",
+    hl:{critical:"你的成交高度依赖个人魅力和关系，没有可复制的系统——业绩好坏取决于你的状态，而非流程。",moderate:"你有一些成交路径，但还不够系统化，复制和持续优化都存在困难。"},
+    desc:"成交不是才华的证明，而是系统的输出。没有系统的成交，你永远在「靠感觉」，无法预测和扩大营收。",
+    chain:["成交依赖个人感觉，转化率波动大且难以预测","转化不稳定，营收无法可靠地预测和规划","营收不可预测，产品迭代和团队投入决策困难","投入决策困难，整体增长速度受到根本性限制"],
+    risks:["好月和坏月的收入差距巨大，无法做年度规划","成交过程让你感到消耗，影响主动销售的意愿","无法训练他人成交，因为没有可传授的系统","潜在客户在跟进间隙流失，靠记忆而非流程管理"],
+    build:"建立你的「成交操作系统」：从首次接触到最终付款，每个环节都有明确的动作和标准。",
+    benchmark:"大多数同阶段创始人成交体系得分在 2–4 分，这是最容易被忽视但影响最直接的维度。",
+    delay:"按现在轨迹，12个月后你的产品和内容可能都在进步，但营收增长将持续低于潜力——因为漏斗底部有洞。",
+    actions:["画出你现在的成交流程图：从用户第一次联系到付款，列出所有步骤","找出最常见的「成交卡点」——用户在哪个环节最容易消失","为最高频的询盘问题写一套标准回复模板，本周完成","统计上个月的咨询量和成交量，算出你的实际转化率"],
+    svc:{en:"Your Best Offer Session",cn:"成交体系设计咨询",desc:"帮你从零梳理或重构成交流程，设计可复制的成交话术和跟进系统，让转化不再依赖灵感和个人状态。"},
+    str:"已有基本的用户咨询与成交经验"
+  }
+];
+
+const QS = [
+  {c:0,t:"当有人问'你是做什么的'，你能在30秒内清楚说出：服务谁、解决什么问题、为何找你而非别人吗？",o:["完全说不清楚，每次回答都不一样","能说出大概，但很模糊","有基本答案，但说服力不强","有一句清晰精准的定位语，对方立刻能理解"]},
+  {c:0,t:"你的核心用户画像有多清晰？",o:["没有想过用户画像","有宽泛描述，如「25-35岁女性」","有较具体的职业/阶段/痛点描述","基于真实访谈的详细画像，含心理特征"]},
+  {c:0,t:"你的内容和品牌调性在不同平台上一致吗？",o:["各平台风格差异很大，没有统一感","有一定相似度，但不够系统","有意识保持统一，偶有偏差","遵循清晰品牌规范，各平台高度一致"]},
+  {c:1,t:"你的产品/服务线是否形成了从低到高的完整价值阶梯？",o:["只有一两个产品，没有层级结构","有高低价产品，但没有升级路径","有初步层级，用户能自然升级","完整产品矩阵，每层都有清晰转化逻辑"]},
+  {c:1,t:"你最核心的变现产品，在不完全依赖你的情况下能交付吗？",o:["完全依赖我，离开我就无法交付","主要依赖我，偶尔有助手配合","有标准化流程，我主要做质量把控","有完整交付系统，我更多是策略指导"]},
+  {c:1,t:"你清楚自己每个产品的利润率和时间投入比吗？",o:["从未计算过，靠感觉定价","大概知道，但没有系统数据","有基本了解，偶尔复盘","清晰知道每个产品ROI，并以此优化产品组合"]},
+  {c:2,t:"你的私域用户（微信、社群等）活跃度如何？",o:["基本沉寂，发什么都没反应","偶尔有互动，需要持续刺激","有稳定的互动核心人群","私域氛围活跃，用户自发参与和推荐"]},
+  {c:2,t:"有多少用户是因为信任你的品牌而主动推荐新用户的？",o:["几乎没有口碑转介绍","偶尔有，但不系统","有一定比例的转介绍","转介绍是我主要的新用户来源之一"]},
+  {c:2,t:"你是否了解你的用户在购买后的真实体验和长期进展？",o:["交付完就结束了，几乎没有跟进","偶尔问问，不系统","有基本的用户反馈收集机制","有持续的用户跟进和成果追踪系统"]},
+  {c:3,t:"你的业务中，有多少核心工作只有你一个人能完成？",o:["几乎所有核心工作都只有我能做","大部分依赖我，少数可以授权","有一半工作可以由他人执行","只有真正需要我的事才由我亲自做"]},
+  {c:3,t:"你的团队（含外包/助理）是否有清晰的工作流程和标准？",o:["没有正式流程，都靠口头沟通","有一些非正式流程，执行不稳定","有基本SOP，但还不完整","有系统的流程和质量标准，可独立执行"]},
+  {c:3,t:"在你缺席的情况下，你的业务能正常运转多久？",o:["我一离开，所有事情都会停下来","1–2天勉强维持","1周左右可以基本运转","有完整的应急机制，长期缺席业务仍可运作"]},
+  {c:4,t:"你现在对自己的业务和工作，整体感受是什么？",o:["明显感到疲惫和消耗，不可持续","有些疲惫，但还能撑着","总体还好，偶尔有消耗感","充满能量，工作给我带来意义感"]},
+  {c:4,t:"一周内，你有多少时间是用在你认为最重要的事情上？",o:["大部分时间在处理紧急但不重要的事","约一半时间在高价值工作上","大部分时间在重要事务上，还有改善空间","时间高度聚焦于核心价值工作"]},
+  {c:4,t:"你对业务的下一步方向，是否有清晰且令你兴奋的图景？",o:["完全迷茫，不知道下一步是什么","有一些想法，但方向不够清晰","方向大致清晰，但细节还需打磨","有清晰、具体且令我真正兴奋的5年图景"]},
+  {c:5,t:"如果你停止主动发内容，你的品牌还会被多少人记住和提及？",o:["几乎不会有人提起我","少数忠实用户会记得","有一定品牌印记，会有人提及","品牌有独立生命力，用户会自发传播"]},
+  {c:5,t:"你的内容或作品是否让用户感到「只有你才能做出来」？",o:["我的内容和很多人差不多，容易被替代","有一定特色，但差异化不够强","有明显个人风格，但还未成为标志","有独特视角和表达，用户认可你的不可替代性"]},
+  {c:5,t:"你是否有线下活动、跨界合作或媒体曝光等构建势能的渠道？",o:["完全没有，只靠线上内容","偶尔有，但不系统","有规律的势能构建活动","势能渠道多元且系统化，线上线下协同"]},
+  {c:6,t:"你是否有一套可重复执行的成交流程，不依赖你当天的个人状态？",o:["完全没有，每次都临场发挥","有一些感性路径，但不够固定","有基本流程，但执行不够稳定","有清晰的、可复制的成交SOP"]},
+  {c:6,t:"你的成交主要依赖什么？",o:["完全依赖我个人魅力和私人关系","主要靠个人魅力，内容配合","有品牌背书，但核心还是靠我","品牌和系统共同支撑，不过度依赖个人感染力"]},
+  {c:6,t:"你是否追踪并主动优化自己的成交转化率？",o:["从不追踪，不知道自己的转化率","偶尔感性评估，没有数据","有基本数据，但不系统优化","持续追踪转化率并定期迭代优化"]}
+];
+
+const QS_SOLO = [
+  {c:3,t:"作为独立创始人，你是否有清晰的时间分配系统，知道什么时候做什么类型的工作？",o:["完全没有，每天被临时任务驱动","有一些习惯，但不够清晰","有基本的周计划，大致能执行","有明确的时间块分配，能保护高价值工作时间"]},
+  {c:3,t:"你是否已将部分重复性工作（如剪辑、排版、回复等）外包或工具化？",o:["所有工作都由我自己做","有想过，但还没行动","已外包1–2项，但不系统","已系统化地外包或工具化大部分重复工作"]},
+  {c:3,t:"如果你计划在未来1年内扩张，你是否知道第一个关键雇佣或合作对象是谁？",o:["完全没有想过","有模糊的想法，但不确定","知道大方向，但不具体","非常清楚，已有候选人或明确标准"]}
+];
+
+let ans = new Array(21).fill(null);
+let teamSize = null;
+
+function buildQScreens(){
+  const container = document.getElementById('q-screens');
+  QS.forEach((q,i)=>{
+    const cat = CATS[q.c];
+    const div = document.createElement('div');
+    div.className = 'screen';
+    div.id = 's-q'+i;
+    div.innerHTML = `
+      <div class="progress-area">
+        <div class="progress-top">
+          <span class="progress-count">问题 ${i+1} / 21</span>
+          <span class="cat-label">${cat.cn}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${Math.round(i/21*100)}%"></div></div>
+      </div>
+      <div class="q-num">${cat.num} · ${cat.gap}</div>
+      <h2 class="q-title" id="qt-${i}">${q.t}</h2>
+      <div class="options" id="qo-${i}">
+        ${q.o.map((o,j)=>`<button class="opt" onclick="selectAns(${i},${j},this)"><span class="opt-dot"></span><span>${o}</span></button>`).join('')}
+      </div>
+      <div class="nav">
+        <button class="btn-prev" onclick="goQ(${i-1})">${i===0?'← 返回':'← 上一题'}</button>
+        <button class="btn-next" id="bn-${i}" onclick="tryNext(${i})">${i===20?'查看诊断结果 →':'继续 →'}</button>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function selectTeam(el,size){
+  teamSize = size;
+  document.querySelectorAll('#screener-opts .opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btn-scr-next').classList.add('on');
+  updateTeamQs();
+}
+
+function updateTeamQs(){
+  for(let i=9;i<=11;i++){
+    const src = teamSize==='solo' ? QS_SOLO[i-9] : QS[i];
+    const te = document.getElementById('qt-'+i);
+    const oe = document.getElementById('qo-'+i);
+    if(te) te.textContent = src.t;
+    if(oe) oe.innerHTML = src.o.map((o,j)=>`<button class="opt${ans[i]===j?' selected':''}" onclick="selectAns(${i},${j},this)"><span class="opt-dot"></span><span>${o}</span></button>`).join('');
+  }
+}
+
+function goQ(idx){
+  if(idx===-1){showScreen('s-screener');return;}
+  if(idx===21){buildResults();showScreen('s-results');return;}
+  if(idx<0||idx>20) return;
+  showScreen('s-q'+idx);
+}
+
+function tryNext(i){
+  if(ans[i]===null) return;
+  goQ(i+1);
+}
+
+function selectAns(qi,val,el){
+  ans[qi]=val;
+  document.querySelectorAll('#qo-'+qi+' .opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('bn-'+qi).classList.add('on');
+}
+
+function buildResults(){
+  const sc=[0,0,0,0,0,0,0];
+  QS.forEach((q,i)=>{if(ans[i]!==null) sc[q.c]+=ans[i];});
+
+  const sorted = sc.map((v,i)=>({v,i})).sort((a,b)=>a.v-b.v);
+  const pIdx=sorted[0].i, sIdx=sorted[1].i;
+  const hasTie = sorted[1].v===sorted[0].v;
+  const cat=CATS[pIdx], sCat=CATS[sIdx];
+  const sev=sorted[0].v<=3?'critical':'moderate';
+
+  const chainToUse = (teamSize==='solo'&&pIdx===3&&cat.soloChain) ? cat.soloChain : cat.chain;
+  const risksToUse = (teamSize==='solo'&&pIdx===3&&cat.soloRisks) ? cat.soloRisks : cat.risks;
+
+  const strCats = sc.map((v,i)=>({v,i})).filter(x=>x.i!==pIdx&&x.v>=5).sort((a,b)=>b.v-a.v);
+  const hasRealStr = strCats.length>0;
+  const displayStr = hasRealStr ? strCats : sc.map((v,i)=>({v,i})).filter(x=>x.i!==pIdx).sort((a,b)=>b.v-a.v).slice(0,2);
+
+  const total=sc.reduce((a,b)=>a+b,0);
+
+  document.getElementById('results-content').innerHTML = `
+    <div class="results-header">
+      <div class="label">SHUYUN UNIVERSE · FOUNDER AUDIT</div>
+      <div class="gold-line" style="margin:16px 0;"></div>
+      <h2 class="results-title">你的增长<br>瓶颈诊断结果</h2>
+      <p class="results-sub">综合得分 ${total} / 63 · 主要瓶颈：${cat.cn}</p>
+    </div>
+
+    <div class="scores-section">
+      <div class="scores-header">
+        <div class="label">七维度总览</div>
+        <div class="scores-legend"><span>0–3</span> 需要重建 · <span>4–6</span> 发展中 · <span>7–9</span> 相对成熟</div>
+      </div>
+      ${sc.map((v,i)=>{
+        const isPri=i===pIdx;
+        const bc=isPri?'s-primary':v>=7?'s-good':'s-ok';
+        const lbl=v<=3?'需重建':v<=6?'发展中':'相对成熟';
+        return `<div class="score-row">
+          <span class="score-label">${CATS[i].cn}</span>
+          <div class="score-bar-wrap"><div class="score-bar-fill ${bc}" style="width:${Math.round(v/9*100)}%"></div></div>
+          <span class="score-val">${v}/9</span>
+          <span class="score-tag ${isPri?'t-primary':''}">${isPri?'● 瓶颈':lbl}</span>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="gap-section">
+      <div class="gap-num">01 · 当前增长瓶颈</div>
+      <h3 class="gap-title">${cat.cn}</h3>
+      <div class="gap-en">${cat.gap}</div>
+      <p class="gap-hl">${cat.hl[sev]}</p>
+      <p class="gap-desc">${cat.desc}</p>
+      <div class="benchmark">${cat.benchmark} ${sorted[0].v<=3?'你目前的得分低于平均水平，这个维度需要优先重建。':'你目前的得分与同阶段创始人相近，但有明显提升空间。'}</div>
+    </div>
+
+    <div class="chain-section">
+      <div class="chain-label">连锁影响 · 如果不解决</div>
+      ${chainToUse.map((item,i)=>`
+        <div class="chain-item">
+          <span class="chain-arrow">${i===0?'◆':'→'}</span>
+          <span>${item}</span>
+        </div>`).join('')}
+    </div>
+
+    <div class="secondary-gap">
+      <div class="section-label">02 · 次要关注维度</div>
+      <div class="secondary-gap-title">${sCat.cn} <span style="font-size:13px;color:var(--mist);font-family:var(--sans)">${sorted[1].v}/9</span></div>
+      <p class="secondary-gap-desc">${hasTie?'与主要瓶颈并列低分，需要同时关注。':'待主要瓶颈有所改善后，建议重点投入这个维度。'} ${sCat.hl.moderate}</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">03 · 如果延迟解决</div>
+      <div class="build-path">${cat.delay}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">04 · 当前风险信号</div>
+      ${risksToUse.map(r=>`<div class="risk-item"><span class="risk-dot"></span><span>${r}</span></div>`).join('')}
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">05 · 立即可行的行动</div>
+      <div class="section-title">从这里开始</div>
+      ${cat.actions.map((a,i)=>`
+        <div class="action-item">
+          <span class="action-tag ${i<2?'week':'month'}">${i<2?'本周':'本月'}</span>
+          <span class="action-text">${a}</span>
+        </div>`).join('')}
+    </div>
+
+    <div class="section">
+      <div class="section-label">06 · 相对稳定区域</div>
+      <div class="section-title">${hasRealStr?'你的优势基础':'相对稳定维度'}</div>
+      ${!hasRealStr?'<p style="font-size:13px;color:var(--mist);margin-bottom:16px;line-height:1.7">暂无明显优势区——先聚焦主要瓶颈，以下维度会随整体提升而强化。</p>':''}
+      ${displayStr.map(x=>`
+        <div class="strength-item">
+          <span class="strength-dot"></span>
+          <span class="strength-text"><strong>${CATS[x.i].cn}</strong>（${x.v}/9）— ${CATS[x.i].str}</span>
+        </div>`).join('')}
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="service-section">
+      <div class="service-en">${cat.svc.en}</div>
+      <div class="service-cn">${cat.svc.cn}</div>
+      <p class="service-desc">${cat.svc.desc}</p>
+      <p class="service-desc" style="font-size:13px;">如果你想系统性地解决这个瓶颈，而不是零散地修补，这里有一个为你设计的路径。</p>
+      <a href="mailto:miliatada@gmail.com?subject=Founder增长瓶颈咨询 — ${cat.cn}&body=我完成了Founder增长瓶颈诊断。%0A主要瓶颈：${cat.cn}（${sorted[0].v}/9）%0A我想了解更多关于${cat.svc.cn}的信息。" class="btn-cta">预约深度对话</a>
+    </div>
+
+    <div class="retest-section">
+      <div class="retest-title">90 天后重新诊断</div>
+      <p class="retest-desc">记下今天的日期。90天后重新完成这份诊断，看看你的瓶颈是否移动——以及移动到了哪里。<br>大多数创始人会在90天内看到至少1–2个维度的明显变化。</p>
+    </div>
+
+    <div class="results-footer">
+      <span class="footer-brand">SHUYUN UNIVERSE</span>
+      <button class="btn-print" onclick="window.print()">保存 / 打印</button>
+    </div>`;
+}
+
+buildQScreens();
+</script>
+</body>
+</html>

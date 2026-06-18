@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh" data-lang="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud Circle · 高信任创始人社群 · Shuyun Universe</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="detail.css">
+<style>
+.cc-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.72fr);
+  gap: clamp(52px,7vw,108px);
+  align-items: center;
+  padding: 148px clamp(28px,5vw,80px) 112px;
+  background: linear-gradient(145deg, #f8f5ef 0%, var(--chalk) 50%, #e7ded1 100%);
+  position: relative;
+  overflow: hidden;
+}
+.cc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 48% 55% at 12% 20%, rgba(123,142,130,0.08) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 45% at 88% 70%, rgba(184,149,90,0.08) 0%, transparent 58%);
+  pointer-events: none;
+}
+.cc-hero-body { position: relative; z-index: 1; max-width: 650px; justify-self: end; }
+.cc-crumb {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(74,92,107,0.45); display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 76px;
+}
+.cc-crumb a { color: inherit; transition: color 0.3s; }
+.cc-crumb a:hover { color: var(--antique-gold); }
+.cc-label {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--antique-gold); margin-bottom: 26px;
+}
+.cc-title-en {
+  font-family: var(--serif); font-size: clamp(58px, 8vw, 108px); font-weight: 300;
+  color: var(--abyssal); line-height: 0.95; letter-spacing: -0.015em; margin-bottom: 24px;
+}
+.cc-title-cn {
+  font-family: var(--serif); font-size: clamp(30px, 3.4vw, 46px); font-weight: 400;
+  color: var(--lacquer); line-height: 1.18; letter-spacing: 0.04em; margin-bottom: 38px;
+}
+.cc-deck-cn {
+  font-family: var(--serif); font-size: clamp(18px,1.75vw,24px); font-weight: 400;
+  color: rgba(28,43,53,0.86); line-height: 1.9; letter-spacing: 0.02em; max-width: 560px;
+}
+.cc-deck-en {
+  font-family: var(--sans); font-size: 13px; font-weight: 300;
+  color: rgba(74,92,107,0.66); line-height: 1.9; max-width: 560px; margin-top: 18px;
+}
+.cc-hero-card {
+  position: relative; z-index: 1;
+  background: var(--abyssal);
+  color: var(--chalk);
+  min-height: 560px;
+  padding: clamp(34px,4vw,58px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(184,149,90,0.28);
+  box-shadow: 0 30px 90px rgba(28,43,53,0.14);
+}
+.cc-card-top {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(184,149,90,0.72);
+}
+.cc-card-line {
+  font-family: var(--serif); font-size: clamp(28px,3vw,42px); font-weight: 300;
+  line-height: 1.22; color: var(--chalk);
+}
+.cc-card-note {
+  font-family: var(--sans); font-size: 13px; line-height: 1.9; color: rgba(158,168,178,0.74);
+}
+.cc-inner { max-width: 1180px; margin: 0 auto; padding: 0 clamp(28px,5vw,80px); }
+.cc-section { padding: 136px 0; background: var(--chalk); }
+.cc-section.sand { background: var(--sand-veil); }
+.cc-section.dark { background: var(--abyssal); }
+.cc-hd { margin-bottom: 72px; }
+.cc-hd-en {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(74,92,107,0.38); display: flex; align-items: center; gap: 16px; margin-bottom: 12px;
+}
+.cc-hd-en::after { content: ''; width: 88px; height: 1px; background: rgba(184,149,90,0.26); }
+.cc-hd-en.light { color: rgba(184,149,90,0.5); }
+.cc-hd-cn {
+  font-family: var(--serif); font-size: clamp(27px,3.2vw,43px); font-weight: 400;
+  color: var(--abyssal); line-height: 1.28; letter-spacing: 0.02em;
+}
+.cc-hd-cn.light { color: var(--chalk); }
+.cc-two { display: grid; grid-template-columns: 0.88fr 1.12fr; gap: clamp(52px,7vw,104px); align-items: start; }
+.cc-lead-cn {
+  font-family: var(--serif); font-size: clamp(24px,2.7vw,36px); font-weight: 400;
+  line-height: 1.58; color: var(--abyssal); letter-spacing: 0.01em;
+}
+.cc-body { font-family: var(--sans); font-size: 15px; line-height: 1.95; color: var(--deep-current); }
+.cc-body + .cc-body { margin-top: 20px; }
+.cc-body-cn {
+  font-family: var(--serif); font-size: 16px; line-height: 2.05; color: var(--deep-current);
+  letter-spacing: 0.035em; margin-top: 26px; padding-top: 24px; border-top: 1px solid rgba(196,180,154,0.32);
+}
+.cc-network { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(196,180,154,0.28); }
+.cc-network-item {
+  background: var(--chalk); padding: 42px 34px; min-height: 190px;
+  border-top: 3px solid transparent; transition: border-color 0.3s;
+}
+.cc-network-item:hover { border-top-color: var(--antique-gold); }
+.cc-network-cn { font-family: var(--serif); font-size: 21px; font-weight: 400; color: var(--abyssal); line-height: 1.35; margin-bottom: 10px; }
+.cc-network-en { font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(74,92,107,0.38); line-height: 1.7; }
+.cc-inside { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.cc-inside-item {
+  background: rgba(74,92,107,0.12); border: 1px solid rgba(158,168,178,0.12);
+  padding: 44px 34px 40px; min-height: 220px;
+}
+.cc-inside-num { font-family: var(--serif); font-size: 30px; color: rgba(184,149,90,0.34); margin-bottom: 20px; }
+.cc-inside-cn { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--chalk); line-height: 1.28; margin-bottom: 8px; }
+.cc-inside-en {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--antique-gold); margin-bottom: 20px;
+}
+.cc-inside-body { font-family: var(--serif); font-size: 14px; line-height: 1.85; color: rgba(232,226,216,0.68); }
+.cc-fit { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.cc-fit-block { background: white; padding: 48px 44px; }
+.cc-fit-title { font-family: var(--serif); font-size: 28px; font-weight: 400; color: var(--abyssal); margin-bottom: 28px; }
+.cc-fit-list { list-style: none; display: grid; gap: 15px; }
+.cc-fit-list li {
+  font-family: var(--serif); font-size: 16px; line-height: 1.7; color: var(--deep-current);
+  padding-left: 18px; position: relative;
+}
+.cc-fit-list li::before { content: '-'; position: absolute; left: 0; color: var(--antique-gold); }
+.cc-fit-block.no { background: #efe9df; }
+.cc-fit-block.no .cc-fit-title { color: rgba(28,43,53,0.72); }
+.cc-membership-intro {
+  max-width: 880px;
+  margin-bottom: 70px;
+}
+.cc-membership-cn {
+  font-family: var(--serif); font-size: clamp(20px,2.1vw,28px); font-weight: 400;
+  line-height: 1.82; color: var(--abyssal); letter-spacing: 0.02em; margin-bottom: 24px;
+}
+.cc-membership-en {
+  font-family: var(--sans); font-size: 13px; line-height: 1.9; color: rgba(74,92,107,0.62);
+  max-width: 720px;
+}
+.cc-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 34px; }
+.cc-tier {
+  background: var(--chalk);
+  padding: clamp(38px,4.2vw,58px);
+  border-top: 2px solid rgba(184,149,90,0.28);
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+}
+.cc-tier.core { background: #f8f5ef; border-top-color: var(--antique-gold); }
+.cc-tier.inner {
+  background: var(--abyssal);
+  border-top-color: rgba(184,149,90,0.52);
+}
+.cc-tier.inner .cc-tier-kicker { color: rgba(184,149,90,0.58); }
+.cc-tier.inner .cc-tier-name,
+.cc-tier.inner .cc-tier-cn { color: var(--chalk); }
+.cc-tier.inner .cc-tier-position {
+  color: rgba(232,226,216,0.72);
+  border-bottom-color: rgba(184,149,90,0.18);
+}
+.cc-tier.inner .cc-tier-list li { color: rgba(232,226,216,0.68); }
+.cc-tier.inner .cc-tier-feeling {
+  color: rgba(158,168,178,0.66);
+  border-top-color: rgba(184,149,90,0.16);
+}
+.cc-tier-kicker {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(74,92,107,0.38); margin-bottom: 18px;
+}
+.cc-tier-name {
+  font-family: var(--serif); font-size: clamp(34px,4vw,52px); font-weight: 300;
+  color: var(--abyssal); line-height: 1.02; margin-bottom: 10px;
+}
+.cc-tier-cn {
+  font-family: var(--serif); font-size: 22px; font-weight: 400;
+  color: var(--deep-current); line-height: 1.3; margin-bottom: 34px;
+}
+.cc-tier-price {
+  font-family: var(--serif); font-size: clamp(34px,3.6vw,48px); font-weight: 300;
+  color: var(--antique-gold); line-height: 1; margin-bottom: 26px;
+}
+.cc-tier-position {
+  font-family: var(--serif); font-size: 17px; line-height: 1.85; color: var(--deep-current);
+  letter-spacing: 0.025em; padding-bottom: 30px; border-bottom: 1px solid rgba(196,180,154,0.34);
+}
+.cc-tier-list { list-style: none; display: grid; gap: 14px; margin: 34px 0 42px; }
+.cc-tier-list li {
+  font-family: var(--serif); font-size: 15px; line-height: 1.66; color: rgba(28,43,53,0.78);
+  padding-left: 18px; position: relative;
+}
+.cc-tier-list li::before { content: '-'; position: absolute; left: 0; color: var(--antique-gold); }
+.cc-tier-feeling {
+  font-family: var(--sans); font-size: 12px; line-height: 1.8; color: rgba(74,92,107,0.56);
+  margin-top: auto; padding-top: 26px; border-top: 1px solid rgba(196,180,154,0.24);
+}
+.cc-tier-cta {
+  align-self: flex-start; margin-top: 30px;
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--antique-gold); border-bottom: 1px solid rgba(184,149,90,0.44); padding-bottom: 7px;
+}
+.cc-structure { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.cc-structure-item { background: rgba(245,242,238,0.72); padding: 42px 34px; border-bottom: 2px solid transparent; }
+.cc-structure-item:hover { border-bottom-color: var(--antique-gold); }
+.cc-structure-cn { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--abyssal); margin-bottom: 8px; }
+.cc-structure-en { font-family: var(--sans); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--antique-gold); margin-bottom: 18px; }
+.cc-structure-body { font-family: var(--sans); font-size: 13px; line-height: 1.85; color: rgba(74,92,107,0.72); }
+.cc-cta {
+  background: var(--abyssal); padding: 128px 0; text-align: center;
+  border-top: 1px solid rgba(184,149,90,0.16);
+}
+.cc-cta-eye {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(184,149,90,0.55); margin-bottom: 44px;
+}
+.cc-cta-cn {
+  font-family: var(--serif); font-size: clamp(30px,4.4vw,56px); font-weight: 300;
+  color: var(--chalk); line-height: 1.18; margin-bottom: 16px;
+}
+.cc-cta-en {
+  font-family: var(--sans); font-size: 13px; line-height: 1.9; color: rgba(158,168,178,0.62);
+  max-width: 620px; margin: 0 auto 54px;
+}
+.cc-actions { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.cc-primary {
+  font-family: var(--serif); font-size: 18px; color: var(--pale-gold);
+  border-bottom: 1px solid rgba(184,149,90,0.46); padding-bottom: 8px;
+}
+.cc-secondary {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(158,168,178,0.62); border-bottom: 1px solid rgba(158,168,178,0.2); padding-bottom: 8px;
+}
+@media (max-width: 980px) {
+  .cc-hero { grid-template-columns: 1fr; min-height: auto; }
+  .cc-hero-body { justify-self: start; }
+  .cc-hero-card { min-height: auto; gap: 80px; }
+  .cc-two, .cc-fit { grid-template-columns: 1fr; }
+  .cc-network, .cc-inside, .cc-structure, .cc-tiers { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .cc-network, .cc-inside, .cc-structure, .cc-tiers { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">抒云 <span>|</span> SHUYUN</a>
+  <span class="nav-service-tag">Cloud Circle</span>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-lang">
+      <span data-lang="cn" class="active">中文</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="en">EN</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="fr">FR</span>
+    </div>
+    <a href="index.html#services" class="nav-back">All Services</a>
+  </div>
+</nav>
+
+<section class="cc-hero">
+  <div class="cc-hero-body">
+    <div class="cc-crumb">
+      <a href="index.html">Shuyun Universe</a>
+      <span>·</span>
+      <a href="index.html#services">Services</a>
+      <span>·</span>
+      Cloud Circle
+    </div>
+    <div class="cc-label">International founder circle</div>
+    <h1 class="cc-title-en">Cloud<br>Circle</h1>
+    <div class="cc-title-cn">高信任创始人社群</div>
+    <p class="cc-deck-cn">一个面向高感知创始人、创作者与文化创业者的长期成长社区。这里不是流量场，而是长期关系的开始。</p>
+    <p class="cc-deck-en">A private circle for founders, creators, and cultural entrepreneurs building meaningful brands, trusted communities, and long-term work.</p>
+  </div>
+  <aside class="cc-hero-card">
+    <div class="cc-card-top">Invitation, not acquisition</div>
+    <div class="cc-card-line">为正在建立长期品牌的人，提供真正高质量的同行者。</div>
+    <p class="cc-card-note">这里聚集的不是“更会营销的人”，而是正在认真建造长期事业、长期关系与长期生活方式的人。</p>
+  </aside>
+</section>
+
+<section class="cc-section">
+  <div class="cc-inner">
+    <div class="cc-hd">
+      <div class="cc-hd-en">01 · What is Cloud Circle</div>
+      <h2 class="cc-hd-cn">这不是一个社群。<br>这是一个高信任Founder关系场。</h2>
+    </div>
+    <div class="cc-two">
+      <p class="cc-lead-cn">Cloud Circle 是一个长期同行网络，一个创始人成长环境，也是高质量机会自然发生的信任场域。</p>
+      <div>
+        <p class="cc-body">Cloud Circle exists for founders, creators, and cultural entrepreneurs who are building with depth. It is designed for people who need more than visibility: they need peers, context, trust, and a room where serious conversations can happen without performance.</p>
+        <p class="cc-body">The circle connects high-perception founders, healing and women's growth IPs, international creators, community builders, aesthetic entrepreneurs, and long-termist brands.</p>
+        <p class="cc-body-cn">它连接的是高感知Founder、疗愈IP、女性成长品牌、国际化创作者、社群主理人、审美型创业者与长期主义品牌。这里不是热闹的流量池，而是能被长期信任、长期推荐、长期同行的人群系统。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section sand">
+  <div class="cc-inner">
+    <div class="cc-hd">
+      <div class="cc-hd-en">02 · You don't need more followers</div>
+      <h2 class="cc-hd-cn">很多Founder缺少的，<br>不是更多流量，而是更高质量的关系。</h2>
+    </div>
+    <div class="cc-network">
+      <div class="cc-network-item">
+        <div class="cc-network-cn">有流量，不等于有长期用户</div>
+        <div class="cc-network-en">Attention does not equal trust</div>
+      </div>
+      <div class="cc-network-item">
+        <div class="cc-network-cn">高质量圈层决定机会密度</div>
+        <div class="cc-network-en">The right room changes opportunity density</div>
+      </div>
+      <div class="cc-network-item">
+        <div class="cc-network-cn">Founder需要长期同行者</div>
+        <div class="cc-network-en">Founders need long-term peers</div>
+      </div>
+      <div class="cc-network-item">
+        <div class="cc-network-cn">真正高价值机会来自信任</div>
+        <div class="cc-network-en">High-value opportunities come through trust</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section dark">
+  <div class="cc-inner">
+    <div class="cc-hd">
+      <div class="cc-hd-en light">03 · What you'll find inside</div>
+      <h2 class="cc-hd-cn light">你会在这里遇见可以长期同行的人。</h2>
+    </div>
+    <div class="cc-inside">
+      <div class="cc-inside-item">
+        <div class="cc-inside-num">01</div>
+        <div class="cc-inside-cn">创始人深度讨论</div>
+        <div class="cc-inside-en">Founder conversations</div>
+        <p class="cc-inside-body">关于品牌、增长、关系、定价、边界与长期建造的真实讨论。</p>
+      </div>
+      <div class="cc-inside-item">
+        <div class="cc-inside-num">02</div>
+        <div class="cc-inside-cn">线下小型聚会与Dinner</div>
+        <div class="cc-inside-en">Private gatherings</div>
+        <p class="cc-inside-body">小规模、筛选制、重氛围的线下相遇，让关系自然发生。</p>
+      </div>
+      <div class="cc-inside-item">
+        <div class="cc-inside-num">03</div>
+        <div class="cc-inside-cn">商业结构与增长讨论</div>
+        <div class="cc-inside-en">Growth and strategy dialogues</div>
+        <p class="cc-inside-body">不是泛泛而谈，而是围绕产品、私域、用户关系与Founder系统。</p>
+      </div>
+      <div class="cc-inside-item">
+        <div class="cc-inside-num">04</div>
+        <div class="cc-inside-cn">高质量人脉与合作机会</div>
+        <div class="cc-inside-en">Curated people and opportunities</div>
+        <p class="cc-inside-body">通过信任关系产生推荐、合作、资源交换与长期支持。</p>
+      </div>
+      <div class="cc-inside-item">
+        <div class="cc-inside-num">05</div>
+        <div class="cc-inside-cn">高端体验与文化项目</div>
+        <div class="cc-inside-en">Retreats and cultural experiences</div>
+        <p class="cc-inside-body">通过空间、文化与体验，让关系不只停留在线上。</p>
+      </div>
+      <div class="cc-inside-item">
+        <div class="cc-inside-num">06</div>
+        <div class="cc-inside-cn">长期同行关系网络</div>
+        <div class="cc-inside-en">Long-term relationships</div>
+        <p class="cc-inside-body">不是一次活动后的合影，而是能长期互相看见与支持的人群。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section">
+  <div class="cc-inner">
+    <div class="cc-hd">
+      <div class="cc-hd-en">04 · Who this is for</div>
+      <h2 class="cc-hd-cn">适合长期主义Founder。<br>不适合短期流量玩家。</h2>
+    </div>
+    <div class="cc-fit">
+      <div class="cc-fit-block">
+        <div class="cc-fit-title">适合谁</div>
+        <ul class="cc-fit-list">
+          <li>已经开始建立个人品牌的人</li>
+          <li>有一定用户基础的Founder</li>
+          <li>高信任IP与社群型品牌</li>
+          <li>疗愈 / 女性成长 / 审美型创业者</li>
+          <li>国际化创作者与长期主义品牌</li>
+          <li>不想做低质量流量的人</li>
+        </ul>
+      </div>
+      <div class="cc-fit-block no">
+        <div class="cc-fit-title">不适合谁</div>
+        <ul class="cc-fit-list">
+          <li>短期流量玩家</li>
+          <li>纯割韭菜型IP</li>
+          <li>强销售导向的人</li>
+          <li>只想找“资源捷径”的人</li>
+          <li>低质量泛社群用户</li>
+          <li>不愿意长期建立信任的人</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-section sand">
+  <div class="cc-inner">
+    <div class="cc-hd">
+      <div class="cc-hd-en">05 · Membership</div>
+      <h2 class="cc-hd-cn">成员机制</h2>
+    </div>
+    <div class="cc-membership-intro">
+      <p class="cc-membership-cn">Cloud Circle 不是一个普通社群。它更像一个由高感知Founder、创作者与文化创业者组成的长期关系网络。我们更关注人与人的长期价值，而不是短期流量与泛社交。</p>
+      <p class="cc-membership-en">Cloud Circle is designed as a long-term relationship network for founders, creators, and cultural entrepreneurs — not a mass community, but a curated ecosystem built on trust, resonance, and shared ambition.</p>
+    </div>
+
+    <div class="cc-tiers">
+      <article class="cc-tier">
+        <div class="cc-tier-kicker">Tier 01</div>
+        <h3 class="cc-tier-name">Cloud Circle Lite</h3>
+        <div class="cc-tier-cn">Lite Member</div>
+        <div class="cc-tier-price">¥2,999 / 年</div>
+        <p class="cc-tier-position">适合刚开始建立个人品牌、想进入高质量Founder圈层的人。</p>
+        <ul class="cc-tier-list">
+          <li>Cloud Circle 社群访问权限</li>
+          <li>Founder Newsletter</li>
+          <li>月度线上分享 / 对话</li>
+          <li>Retreat 与线下活动优先通知</li>
+          <li>精选资源与内容更新</li>
+        </ul>
+        <p class="cc-tier-feeling">进入一个更高质量的人群环境。</p>
+        <a href="mailto:hello@shuyun.universe?subject=Cloud Circle Lite — Membership Application" class="cc-tier-cta">Apply for Lite Membership</a>
+      </article>
+
+      <article class="cc-tier core">
+        <div class="cc-tier-kicker">Tier 02</div>
+        <h3 class="cc-tier-name">Cloud Circle Core</h3>
+        <div class="cc-tier-cn">Core Circle</div>
+        <div class="cc-tier-price">¥12,000 / 年</div>
+        <p class="cc-tier-position">更深度参与的Founder Circle，适合已经有项目与用户基础、正在建立长期关系网络的人。</p>
+        <ul class="cc-tier-list">
+          <li>Lite Member 全部内容</li>
+          <li>Founder Dinner / 小型线下聚会</li>
+          <li>深度Founder对话</li>
+          <li>Retreat优先参与资格</li>
+          <li>高质量合作与人脉连接</li>
+          <li>小范围Mastermind讨论</li>
+          <li>部分项目与合作机会</li>
+        </ul>
+        <p class="cc-tier-feeling">进入更深层的高质量关系网络。</p>
+        <a href="mailto:hello@shuyun.universe?subject=Cloud Circle Core — Circle Application" class="cc-tier-cta">Apply for Core Circle</a>
+      </article>
+
+      <article class="cc-tier inner">
+        <div class="cc-tier-kicker">Tier 03</div>
+        <h3 class="cc-tier-name">Inner Circle</h3>
+        <div class="cc-tier-cn">Inner Circle</div>
+        <div class="cc-tier-price">¥50,000 / 年</div>
+        <p class="cc-tier-position">一个更私密的小型Founder Circle，面向正在建立长期品牌、文化项目与高信任生态的人。</p>
+        <ul class="cc-tier-list">
+          <li>Core Circle 全部内容</li>
+          <li>私人Founder Dinner</li>
+          <li>小范围Mastermind</li>
+          <li>深度战略讨论</li>
+          <li>高质量资源连接</li>
+          <li>国际项目与合作机会</li>
+          <li>Retreat共创与邀请</li>
+          <li>城市节点与长期合作可能</li>
+        </ul>
+        <p class="cc-tier-feeling">一个长期同行的高质量Founder Network：更深层的关系、更高质量的连接，以及长期协作可能性。</p>
+        <a href="mailto:hello@shuyun.universe?subject=Inner Circle — Founder Application" class="cc-tier-cta">Apply for Inner Circle</a>
+      </article>
+    </div>
+
+    <div class="cc-structure">
+      <div class="cc-structure-item">
+        <div class="cc-structure-cn">优先邀请制</div>
+        <div class="cc-structure-en">Invitation Preferred</div>
+        <p class="cc-structure-body">Inner Circle 会优先邀请已经具备长期建设方向、关系质量与合作潜力的Founder。</p>
+      </div>
+      <div class="cc-structure-item">
+        <div class="cc-structure-cn">严格控制人数</div>
+        <div class="cc-structure-en">Limited Seats</div>
+        <p class="cc-structure-body">保持非常小的密度，让每一次连接都更具体、更真实，也更有长期协作的可能。</p>
+      </div>
+      <div class="cc-structure-item">
+        <div class="cc-structure-cn">长期价值观匹配</div>
+        <div class="cc-structure-en">Long-term alignment</div>
+        <p class="cc-structure-body">比起短期资源交换，我们更关注长期关系、深度协作与共同成长。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cc-cta">
+  <div class="cc-inner">
+    <div class="cc-cta-eye">Apply to Join</div>
+    <h2 class="cc-cta-cn">申请进入 Cloud Circle。</h2>
+    <p class="cc-cta-en">The first step is not payment. It is alignment. Tell us what you are building, what kind of relationships you are seeking, and why now.</p>
+    <div class="cc-actions">
+      <a href="mailto:hello@shuyun.universe?subject=Cloud Circle — Apply to Join" class="cc-primary">申请加入 →</a>
+      <a href="index.html#services" class="cc-secondary">Back to Services</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const langBtns = document.querySelectorAll('.nav-lang [data-lang]');
+  const saved = localStorage.getItem('shuyun-lang') || 'cn';
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    localStorage.setItem('shuyun-lang', lang);
+    langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  }
+  setLang(saved);
+  langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+})();
+</script>
+</body>
+</html>

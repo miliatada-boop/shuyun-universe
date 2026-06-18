@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../Shuyun Universe"
+		},
+		{
+			"path": "../../.claude/skills"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Shuyun Website"
+	}
+}

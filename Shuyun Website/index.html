@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抒云 · Shuyun Studio</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+
+:root {
+  --chalk:        #F5F2EE;
+  --sand-veil:    #E8E2D8;
+  --warm-drift:   #C4B49A;
+  --mist:         #9EA8B2;
+  --deep-current: #4A5C6B;
+  --abyssal:      #1C2B35;
+  --antique-gold: #B8955A;
+  --pale-gold:    #D4BA7E;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+  --mono:  'Courier New', monospace;
+  --nav-h: 56px;
+}
+
+body {
+  background: var(--abyssal);
+  color: var(--chalk);
+  font-family: var(--sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 52px;
+  background: rgba(28,43,53,0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: background 0.35s ease;
+}
+nav:hover {
+  background: rgba(28,43,53,0.92);
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 300;
+  color: rgba(245,242,238,0.72);
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.35s;
+}
+nav:hover .nav-logo { color: rgba(245,242,238,0.95); }
+
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-tab {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: rgba(245,242,238,0.55);
+  padding: 10px 24px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: color 0.35s;
+  white-space: nowrap;
+}
+nav:hover .nav-tab { color: rgba(245,242,238,0.75); }
+nav:hover .nav-tab:hover { color: rgba(245,242,238,0.95); }
+.nav-tab.active { color: var(--antique-gold) !important; }
+
+.nav-lang {
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(245,242,238,0.45);
+  border: 1px solid rgba(245,242,238,0.22);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+.nav-lang:hover { color: rgba(184,149,90,0.8); border-color: rgba(184,149,90,0.4); }
+
+/* Language toggle — english content hidden by default */
+.en-only { display: none; }
+html.lang-en .en-only { display: inline; }
+html.lang-en div.en-only, html.lang-en p.en-only { display: block; }
+html.lang-en .cn-only { display: none; }
+
+.nav-cta {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(245,242,238,0.55);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.35s;
+  flex-shrink: 0;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+.nav-cta:hover { color: var(--antique-gold); }
+
+/* ── Page panels ── */
+.page {
+  position: fixed;
+  top: var(--nav-h);
+  left: 0; right: 0; bottom: 0;
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.page.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ═══════════════════════════════
+   HOME
+══════════════════════════════ */
+#page-home {
+  background: var(--abyssal);
+  background-image: url('图片/shuyun-spiral.jpg');
+  background-size: 140% auto;
+  background-position: 10% 30%;
+  background-attachment: fixed;
+  overflow-y: auto;
+}
+.home-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(10,16,22,0.52);
+  min-height: 100%;
+}
+/* scroll indicator */
+@keyframes scrollBob {
+  0%,100% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(7px); opacity: 0.55; }
+}
+.home-scroll-hint {
+  padding-bottom: 44px;
+  text-align: center;
+  position: relative; z-index: 2;
+  cursor: pointer;
+}
+.home-scroll-arrow {
+  display: inline-block;
+  animation: scrollBob 2.4s ease-in-out infinite;
+  color: var(--antique-gold);
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  letter-spacing: 0.1em;
+}
+/* Home About section */
+.home-about {
+  background: var(--abyssal);
+  border-top: 1px solid rgba(184,149,90,0.1);
+  position: relative;
+  z-index: 2;
+}
+.ha-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 96px 56px 120px;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 88px;
+  align-items: start;
+}
+.ha-photo {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+}
+.ha-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: saturate(0.76) brightness(0.72);
+  display: block;
+}
+.ha-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(28,43,53,0.55));
+}
+.ha-label {
+  font-family: var(--mono);
+  font-size: 7.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(184,149,90,0.45);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ha-label::after {
+  content: '';
+  width: 44px;
+  height: 1px;
+  background: rgba(184,149,90,0.2);
+}
+.ha-name {
+  font-family: var(--serif);
+  font-size: clamp(38px,4vw,54px);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  color: var(--chalk);
+  margin-bottom: 8px;
+}
+.ha-title {
+  font-family: var(--serif);
+  font-size: clamp(15px,1.6vw,19px);
+  font-style: italic;
+  color: var(--antique-gold);
+  letter-spacing: 0.04em;
+  margin-bottom: 40px;
+}
+.ha-divider {
+  height: 1px;
+  background: rgba(184,149,90,0.14);
+  margin: 32px 0;
+}
+.ha-bio {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(232,226,216,0.62);
+  letter-spacing: 0.04em;
+  line-height: 2.05;
+  margin-bottom: 18px;
+}
+.ha-creds {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 4px;
+}
+.ha-cred {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.ha-cred-num {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(184,149,90,0.36);
+  flex-shrink: 0;
+  width: 28px;
+}
+.ha-cred-text {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(232,226,216,0.62);
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+}
+.ha-cred-text em {
+  font-style: normal;
+  color: var(--chalk);
+}
+.home-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - var(--nav-h));
+  text-align: center;
+  align-items: center;
+}
+
+/* ═══════════════════════════════
+   ABOUT
+══════════════════════════════ */
+#page-about {
+  background: var(--abyssal);
+}
+.about-layout {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  min-height: calc(100vh - var(--nav-h));
+}
+.about-photo {
+  position: relative;
+  overflow: hidden;
+}
+.about-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  filter: saturate(0.82) brightness(0.78);
+}
+.about-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(14,25,35,0.08) 40%, rgba(14,25,35,0.6));
+}
+.about-content {
+  padding: 72px 72px 72px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+}
+.about-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(184,149,90,0.5);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.about-label::after {
+  content: '';
+  width: 48px;
+  height: 1px;
+  background: rgba(184,149,90,0.25);
+}
+.about-name {
+  font-family: var(--serif);
+  font-size: clamp(36px,4vw,52px);
+  font-weight: 300;
+  color: var(--chalk);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.about-title {
+  font-family: var(--serif);
+  font-size: clamp(16px,1.8vw,22px);
+  font-style: italic;
+  color: var(--antique-gold);
+  letter-spacing: 0.04em;
+  margin-bottom: 40px;
+}
+.about-divider {
+  height: 1px;
+  background: rgba(184,149,90,0.18);
+  margin: 28px 0;
+}
+.about-body {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(232,226,216,0.72);
+  letter-spacing: 0.04em;
+  line-height: 2;
+  margin-bottom: 20px;
+}
+.about-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 8px;
+}
+.about-cred {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+.about-cred-num {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(184,149,90,0.4);
+  flex-shrink: 0;
+}
+.about-cred-text {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(232,226,216,0.7);
+  letter-spacing: 0.04em;
+  line-height: 1.65;
+}
+.about-cred-text em {
+  font-style: normal;
+  color: var(--chalk);
+}
+.about-values {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  margin-top: 40px;
+  background: rgba(184,149,90,0.1);
+}
+.about-value {
+  background: var(--abyssal);
+  padding: 22px 18px;
+  transition: background 0.3s;
+}
+.about-value:hover { background: rgba(74,92,107,0.18); }
+.about-value-cn {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--antique-gold);
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+.about-value-en {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(158,168,178,0.45);
+}
+
+/* ═══════════════════════════════
+   PROJECTS (案例) — Auction Grid
+══════════════════════════════ */
+#page-projects { background: var(--chalk); color: var(--abyssal); }
+.projects-inner { max-width: 1080px; margin: 0 auto; padding: 72px 0 100px; }
+/* Grid header */
+.gh{display:flex;justify-content:space-between;align-items:flex-end;padding:0 56px 48px;border-bottom:1px solid rgba(0,0,0,0.07);margin-bottom:48px;}
+.gh-eyebrow{font-family:var(--mono);font-size:8px;letter-spacing:0.36em;text-transform:uppercase;color:rgba(28,43,53,0.3);margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.gh-eyebrow::before{content:'';width:20px;height:1px;background:rgba(184,149,90,0.4);}
+.gh-title{font-family:var(--serif);font-size:clamp(30px,3.8vw,46px);font-weight:300;color:var(--abyssal);letter-spacing:0.06em;line-height:1;margin-bottom:8px;}
+.gh-sub{font-family:var(--serif);font-size:14px;font-style:italic;color:rgba(184,149,90,0.65);letter-spacing:0.06em;}
+.gh-meta{font-family:var(--mono);font-size:7.5px;letter-spacing:0.14em;color:rgba(28,43,53,0.22);line-height:2.2;text-align:right;}
+/* Grid */
+.lot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;padding:0 56px;}
+/* Wide card */
+.lot-wide{grid-column:1/-1;display:flex;background:#fff;cursor:pointer;text-decoration:none;color:inherit;overflow:hidden;transition:box-shadow 0.4s ease;}
+.lot-wide:hover{box-shadow:0 24px 64px rgba(28,43,53,0.11);}
+.lot-wide:hover .lc-vis{transform:scale(1.02);}
+.lot-wide:hover .lc-overlay{opacity:1;}
+.lot-wide .lc-vis-wrap{width:58%;flex-shrink:0;height:360px;overflow:hidden;position:relative;}
+.lot-wide .lc-info{flex:1;display:flex;flex-direction:column;justify-content:center;padding:48px 52px;border-left:1px solid rgba(0,0,0,0.05);}
+.lot-wide .lc-title{font-size:clamp(20px,2.4vw,30px);margin-bottom:8px;}
+.lot-wide .lc-tagline{font-size:13px;margin-bottom:24px;}
+/* Standard card */
+.lot-card{background:#fff;cursor:pointer;text-decoration:none;color:inherit;overflow:hidden;display:block;transition:box-shadow 0.4s ease;}
+.lot-card:hover{box-shadow:0 20px 56px rgba(28,43,53,0.1);}
+.lot-card:hover .lc-vis{transform:scale(1.02);}
+.lot-card:hover .lc-overlay{opacity:1;}
+/* Visual */
+.lc-vis-wrap{overflow:hidden;aspect-ratio:4/3;position:relative;}
+.lc-vis{width:100%;height:100%;transition:transform 0.55s ease;overflow:hidden;}
+.lc-vis img{width:100%;height:100%;object-fit:cover;filter:saturate(0.68) brightness(0.86) contrast(1.06) sepia(0.05);display:block;}
+.lc-overlay{position:absolute;inset:0;background:rgba(28,43,53,0.48);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.35s;}
+.lc-overlay span{font-family:var(--mono);font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--pale-gold);border:1px solid rgba(212,186,126,0.55);padding:10px 24px;}
+.lc-badge{position:absolute;top:16px;left:16px;font-family:var(--mono);font-size:7px;letter-spacing:0.2em;text-transform:uppercase;padding:4px 10px;z-index:2;background:var(--abyssal);color:var(--antique-gold);}
+/* Info */
+.lc-info{padding:22px 26px 28px;border-top:1px solid rgba(0,0,0,0.06);}
+.lc-num{font-family:var(--mono);font-size:7.5px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(184,149,90,0.55);margin-bottom:8px;}
+.lc-title{font-family:var(--serif);font-size:20px;font-weight:300;color:var(--abyssal);letter-spacing:0.04em;line-height:1.3;margin-bottom:5px;}
+.lc-tagline{font-family:var(--serif);font-size:12px;font-style:italic;color:rgba(184,149,90,0.6);letter-spacing:0.06em;margin-bottom:16px;}
+.lc-bottom{display:flex;align-items:baseline;justify-content:space-between;}
+.lc-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.lc-tag{font-family:var(--mono);font-size:6.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(28,43,53,0.3);border:1px solid rgba(28,43,53,0.12);padding:3px 8px;}
+.lc-year{font-family:var(--serif);font-size:26px;font-weight:300;color:rgba(28,43,53,0.1);letter-spacing:0.06em;flex-shrink:0;}
+/* Footer */
+.grid-footer{margin:48px 56px 0;padding-top:20px;border-top:1px solid rgba(0,0,0,0.07);display:flex;justify-content:space-between;align-items:center;}
+.gf-note{font-family:var(--mono);font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(28,43,53,0.22);}
+.gf-ref{font-family:monospace;font-size:7px;letter-spacing:0.1em;color:rgba(28,43,53,0.16);}
+
+/* ═══════════════════════════════
+   SERVICES
+══════════════════════════════ */
+#page-collaboration {
+  background: var(--chalk);
+  color: var(--abyssal);
+}
+#page-experience {
+  background: var(--chalk);
+}
+.services-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 72px 64px 96px;
+}
+.services-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(184,149,90,0.6);
+  margin-bottom: 52px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.services-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(184,149,90,0.18);
+}
+.services-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+  margin-bottom: 64px;
+}
+.services-h2 {
+  font-family: var(--serif);
+  font-size: clamp(30px,3.8vw,50px);
+  font-weight: 300;
+  color: var(--abyssal);
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.services-h2 em { font-style: italic; color: var(--antique-gold); }
+.services-sub {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: rgba(74,92,107,0.45);
+  letter-spacing: 0.04em;
+}
+.services-intro {
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--deep-current);
+  letter-spacing: 0.03em;
+}
+/* Three offering cards */
+.offering-cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 2px;
+  margin-bottom: 52px;
+}
+.offering-card {
+  border: 1px solid rgba(196,180,154,0.35);
+  border-top: 3px solid transparent;
+  padding: 36px 32px 32px;
+  transition: border-top-color 0.3s, border-color 0.3s;
+  cursor: default;
+}
+.offering-card:hover {
+  border-top-color: var(--antique-gold);
+  border-color: rgba(184,149,90,0.3);
+}
+.offering-num {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 300;
+  color: rgba(196,180,154,0.3);
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.offering-type {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(184,149,90,0.6);
+  margin-bottom: 10px;
+}
+.offering-cn {
+  font-family: var(--serif);
+  font-size: clamp(18px,2vw,24px);
+  font-weight: 300;
+  color: var(--abyssal);
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+.offering-en {
+  font-family: var(--serif);
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(74,92,107,0.4);
+  letter-spacing: 0.04em;
+  margin-bottom: 18px;
+}
+.offering-items {
+  list-style: none;
+  border-top: 1px solid rgba(196,180,154,0.25);
+  padding-top: 18px;
+}
+.offering-items li {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--deep-current);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(196,180,154,0.18);
+  display: flex;
+  gap: 10px;
+  line-height: 1.55;
+  letter-spacing: 0.03em;
+}
+.offering-items li:last-child { border-bottom: none; }
+.offering-items li::before {
+  content: '—';
+  color: var(--antique-gold);
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+.offering-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(196,180,154,0.2);
+}
+.offering-price-num {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--abyssal);
+}
+.offering-price-note {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--mist);
+  font-style: italic;
+}
+/* Strategic session highlight */
+.session-highlight {
+  background: var(--abyssal);
+  padding: 52px 56px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+.session-left {}
+.session-label-tag {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--antique-gold);
+  margin-bottom: 20px;
+}
+.session-h3 {
+  font-family: var(--serif);
+  font-size: clamp(24px,2.8vw,36px);
+  font-weight: 300;
+  color: var(--chalk);
+  line-height: 1.2;
+  margin-bottom: 18px;
+}
+.session-h3 em { font-style: italic; color: var(--antique-gold); }
+.session-desc {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: rgba(158,168,178,0.65);
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+.session-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-left: 1px solid rgba(184,149,90,0.15);
+  padding-left: 52px;
+}
+.session-meta-row {}
+.session-meta-key {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--antique-gold);
+  margin-bottom: 6px;
+}
+.session-meta-val {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--sand-veil);
+  line-height: 1.5;
+}
+.session-meta-sub {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(158,168,178,0.4);
+  margin-top: 3px;
+}
+
+/* ═══════════════════════════════
+   EXPERIENCE — Cloud Circle
+══════════════════════════════ */
+.cc-section { background: var(--chalk); color: var(--abyssal); padding: 80px 64px 80px; }
+.cc-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.cc-label { font-family: var(--mono); font-size: 8px; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(184,149,90,0.55); display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+.cc-label::after { content: ''; flex: 1; height: 1px; background: rgba(184,149,90,0.18); max-width: 120px; }
+.cc-num { font-family: var(--serif); font-size: 28px; font-weight: 300; color: rgba(28,43,53,0.12); margin-bottom: 4px; }
+.cc-type { font-family: var(--mono); font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(184,149,90,0.6); margin-bottom: 12px; }
+.cc-title { font-family: var(--serif); font-size: clamp(32px,3.2vw,48px); font-weight: 300; color: var(--abyssal); letter-spacing: 0.04em; margin-bottom: 6px; }
+.cc-subtitle { font-family: var(--serif); font-size: 14px; font-style: italic; color: rgba(74,92,107,0.5); margin-bottom: 36px; }
+.cc-desc { font-family: var(--serif); font-size: 15px; line-height: 1.9; color: rgba(28,43,53,0.55); max-width: 380px; margin-bottom: 40px; }
+.cc-link { font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--antique-gold); text-decoration: none; border-bottom: 1px solid rgba(184,149,90,0.3); padding-bottom: 3px; transition: border-color 0.2s; }
+.cc-link:hover { border-color: var(--antique-gold); }
+.cc-items { list-style: none; border-top: 1px solid rgba(196,180,154,0.25); }
+.cc-items li { font-family: var(--serif); font-size: 15px; color: rgba(28,43,53,0.65); padding: 18px 0; border-bottom: 1px solid rgba(196,180,154,0.2); display: flex; align-items: center; gap: 16px; }
+.cc-items li::before { content: ''; width: 20px; height: 1px; background: rgba(184,149,90,0.35); flex-shrink: 0; }
+.cc-apply { margin-top: 32px; padding: 20px; border: 1px solid rgba(196,180,154,0.3); text-align: center; font-family: var(--mono); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(28,43,53,0.5); text-decoration: none; display: block; transition: all 0.2s; }
+.cc-apply:hover { border-color: var(--antique-gold); color: var(--antique-gold); }
+
+/* ═══════════════════════════════
+   EXPERIENCE — Retreats (steel blue)
+══════════════════════════════ */
+.rt-section { padding: 96px 0 120px; }
+.rt-inner { max-width: 1280px; margin: 0 auto; padding: 0 56px; }
+.rt-label { display: flex; align-items: center; gap: 16px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(28,43,53,0.35); margin-bottom: 80px; }
+.rt-label-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(184,149,90,0.5); }
+.rt-label-gold { color: var(--antique-gold); opacity: 0.9; }
+.rt-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; padding-bottom: 56px; border-bottom: 1px solid rgba(28,43,53,0.12); }
+.rt-intro-h { font-family: var(--serif); font-size: clamp(38px,4.2vw,60px); font-weight: 300; font-style: italic; color: var(--abyssal); line-height: 1.05; }
+.rt-intro-p { font-family: var(--serif); font-size: 15px; line-height: 1.9; color: rgba(28,43,53,0.6); font-weight: 300; letter-spacing: 0.04em; padding-top: 8px; }
+.rt-stack { display: flex; flex-direction: column; gap: 4px; }
+.rt-card { display: grid; height: 540px; overflow: hidden; position: relative; }
+.rt-card.pl { grid-template-columns: 62% 38%; }
+.rt-card.pr { grid-template-columns: 38% 62%; }
+.rt-photo { position: relative; overflow: hidden; }
+.rt-photo img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.88) saturate(0.72) contrast(1.04); transition: transform 0.9s ease; }
+.rt-card:hover .rt-photo img { transform: scale(1.04); }
+.rt-card.pl .rt-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, rgba(90,122,146,0.95) 100%); }
+.rt-card.pr .rt-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to left, transparent 50%, rgba(78,109,132,0.95) 100%); }
+.rt-text { background: #5A7A92; padding: 52px 56px; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+.rt-card.pr .rt-text { background: #4E6D84; }
+.rt-status { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(244,241,232,0.38); margin-bottom: 32px; }
+.rt-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(244,241,232,0.38); }
+.rt-status.open { color: rgba(150,210,170,0.85); }
+.rt-dot.open { background: #96D2AA; }
+.rt-dest { font-family: var(--serif); font-size: clamp(52px,5.8vw,84px); font-weight: 300; font-style: italic; line-height: 0.88; color: #F4F1E8; letter-spacing: -0.02em; margin-bottom: 8px; }
+.rt-sub { font-family: var(--mono); font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--antique-gold); opacity: 0.65; margin-bottom: 40px; }
+.rt-desc { font-family: var(--serif); font-size: 14px; line-height: 2.0; color: rgba(244,241,232,0.6); letter-spacing: 0.04em; font-weight: 300; flex: 1; margin-bottom: 28px; }
+.rt-cta { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: #F4F1E8; text-decoration: none; border: 1px solid rgba(244,241,232,0.18); padding: 13px 24px; align-self: flex-start; cursor: pointer; background: none; transition: background 0.2s, border-color 0.2s; }
+.rt-cta:hover { background: rgba(244,241,232,0.12); border-color: rgba(244,241,232,0.38); }
+.rt-num { position: absolute; bottom: 40px; right: 44px; font-family: var(--serif); font-size: 120px; font-weight: 300; font-style: italic; color: rgba(244,241,232,0.04); line-height: 1; pointer-events: none; letter-spacing: -0.04em; }
+
+/* ═══════════════════════════════
+   CONTACT
+══════════════════════════════ */
+/* ── 鎏金扫光动画 ── */
+@keyframes gilded {
+  0%   { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+.gilded-text {
+  background: linear-gradient(
+    135deg,
+    #8C6C24 0%,
+    #B8955A 18%,
+    #D4BA7E 34%,
+    #F5EEC0 50%,
+    #D4BA7E 66%,
+    #B8955A 82%,
+    #8C6C24 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gilded 5s ease-in-out infinite alternate;
+}
+
+/* ═══════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 768px) {
+  /* Nav */
+  nav { padding: 0 20px; }
+  .nav-tabs { gap: 0; }
+  .nav-tab { font-size: 12px; padding: 10px 12px; letter-spacing: 0.04em; }
+  .nav-logo { font-size: 15px; }
+  .nav-cta { padding: 6px 12px; font-size: 9px; letter-spacing: 0.12em; }
+
+  /* Home */
+  #page-home { background-size: cover; background-position: 70% center; }
+  .home-content { align-items: center; }
+
+  /* Services 2-col → 1 col */
+  .services-inner { padding: 48px 24px 64px; }
+  #page-collaboration .services-inner > div[style*="grid-template-columns:1fr 1fr"] {
+    display: flex !important;
+    flex-direction: column !important;
+    max-width: 100% !important;
+  }
+
+  /* Cases */
+  .lot-grid { grid-template-columns: 1fr !important; }
+  .lot-wide, .lot-card { grid-column: auto !important; }
+  .gh { flex-direction: column; gap: 8px; }
+  .projects-inner { padding: 40px 20px 64px; }
+
+  /* Experience */
+  .cc-inner { grid-template-columns: 1fr !important; gap: 40px; }
+  .cc-section { padding: 48px 24px; }
+  .rt-card { grid-template-columns: 1fr !important; min-height: auto !important; }
+  .rt-photo { height: 220px; }
+  .rt-text { padding: 32px 24px !important; }
+
+  /* Offering cards */
+  .offering-cards { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 480px) {
+  .nav-tab { font-size: 11px; padding: 10px 8px; }
+  .nav-lang { font-size: 10px; padding: 5px 8px; }
+  .nav-cta { padding: 5px 10px; font-size: 8px; letter-spacing: 0.08em; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Navigation ─── -->
+<nav>
+  <div class="nav-logo" onclick="switchTab('home')">抒云</div>
+
+  <div class="nav-tabs">
+    <button class="nav-tab" data-tab="home" onclick="switchTab('home')"><span class="cn-only">首页</span><span class="en-only">Home</span></button>
+    <button class="nav-tab" data-tab="projects" onclick="switchTab('projects')"><span class="cn-only">案例</span><span class="en-only">Cases</span></button>
+    <button class="nav-tab" data-tab="collaboration" onclick="switchTab('collaboration')"><span class="cn-only">服务</span><span class="en-only">Services</span></button>
+    <button class="nav-tab" data-tab="experience" onclick="switchTab('experience')"><span class="cn-only">体验</span><span class="en-only">Experiences</span></button>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:20px;flex-shrink:0;">
+    <div class="nav-lang" id="nav-lang-btn" onclick="toggleLang()">EN</div>
+    <div class="nav-cta" onclick="switchTab('collaboration')"><span class="cn-only">预约对话</span><span class="en-only">Book a Call</span></div>
+  </div>
+</nav>
+
+
+<!-- ─── HOME ─── -->
+<div id="page-home" class="page active">
+  <div class="home-bg"></div>
+  <div class="home-content">
+
+    <!-- Logo top -->
+    <div style="padding:52px 0 0;text-align:center;">
+      <div class="gilded-text" style="font-family:var(--serif);font-size:clamp(34px,4.2vw,64px);font-weight:300;letter-spacing:0.12em;line-height:1;">抒云</div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;align-items:center;max-width:540px;">
+        <div style="font-family:var(--sans);font-size:14px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.06em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);">
+          <span class="cn-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">中法当代艺术协会会长</em> · Association sino-française d'art contemporain</span>
+          <span class="en-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">President, Sino-French Contemporary Art Association</em> · Association sino-française d'art contemporain</span>
+        </div>
+        <div style="font-family:var(--sans);font-size:14px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.06em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);">
+          <span class="cn-only">旅法 <em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">8 年</em> · MIE Art &amp; Culture 合作人 · Paris–Shanghai</span>
+          <span class="en-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">8 years in France</em> · MIE Art &amp; Culture Partner · Paris–Shanghai</span>
+        </div>
+        <div style="font-family:var(--sans);font-size:14px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.06em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);">
+          <span class="cn-only">发起 <em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">30+ 跨文化项目</em> · Founder · 独立品牌 · 国际机构</span>
+          <span class="en-only">Initiated <em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">30+ cross-cultural projects</em> · Founder · Independent Brand · International</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Identity center -->
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 48px;text-align:center;">
+      <div style="font-family:var(--serif);font-size:clamp(44px,5.8vw,76px);font-weight:300;font-style:italic;color:var(--antique-gold);letter-spacing:0.04em;line-height:1.05;margin-bottom:20px;">Value Editor</div>
+      <div style="font-family:var(--serif);font-size:clamp(15px,1.65vw,21px);font-weight:300;color:rgba(232,226,216,0.62);letter-spacing:0.05em;line-height:1.9;max-width:580px;">
+        <span class="cn-only">帮创始人和品牌，找到真正属于自己的市场语言与位置。</span>
+        <span class="en-only">Helping founders and brands find their true market language and position.</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bio section -->
+  <div style="position:relative;z-index:2;background:var(--abyssal);border-top:1px solid rgba(184,149,90,0.1);">
+    <div style="max-width:720px;margin:0 auto;padding:80px 56px 100px;">
+
+      <div style="font-family:var(--serif);font-size:clamp(15px,1.55vw,19px);font-weight:300;color:rgba(232,226,216,0.58);letter-spacing:0.04em;line-height:2;margin-bottom:18px;">
+        <span class="cn-only">我在法国生活了八年，在巴黎策划了三十余个跨文化项目——从卢浮宫非遗展到孚日广场行为艺术周，从高定发布到国际社区建设。</span>
+        <span class="en-only">I lived in France for eight years, curating over thirty cross-cultural projects in Paris — from Louvre heritage exhibitions to Place des Vosges performance art weeks, from haute couture launches to international community building.</span>
+      </div>
+      <div style="font-family:var(--serif);font-size:clamp(15px,1.55vw,19px);font-weight:300;color:rgba(232,226,216,0.58);letter-spacing:0.04em;line-height:2;margin-bottom:48px;">
+        <span class="cn-only">我相信，很多真正有价值的创始人和品牌，正在被错误的价格、错误的语言、错误的市场位置所掩盖。我做的事，是帮他们找到真正属于自己的位置——在正确的世界里，被正确的人看见。</span>
+        <span class="en-only">I believe many truly valuable founders and brands are being obscured by wrong pricing, wrong language, and wrong market positioning. What I do is help them find their rightful place — seen by the right people, in the right world.</span>
+      </div>
+
+      <div style="display:flex;gap:48px;">
+        <div style="text-align:center;">
+          <div style="font-family:var(--serif);font-size:22px;font-weight:300;letter-spacing:0.06em;color:rgba(232,226,216,0.72);margin-bottom:6px;">辨识</div>
+          <div style="font-family:var(--mono);font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(184,149,90,0.35);">Recognition</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:var(--serif);font-size:22px;font-weight:300;letter-spacing:0.06em;color:rgba(232,226,216,0.72);margin-bottom:6px;">表达</div>
+          <div style="font-family:var(--mono);font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(184,149,90,0.35);">Expression</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:var(--serif);font-size:22px;font-weight:300;letter-spacing:0.06em;color:rgba(232,226,216,0.72);margin-bottom:6px;">连接</div>
+          <div style="font-family:var(--mono);font-size:7.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(184,149,90,0.35);">Connection</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ─── PROJECTS ─── -->
+<div id="page-projects" class="page">
+  <div class="projects-inner">
+
+    <div class="gh">
+      <div>
+        <div class="gh-eyebrow">精选案例 · 2023–2026</div>
+        <div class="gh-title">案例档案</div>
+        <div class="gh-sub">5 个精选项目</div>
+      </div>
+      <div>
+        <div class="gh-meta">MIE Art, Paris</div>
+      </div>
+    </div>
+
+    <div class="lot-grid">
+
+      <!-- CASE 001 全宽横版 -->
+      <a href="project-inner-forest.html" class="lot-wide">
+        <div class="lc-vis-wrap">
+          <div class="lc-vis"><img src="图片/projects/touch/performance.jpg" alt="内境森林"></div>
+          <div class="lc-overlay"><span>查看案例 →</span></div>
+          <div class="lc-badge">CASE 001</div>
+        </div>
+        <div class="lc-info">
+          <div class="lc-num">社区策略 · 2025</div>
+          <div class="lc-title">内境森林</div>
+          <div class="lc-tags">
+            <span class="lc-tag">社区建设</span>
+            <span class="lc-tag">行为艺术</span>
+            <span class="lc-tag">ASFAC × DNβ</span>
+          </div>
+          <div style="margin-top:20px;font-family:var(--serif);font-size:13.5px;color:rgba(28,43,53,0.48);line-height:1.75;letter-spacing:0.03em;border-top:1px solid rgba(28,43,53,0.07);padding-top:18px;">首期活动吸引 40+ 位创始人参与，推动 ASFAC 成都社区节点建立。</div>
+          <div style="margin-top:16px;font-family:var(--mono);font-size:7.5px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(184,149,90,0.45);">Chengdu · 2025</div>
+        </div>
+      </a>
+
+      <!-- CASE 002 -->
+      <a href="project-vosges.html" class="lot-card">
+        <div class="lc-vis-wrap">
+          <div class="lc-vis"><img src="图片/projects/vosges/cover.jpg" alt="孚日广场"></div>
+          <div class="lc-overlay"><span>查看案例 →</span></div>
+          <div class="lc-badge">CASE 002</div>
+        </div>
+        <div class="lc-info">
+          <div class="lc-num">国际策展 · 2024</div>
+          <div class="lc-title">孚日广场行为艺术周</div>
+          <div style="font-family:var(--serif);font-size:12.5px;color:rgba(28,43,53,0.48);line-height:1.75;letter-spacing:0.03em;margin-bottom:14px;">8 位中国艺术家首次在法国国家级历史地标公开展演。</div>
+          <div class="lc-bottom">
+            <div class="lc-tags"><span class="lc-tag">国际策展</span><span class="lc-tag">Paris</span></div>
+            <div class="lc-year">2024</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- CASE 003 -->
+      <a href="project-solelegia.html" class="lot-card">
+        <div class="lc-vis-wrap">
+          <div class="lc-vis"><img src="图片/projects/solelegia/cover.jpg" alt="SOLELEGIA" style="object-position:center top;"></div>
+          <div class="lc-overlay"><span>查看案例 →</span></div>
+          <div class="lc-badge">CASE 003</div>
+        </div>
+        <div class="lc-info">
+          <div class="lc-num">品牌合作 · 2024</div>
+          <div class="lc-title">SOLELEGIA 高定发布</div>
+          <div style="font-family:var(--serif);font-size:12.5px;color:rgba(28,43,53,0.48);line-height:1.75;letter-spacing:0.03em;margin-bottom:14px;">巴黎首发后进入法国高级时装媒体传播网络，品牌国际曝光显著提升。</div>
+          <div class="lc-bottom">
+            <div class="lc-tags"><span class="lc-tag">高级定制</span><span class="lc-tag">Paris</span></div>
+            <div class="lc-year">2024</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- CASE 004 -->
+      <a href="project-louvre.html" class="lot-card">
+        <div class="lc-vis-wrap">
+          <div class="lc-vis"><img src="图片/mie/crops/louvre-heritage.jpg" alt="卢浮宫非遗展"></div>
+          <div class="lc-overlay"><span>查看案例 →</span></div>
+          <div class="lc-badge">CASE 004</div>
+        </div>
+        <div class="lc-info">
+          <div class="lc-num">文化遗产展览 · 2024</div>
+          <div class="lc-title">卢浮宫非遗展</div>
+          <div style="font-family:var(--serif);font-size:12.5px;color:rgba(28,43,53,0.48);line-height:1.75;letter-spacing:0.03em;margin-bottom:14px;">在卢浮宫达鲁庭院举办，吸引国际专业观众，获法国主流文化媒体报道。</div>
+          <div class="lc-bottom">
+            <div class="lc-tags"><span class="lc-tag">非遗传承</span><span class="lc-tag">卢浮宫</span></div>
+            <div class="lc-year">2024</div>
+          </div>
+        </div>
+      </a>
+
+      <!-- CASE 005 -->
+      <a href="project-utopia.html" class="lot-card">
+        <div class="lc-vis-wrap">
+          <div class="lc-vis"><img src="图片/mie/crops/utopia-art.jpg" alt="乌托邦系列快闪"></div>
+          <div class="lc-overlay"><span>查看案例 →</span></div>
+          <div class="lc-badge">CASE 005</div>
+        </div>
+        <div class="lc-info">
+          <div class="lc-num">艺术商业 · 2023</div>
+          <div class="lc-title">乌托邦系列快闪</div>
+          <div style="font-family:var(--serif);font-size:12.5px;color:rgba(28,43,53,0.48);line-height:1.75;letter-spacing:0.03em;margin-bottom:14px;">巴黎 3 场系列快闪，带动品牌进入法国当代艺术社区圈层。</div>
+          <div class="lc-bottom">
+            <div class="lc-tags"><span class="lc-tag">艺术商业</span><span class="lc-tag">Paris</span></div>
+            <div class="lc-year">2023</div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="grid-footer">
+      <span class="gf-note">○ 以上项目通过 MIE Art & Culture，巴黎 执行</span>
+      <span class="gf-ref">抒云 · Shuyun Studio</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ─── SERVICES ─── -->
+<div id="page-collaboration" class="page">
+  <div class="services-inner">
+
+    <div class="services-label" style="margin-bottom:20px;">服务 · Services</div>
+
+    <div style="font-family:var(--serif);font-size:16px;line-height:2.05;color:rgba(28,43,53,0.55);letter-spacing:0.03em;max-width:700px;margin-bottom:52px;">
+      <span class="cn-only">我做两件事：帮助创始人和品牌找到正确的价值语言与市场位置；连接中法两个世界的文化资源、机构网络与合作伙伴。</span>
+      <span class="en-only">I do two things: help founders and brands find the right value language and market position; and connect cultural resources, institutional networks and partners between China and France.</span>
+    </div>
+
+    <!-- Two columns: each card + its own CTA block -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:840px;">
+
+      <!-- LEFT: 云拍卖 + 战略价值鉴定会 -->
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <a href="auction.html" class="offering-card" style="display:block;text-decoration:none;color:inherit;">
+          <div class="offering-num">01</div>
+          <div class="offering-type">价值定位与策展</div>
+          <div class="offering-cn">云拍卖</div>
+          <div class="offering-en">价值策展与市场定位</div>
+          <ul class="offering-items">
+            <li>价值鉴定与战略诊断</li>
+            <li>价值图录与叙事体系</li>
+            <li>进入高端市场渠道</li>
+          </ul>
+          <div class="offering-price">
+            <span class="offering-price-note">了解详情 →</span>
+          </div>
+        </a>
+        <!-- 战略价值鉴定会 — single column -->
+        <div style="background:var(--abyssal);border-top:3px solid var(--antique-gold);padding:36px 32px 40px;">
+          <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:18px;">入门 · First Step</div>
+          <div style="font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);font-weight:300;color:var(--chalk);line-height:1.2;margin-bottom:16px;">战略价值<em style="font-style:italic;color:var(--antique-gold);">鉴定会</em></div>
+          <div style="font-family:var(--serif);font-size:14px;color:rgba(158,168,178,0.65);line-height:1.9;letter-spacing:0.03em;margin-bottom:28px;">不确定从哪里开始？先从一次深度对话开始。3 小时，共同诊断你的价值位置。</div>
+          <div style="display:flex;gap:32px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(184,149,90,0.12);">
+            <div>
+              <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:6px;">时长</div>
+              <div style="font-family:var(--serif);font-size:16px;font-weight:300;color:var(--sand-veil);">3 小时</div>
+            </div>
+            <div>
+              <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:6px;">形式</div>
+              <div style="font-family:var(--serif);font-size:16px;font-weight:300;color:var(--sand-veil);">1 对 1，线上或线下</div>
+            </div>
+          </div>
+          <a href="mailto:asfacparis@gmail.com?subject=战略价值鉴定会申请" style="font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--antique-gold);background:transparent;border:1px solid rgba(184,149,90,0.4);padding:12px 28px;display:inline-block;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(184,149,90,0.08)';this.style.borderColor='var(--antique-gold)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(184,149,90,0.4)'">预约鉴定会 →</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: 中法当代艺术协会 + 开始一次对话 -->
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div class="offering-card">
+          <div class="offering-num">02</div>
+          <div class="offering-type">国际文化与合作</div>
+          <div class="offering-cn">中法当代艺术协会</div>
+          <div class="offering-en">中法文化资源桥梁</div>
+          <ul class="offering-items">
+            <li>艺术驻留与国际展览</li>
+            <li>中法品牌跨境合作</li>
+            <li>文化项目策划与执行</li>
+          </ul>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:28px;padding-top:24px;border-top:1px solid rgba(196,180,154,0.2);">
+            <a href="ASFAC.pdf" target="_blank" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--abyssal);opacity:0.6;text-decoration:none;padding:9px 0;border-bottom:1px solid rgba(196,180,154,0.15);transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+              <span>协会简介 · ASFAC</span><span style="font-size:10px;">↗</span>
+            </a>
+            <a href="Touch-Art-Party-Foret-interieure.pdf" target="_blank" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--abyssal);opacity:0.6;text-decoration:none;padding:9px 0;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+              <span>Touch Art Party · Forêt intérieure</span><span style="font-size:10px;">↗</span>
+            </a>
+          </div>
+        </div>
+        <div style="background:var(--abyssal);border-top:1px solid rgba(184,149,90,0.1);padding:40px 40px 48px;flex:1;">
+          <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(184,149,90,0.55);margin-bottom:20px;">联系 · Reach Out</div>
+          <div style="font-family:var(--serif);font-size:clamp(22px,2.2vw,32px);font-weight:300;color:var(--chalk);margin-bottom:10px;">开始一次对话</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <a href="mailto:asfacparis@gmail.com" style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:rgba(232,226,216,0.75);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--chalk)'" onmouseout="this.style.color='rgba(232,226,216,0.75)'">✦ asfacparis@gmail.com</a>
+            <div onclick="document.getElementById('wechat-modal').style.display='flex'" style="font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:rgba(232,226,216,0.42);cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='rgba(232,226,216,0.85)'" onmouseout="this.style.color='rgba(232,226,216,0.42)'">微信 · WeChat →</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Bali Modal -->
+<div id="bali-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,24,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="position:relative;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;">
+    <button onclick="document.getElementById('bali-modal').style.display='none'" style="position:sticky;top:0;margin-left:auto;display:block;background:rgba(28,43,53,0.9);border:1px solid rgba(158,168,178,0.3);color:var(--chalk);font-family:var(--sans);font-size:11px;letter-spacing:0.2em;padding:8px 16px;cursor:pointer;z-index:10000;flex-basis:100%;text-align:right;margin-bottom:4px;">✕ CLOSE</button>
+    <img src="图片/retreats-bali-1.jpg" alt="巴厘岛艺术驻观" style="width:calc(50% - 4px);min-width:260px;flex:1;border-radius:2px;">
+    <img src="图片/retreats-bali-2.jpg" alt="巴厘岛行程亮点" style="width:calc(50% - 4px);min-width:260px;flex:1;border-radius:2px;">
+  </div>
+</div>
+
+
+<!-- ─── EXPERIENCE ─── -->
+<div id="page-experience" class="page">
+
+  <!-- Cloud Circle -->
+  <div class="cc-section">
+    <div class="cc-inner">
+      <div>
+        <div class="cc-label">体验 · Experiences</div>
+        <div class="cc-num">01</div>
+        <div class="cc-type">私享社群</div>
+        <h2 class="cc-title">Cloud Circle</h2>
+        <div class="cc-subtitle">私享圈层 · 创始人社群</div>
+        <p class="cc-desc">为高净值创始人与品牌主理人打造的私享圈层。<br>在这里，关系本身就是资产。<br><br><span style="font-size:13px;color:rgba(28,43,53,0.38);font-style:normal;">Cloud Circle 是邀请制的。成员通过引荐或申请，经过筛选后加入。</span></p>
+        <a href="community-architecture.html" class="cc-link">申请加入 →</a>
+      </div>
+      <div>
+        <ul class="cc-items">
+          <li>高净值会员体系设计</li>
+          <li>私享活动策划与运营</li>
+          <li>旅修与深度体验项目</li>
+          <li>跨界连接与资源引介</li>
+        </ul>
+        <a href="community-architecture.html" class="cc-apply">了解详情 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Retreats -->
+  <div class="rt-section">
+    <div class="rt-inner">
+
+      <div class="rt-label">
+        <span>02</span>
+        <div class="rt-label-dot"></div>
+        <span class="rt-label-gold">旅修</span>
+      </div>
+
+      <div class="rt-intro">
+        <h2 class="rt-intro-h">走出去，<br>是为了看得更清楚。</h2>
+        <p class="rt-intro-p">每一次旅修，是一次真正意义上的暂停。<br>我们在此世界边缘选址，与行业外脑同行，<br>让身体重新记住思考本来的样子。</p>
+      </div>
+
+      <div class="rt-stack">
+
+        <div class="rt-card pl" style="cursor:pointer;" onclick="document.getElementById('bali-modal').style.display='flex'">
+          <div class="rt-photo">
+            <img src="图片/retreats-bali-2.jpg" alt="Bali" style="object-position:center 35%;">
+          </div>
+          <div class="rt-text">
+            <div>
+              <div class="rt-status open"><div class="rt-dot open"></div>开放报名</div>
+              <div class="rt-dest">Bali</div>
+              <div class="rt-sub">巴厘岛 · Indonesia · 2026</div>
+              <p class="rt-desc">在巴厘岛的能量场里，重启商业与生命叙事。与顶级行业外脑同行，触碰巴厘能量源头，在自然与艺术中激活感知与直觉。</p>
+            </div>
+            <button class="rt-cta" onclick="event.stopPropagation();document.getElementById('bali-modal').style.display='flex'">查看详情 →</button>
+            <div class="rt-num">01</div>
+          </div>
+        </div>
+
+        <div class="rt-card pr">
+          <div class="rt-text">
+            <div>
+              <div class="rt-status"><div class="rt-dot"></div>即将发布</div>
+              <div class="rt-dest">Paris</div>
+              <div class="rt-sub">巴黎 · France · 艺术生活漫游</div>
+              <p class="rt-desc">在巴黎与法国南部之间穿行，以艺术为线索，重新感知生活的质地与节奏。与当地策展人、设计师同行，走进真正属于巴黎的生活现场。</p>
+            </div>
+            <a href="paris-retreat.pdf" target="_blank" class="rt-cta">查看完整行程 →</a>
+            <div class="rt-num">02</div>
+          </div>
+          <div class="rt-photo">
+            <img src="图片/retreats-paris-1.jpg" alt="Paris" style="object-position:center 40%;">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- WeChat Modal -->
+<div id="wechat-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,24,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:var(--abyssal);border:1px solid rgba(184,149,90,0.2);padding:56px 64px;text-align:center;max-width:400px;width:90%;position:relative;">
+    <button onclick="document.getElementById('wechat-modal').style.display='none'" style="position:absolute;top:16px;right:20px;background:none;border:none;color:var(--mist);font-size:18px;cursor:pointer;">✕</button>
+    <div style="font-family:var(--sans);font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:20px;">WeChat · 微信</div>
+    <img src="图片/wechat-qr.jpg" alt="抒云 WeChat QR Code" style="width:220px;height:220px;object-fit:cover;margin:0 auto 20px;display:block;border-radius:4px;">
+    <div style="font-family:var(--serif);font-size:16px;font-weight:300;color:var(--chalk);margin-bottom:6px;">#抒云 Shuyun</div>
+    <div style="font-family:var(--sans);font-size:10px;color:rgba(158,168,178,0.4);letter-spacing:0.08em;">扫码添加微信 · Scan to add on WeChat</div>
+  </div>
+</div>
+
+
+<script>
+function switchTab(tabName) {
+  // Deactivate all tabs and pages
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+  // Activate selected
+  const tab = document.querySelector(`[data-tab="${tabName}"]`);
+  const page = document.getElementById(`page-${tabName}`);
+  if (tab) tab.classList.add('active');
+  if (page) page.classList.add('active');
+
+  // Update URL hash
+  history.pushState(null, '', `#${tabName}`);
+}
+
+// Handle initial load with hash
+(function() {
+  const hash = location.hash.replace('#', '');
+  const valid = ['home','projects','collaboration','experience'];
+  if (hash && valid.includes(hash)) {
+    switchTab(hash);
+  }
+})();
+
+// Language toggle
+function toggleLang() {
+  const btn = document.getElementById('nav-lang-btn');
+  const isEn = document.documentElement.classList.toggle('lang-en');
+  btn.textContent = isEn ? 'CN' : 'EN';
+}
+
+// Archive card pull animation
+document.querySelectorAll('.af-card').forEach(function(card) {
+  card.addEventListener('click', function(e) {
+    e.preventDefault();
+    var href = this.getAttribute('href');
+    if (!href || href === '#') return;
+    var el = this;
+    el.classList.add('af-pulling');
+    setTimeout(function() { window.location.href = href; }, 880);
+  });
+});
+</script>
+
+</body>
+</html>

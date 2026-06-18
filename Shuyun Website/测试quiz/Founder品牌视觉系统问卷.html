@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder 品牌视觉系统问卷 · 抒云</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --chalk: #F5F3EF;
+  --sand: #EAE6DE;
+  --warm: #D8D2C6;
+  --ink: #1C1A17;
+  --deep: #2E2B27;
+  --mist: #807A72;
+  --faint: #A8A39B;
+  --gold: #C4A87A;
+  --gold-pale: #E0CBA8;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --radius: 2px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { font-size: 16px; }
+
+body {
+  background: var(--chalk);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── PROGRESS ── */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--gold);
+  transition: width 0.6s var(--ease);
+  z-index: 100;
+}
+
+/* ── NAV ── */
+.q-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+  background: rgba(245, 243, 239, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.q-nav-logo {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.q-nav-step {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--faint);
+  text-transform: uppercase;
+}
+
+/* ── SCREEN SYSTEM ── */
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 120px 40px 80px;
+  animation: fadeUp 0.5s var(--ease) both;
+}
+
+.screen.active { display: flex; flex-direction: column; justify-content: center; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── INNER CONTAINER ── */
+.q-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── COVER ── */
+.cover-eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 32px;
+}
+
+.cover-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.cover-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cover-desc {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--mist);
+  max-width: 480px;
+  margin-bottom: 56px;
+}
+
+.cover-meta {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 48px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+}
+
+.cover-meta span::before {
+  content: '— ';
+}
+
+/* ── PART DIVIDER ── */
+.part-divider {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 80px;
+  animation: fadeUp 0.5s var(--ease) both;
+}
+
+.part-divider.active { display: flex; }
+
+.part-num {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.part-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+.part-subtitle {
+  font-size: 15px;
+  color: var(--mist);
+  line-height: 1.7;
+  max-width: 440px;
+  margin-bottom: 56px;
+}
+
+/* ── QUESTION BLOCK ── */
+.q-block {
+  margin-bottom: 56px;
+}
+
+.q-label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.q-text {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+
+.q-hint {
+  font-size: 13px;
+  color: var(--faint);
+  margin-top: -16px;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+/* ── TEXT INPUT ── */
+.q-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--warm);
+  padding: 12px 0;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.3s;
+  -webkit-appearance: none;
+}
+
+.q-input:focus { border-color: var(--gold); }
+.q-input::placeholder { color: var(--faint); }
+
+/* ── TEXTAREA ── */
+.q-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--warm);
+  padding: 12px 0;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--ink);
+  outline: none;
+  resize: none;
+  min-height: 80px;
+  transition: border-color 0.3s;
+  line-height: 1.7;
+  -webkit-appearance: none;
+}
+
+.q-textarea:focus { border-color: var(--gold); }
+.q-textarea::placeholder { color: var(--faint); }
+
+/* ── RADIO / CHECKBOX OPTIONS ── */
+.q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.q-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.25s var(--ease);
+  border-radius: var(--radius);
+}
+
+.q-option:hover {
+  background: var(--sand);
+}
+
+.q-option.selected {
+  background: var(--sand);
+  border-color: var(--gold);
+}
+
+.q-option-dot {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--warm);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: all 0.25s;
+}
+
+.q-option.selected .q-option-dot {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.q-option-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.2s;
+}
+
+.q-option.selected .q-option-dot::after { transform: translate(-50%, -50%) scale(1); }
+
+/* checkbox variant */
+.q-option-check {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--warm);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: all 0.25s;
+}
+
+.q-option.selected .q-option-check {
+  border-color: var(--gold);
+  background: var(--gold);
+}
+
+.q-option.selected .q-option-check::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 5px;
+  width: 4px; height: 7px;
+  border: 1.5px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.q-option-body {}
+
+.q-option-main {
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.q-option-sub {
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* ── VISUAL GRID (image choices) ── */
+.q-visual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.q-visual-card {
+  cursor: pointer;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.25s var(--ease);
+  position: relative;
+}
+
+.q-visual-card:hover { border-color: var(--warm); }
+
+.q-visual-card.selected {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.q-visual-swatch {
+  height: 100px;
+  display: flex;
+  gap: 0;
+}
+
+.q-visual-swatch span {
+  flex: 1;
+  display: block;
+}
+
+.q-visual-body {
+  padding: 14px 16px;
+  background: white;
+}
+
+.q-visual-tag {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.q-visual-name {
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.q-visual-desc {
+  font-size: 11px;
+  color: var(--faint);
+  margin-top: 3px;
+  font-style: italic;
+}
+
+/* typography preview cards */
+.q-type-card {
+  cursor: pointer;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  transition: all 0.25s var(--ease);
+  background: white;
+}
+
+.q-type-card:hover { border-color: var(--warm); }
+.q-type-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+
+.q-type-sample {
+  font-size: 26px;
+  line-height: 1.2;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+
+.q-type-label {
+  font-size: 11px;
+  color: var(--faint);
+  letter-spacing: 0.1em;
+}
+
+/* photo style cards */
+.q-photo-card {
+  cursor: pointer;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.25s var(--ease);
+}
+
+.q-photo-card:hover { border-color: var(--warm); }
+.q-photo-card.selected { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); }
+
+.q-photo-preview {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: white;
+  font-style: italic;
+}
+
+.q-photo-body {
+  padding: 12px 14px;
+  background: white;
+}
+
+.q-photo-name {
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.q-photo-sub {
+  font-size: 11px;
+  color: var(--faint);
+  margin-top: 2px;
+}
+
+/* space cards (2x3 grid) */
+.q-space-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.q-space-card {
+  cursor: pointer;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius);
+  padding: 20px 14px;
+  text-align: center;
+  background: white;
+  transition: all 0.25s var(--ease);
+}
+
+.q-space-card:hover { border-color: var(--warm); }
+.q-space-card.selected { border-color: var(--gold); background: #fdf9f4; }
+
+.q-space-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.q-space-name {
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.q-space-sub {
+  font-size: 10px;
+  color: var(--faint);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* material chips */
+.q-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.q-chip {
+  padding: 10px 18px;
+  border: 1px solid var(--warm);
+  border-radius: 40px;
+  font-size: 13px;
+  color: var(--mist);
+  cursor: pointer;
+  transition: all 0.2s;
+  background: white;
+}
+
+.q-chip:hover { border-color: var(--gold-pale); color: var(--ink); }
+.q-chip.selected { border-color: var(--gold); color: var(--ink); background: #fdf9f4; }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--ink);
+  color: white;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.25s;
+  text-decoration: none;
+}
+
+.btn-primary:hover { background: var(--deep); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0;
+  background: transparent;
+  color: var(--mist);
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.btn-ghost:hover { color: var(--ink); }
+
+.btn-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+/* ── DIVIDER LINE ── */
+.q-rule {
+  border: none;
+  border-top: 1px solid var(--sand);
+  margin: 40px 0;
+}
+
+/* ── THANK YOU ── */
+.ty-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  color: var(--gold);
+  font-size: 20px;
+}
+
+.ty-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.ty-body {
+  font-size: 15px;
+  color: var(--mist);
+  line-height: 1.8;
+  max-width: 440px;
+  margin-bottom: 40px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 640px) {
+  .q-nav { padding: 16px 20px; }
+  .screen, .part-divider { padding: 100px 20px 60px; }
+  .q-visual-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .q-space-grid { grid-template-columns: repeat(2, 1fr); }
+  .cover-meta { flex-wrap: wrap; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<nav class="q-nav">
+  <a href="../index.html" class="q-nav-logo">抒云 · SHUYUN</a>
+  <span class="q-nav-step" id="navStep"></span>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     SCREEN 0 · COVER
+════════════════════════════════════════ -->
+<div class="screen active" id="screen-cover">
+  <div class="q-inner">
+    <div class="cover-eyebrow">Founder Visual System · 品牌视觉感知采集</div>
+    <h1 class="cover-title">
+      在我们开始之前，<br>
+      <em>让我先理解你。</em>
+    </h1>
+    <p class="cover-desc">
+      这不是一份商业问卷。<br>
+      它更像一次私人对话——关于你的气质、审美、以及你真正想成为的品牌。<br><br>
+      你的回答将帮助我为你生成一份「Founder 视觉人格系统」，
+      作为我们合作的起点。
+    </p>
+    <div class="cover-meta">
+      <span>7 个部分</span>
+      <span>约 33 题</span>
+      <span>预计 15 分钟</span>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p1-divider')">
+        开始 <span>→</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 1 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p1-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 01 / 07</div>
+    <h2 class="part-title">你是谁</h2>
+    <p class="part-subtitle">最基本的信息。轻轻的开始。</p>
+    <button class="btn-primary" onclick="goTo('screen-p1')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 1 · 你是谁
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p1">
+  <div class="q-inner">
+
+    <div class="q-block">
+      <div class="q-label">Q01</div>
+      <div class="q-text">你的名字</div>
+      <input class="q-input" type="text" id="q1" placeholder="你希望我怎么称呼你">
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q02</div>
+      <div class="q-text">你的品牌或项目名称</div>
+      <div class="q-hint">如果还没有，写"还在定义中"也完全可以</div>
+      <input class="q-input" type="text" id="q2" placeholder="品牌 / 项目名称">
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q03</div>
+      <div class="q-text">你目前最接近哪种身份？</div>
+      <div class="q-options" id="q3" data-type="single">
+        <label class="q-option" data-value="Founder / 创始人">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">Founder / 创始人</div></div>
+        </label>
+        <label class="q-option" data-value="IP 创作者 / 内容创作者">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">IP 创作者 / 内容创作者</div></div>
+        </label>
+        <label class="q-option" data-value="社群 / 空间主理人">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">社群 / 空间主理人</div></div>
+        </label>
+        <label class="q-option" data-value="顾问 / 教练 / 疗愈师">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">顾问 / 教练 / 疗愈师</div></div>
+        </label>
+        <label class="q-option" data-value="艺术家 / 创意创业者">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">艺术家 / 创意创业者</div></div>
+        </label>
+        <label class="q-option" data-value="还在定义中">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">还在定义中...</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q04</div>
+      <div class="q-text">你的网站或社媒主页</div>
+      <div class="q-hint">可选 — 帮助我在对话前更好了解你</div>
+      <input class="q-input" type="text" id="q4" placeholder="小红书 / Instagram / 网站链接">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p2-divider')">下一部分 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-cover')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 2 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p2-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 02 / 07</div>
+    <h2 class="part-title">你的品牌气质</h2>
+    <p class="part-subtitle">不用分析，只需感受。跟着直觉走。</p>
+    <button class="btn-primary" onclick="goTo('screen-p2')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 2 · 品牌气质
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p2">
+  <div class="q-inner">
+
+    <div class="q-block">
+      <div class="q-label">Q05</div>
+      <div class="q-text">如果你的品牌是一个空间，它最像哪一个？</div>
+      <div class="q-space-grid" id="q5" data-type="single">
+        <div class="q-space-card" data-value="极简白色建筑Studio">
+          <div class="q-space-icon">◻</div>
+          <div class="q-space-name">极简白色<br>建筑 Studio</div>
+          <div class="q-space-sub">清醒 · 结构感</div>
+        </div>
+        <div class="q-space-card" data-value="静谧日式旅馆">
+          <div class="q-space-icon">⌀</div>
+          <div class="q-space-name">静谧<br>日式旅馆</div>
+          <div class="q-space-sub">留白 · 禅意</div>
+        </div>
+        <div class="q-space-card" data-value="巴黎私人艺术馆">
+          <div class="q-space-icon">◈</div>
+          <div class="q-space-name">巴黎<br>私人艺术馆</div>
+          <div class="q-space-sub">精选 · 欧陆感</div>
+        </div>
+        <div class="q-space-card" data-value="私密会员俱乐部">
+          <div class="q-space-icon">◉</div>
+          <div class="q-space-name">私密<br>会员俱乐部</div>
+          <div class="q-space-sub">稀缺 · 高净值</div>
+        </div>
+        <div class="q-space-card" data-value="山中石屋Retreat">
+          <div class="q-space-icon">△</div>
+          <div class="q-space-name">山中石屋<br>Retreat</div>
+          <div class="q-space-sub">疗愈 · 归隐</div>
+        </div>
+        <div class="q-space-card" data-value="面朝海的独立书店">
+          <div class="q-space-icon">◇</div>
+          <div class="q-space-name">面朝海<br>独立书店</div>
+          <div class="q-space-sub">自由 · 文化感</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q06</div>
+      <div class="q-text">你最欣赏的 1–3 个品牌是什么？</div>
+      <div class="q-hint">任意领域都可以 — 时尚、建筑、科技、餐饮……品味无界</div>
+      <textarea class="q-textarea" id="q6" rows="2" placeholder="例如：Aesop、Bottega Veneta、Notion……"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q07</div>
+      <div class="q-text">你最不希望自己的品牌给人哪种感觉？</div>
+      <div class="q-hint">最多选 2 个</div>
+      <div class="q-chips" id="q7" data-type="multi" data-max="2">
+        <span class="q-chip" data-value="廉价感">廉价感</span>
+        <span class="q-chip" data-value="大众化">大众化</span>
+        <span class="q-chip" data-value="过度营销">过度营销感</span>
+        <span class="q-chip" data-value="说教感">说教感</span>
+        <span class="q-chip" data-value="冷漠疏离">冷漠疏离</span>
+        <span class="q-chip" data-value="模仿感">模仿感</span>
+        <span class="q-chip" data-value="刻意网红感">刻意网红感</span>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q08</div>
+      <div class="q-text">陌生人第一次接触你的品牌，你希望他们的第一反应是什么？</div>
+      <div class="q-options" id="q8" data-type="single">
+        <label class="q-option" data-value="神秘好奇：这是什么，我想了解更多">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「这是什么？我想了解更多」</div>
+            <div class="q-option-sub">神秘感 / 好奇心</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="共鸣：这和我很像，我被看见了">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「这和我很像，我在这里被看见了」</div>
+            <div class="q-option-sub">共鸣感 / 归属感</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="权威：这个人很厉害，我信服">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「这个人很厉害，让我信服」</div>
+            <div class="q-option-sub">权威感 / 信任感</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="审美：好美，好有品位">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「好美，好有品位」</div>
+            <div class="q-option-sub">审美震撼 / 视觉吸引</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="亲近：好温暖，我想靠近">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「好温暖，我想靠近」</div>
+            <div class="q-option-sub">亲近感 / 陪伴感</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p3-divider')">下一部分 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-p1')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 3 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p3-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 03 / 07</div>
+    <h2 class="part-title">视觉与<br>审美偏好</h2>
+    <p class="part-subtitle">这一部分是图片选择为主。<br>不要想太多，跟着感觉选。</p>
+    <button class="btn-primary" onclick="goTo('screen-p3')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 3 · 视觉审美
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p3">
+  <div class="q-inner">
+
+    <!-- Q9 COLOR -->
+    <div class="q-block">
+      <div class="q-label">Q09</div>
+      <div class="q-text">哪组色调最接近你理想中的品牌气场？</div>
+      <div class="q-visual-grid" id="q9" data-type="single">
+        <div class="q-visual-card" data-value="清醒极简：象牙白+冷灰+烟蓝">
+          <div class="q-visual-swatch">
+            <span style="background:#F0EEE9;"></span>
+            <span style="background:#C2C4C7;"></span>
+            <span style="background:#8B9BAE;"></span>
+            <span style="background:#E8E6E1;"></span>
+          </div>
+          <div class="q-visual-body">
+            <div class="q-visual-tag">A</div>
+            <div class="q-visual-name">象牙白 · 冷灰 · 烟蓝</div>
+            <div class="q-visual-desc">清醒 · 极简 · 建筑感</div>
+          </div>
+        </div>
+        <div class="q-visual-card" data-value="温润有机：燕麦米+旧金+深棕">
+          <div class="q-visual-swatch">
+            <span style="background:#EDE5D8;"></span>
+            <span style="background:#C4A87A;"></span>
+            <span style="background:#7A5C40;"></span>
+            <span style="background:#F5EFE6;"></span>
+          </div>
+          <div class="q-visual-body">
+            <div class="q-visual-tag">B</div>
+            <div class="q-visual-name">燕麦米 · 旧金 · 深棕</div>
+            <div class="q-visual-desc">温润 · 有机 · 大地气息</div>
+          </div>
+        </div>
+        <div class="q-visual-card" data-value="神秘奢感：炭黑+暗金+酒红">
+          <div class="q-visual-swatch">
+            <span style="background:#1C1A17;"></span>
+            <span style="background:#B8924A;"></span>
+            <span style="background:#7A2832;"></span>
+            <span style="background:#2E2B27;"></span>
+          </div>
+          <div class="q-visual-body">
+            <div class="q-visual-tag">C</div>
+            <div class="q-visual-name">炭黑 · 暗金 · 酒红</div>
+            <div class="q-visual-desc">神秘 · 权威 · 奢感</div>
+          </div>
+        </div>
+        <div class="q-visual-card" data-value="感性梦境：玫瑰米+雾霾紫+月光白">
+          <div class="q-visual-swatch">
+            <span style="background:#E8C8C0;"></span>
+            <span style="background:#B8A8C0;"></span>
+            <span style="background:#F0EDE8;"></span>
+            <span style="background:#D4C8D8;"></span>
+          </div>
+          <div class="q-visual-body">
+            <div class="q-visual-tag">D</div>
+            <div class="q-visual-name">玫瑰米 · 雾霾紫 · 月光白</div>
+            <div class="q-visual-desc">感性 · 女性 · 梦境气质</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="q-rule">
+
+    <!-- Q10 TYPOGRAPHY -->
+    <div class="q-block">
+      <div class="q-label">Q10</div>
+      <div class="q-text">哪种字体风格最像你想要的品牌语言？</div>
+      <div class="q-visual-grid" id="q10" data-type="single">
+        <div class="q-type-card" data-value="高对比衬线：优雅克制Didot感">
+          <div class="q-type-sample" style="font-family:'Cormorant Garamond',serif; font-weight:300; letter-spacing:0.02em;">Clarity</div>
+          <div class="q-type-label">高对比衬线 · 优雅克制</div>
+        </div>
+        <div class="q-type-card" data-value="现代几何无衬线：干净国际感">
+          <div class="q-type-sample" style="font-family:'DM Sans',sans-serif; font-weight:200; letter-spacing:0.08em;">Clarity</div>
+          <div class="q-type-label">现代无衬线 · 干净国际感</div>
+        </div>
+        <div class="q-type-card" data-value="温柔手写衬线：有温度文学气息">
+          <div class="q-type-sample" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400;">Clarity</div>
+          <div class="q-type-label">手写衬线斜体 · 温柔文学感</div>
+        </div>
+        <div class="q-type-card" data-value="极粗无衬线：强视觉冲击当代感">
+          <div class="q-type-sample" style="font-family:'DM Sans',sans-serif; font-weight:800; letter-spacing:-0.03em; font-size:28px;">Clarity</div>
+          <div class="q-type-label">极粗无衬线 · 强视觉冲击</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="q-rule">
+
+    <!-- Q11 PHOTO STYLE -->
+    <div class="q-block">
+      <div class="q-label">Q11</div>
+      <div class="q-text">你的品牌内容更接近哪种摄影气质？</div>
+      <div class="q-visual-grid" id="q11" data-type="single">
+        <div class="q-photo-card" data-value="大量留白·冷调·建筑感">
+          <div class="q-photo-preview" style="background:linear-gradient(135deg,#E8E6E1,#C4C8CC);">大量留白</div>
+          <div class="q-photo-body">
+            <div class="q-photo-name">极简冷调</div>
+            <div class="q-photo-sub">留白 · 建筑感 · 克制</div>
+          </div>
+        </div>
+        <div class="q-photo-card" data-value="自然光·温暖·真实生活流">
+          <div class="q-photo-preview" style="background:linear-gradient(135deg,#E8D5C0,#C4A87A);">自然温暖</div>
+          <div class="q-photo-body">
+            <div class="q-photo-name">自然光温暖</div>
+            <div class="q-photo-sub">真实 · 生活流 · 有温度</div>
+          </div>
+        </div>
+        <div class="q-photo-card" data-value="黑白·强对比·纪实情绪">
+          <div class="q-photo-preview" style="background:linear-gradient(135deg,#3A3835,#1C1A17);">黑白纪实</div>
+          <div class="q-photo-body">
+            <div class="q-photo-name">黑白对比</div>
+            <div class="q-photo-sub">纪实 · 力量感 · 情绪化</div>
+          </div>
+        </div>
+        <div class="q-photo-card" data-value="柔焦·胶片颗粒·梦境感">
+          <div class="q-photo-preview" style="background:linear-gradient(135deg,#D4C0C8,#B8A8C0);">柔焦梦境</div>
+          <div class="q-photo-body">
+            <div class="q-photo-name">柔焦胶片</div>
+            <div class="q-photo-sub">梦境感 · 颗粒质感 · 诗意</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="q-rule">
+
+    <!-- Q12 MATERIAL -->
+    <div class="q-block">
+      <div class="q-label">Q12</div>
+      <div class="q-text">如果你的品牌有一个实体空间，主要材质是什么？</div>
+      <div class="q-hint">最多选 3 个</div>
+      <div class="q-chips" id="q12" data-type="multi" data-max="3">
+        <span class="q-chip" data-value="白色石膏 / 水泥灰">白色石膏 / 水泥灰</span>
+        <span class="q-chip" data-value="原木 / 竹 / 藤编">原木 / 竹 / 藤编</span>
+        <span class="q-chip" data-value="大理石 / 黄铜">大理石 / 黄铜</span>
+        <span class="q-chip" data-value="亚麻 / 棉布 / 自然织物">亚麻 / 棉布 / 自然织物</span>
+        <span class="q-chip" data-value="亚克力 / 玻璃 / 金属">亚克力 / 玻璃 / 金属</span>
+        <span class="q-chip" data-value="深色皮革 / 丝绒">深色皮革 / 丝绒</span>
+      </div>
+    </div>
+
+    <hr class="q-rule">
+
+    <!-- Q13 WARDROBE -->
+    <div class="q-block">
+      <div class="q-label">Q13</div>
+      <div class="q-text">哪种穿搭气质最像你希望品牌呈现的状态？</div>
+      <div class="q-options" id="q13" data-type="single">
+        <label class="q-option" data-value="全白亚麻·极简·无性别感">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">全白亚麻 · 极简 · 无性别感</div>
+            <div class="q-option-sub">去装饰 · 本质感 · 国际观</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="知性深色·结构感·都市专业">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">知性深色 · 结构感 · 都市专业</div>
+            <div class="q-option-sub">权威 · 有章法 · 让人信赖</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="柔软流动·自然色·疗愈感">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">柔软流动 · 自然色 · 疗愈感</div>
+            <div class="q-option-sub">温柔 · 有机 · 生命力</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="全黑利落·强气场·权威感">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">全黑利落 · 强气场 · 权威感</div>
+            <div class="q-option-sub">神秘 · 不解释 · 高势能</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p4-divider')">下一部分 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-p2')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 4 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p4-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 04 / 07</div>
+    <h2 class="part-title">Founder<br>表达方式</h2>
+    <p class="part-subtitle">不是你想表达什么，<br>而是你天然适合什么方式表达。</p>
+    <button class="btn-primary" onclick="goTo('screen-p4')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 4 · Founder 表达方式
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p4">
+  <div class="q-inner">
+
+    <div class="q-block">
+      <div class="q-label">Q14</div>
+      <div class="q-text">你的内容表达更接近哪种风格？</div>
+      <div class="q-options" id="q14" data-type="single">
+        <label class="q-option" data-value="强观点型：有立场，不怕和别人不一样">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">强观点型</div>
+            <div class="q-option-sub">我有明确立场，我不怕和别人不一样</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="留白型：说一半，让对方感受另一半">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">留白型</div>
+            <div class="q-option-sub">我喜欢说一半，让对方感受另一半</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="温柔陪伴型：更像朋友，不像导师">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">温柔陪伴型</div>
+            <div class="q-option-sub">我更像一个朋友，而不是导师</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="权威型：说话让人信服，判断有重量">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">权威型</div>
+            <div class="q-option-sub">我说话让人信服，我的判断有重量</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="神秘感型：不解释，气场本身就是语言">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">神秘感型</div>
+            <div class="q-option-sub">不需要解释太多，气场本身就是语言</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q15</div>
+      <div class="q-text">你更适合哪种内容节奏？</div>
+      <div class="q-options" id="q15" data-type="single">
+        <label class="q-option" data-value="高频输出：每天都有存在感，粉丝粘性强">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">高频输出 — 每天都有存在感，粉丝粘性强</div></div>
+        </label>
+        <label class="q-option" data-value="低频高质量：不常出现，但一出现就有影响力">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">低频高质量 — 不常出现，但一出现就有影响力</div></div>
+        </label>
+        <label class="q-option" data-value="不规律，随感而发，自然流动">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">不规律，随感而发，自然流动</div></div>
+        </label>
+        <label class="q-option" data-value="还没找到节奏">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">还没找到节奏</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q16</div>
+      <div class="q-text">你更想吸引什么样的受众？</div>
+      <div class="q-options" id="q16" data-type="single">
+        <label class="q-option" data-value="高感知小众用户：数量少但深度高，愿意付高客单">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">高感知小众用户</div>
+            <div class="q-option-sub">数量少但深度高，愿意付高客单</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="大众规模化受众：触达面广，规模化潜力">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">大众规模化受众</div>
+            <div class="q-option-sub">触达面广，规模化潜力</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="特定圈层精准人群：圈内高认知，口碑驱动">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">特定圈层精准人群</div>
+            <div class="q-option-sub">圈内高认知，口碑驱动</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="还没想清楚">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">还没想清楚</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q17</div>
+      <div class="q-text">你希望用户与你的关系感更像什么？</div>
+      <div class="q-options" id="q17" data-type="single">
+        <label class="q-option" data-value="稀缺感：你不是所有人都能接触到的">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">稀缺感</div>
+            <div class="q-option-sub">你不是所有人都能接触到的</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="陪伴感：你一直在，是他们成长的见证者">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">陪伴感</div>
+            <div class="q-option-sub">你一直在，是他们成长的见证者</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="启发感：每次出现都给他们新的视角">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">启发感</div>
+            <div class="q-option-sub">每次出现都给他们新的视角</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="深度信任感：他们愿意把重要决定交给你">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">深度信任感</div>
+            <div class="q-option-sub">他们愿意把重要决定交给你</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p5-divider')">下一部分 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-p3')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 5 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p5-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 05 / 07</div>
+    <h2 class="part-title">商业与<br>用户气质</h2>
+    <p class="part-subtitle">帮助我理解你真实的商业处境，<br>而不是你觉得"应该"说的答案。</p>
+    <button class="btn-primary" onclick="goTo('screen-p5')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 5 · 商业与用户气质
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p5">
+  <div class="q-inner">
+
+    <div class="q-block">
+      <div class="q-label">Q18</div>
+      <div class="q-text">你最适合哪种商业模式？</div>
+      <div class="q-hint">最多选 2 个</div>
+      <div class="q-options" id="q18" data-type="multi" data-max="2">
+        <label class="q-option" data-value="顾问型：一对一深度服务，高客单">
+          <span class="q-option-check"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">顾问型</div>
+            <div class="q-option-sub">一对一深度服务，高客单</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="社群型：社区成员制，持续订阅">
+          <span class="q-option-check"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">社群型</div>
+            <div class="q-option-sub">社区成员制，持续订阅</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="内容型：知识付费，课程，视频">
+          <span class="q-option-check"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">内容型</div>
+            <div class="q-option-sub">知识付费，课程，视频</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="Retreat/空间体验型：线下沉浸式">
+          <span class="q-option-check"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">Retreat / 空间体验型</div>
+            <div class="q-option-sub">线下沉浸式体验</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="品牌型：产品，联名，授权">
+          <span class="q-option-check"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">品牌型</div>
+            <div class="q-option-sub">产品、联名、授权</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="还不确定">
+          <span class="q-option-check"></span>
+          <div class="q-option-body"><div class="q-option-main">还不确定</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q19</div>
+      <div class="q-text">你更想建立的是什么？</div>
+      <div class="q-options" id="q19" data-type="single">
+        <label class="q-option" data-value="流量与知名度：让更多人认识我">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">流量与知名度 — 让更多人认识我</div></div>
+        </label>
+        <label class="q-option" data-value="高信任深度关系：让核心用户深度依赖我">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">高信任深度关系 — 让核心用户深度依赖我</div></div>
+        </label>
+        <label class="q-option" data-value="行业影响力坐标：成为某个领域的参考点">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">行业影响力坐标 — 成为某个领域的参考点</div></div>
+        </label>
+        <label class="q-option" data-value="社区归属感：建立有温度的圈子">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body"><div class="q-option-main">社区归属感 — 建立有温度的圈子</div></div>
+        </label>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q20</div>
+      <div class="q-text">用一句话定义你的商业气质，你会选哪个？</div>
+      <div class="q-options" id="q20" data-type="single">
+        <label class="q-option" data-value="少但极好：高端稀缺，深度服务">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「少，但极好」</div>
+            <div class="q-option-sub">高端稀缺，深度服务</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="我带你走过这段旅程：陪伴型，长期关系">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「我带你走过这段旅程」</div>
+            <div class="q-option-sub">陪伴型，长期关系</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="看我然后你会思考：影响力型，启发表达">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「看我，然后你会思考」</div>
+            <div class="q-option-sub">影响力型，启发性表达</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="这是一个你想属于的地方：社群型，归属感">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">「这是一个你想属于的地方」</div>
+            <div class="q-option-sub">社群型，归属感驱动</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <hr class="q-rule">
+
+    <!-- Direction A: client description -->
+    <div class="q-block">
+      <div class="q-label">Q21</div>
+      <div class="q-text">用你自己的话描述：你的理想客户是谁？</div>
+      <div class="q-hint">不用套框架，随便聊——他们是什么样的人，过着什么样的生活？</div>
+      <textarea class="q-textarea" id="q21" rows="3" placeholder="他们是……"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q22</div>
+      <div class="q-text">你服务过的客户里，哪一类人对你评价最高、最认可你？</div>
+      <div class="q-hint">他们有什么共同点？</div>
+      <textarea class="q-textarea" id="q22" rows="3" placeholder="他们通常是……"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q23</div>
+      <div class="q-text">你最不想服务哪类客户？</div>
+      <div class="q-hint">这个问题往往比"我想要谁"更能精准定位你的边界</div>
+      <textarea class="q-textarea" id="q23" rows="2" placeholder="我不适合……"></textarea>
+    </div>
+
+    <hr class="q-rule">
+
+    <!-- Direction C: value proposition -->
+    <div class="q-block">
+      <div class="q-label">Q24</div>
+      <div class="q-text">你的品牌现在在帮谁解决什么问题？</div>
+      <textarea class="q-textarea" id="q24" rows="2" placeholder="我在帮……解决……"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q25</div>
+      <div class="q-text">你觉得用户为什么选你，而不是选别人？</div>
+      <div class="q-hint">诚实地说，不用谦虚</div>
+      <textarea class="q-textarea" id="q25" rows="2" placeholder="他们选我是因为……"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q26</div>
+      <div class="q-text">你现在的定价，和你真实提供的价值相比——</div>
+      <div class="q-options" id="q26" data-type="single">
+        <label class="q-option" data-value="偏低：我给的比我收的多">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">偏低</div>
+            <div class="q-option-sub">我给的比我收的多</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="基本合理：价值与定价基本匹配">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">基本合理</div>
+            <div class="q-option-sub">价值与定价基本匹配</div>
+          </div>
+        </label>
+        <label class="q-option" data-value="还没想清楚：定价让我感到不确定">
+          <span class="q-option-dot"></span>
+          <div class="q-option-body">
+            <div class="q-option-main">还没想清楚</div>
+            <div class="q-option-sub">定价这件事让我感到不确定</div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p6-divider')">下一部分 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-p4')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 6 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p6-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 06 / 07</div>
+    <h2 class="part-title">你现在<br>的卡点</h2>
+    <p class="part-subtitle">不需要逻辑，只需要诚实。<br>说感受就够了。</p>
+    <button class="btn-primary" onclick="goTo('screen-p6')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 6 · 卡点
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p6">
+  <div class="q-inner">
+
+    <div class="q-block">
+      <div class="q-label">Q27</div>
+      <div class="q-text">为什么你觉得现在的品牌「还不像自己」？</div>
+      <div class="q-hint">可以聊感觉，不用聊逻辑</div>
+      <textarea class="q-textarea" id="q27" rows="4" placeholder="我总觉得……"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q28</div>
+      <div class="q-text">你最想升级的是哪个维度？</div>
+      <div class="q-hint">最多选 3 个</div>
+      <div class="q-chips" id="q28" data-type="multi" data-max="3">
+        <span class="q-chip" data-value="视觉系统">视觉系统</span>
+        <span class="q-chip" data-value="品牌语言">品牌语言</span>
+        <span class="q-chip" data-value="内容策略">内容策略</span>
+        <span class="q-chip" data-value="定价与商业模式">定价与商业模式</span>
+        <span class="q-chip" data-value="吸引更对的人">吸引更对的人</span>
+        <span class="q-chip" data-value="自我认知与定价信心">自我认知与定价信心</span>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q29</div>
+      <div class="q-text">你觉得自己最被低估的是什么？</div>
+      <textarea class="q-textarea" id="q29" rows="3" placeholder="其实我……但很少有人看见这一点"></textarea>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q30</div>
+      <div class="q-text">如果你的品牌三年后真正成熟，它会是什么样的？</div>
+      <div class="q-hint">一段话就够，随便写</div>
+      <textarea class="q-textarea" id="q30" rows="4" placeholder="那时候它会……"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo('screen-p7-divider')">最后一步 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-p5')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 7 DIVIDER
+════════════════════════════════════════ -->
+<div class="part-divider" id="screen-p7-divider">
+  <div class="q-inner">
+    <div class="part-num">Part 07 / 07</div>
+    <h2 class="part-title">留下你的<br>联系方式</h2>
+    <p class="part-subtitle">我会在 48 小时内认真读完你的回答，<br>然后联系你安排第一次对话。</p>
+    <button class="btn-primary" onclick="goTo('screen-p7')">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 7 · 联系方式
+════════════════════════════════════════ -->
+<div class="screen" id="screen-p7">
+  <div class="q-inner">
+
+    <div class="q-block">
+      <div class="q-label">Q31</div>
+      <div class="q-text">微信 ID</div>
+      <input class="q-input" type="text" id="q31" placeholder="微信号">
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q32</div>
+      <div class="q-text">邮箱</div>
+      <input class="q-input" type="email" id="q32" placeholder="your@email.com">
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">Q33</div>
+      <div class="q-text">Instagram / 小红书</div>
+      <div class="q-hint">可选</div>
+      <input class="q-input" type="text" id="q33" placeholder="@handle">
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="submitForm()">提交问卷 →</button>
+      <button class="btn-ghost" onclick="goTo('screen-p6')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     THANK YOU
+════════════════════════════════════════ -->
+<div class="screen" id="screen-ty">
+  <div class="q-inner">
+    <div class="ty-mark">✓</div>
+    <h2 class="ty-title">感谢你的<br>信任与坦诚。</h2>
+    <p class="ty-body">
+      你的回答我会认真阅读。<br>
+      通常在 48 小时内，我会通过你留下的方式联系你，<br>
+      我们一起进入第一次对话。
+    </p>
+    <a href="../index.html" class="btn-primary">返回抒云主页 →</a>
+  </div>
+</div>
+
+<script>
+// ── SCREEN ORDER ──
+const screenOrder = [
+  'screen-cover',
+  'screen-p1-divider', 'screen-p1',
+  'screen-p2-divider', 'screen-p2',
+  'screen-p3-divider', 'screen-p3',
+  'screen-p4-divider', 'screen-p4',
+  'screen-p5-divider', 'screen-p5',
+  'screen-p6-divider', 'screen-p6',
+  'screen-p7-divider', 'screen-p7',
+  'screen-ty'
+];
+
+const stepLabels = {
+  'screen-cover':      '',
+  'screen-p1-divider': 'Part 01 · 你是谁',
+  'screen-p1':         'Part 01 · 你是谁',
+  'screen-p2-divider': 'Part 02 · 品牌气质',
+  'screen-p2':         'Part 02 · 品牌气质',
+  'screen-p3-divider': 'Part 03 · 视觉审美',
+  'screen-p3':         'Part 03 · 视觉审美',
+  'screen-p4-divider': 'Part 04 · Founder表达',
+  'screen-p4':         'Part 04 · Founder表达',
+  'screen-p5-divider': 'Part 05 · 商业气质',
+  'screen-p5':         'Part 05 · 商业气质',
+  'screen-p6-divider': 'Part 06 · 卡点',
+  'screen-p6':         'Part 06 · 卡点',
+  'screen-p7-divider': 'Part 07 · 联系方式',
+  'screen-p7':         'Part 07 · 联系方式',
+  'screen-ty':         '已完成'
+};
+
+let currentScreen = 'screen-cover';
+
+function goTo(id) {
+  // hide current
+  const cur = document.getElementById(currentScreen);
+  if (cur) { cur.classList.remove('active'); cur.style.display = 'none'; }
+
+  // show next
+  const next = document.getElementById(id);
+  if (!next) return;
+  currentScreen = id;
+
+  const isDiv = next.classList.contains('part-divider');
+  next.style.display = 'flex';
+  next.classList.add('active');
+
+  // update progress
+  const idx = screenOrder.indexOf(id);
+  const pct = idx / (screenOrder.length - 1) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+
+  // update nav label
+  document.getElementById('navStep').textContent = stepLabels[id] || '';
+
+  window.scrollTo(0, 0);
+}
+
+// ── OPTION INTERACTIVITY ──
+document.querySelectorAll('.q-options[data-type="single"]').forEach(group => {
+  group.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      group.querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    });
+  });
+});
+
+document.querySelectorAll('.q-options[data-type="multi"]').forEach(group => {
+  const max = parseInt(group.dataset.max) || 99;
+  group.querySelectorAll('.q-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const selected = group.querySelectorAll('.q-option.selected');
+      if (opt.classList.contains('selected')) {
+        opt.classList.remove('selected');
+      } else if (selected.length < max) {
+        opt.classList.add('selected');
+      }
+    });
+  });
+});
+
+document.querySelectorAll('.q-space-grid[data-type="single"]').forEach(grid => {
+  grid.querySelectorAll('.q-space-card').forEach(card => {
+    card.addEventListener('click', () => {
+      grid.querySelectorAll('.q-space-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    });
+  });
+});
+
+document.querySelectorAll('.q-visual-grid[data-type="single"]').forEach(grid => {
+  grid.querySelectorAll('.q-visual-card, .q-type-card, .q-photo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      grid.querySelectorAll('.q-visual-card, .q-type-card, .q-photo-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+    });
+  });
+});
+
+document.querySelectorAll('.q-chips[data-type="multi"]').forEach(container => {
+  const max = parseInt(container.dataset.max) || 99;
+  container.querySelectorAll('.q-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const selected = container.querySelectorAll('.q-chip.selected');
+      if (chip.classList.contains('selected')) {
+        chip.classList.remove('selected');
+      } else if (selected.length < max) {
+        chip.classList.add('selected');
+      }
+    });
+  });
+});
+
+// ── COLLECT & SUBMIT ──
+function getVal(id) {
+  const el = document.getElementById(id);
+  if (!el) return '';
+  return el.value.trim();
+}
+
+function getSelected(id) {
+  const el = document.getElementById(id);
+  if (!el) return '';
+  const items = el.querySelectorAll('.q-option.selected, .q-space-card.selected, .q-visual-card.selected, .q-type-card.selected, .q-photo-card.selected, .q-chip.selected');
+  return Array.from(items).map(i => i.dataset.value || i.querySelector('.q-option-main')?.textContent || i.querySelector('.q-space-name')?.textContent?.replace(/\n/g,' ') || '').filter(Boolean).join('；');
+}
+
+function submitForm() {
+  const data = [
+    ['Q01 名字', getVal('q1')],
+    ['Q02 品牌名称', getVal('q2')],
+    ['Q03 当前身份', getSelected('q3')],
+    ['Q04 社媒主页', getVal('q4')],
+    ['Q05 品牌像哪种空间', getSelected('q5')],
+    ['Q06 最欣赏的品牌', getVal('q6')],
+    ['Q07 最不希望的感觉', getSelected('q7')],
+    ['Q08 希望的第一反应', getSelected('q8')],
+    ['Q09 色调偏好', getSelected('q9')],
+    ['Q10 字体风格', getSelected('q10')],
+    ['Q11 摄影风格', getSelected('q11')],
+    ['Q12 材质偏好', getSelected('q12')],
+    ['Q13 穿搭气质', getSelected('q13')],
+    ['Q14 表达风格', getSelected('q14')],
+    ['Q15 内容节奏', getSelected('q15')],
+    ['Q16 目标受众', getSelected('q16')],
+    ['Q17 关系感', getSelected('q17')],
+    ['Q18 商业模式', getSelected('q18')],
+    ['Q19 更想建立什么', getSelected('q19')],
+    ['Q20 商业气质一句话', getSelected('q20')],
+    ['Q21 理想客户描述', getVal('q21')],
+    ['Q22 认可你最多的客户类型', getVal('q22')],
+    ['Q23 不想服务的客户', getVal('q23')],
+    ['Q24 帮谁解决什么问题', getVal('q24')],
+    ['Q25 为什么选你', getVal('q25')],
+    ['Q26 定价自我评估', getSelected('q26')],
+    ['Q27 品牌还不像自己的原因', getVal('q27')],
+    ['Q28 最想升级的维度', getSelected('q28')],
+    ['Q29 最被低估的是什么', getVal('q29')],
+    ['Q30 三年后的品牌愿景', getVal('q30')],
+    ['Q31 微信 ID', getVal('q31')],
+    ['Q32 邮箱', getVal('q32')],
+    ['Q33 Instagram / 小红书', getVal('q33')],
+  ];
+
+  const name = getVal('q1') || '客户';
+  const body = data.map(([q, a]) => `${q}\n${a || '（未填写）'}`).join('\n\n');
+
+  const subject = encodeURIComponent(`【Founder 品牌视觉系统问卷】${name} 的回答`);
+  const bodyEncoded = encodeURIComponent(body);
+
+  window.location.href = `mailto:miliatada@gmail.com?subject=${subject}&body=${bodyEncoded}`;
+
+  goTo('screen-ty');
+}
+
+// init
+goTo('screen-cover');
+</script>
+</body>
+</html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>上拍鉴定意见 · CEO 的 AI 商业教练</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400&family=Noto+Serif+SC:wght@300;400&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── 色卡系统 · 抒云专属 ── */
+    :root {
+      --cloud-white: #F4F2EC;   /* 云上舞白 */
+      --taupe:       #C4B49A;   /* 裸灰色   */
+      --steel-blue:  #7A9BB5;   /* 浅灰蓝   */
+      --khaki:       #B8A882;   /* 暖灰黄   */
+      --gold:        #C9A84C;   /* 金色主色 */
+      --dark:        #1C1C1A;
+    }
+
+    html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+    body { font-family: 'Noto Sans SC', 'PingFang SC', sans-serif; font-weight: 300; }
+
+    /* ── 每一页 = 1 个 slide ── */
+    .slide {
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── 右侧导航点 ── */
+    #nav {
+      position: fixed;
+      right: 28px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      z-index: 200;
+    }
+    #nav a {
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: all 0.3s;
+    }
+    #nav a.active { background: var(--gold); transform: scale(1.4); }
+    #nav.on-light a { background: rgba(28,28,26,0.2); }
+    #nav.on-light a.active { background: var(--gold); }
+
+    /* ── 通用组件 ── */
+    .small-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+    }
+    .arrow-down {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .ghost-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(160px, 22vw, 280px);
+      line-height: 1;
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ══════════════════════════════════════════
+       SLIDE 0 · 封面
+       背景：石灰岩质感 · 深灰蓝
+    ══════════════════════════════════════════ */
+    #s0 {
+      background:
+        radial-gradient(ellipse at 75% 40%, rgba(180,190,195,0.45) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 75%, rgba(140,155,165,0.3) 0%, transparent 50%),
+        linear-gradient(155deg, #6E8490 0%, #8B9EA8 25%, #A8B4B8 50%, #C8C4BC 75%, #D4CFC6 100%);
+    }
+    #s0 .cover-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      padding: 32px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #s0 .cover-bar .small-label { color: rgba(255,255,255,0.45); }
+    #s0 .cover-bar .lot { font-family: 'Cormorant Garamond', serif; font-size: 12px; letter-spacing: 0.3em; color: rgba(255,255,255,0.3); }
+    #s0 .cover-center { text-align: center; position: relative; z-index: 2; }
+    #s0 .cover-title-cn {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(28px, 4.5vw, 52px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      margin-bottom: 16px;
+    }
+    #s0 .cover-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.15em;
+      margin-bottom: 56px;
+    }
+    #s0 .cover-subject-label { color: rgba(255,255,255,0.3); margin-bottom: 10px; }
+    #s0 .cover-subject {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(14px, 2vw, 20px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.12em;
+    }
+    #s0 .cover-bottom {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    #s0 .cover-bottom .meta { font-size: 11px; color: rgba(255,255,255,0.28); letter-spacing: 0.15em; line-height: 1.8; }
+    #s0 .cover-bottom .meta strong { color: rgba(255,255,255,0.5); font-weight: 400; }
+
+    /* ══════════════════════════════════════════
+       SLIDE 1 · 值判断
+       背景：云上舞白 · 轻盈
+    ══════════════════════════════════════════ */
+    #s1 {
+      background:
+        radial-gradient(ellipse at 60% 20%, rgba(122,155,181,0.25) 0%, transparent 55%),
+        radial-gradient(ellipse at 30% 80%, rgba(196,180,154,0.2) 0%, transparent 50%),
+        linear-gradient(175deg, #C8D4DC 0%, #D8E0E4 30%, #E8E4DC 65%, #F4F2EC 100%);
+    }
+    #s1 .ghost-num { color: rgba(122,155,181,0.12); right: -20px; top: 50%; transform: translateY(-50%); }
+    #s1 .slide-label { color: rgba(28,28,26,0.35); margin-bottom: 20px; text-align: center; }
+    #s1 .verdict-cn {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(22px, 3.5vw, 40px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    #s1 .verdict-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: rgba(28,28,26,0.35);
+      letter-spacing: 0.12em;
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    #s1 .verdict-body {
+      max-width: 560px;
+      font-size: 13px;
+      color: rgba(28,28,26,0.55);
+      line-height: 2.1;
+      letter-spacing: 0.04em;
+      text-align: center;
+      margin: 0 auto 48px;
+    }
+    #s1 .dims-row {
+      display: flex;
+      gap: 2px;
+      justify-content: center;
+    }
+    #s1 .dim {
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 10px;
+      padding: 20px 22px;
+      text-align: center;
+      width: 120px;
+    }
+    #s1 .dim-label { font-family: 'DM Sans', sans-serif; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(28,28,26,0.4); margin-bottom: 10px; }
+    #s1 .dim-grade { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; margin-bottom: 8px; }
+    #s1 .dim-bar { height: 2px; background: rgba(28,28,26,0.08); border-radius: 1px; position: relative; overflow: hidden; }
+    #s1 .dim-bar-fill { height: 100%; background: var(--gold); border-radius: 1px; }
+
+    /* ══════════════════════════════════════════
+       SLIDE 2 · 被低估的原因
+       背景：裸灰 · 暖砂
+    ══════════════════════════════════════════ */
+    #s2 {
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(215,205,185,0.5) 0%, transparent 50%),
+        radial-gradient(ellipse at 15% 85%, rgba(140,130,110,0.3) 0%, transparent 45%),
+        linear-gradient(150deg, #B8A882 0%, #C4B49A 30%, #D8CEBC 65%, #EAE4D8 100%);
+    }
+    #s2 .ghost-num { color: rgba(255,255,255,0.15); left: -30px; bottom: -20px; }
+    #s2 .slide-label { color: rgba(255,255,255,0.45); margin-bottom: 20px; }
+    #s2 .slide-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 48px;
+    }
+    #s2 .reasons {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 700px;
+      width: 100%;
+    }
+    #s2 .reason {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    #s2 .reason:last-child { border-bottom: none; }
+    #s2 .r-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.2);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 40px;
+    }
+    #s2 .r-body { flex: 1; }
+    #s2 .r-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(28,28,26,0.85);
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    #s2 .r-desc { font-size: 12px; color: rgba(28,28,26,0.5); line-height: 1.95; letter-spacing: 0.03em; }
+    #s2 .r-tag {
+      flex-shrink: 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 7px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 3px;
+      padding: 4px 10px;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       SLIDE 3 · 能否上拍
+       背景：深灰 · 有力量
+    ══════════════════════════════════════════ */
+    #s3 {
+      background:
+        radial-gradient(ellipse at 70% 30%, rgba(80,90,100,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(50,55,50,0.6) 0%, transparent 50%),
+        linear-gradient(150deg, #2C2E2A 0%, #363830 40%, #282A26 100%);
+    }
+    #s3 .slide-label { color: rgba(255,255,255,0.28); margin-bottom: 24px; }
+    #s3 .arrow-down { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+    #s3 .verdict-big {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(30px, 5vw, 60px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    #s3 .verdict-en-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.15em;
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    #s3 .conds {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      max-width: 720px;
+      width: 100%;
+    }
+    #s3 .cond-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 24px 28px;
+    }
+    #s3 .cond-card-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.5);
+      margin-bottom: 12px;
+    }
+    #s3 .cond-card-text { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 2; letter-spacing: 0.03em; }
+
+    /* ══════════════════════════════════════════
+       SLIDE 4 · 适合的人群
+       背景：浅灰蓝 · 天空感
+    ══════════════════════════════════════════ */
+    #s4 {
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(200,220,235,0.6) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(150,175,195,0.4) 0%, transparent 50%),
+        linear-gradient(175deg, #7A9BB5 0%, #9DB5C4 30%, #BDD0D8 60%, #DDE8EC 100%);
+    }
+    #s4 .ghost-num { color: rgba(255,255,255,0.12); right: -20px; top: 50%; transform: translateY(-50%); }
+    #s4 .slide-label { color: rgba(255,255,255,0.45); margin-bottom: 20px; }
+    #s4 .slide-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    #s4 .buyer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 760px;
+      width: 100%;
+    }
+    #s4 .buyer-card {
+      background: rgba(255,255,255,0.22);
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 12px;
+      padding: 36px 32px;
+      backdrop-filter: blur(8px);
+    }
+    #s4 .buyer-card.primary { background: rgba(28,28,26,0.55); border-color: rgba(201,168,76,0.2); }
+    #s4 .b-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    #s4 .buyer-card.primary .b-tag { opacity: 0.7; }
+    #s4 .b-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(28,28,26,0.85);
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    #s4 .buyer-card.primary .b-title { color: rgba(255,255,255,0.85); }
+    #s4 .b-body { font-size: 12px; color: rgba(28,28,26,0.5); line-height: 1.95; letter-spacing: 0.03em; }
+    #s4 .buyer-card.primary .b-body { color: rgba(255,255,255,0.4); }
+    #s4 .b-tags { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 6px; }
+    #s4 .b-pill {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(28,28,26,0.45);
+      border: 1px solid rgba(28,28,26,0.15);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+    #s4 .buyer-card.primary .b-pill { color: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.15); }
+
+    /* ══════════════════════════════════════════
+       SLIDE 5 · 预估成交量级
+       背景：深钢蓝
+    ══════════════════════════════════════════ */
+    #s5 {
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(100,130,155,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 90%, rgba(60,80,95,0.5) 0%, transparent 45%),
+        linear-gradient(155deg, #3A4E5C 0%, #4E6575 30%, #5E7888 60%, #7090A0 100%);
+    }
+    #s5 .slide-label { color: rgba(255,255,255,0.35); margin-bottom: 16px; }
+    #s5 .range-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: -0.01em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    #s5 .range-big em { font-size: 0.5em; font-style: normal; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
+    #s5 .range-sub { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.15em; text-align: center; margin-bottom: 44px; }
+    #s5 .tiers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      max-width: 740px;
+      width: 100%;
+    }
+    #s5 .tier {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 28px 24px;
+      position: relative;
+    }
+    #s5 .tier.feat {
+      background: rgba(201,168,76,0.12);
+      border-color: rgba(201,168,76,0.3);
+    }
+    #s5 .tier-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 7px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 16px;
+    }
+    #s5 .tier.feat .tier-label { color: rgba(201,168,76,0.6); }
+    #s5 .tier-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    #s5 .tier.feat .tier-price { color: var(--gold); }
+    #s5 .tier-period { font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; margin-bottom: 14px; }
+    #s5 .tier-body { font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.9; letter-spacing: 0.02em; }
+    #s5 .tier-badge {
+      position: absolute; top: 0; right: 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase;
+      background: var(--gold); color: white;
+      padding: 5px 12px; border-radius: 0 10px 0 6px;
+    }
+
+    /* ══════════════════════════════════════════
+       SLIDE 6 · 价值证据
+       背景：暖灰黄 · 行动感
+    ══════════════════════════════════════════ */
+    #s6 {
+      background:
+        radial-gradient(ellipse at 70% 10%, rgba(235,225,200,0.6) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 90%, rgba(185,170,140,0.4) 0%, transparent 50%),
+        linear-gradient(160deg, #C8BC9C 0%, #D4C8A8 30%, #E0D8C0 65%, #EDE8D8 100%);
+    }
+    #s6 .ghost-num { color: rgba(255,255,255,0.2); right: -20px; top: 50%; transform: translateY(-50%); }
+    #s6 .slide-label { color: rgba(28,28,26,0.35); margin-bottom: 18px; }
+    #s6 .slide-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(16px, 2.2vw, 24px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    #s6 .phases {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      max-width: 780px;
+      width: 100%;
+    }
+    #s6 .phase {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.75);
+      border-radius: 12px;
+      padding: 28px 24px;
+      backdrop-filter: blur(6px);
+    }
+    #s6 .phase-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 8px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(28,28,26,0.35);
+      margin-bottom: 8px;
+    }
+    #s6 .phase-days {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: rgba(28,28,26,0.1);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    #s6 .phase-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(28,28,26,0.75);
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    #s6 .phase-items { list-style: none; }
+    #s6 .phase-items li {
+      font-size: 11px;
+      color: rgba(28,28,26,0.48);
+      line-height: 1.9;
+      padding-left: 14px;
+      position: relative;
+      letter-spacing: 0.02em;
+    }
+    #s6 .phase-items li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: rgba(201,168,76,0.4);
+    }
+
+    /* ══════════════════════════════════════════
+       SLIDE 7 · 鉴定结论
+       背景：极深暗 · 庄重
+    ══════════════════════════════════════════ */
+    #s7 {
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(50,50,45,0.6) 0%, transparent 70%),
+        linear-gradient(150deg, #1A1C18 0%, #222420 50%, #1C1E1A 100%);
+    }
+    #s7 .cert-frame {
+      position: absolute;
+      inset: 44px;
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    #s7 .cert-corner {
+      position: absolute;
+      width: 18px; height: 18px;
+    }
+    #s7 .cert-corner.tl { top: 44px; left: 44px; border-top: 1px solid rgba(201,168,76,0.4); border-left: 1px solid rgba(201,168,76,0.4); }
+    #s7 .cert-corner.tr { top: 44px; right: 44px; border-top: 1px solid rgba(201,168,76,0.4); border-right: 1px solid rgba(201,168,76,0.4); }
+    #s7 .cert-corner.bl { bottom: 44px; left: 44px; border-bottom: 1px solid rgba(201,168,76,0.4); border-left: 1px solid rgba(201,168,76,0.4); }
+    #s7 .cert-corner.br { bottom: 44px; right: 44px; border-bottom: 1px solid rgba(201,168,76,0.4); border-right: 1px solid rgba(201,168,76,0.4); }
+    #s7 .cert-inner { text-align: center; position: relative; z-index: 1; max-width: 500px; }
+    #s7 .cert-top-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase;
+      color: rgba(201,168,76,0.3);
+      margin-bottom: 40px;
+    }
+    #s7 .cert-seal {
+      width: 64px; height: 64px;
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+    }
+    #s7 .cert-seal span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 300; font-style: italic;
+      color: rgba(201,168,76,0.55);
+    }
+    #s7 .cert-body {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 14px; font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em; line-height: 2.2;
+      margin-bottom: 44px;
+    }
+    #s7 .cert-verdict {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(22px, 4vw, 42px);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-bottom: 44px;
+    }
+    #s7 .cert-meta {
+      display: flex; gap: 56px; justify-content: center;
+      border-top: 1px solid rgba(201,168,76,0.08);
+      padding-top: 28px;
+    }
+    #s7 .cert-meta-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 7px; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(201,168,76,0.25);
+      margin-bottom: 7px;
+    }
+    #s7 .cert-meta-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.1em;
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE · 手机 / 小屏适配
+    ════════════════════════════════════════ */
+
+    /* 平板及以下 (≤768px) */
+    @media (max-width: 768px) {
+
+      /* 滑动页改为最小高度，内容多时可撑开 */
+      .slide {
+        height: auto;
+        min-height: 100svh;
+        padding: 80px 0 60px;
+        overflow: visible;
+      }
+
+      /* 隐藏右侧导航点（手机上无意义） */
+      #nav { display: none; }
+
+      /* ghost 数字缩小 */
+      .ghost-num { font-size: 120px !important; }
+
+      /* ── 封面 ── */
+      #s0 { padding: 0; }
+      #s0 .cover-bar { padding: 20px 24px; }
+      #s0 .cover-bar .small-label { font-size: 9px; letter-spacing: 0.2em; }
+      #s0 .cover-center { padding: 0 28px; text-align: center; }
+      #s0 .cover-title-cn { font-size: clamp(24px, 8vw, 36px); letter-spacing: 0.18em; margin-bottom: 12px; }
+      #s0 .cover-subtitle { font-size: 12px; margin-bottom: 36px; }
+      #s0 .cover-subject { font-size: 14px; letter-spacing: 0.07em; }
+      #s0 .cover-bottom { padding: 20px 24px; flex-direction: column; gap: 6px; align-items: flex-start; }
+      #s0 .cover-bottom .meta:last-child { text-align: left; }
+
+      /* ── S1 值判断 ── */
+      #s1 .slide-label { font-size: 9px; }
+      #s1 .verdict-cn { font-size: clamp(18px, 6vw, 28px); padding: 0 24px; letter-spacing: 0.1em; }
+      #s1 .verdict-en { font-size: 12px; padding: 0 24px; }
+      #s1 .verdict-body { font-size: 12px; padding: 0 24px; margin-bottom: 32px; }
+      #s1 .dims-row {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 0 20px;
+        justify-content: center;
+      }
+      #s1 .dim {
+        width: calc(33.3% - 6px);
+        min-width: 80px;
+        padding: 14px 10px;
+      }
+      #s1 .dim-grade { font-size: 22px; }
+
+      /* ── S2 低估原因 ── */
+      #s2 .ghost-num { display: none; }
+      #s2 .slide-label { font-size: 9px; }
+      #s2 .slide-title { font-size: clamp(15px, 5vw, 22px); padding: 0 24px; text-align: center; margin-bottom: 28px; }
+      #s2 .reasons { padding: 0 20px; gap: 0; }
+      #s2 .reason { gap: 16px; padding: 18px 0; }
+      #s2 .r-num { font-size: 24px; width: 28px; }
+      #s2 .r-title { font-size: 13px; margin-bottom: 6px; }
+      #s2 .r-desc { font-size: 11px; line-height: 1.85; }
+      #s2 .r-tag { display: none; } /* 手机隐藏标签节省空间 */
+
+      /* ── S3 能否上拍 ── */
+      #s3 .slide-label { font-size: 9px; }
+      #s3 .arrow-down { width: 32px; height: 32px; font-size: 13px; margin-bottom: 20px; }
+      #s3 .verdict-big { font-size: clamp(26px, 9vw, 44px); padding: 0 20px; }
+      #s3 .verdict-en-sub { font-size: 12px; padding: 0 20px; margin-bottom: 32px; }
+      #s3 .conds {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 0 20px;
+        max-width: 100%;
+      }
+      #s3 .cond-card { padding: 18px 20px; }
+      #s3 .cond-card-text { font-size: 11px; line-height: 1.9; }
+
+      /* ── S4 适合人群 ── */
+      #s4 .ghost-num { display: none; }
+      #s4 .slide-label { font-size: 9px; }
+      #s4 .slide-title { font-size: clamp(15px, 5vw, 22px); padding: 0 24px; margin-bottom: 24px; }
+      #s4 .buyer-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 0 20px;
+        max-width: 100%;
+      }
+      #s4 .buyer-card { padding: 24px 22px; border-radius: 10px; }
+      #s4 .b-title { font-size: 14px; }
+      #s4 .b-body { font-size: 11px; line-height: 1.85; }
+
+      /* ── S5 成交量级 ── */
+      #s5 .slide-label { font-size: 9px; }
+      #s5 .range-big { font-size: clamp(26px, 8vw, 44px); padding: 0 20px; text-align: center; }
+      #s5 .range-sub { font-size: 10px; padding: 0 20px; margin-bottom: 28px; }
+      #s5 .tiers {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 0 20px;
+        max-width: 100%;
+      }
+      #s5 .tier { padding: 20px 20px; border-radius: 8px; }
+      #s5 .tier-price { font-size: 28px; }
+      #s5 .tier-body { font-size: 11px; }
+
+      /* ── S6 价值证据 ── */
+      #s6 .ghost-num { display: none; }
+      #s6 .slide-label { font-size: 9px; }
+      #s6 .slide-title { font-size: clamp(13px, 4.5vw, 18px); padding: 0 24px; margin-bottom: 24px; }
+      #s6 .phases {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 0 20px;
+        max-width: 100%;
+      }
+      #s6 .phase { padding: 22px 20px; border-radius: 10px; }
+      #s6 .phase-days { font-size: 28px; margin-bottom: 8px; }
+      #s6 .phase-title { font-size: 12px; margin-bottom: 12px; }
+      #s6 .phase-items li { font-size: 11px; }
+
+      /* ── S7 结论 ── */
+      #s7 .cert-frame { inset: 20px; }
+      #s7 .cert-corner.tl { top: 20px; left: 20px; }
+      #s7 .cert-corner.tr { top: 20px; right: 20px; }
+      #s7 .cert-corner.bl { bottom: 20px; left: 20px; }
+      #s7 .cert-corner.br { bottom: 20px; right: 20px; }
+      #s7 .cert-inner { padding: 0 28px; }
+      #s7 .cert-top-label { font-size: 8px; letter-spacing: 0.3em; margin-bottom: 28px; }
+      #s7 .cert-seal { width: 52px; height: 52px; margin-bottom: 24px; }
+      #s7 .cert-body { font-size: 12px; line-height: 2; margin-bottom: 28px; }
+      #s7 .cert-verdict { font-size: clamp(22px, 7vw, 36px); letter-spacing: 0.12em; margin-bottom: 28px; }
+      #s7 .cert-meta { gap: 20px; flex-wrap: wrap; justify-content: center; }
+    }
+
+    /* 小手机 (≤390px) 追加微调 */
+    @media (max-width: 390px) {
+      #s0 .cover-title-cn { font-size: 22px; }
+      #s1 .dims-row { gap: 4px; }
+      #s1 .dim { width: calc(50% - 4px); }
+      #s5 .range-big { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航点 -->
+<nav id="nav">
+  <a href="#s0"></a><a href="#s1"></a><a href="#s2"></a><a href="#s3"></a>
+  <a href="#s4"></a><a href="#s5"></a><a href="#s6"></a><a href="#s7"></a>
+</nav>
+
+<!-- ══ 封面 ══ -->
+<section class="slide" id="s0">
+  <div class="cover-bar">
+    <span class="small-label">上拍鉴定意见 · Strategic Valuation</span>
+    <span class="lot">Lot SVR-2026-001</span>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-title-cn">上 拍 鉴 定 意 见</div>
+    <div class="cover-subtitle">Strategic Valuation Report</div>
+    <div class="small-label cover-subject-label">鉴定对象 · Subject of Valuation</div>
+    <div class="cover-subject">CEO 的 AI 商业教练 · Tia / 星芒AI进化岛</div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="meta"><strong>鉴定人</strong> 抒云 · 价值撰稿人</div>
+    <div class="meta" style="text-align:right"><strong>SVR-2026-001</strong><br>2026 · 06 · 13</div>
+  </div>
+</section>
+
+<!-- ══ 01 · 值判断 ══ -->
+<section class="slide" id="s1">
+  <div class="ghost-num">01</div>
+  <div class="small-label slide-label">值判断 · Valuation</div>
+  <div class="verdict-cn">稀缺型复合资产，市场严重低估</div>
+  <div class="verdict-en">A rare tri-credential asset — priced as a service, worth as a strategist</div>
+  <div class="verdict-body">
+    这件标的物罕见之处在于同时持有三把钥匙：PE投资人的决策语言、一人公司实践者的执行路径、深度教练的陪伴能力。三重背景的交叉在当前AI教练市场属于极稀缺组合，但现有定价仍锚定在「知识服务」坐标而非「战略顾问」坐标，导致其真实价值被系统性低估。
+  </div>
+  <div class="dims-row">
+    <div class="dim">
+      <div class="dim-label">专业稀缺性</div>
+      <div class="dim-grade" style="color:var(--gold)">A</div>
+      <div class="dim-bar"><div class="dim-bar-fill" style="width:88%"></div></div>
+    </div>
+    <div class="dim">
+      <div class="dim-label">客户关系深度</div>
+      <div class="dim-grade" style="color:var(--gold)">A</div>
+      <div class="dim-bar"><div class="dim-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="dim">
+      <div class="dim-label">产品化程度</div>
+      <div class="dim-grade" style="color:#888">B</div>
+      <div class="dim-bar"><div class="dim-bar-fill" style="width:52%"></div></div>
+    </div>
+    <div class="dim">
+      <div class="dim-label">可验证成果</div>
+      <div class="dim-grade" style="color:#888">B−</div>
+      <div class="dim-bar"><div class="dim-bar-fill" style="width:40%"></div></div>
+    </div>
+    <div class="dim">
+      <div class="dim-label">品牌可见度</div>
+      <div class="dim-grade" style="color:#bbb">C+</div>
+      <div class="dim-bar"><div class="dim-bar-fill" style="width:28%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 02 · 被低估的原因 ══ -->
+<section class="slide" id="s2">
+  <div class="ghost-num">02</div>
+  <div class="small-label slide-label">被低估的原因 · Undervaluation Diagnosis</div>
+  <div class="slide-title">为什么没有卖到它该有的价格</div>
+  <div class="reasons">
+    <div class="reason">
+      <div class="r-num">I</div>
+      <div class="r-body">
+        <div class="r-title">用「AI服务」定价，而非用「CEO决策成本」定价</div>
+        <div class="r-desc">¥20,000/月在AI培训市场是高价，在CEO战略顾问市场是低价。定价锚点选错坐标系，目标买家要么嫌贵（与课程比），要么觉得便宜（与顾问比）。国内高管教练行情¥30,000–¥80,000/月。</div>
+      </div>
+      <div class="r-tag">Primary · 首要</div>
+    </div>
+    <div class="reason">
+      <div class="r-num">II</div>
+      <div class="r-body">
+        <div class="r-title">成果不可见，买家无法在付款前预判回报</div>
+        <div class="r-desc">缺乏量化成果叙事——没有「某CEO合作3个月节省2个全职岗位」「某创始人6周内跑通选品工作流」这类ROI数字。买家面对抽象承诺，只能用价格评估风险。</div>
+      </div>
+      <div class="r-tag">Secondary</div>
+    </div>
+    <div class="reason">
+      <div class="r-num">III</div>
+      <div class="r-body">
+        <div class="r-title">目标客群宽泛，信号强度被稀释</div>
+        <div class="r-desc">三类人群的痛点、决策速度和支付逻辑差异显著，同一套话语体系无法精准命中三种人。越精准的定位才能支撑越高的定价。</div>
+      </div>
+      <div class="r-tag">Contributing</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 · 能否上拍 ══ -->
+<section class="slide" id="s3">
+  <div class="small-label slide-label">能否上拍 · Auction Eligibility</div>
+  <div class="arrow-down">↓</div>
+  <div class="verdict-big">可以上拍</div>
+  <div class="verdict-en-sub">Yes — Ready for Auction, with evidence to build first</div>
+  <div class="conds">
+    <div class="cond-card">
+      <div class="cond-card-label">已具备的条件</div>
+      <div class="cond-card-text">
+        稀缺背景真实可验证（PE + 一人公司）<br>
+        服务流程已结构化（周会 + 实时支持 + 复盘）<br>
+        限量开放机制构成天然稀缺信号<br>
+        现有客户关系深度高、续费意愿强
+      </div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-card-label">上拍前需补足</div>
+      <div class="cond-card-text">
+        2–3 个量化成果案例（节省人力 / 时间数字）<br>
+        产品页从「我能做什么」→「你会得到什么」<br>
+        「上拍鉴定」前置产品 ¥5,000 标准化<br>
+        定价结构从月付切换为季付 ¥90,000/季
+      </div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-card-label">鉴定人判断</div>
+      <div class="cond-card-text">
+        阻碍溢价成交的是「证明层」缺失而非能力本身。补齐证据后，价格提升 50–100% 的市场条件完全成立。
+      </div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-card-label">明确拒绝接件</div>
+      <div class="cond-card-text">
+        没有决策权的执行者<br>
+        只想靠包装虚高价格、无实质改变意愿<br>
+        纯体力型业务 / 灰色产业<br>
+        需要「先试用再付费」的
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 · 适合的人群 ══ -->
+<section class="slide" id="s4">
+  <div class="ghost-num">04</div>
+  <div class="small-label slide-label">适合的人群 · Ideal Buyer Profile</div>
+  <div class="slide-title">谁应该来竞这一标</div>
+  <div class="buyer-grid">
+    <div class="buyer-card primary">
+      <div class="b-tag">Primary Buyer · 首选买家</div>
+      <div class="b-title">年营收500万–3000万<br>正考虑裁员或重组的创始人CEO</div>
+      <div class="b-body">公司处于「团队臃肿但业绩卡住」阶段，老板感受到AI必要性但不知从哪下手。愿意为「帮自己做决策而非给自己上课」的专家支付溢价。决策周期短（30天内），预算由创始人本人掌控。</div>
+      <div class="b-tags">
+        <span class="b-pill">私域社群</span>
+        <span class="b-pill">熟人转介绍</span>
+        <span class="b-pill">创始人圈层</span>
+      </div>
+    </div>
+    <div class="buyer-card">
+      <div class="b-tag">Secondary Buyer · 次选买家</div>
+      <div class="b-title">从传统业务转型中的<br>中生代企业主（35–50岁）</div>
+      <div class="b-body">有实体业务基础，感受到AI浪潮的焦虑与机会。不缺资金，缺的是「有人帮我看清楚」的安全感。决策较慢，适合以「上拍鉴定」¥5,000 作为低风险入场点，再转化为长期合作。</div>
+      <div class="b-tags">
+        <span class="b-pill">线下商业活动</span>
+        <span class="b-pill">企业家协会</span>
+        <span class="b-pill">长内容平台</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 05 · 预估成交量级 ══ -->
+<section class="slide" id="s5">
+  <div class="small-label slide-label">预估成交量级 · Estimate</div>
+  <div class="range-big">¥60万 <em>—</em> ¥300万<em> / 年</em></div>
+  <div class="range-sub">基于稀缺性评级 · 战略顾问市场参照 · 目标买家支付能力综合测算</div>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-label">Entry · 入场价</div>
+      <div class="tier-price">¥5,000</div>
+      <div class="tier-period">单次上拍鉴定 · 固定前置不退</div>
+      <div class="tier-body">买的是一句真话而非好话。获客漏斗入口，同时筛选客户意愿与支付能力。交付《上拍鉴定意见》一份。</div>
+    </div>
+    <div class="tier feat">
+      <div class="tier-badge">Recommended</div>
+      <div class="tier-label">Core · 核心价</div>
+      <div class="tier-price">¥90,000</div>
+      <div class="tier-period">3个月AI陪跑 · 季度制</div>
+      <div class="tier-body">季付比月费锚定更高，降低「先试一个月」心理成本。包含每周深度会议、工作流落地、月度复盘。建议立即切换至此结构。</div>
+    </div>
+    <div class="tier">
+      <div class="tier-label">Premium · 溢价席位</div>
+      <div class="tier-price">¥50,000<span style="font-size:0.5em;opacity:0.6">/月</span></div>
+      <div class="tier-period">年度AI战略顾问 · 首席席位</div>
+      <div class="tier-body">积累3–5个量化案例后开放。目标买家年营收5000万以上。前置条件：ROI证明体系与可见度建立。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 · 价值证据 ══ -->
+<section class="slide" id="s6">
+  <div class="ghost-num">06</div>
+  <div class="small-label slide-label">现阶段最该补上的价值证据 · 90-Day Action Plan</div>
+  <div class="slide-title">上拍之前，先把这三件事做完</div>
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-label">Phase I · 第一阶段</div>
+      <div class="phase-days">Day<br>01–30</div>
+      <div class="phase-title">建立可信成果体系<br>让价值变得看得见</div>
+      <ul class="phase-items">
+        <li>深访2–3位现有客户，提炼量化成果</li>
+        <li>撰写1–2篇案例文章：背景→做了什么→结果</li>
+        <li>设计「上拍鉴定」标准化产品，定价¥5,000</li>
+        <li>官网从「我能做什么」改写为「你会得到什么」</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-label">Phase II · 第二阶段</div>
+      <div class="phase-days">Day<br>31–60</div>
+      <div class="phase-title">激活精准买家渠道<br>出现在CEO真正在的地方</div>
+      <ul class="phase-items">
+        <li>选定1个内容主阵地，每周1篇AI决策内容</li>
+        <li>申请2–3个创始人社群分享，以鉴定为钩子</li>
+        <li>启动转介绍机制，现有客户介绍享优先续约权</li>
+        <li>切换季度制¥90,000/季，更新所有销售材料</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <div class="phase-label">Phase III · 第三阶段</div>
+      <div class="phase-days">Day<br>61–90</div>
+      <div class="phase-title">完成首单溢价成交<br>验证新定价体系可行</div>
+      <ul class="phase-items">
+        <li>目标：至少1个¥90,000/季新客户签约</li>
+        <li>收集鉴定反馈，优化交付模板</li>
+        <li>3个量化案例后开放Premium席位预约</li>
+        <li>建立候补名单机制，制造稀缺信号</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 鉴定结论 ══ -->
+<section class="slide" id="s7">
+  <div class="cert-frame"></div>
+  <div class="cert-corner tl"></div><div class="cert-corner tr"></div>
+  <div class="cert-corner bl"></div><div class="cert-corner br"></div>
+  <div class="cert-inner">
+    <div class="cert-top-label">Certificate of Valuation · 鉴定结论</div>
+    <div class="cert-seal"><span>抒</span></div>
+    <div class="cert-body">
+      经审阅全部资料，本鉴定人认为：<br>
+      「CEO 的 AI 商业教练」所具备的价值<br>
+      在当前市场中属于 稀缺型复合资产 级别<br>
+      其合理成交估值远高于当前定价水位
+    </div>
+    <div class="cert-verdict">价 值 被 低 估</div>
+    <div class="cert-meta">
+      <div><div class="cert-meta-label">Appraised by</div><div class="cert-meta-value">抒云</div></div>
+      <div><div class="cert-meta-label">Date of Issue</div><div class="cert-meta-value">2026 · VI · XIII</div></div>
+      <div><div class="cert-meta-label">Report No.</div><div class="cert-meta-value">SVR-2026-001</div></div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots   = [...document.querySelectorAll('#nav a')];
+  const nav    = document.getElementById('nav');
+  const lightSlides = new Set(['s1','s2','s4','s6']);
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.intersectionRatio >= 0.5) {
+        dots.forEach(d => d.classList.remove('active'));
+        const i = slides.indexOf(e.target);
+        if (dots[i]) dots[i].classList.add('active');
+        nav.classList.toggle('on-light', lightSlides.has(e.target.id));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

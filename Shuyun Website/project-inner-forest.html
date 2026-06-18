@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh" data-lang="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内境森林 · Touch Inner Forest · Shuyun Universe</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="detail.css">
+<style>
+
+/* ── Hero upgrade ─────────────────────────────────────── */
+.if-hero-services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin-top: 32px;
+}
+.if-hero-services span {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: rgba(60,55,50,0.45);
+}
+.if-hero-services span::after {
+  content: '·';
+  margin: 0 10px;
+  color: rgba(60,55,50,0.2);
+}
+.if-hero-services span:last-child::after { content: none; }
+
+.if-hero-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(60,55,50,0.09);
+}
+.if-hero-details span {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(60,55,50,0.35);
+  letter-spacing: 0.03em;
+}
+.if-hero-details span::after {
+  content: '·';
+  margin: 0 10px;
+  color: rgba(60,55,50,0.18);
+}
+.if-hero-details span:last-child::after { content: none; }
+
+.pe-hero-deck-cn {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.85;
+  color: rgba(60,55,50,0.4);
+  margin-top: 6px;
+}
+
+/* ── Experience Layers ────────────────────────────────── */
+.if-layers {
+  background: var(--abyssal);
+  padding: 128px 56px 148px;
+}
+.if-layers-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.if-layers-header {
+  margin-bottom: 80px;
+  max-width: 520px;
+}
+.if-layers-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 300;
+  color: var(--chalk);
+  line-height: 1.45;
+  margin-top: 22px;
+  font-style: italic;
+}
+.if-layers-subtitle-cn {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 2;
+  color: rgba(158,168,178,0.45);
+  margin-top: 14px;
+}
+
+.if-layer {
+  display: grid;
+  grid-template-columns: 68px 200px 1fr;
+  gap: 0 44px;
+  padding: 52px 0;
+  border-top: 1px solid rgba(196,171,122,0.09);
+  align-items: start;
+}
+.if-layer:last-child {
+  border-bottom: 1px solid rgba(196,171,122,0.09);
+}
+.if-layer-num {
+  font-family: var(--serif);
+  font-size: 68px;
+  font-weight: 300;
+  color: rgba(196,171,122,0.14);
+  line-height: 1;
+  padding-top: 4px;
+  letter-spacing: -0.02em;
+}
+.if-layer-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 300;
+  color: var(--chalk);
+  line-height: 1.2;
+  padding-top: 8px;
+  font-style: italic;
+}
+.if-layer-title-cn {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(196,171,122,0.45);
+  margin-top: 10px;
+}
+.if-layer-body {
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(222,215,205,0.6);
+  padding-top: 8px;
+}
+.if-layer-body-cn {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 2;
+  color: rgba(158,168,178,0.35);
+  margin-top: 16px;
+}
+
+/* ── Spatial Approach ─────────────────────────────────── */
+/* (uses existing pe-col2-even, pe-pullquote) */
+
+/* ── UX Thinking ──────────────────────────────────────── */
+.if-ux {
+  background: var(--chalk);
+  padding: 128px 56px;
+}
+.if-ux-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.if-ux-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 100px);
+  margin-top: 56px;
+  align-items: start;
+}
+.if-ux-touchpoints {
+  margin-top: 0;
+}
+.if-ux-point {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(60,55,50,0.07);
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(60,55,50,0.48);
+  line-height: 1.65;
+}
+.if-ux-point:first-child {
+  border-top: 1px solid rgba(60,55,50,0.07);
+}
+.if-ux-point strong {
+  font-weight: 400;
+  color: var(--lacquer);
+  display: block;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  margin-bottom: 5px;
+}
+
+/* ── Cultural Impact grid ─────────────────────────────── */
+.if-impact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 60px;
+  border-top: 1px solid rgba(60,55,50,0.08);
+}
+.if-impact-item {
+  padding: 40px 32px 40px 0;
+  border-right: 1px solid rgba(60,55,50,0.07);
+}
+.if-impact-item:last-child {
+  border-right: none;
+  padding-left: 32px;
+  padding-right: 0;
+}
+.if-impact-item:nth-child(2) {
+  padding-left: 32px;
+}
+.if-impact-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(60,55,50,0.3);
+  margin-bottom: 14px;
+}
+.if-impact-value {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 300;
+  color: var(--lacquer);
+  line-height: 1.05;
+}
+.if-impact-desc {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.75;
+  color: rgba(60,55,50,0.42);
+  margin-top: 10px;
+}
+
+/* ── Strategic CTA ────────────────────────────────────── */
+.if-cta {
+  background: var(--sand-veil);
+  padding: 148px 56px;
+  text-align: center;
+}
+.if-cta-inner {
+  max-width: 620px;
+  margin: 0 auto;
+}
+.if-cta-rule {
+  width: 36px;
+  height: 1px;
+  background: rgba(60,55,50,0.18);
+  margin: 0 auto 52px;
+}
+.if-cta-headline {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--lacquer);
+  font-style: italic;
+}
+.if-cta-headline-cn {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 2;
+  color: rgba(60,55,50,0.4);
+  margin-top: 14px;
+}
+.if-cta-contacts {
+  margin-top: 52px;
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+.if-cta-link {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(60,55,50,0.45);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(60,55,50,0.18);
+  padding-bottom: 3px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.if-cta-link:hover {
+  color: var(--lacquer);
+  border-color: var(--lacquer);
+}
+.if-cta-rule-end {
+  width: 36px;
+  height: 1px;
+  background: rgba(60,55,50,0.18);
+  margin: 52px auto 0;
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+@media (max-width: 720px) {
+  .if-layers { padding: 80px 24px 96px; }
+  .if-layer { grid-template-columns: 1fr; gap: 10px; padding: 36px 0; }
+  .if-layer-num { font-size: 44px; }
+  .if-ux { padding: 80px 24px; }
+  .if-ux-grid { grid-template-columns: 1fr; gap: 48px; }
+  .if-impact-grid { grid-template-columns: 1fr; }
+  .if-impact-item { border-right: none; border-bottom: 1px solid rgba(60,55,50,0.07); padding: 32px 0; }
+  .if-impact-item:last-child { border-bottom: none; }
+  .if-cta { padding: 96px 24px; }
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">抒云 <span>|</span> SHUYUN</a>
+  <span class="nav-service-tag">Project Archive · 项目档案</span>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-lang">
+      <span data-lang="cn" class="active">中文</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="en">EN</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="fr">FR</span>
+    </div>
+    <a href="index.html#projects" class="nav-back">All Projects</a>
+  </div>
+</nav>
+
+<!-- Hero ─────────────────────────────────────────────── -->
+<section class="pe-hero">
+  <img src="图片/projects/touch/hero.jpg" alt="内境森林 — atmospheric meditation space" class="pe-hero-img">
+  <div class="pe-hero-scrim"></div>
+  <div class="pe-hero-body">
+    <div class="pe-hero-crumb">
+      <a href="index.html">Shuyun Universe</a>
+      <span class="sep">·</span>
+      <a href="index.html#projects">Projects</a>
+      <span class="sep">·</span>
+      内境森林
+    </div>
+    <div class="pe-hero-tag">○ Experience Design &amp; Cultural Production · ASFAC × DNβ · 成都 2025</div>
+    <div class="pe-hero-title-cn">内境森林</div>
+    <div class="pe-hero-title-en">Touch Inner Forest</div>
+    <p class="pe-hero-deck">Designing how people enter, feel, connect, and remember.</p>
+    <p class="pe-hero-deck-cn">设计人如何进入、感受、连接与记住。</p>
+    <div class="if-hero-services">
+      <span>Creative Direction</span>
+      <span>Experience Design</span>
+      <span>Spatial Journey</span>
+      <span>Public Programming</span>
+      <span>Cultural Production</span>
+    </div>
+    <div class="if-hero-details">
+      <span>Chengdu, China · 2025</span>
+      <span>ASFAC × DNβ International</span>
+      <span>7 Artists · 5 Days · 500+ Visitors</span>
+    </div>
+  </div>
+</section>
+
+<!-- Experience Layers ────────────────────────────────── -->
+<section class="if-layers">
+  <div class="if-layers-inner">
+    <div class="if-layers-header">
+      <div class="pe-section-label" style="color:var(--antique-gold);letter-spacing:0.14em;">Experience Layers · 体验层</div>
+      <p class="if-layers-title">We design experiences through narrative, movement, interaction, atmosphere, and memory.</p>
+      <p class="if-layers-subtitle-cn">我们通过叙事、行为、互动、氛围与记忆，<br>设计一场完整的体验。</p>
+    </div>
+
+    <div class="if-layer">
+      <div class="if-layer-num">01</div>
+      <div>
+        <div class="if-layer-title">Narrative</div>
+        <div class="if-layer-title-cn">叙事与世界观</div>
+      </div>
+      <div>
+        <p class="if-layer-body">We help brands, spaces, and projects build a narrative that can be entered — not merely observed. A world with its own logic, atmosphere, and emotional register. Something people step into, and carry with them when they leave.</p>
+        <p class="if-layer-body-cn">帮助品牌、空间与项目建立可以被"进入"的叙事与气质——而不只是被"观看"的形象。一个有自己逻辑、氛围与情感层次的世界，让人真正踏入其中，并在离开后依然携带着它。</p>
+      </div>
+    </div>
+
+    <div class="if-layer">
+      <div class="if-layer-num">02</div>
+      <div>
+        <div class="if-layer-title">Journey</div>
+        <div class="if-layer-title-cn">用户旅程与体验优化</div>
+      </div>
+      <div>
+        <p class="if-layer-body">From first impression to final memory — we redesign every touchpoint along a user's experience. The moment of discovery, the first contact, the quality of response, the texture of participation. We find the fractures people cannot articulate, but quietly leave because of.</p>
+        <p class="if-layer-body-cn">从浏览到咨询，从参与到离开——重新设计用户在每一个触点中的感受与流动。我们发现那些用户无法明确表达、却会默默离开的体验断层。</p>
+      </div>
+    </div>
+
+    <div class="if-layer">
+      <div class="if-layer-num">03</div>
+      <div>
+        <div class="if-layer-title">Space</div>
+        <div class="if-layer-title-cn">空间与行为动线</div>
+      </div>
+      <div>
+        <p class="if-layer-body">We design how people enter, pause, move, interact, and look within a space. Architecture is the starting condition — but the real material is behaviour. How a room makes someone want to stay. How a threshold changes the quality of attention.</p>
+        <p class="if-layer-body-cn">设计人如何进入、停留、移动、互动与观看。空间不仅是视觉，更是行为与情绪的容器。真正的设计对象，是人在其中的感受与节奏。</p>
+      </div>
+    </div>
+
+    <div class="if-layer">
+      <div class="if-layer-num">04</div>
+      <div>
+        <div class="if-layer-title">Interaction</div>
+        <div class="if-layer-title-cn">社交与参与机制</div>
+      </div>
+      <div>
+        <p class="if-layer-body">We design the conditions for connection — between people, between bodies, between strangers who briefly share the same room. Social atmosphere, interactive rhythm, rituals of participation, and the shared memory that forms when a group experiences something together.</p>
+        <p class="if-layer-body-cn">设计人与人之间连接的条件——社群氛围、互动节奏、仪式感、共同记忆。当一群人共同经历了某件事，那种集体感受本身，就是设计的产物。</p>
+      </div>
+    </div>
+
+    <div class="if-layer">
+      <div class="if-layer-num">05</div>
+      <div>
+        <div class="if-layer-title">Atmosphere</div>
+        <div class="if-layer-title-cn">氛围与记忆感</div>
+      </div>
+      <div>
+        <p class="if-layer-body">What people truly remember is rarely the content. It is an emotion, a pause, a quality of light, a relationship, a moment of presence that cannot be fully explained. Atmosphere is not decoration — it is the medium through which memory is made.</p>
+        <p class="if-layer-body-cn">真正被记住的，往往不是内容本身，而是某种情绪、停顿、光线、关系与现场感。氛围不是装饰——它是记忆得以形成的介质。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The Project ──────────────────────────────────────── -->
+<section style="background:var(--chalk);padding:100px 0;">
+  <div class="pe-essay">
+    <div class="pe-section-label">The Project · 项目背景</div>
+    <div class="pe-col2">
+      <div>
+        <p class="pe-lead-cn">「内境森林」是从「触碰」延伸出的内在感知之旅——探讨人与环境的关系、个体与自我的对话，一次身心融合、精神与肉体连接的疗愈体验。</p>
+      </div>
+      <div>
+        <p class="pe-lead">A multi-sensory art exhibition in Chengdu — where seven international artists created an environment asking visitors to leave the logic of productivity behind and return to a more elemental form of attention.</p>
+        <p class="pe-body" style="margin-top:28px;">Organised by ASFAC (中法当代艺术协会) and DNβ International Digital Nomad Centre, the exhibition brought together artists from France, New Zealand, Greece, and China — each working across different sensory registers. The shared question was not conceptual but bodily: what does it mean to truly inhabit a space?</p>
+        <p class="pe-body">Bunnytopia Art Space in Wuhou District was chosen for its quality of enclosure — a series of intimate rooms that allowed the exhibition to unfold as a sequence of distinct atmospheres rather than a single hall. The space already had a forest feeling; the artists built inward from there.</p>
+        <p class="pe-body-cn">展览由ASFAC与DNβ联合主办，邀请来自法国、新西兰、希腊与中国的七位国际艺术家，在成都武侯区Bunnytopia艺术空间共同呈现。从2024年起，ASFAC围绕「触碰」持续策划系列活动；「内境森林」是Touch系列的成都站，也是对感官唤醒与内在连接的一次深化探索。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Spatial Approach ─────────────────────────────────── -->
+<section style="background:var(--sand-veil);padding:100px 0;">
+  <div class="pe-essay">
+    <div class="pe-section-label">Spatial Approach · 空间策略</div>
+    <div class="pe-col2-even">
+      <div>
+        <div class="pe-pullquote">
+          艺术不需要解释——<br>它只需要一个身体，<br>愿意真正进入其中。
+          <div class="pe-pullquote-cn">Art needs no explanation — only a body willing to truly enter it.</div>
+        </div>
+      </div>
+      <div>
+        <p class="pe-body">The curatorial structure was built around spatial sequencing: Bunnytopia's rooms opened onto a planted courtyard, creating a natural rhythm of contraction and expansion. Some artists placed their work in the most intimate corners; others let it spill into transitional spaces. The effect was a porous boundary between art and atmosphere.</p>
+        <p class="pe-body">The opening ceremony on May 1st was structured as its own experience — artist introductions, performance art presentation, and open viewing arranged so that encounter preceded interpretation. The artists chose not to explain their work verbally. The space did the explaining.</p>
+        <p class="pe-body">Daily healing workshops in the late afternoons invited visitors to move from observation into participation — extending the experience from the visual into the somatic. Seven artists, four nationalities, one spatial logic.</p>
+        <p class="pe-body-cn">策展结构围绕空间序列展开：房间朝向植物庭院开放，赋予展览一种收缩与扩展的节奏，氛围与艺术的边界因此变得可渗透。开幕式被设计为独立体验，空间的安排让相遇先于诠释。每日疗愈工坊，让观者从观看进入参与。七位艺术家，四种国籍，一种空间逻辑。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience Thinking ──────────────────────────────── -->
+<section class="if-ux">
+  <div class="if-ux-inner">
+    <div class="pe-section-label">Experience Thinking · 体验策略</div>
+    <div class="if-ux-grid">
+      <div>
+        <p class="pe-lead" style="max-width:380px;">Beyond events and spaces — experience exists across every touchpoint.</p>
+        <p class="pe-body" style="margin-top:24px;">Every person who encounters a cultural project moves through a sequence of moments — before arrival, at the threshold, during participation, in the aftermath. Each of these moments is a design decision, whether or not it has been treated as one.</p>
+        <p class="pe-body">For 内境森林, the experience did not begin when visitors entered the gallery. It began with the first image encountered, the quality of invitation, the texture of communication — and continued long after they left.</p>
+        <p class="pe-lead-cn" style="margin-top:28px;">体验不只发生在线下空间里。</p>
+        <p class="pe-body-cn" style="margin-top:10px;">它存在于用户第一次浏览、第一次咨询、第一次进入、第一次停留、第一次被回应的每一个瞬间。这些瞬间是否被设计，决定了体验是否真正完整。</p>
+      </div>
+      <div>
+        <div class="if-ux-touchpoints">
+          <div class="if-ux-point">
+            <strong>First Impression · 第一印象</strong>
+            The visual and tonal quality of how the project introduces itself — online, in print, in person.
+          </div>
+          <div class="if-ux-point">
+            <strong>Threshold · 进入门槛</strong>
+            The moment of arrival — how a space, event, or service receives its audience before a word is spoken.
+          </div>
+          <div class="if-ux-point">
+            <strong>Participation Quality · 参与质感</strong>
+            The texture of involvement — passive, active, or somewhere between. How someone is held within the experience.
+          </div>
+          <div class="if-ux-point">
+            <strong>Emotional Flow · 情绪节奏</strong>
+            The pacing of intensity, pause, and release throughout a session, event, or journey.
+          </div>
+          <div class="if-ux-point">
+            <strong>Departure &amp; Memory · 离开与记忆</strong>
+            What people carry with them. How the experience continues after the space closes.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visual Documentation ─────────────────────────────── -->
+<section style="background:var(--abyssal);padding:118px 0 128px;">
+  <div class="pe-essay">
+    <div class="pe-section-label" style="color:var(--antique-gold);">Visual Documentation · 影像记录</div>
+    <div class="pe-doc-mosaic">
+      <img src="图片/projects/touch/space.jpg" alt="内境森林 — gallery space with circular artwork installation" class="pe-img-tall">
+      <div class="pe-doc-stack">
+        <img src="图片/projects/touch/room-window.jpg" alt="内境森林 — room seen through architectural window portal" class="pe-img-sq pe-img-soft">
+        <img src="图片/projects/touch/performance.jpg" alt="内境森林 — performance art through glass with plants" class="pe-img-full">
+      </div>
+      <img src="图片/projects/touch/opening.jpg" alt="内境森林 — opening ceremony audience" class="pe-img-full">
+      <img src="图片/projects/touch/room-orbs.jpg" alt="内境森林 — glowing orb lights in gallery space" class="pe-img-tall">
+    </div>
+    <p class="pe-img-cap" style="color:rgba(158,168,178,0.42);margin-top:18px;">Selected documentation · 内境森林 · Chengdu, China · 2025</p>
+  </div>
+</section>
+
+<!-- Cultural Impact ──────────────────────────────────── -->
+<section style="background:var(--chalk);padding:120px 0;">
+  <div class="pe-essay">
+    <div class="pe-section-label">Cultural Impact · 项目成效</div>
+
+    <div class="if-impact-grid">
+      <div class="if-impact-item">
+        <div class="if-impact-label">Spatial Activation</div>
+        <div class="if-impact-value">5 days</div>
+        <div class="if-impact-desc">Sustained experiential programming — morning open exhibition, afternoon healing workshops, evening opening ceremony — each day with its own rhythm.</div>
+      </div>
+      <div class="if-impact-item">
+        <div class="if-impact-label">Cross-Cultural Participation</div>
+        <div class="if-impact-value">4 nations</div>
+        <div class="if-impact-desc">Artists from France, New Zealand, Greece, and China — working within a single coherent spatial logic, without hierarchy or competition.</div>
+      </div>
+      <div class="if-impact-item">
+        <div class="if-impact-label">Audience Engagement</div>
+        <div class="if-impact-value">500+</div>
+        <div class="if-impact-desc">Visitors across exhibition and workshop formats — spanning Chengdu's creative community and the city's international digital nomad population.</div>
+      </div>
+    </div>
+
+    <div class="pe-col2" style="margin-top:80px;">
+      <div>
+        <p class="pe-lead">Seven artists. Five days. One space in Chengdu that briefly became somewhere else entirely.</p>
+      </div>
+      <div>
+        <p class="pe-body">内境森林 brought together an unusually diverse group of practices — abstract painting (Frédéric Léglise), large-scale figurative work (Roger Mortimer), photography-based installations (Sophy Qi), video art (Sun Sun), printmaking (Lyuyue Qiu), and healing-oriented performance (JoJo) — held in a single space without hierarchy.</p>
+        <p class="pe-body">The collaboration between ASFAC and DNβ connected Chengdu's creative community with its growing digital nomad population — two groups that rarely share the same room. The exhibition became a point of encounter between them, with art functioning less as spectacle and more as common ground.</p>
+        <p class="pe-body">What sustained the experience across five days was not marketing, but design — spatial, social, and programmatic decisions that made the space feel worth returning to. The long-term memory effect was not planned for; it was the result of getting the atmosphere right.</p>
+        <p class="pe-body-cn">「内境森林」将七种极为不同的艺术实践汇聚于同一空间，没有等级，没有竞争。ASFAC与DNβ的合作将成都创意社群与数字游民群体连接在一起。让体验持续五天的，不是营销，而是设计——空间、社交与节目设计的综合决策，让这个空间值得一再回访。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Strategic CTA ────────────────────────────────────── -->
+<section class="if-cta">
+  <div class="if-cta-inner">
+    <div class="if-cta-rule"></div>
+    <p class="if-cta-headline">If you are building a brand, space, community, or cultural experience that deserves to be remembered — we would love to shape it together.</p>
+    <p class="if-cta-headline-cn">如果你正在创建一个值得被记住的品牌、空间、社群或文化体验，<br>我们很愿意与你共同塑造它。</p>
+    <div class="if-cta-contacts">
+      <a href="mailto:miliatada@gmail.com" class="if-cta-link">miliatada@gmail.com</a>
+      <a href="curatorial-experience.html" class="if-cta-link">Experience Design Services</a>
+    </div>
+    <div class="if-cta-rule-end"></div>
+  </div>
+</section>
+
+<!-- Footer navigation ────────────────────────────────── -->
+<div class="pe-nav-foot">
+  <a href="index.html#projects" class="pe-nav-back">All Projects · 返回项目档案</a>
+  <a href="project-vosges.html" class="pe-nav-next">孚日广场行为艺术周 · Next</a>
+</div>
+
+<script>
+(function() {
+  const langBtns = document.querySelectorAll('.nav-lang [data-lang]');
+  const saved = localStorage.getItem('shuyun-lang') || 'cn';
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    localStorage.setItem('shuyun-lang', lang);
+    langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  }
+  setLang(saved);
+  langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+})();
+</script>
+</body>
+</html>

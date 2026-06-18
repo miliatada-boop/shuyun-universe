@@ -1,0 +1,1261 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>文文 · 品牌视觉规范 VI System V2</title>
+<style>
+/* ── 字体：中国可用的 CDN ── */
+@import url('https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;700;900&display=swap');
+
+:root{
+  --black:#111110;
+  --ivory:#F5F0E8;
+  --off:#FAFAF8;
+  --wine:#6B1E2A;
+  --bronze:#4A3728;
+  --gold:#B8954A;
+  --g1:#2A2A28; --g2:#3E3E3C; --g3:#6E6E6A; --g4:#9A9892; --g5:#C8C4BC;
+  --serif:'Cormorant Garamond','Noto Serif SC','Source Han Serif CN',serif;
+  --sans:'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+  --heavy:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  --nav-w:200px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--off);
+  color:var(--black);
+  font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+  display:flex;
+}
+
+/* ══ 左侧目录 ══ */
+.toc{
+  width:var(--nav-w);
+  flex-shrink:0;
+  position:fixed;top:0;left:0;bottom:0;
+  background:var(--black);
+  overflow-y:auto;
+  padding:40px 0 40px;
+  z-index:50;
+}
+.toc-brand{
+  padding:0 24px 32px;
+  font-family:var(--serif);font-size:20px;font-weight:300;
+  color:var(--ivory);letter-spacing:0.04em;
+  border-bottom:1px solid rgba(245,240,232,0.08);
+  margin-bottom:24px;
+}
+.toc-brand span{
+  display:block;font-family:var(--sans);font-size:8px;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:8px;
+}
+.toc-item{
+  display:block;padding:10px 24px;
+  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  color:rgba(245,240,232,0.35);text-decoration:none;
+  transition:color 0.2s,background 0.2s;
+  border-left:2px solid transparent;
+}
+.toc-item:hover{color:rgba(245,240,232,0.8);background:rgba(245,240,232,0.04);}
+.toc-item.active{color:var(--gold);border-left-color:var(--gold);}
+.toc-num{
+  font-size:9px;color:rgba(245,240,232,0.2);
+  margin-right:8px;
+}
+
+/* ══ 主内容区 ══ */
+.main{
+  margin-left:var(--nav-w);
+  flex:1;
+  min-width:0;
+}
+
+/* ══ COVER ══ */
+.cover{
+  background:var(--black);
+  padding:100px 80px;
+  position:relative;overflow:hidden;
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.cover::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 65% 55% at 85% 20%, rgba(107,30,42,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 5% 85%, rgba(184,149,74,0.07) 0%, transparent 55%);
+}
+.cover-num{
+  position:absolute;top:80px;right:80px;
+  font-family:var(--serif);font-size:160px;font-weight:300;line-height:1;
+  color:rgba(245,240,232,0.03);letter-spacing:-0.05em;
+  user-select:none;
+}
+.cover-top{
+  position:absolute;top:80px;left:80px;
+  font-size:9px;letter-spacing:0.35em;text-transform:uppercase;
+  color:var(--gold);
+  display:flex;align-items:center;gap:12px;
+}
+.cover-top::before{content:'';width:28px;height:1px;background:var(--gold);opacity:.6;}
+.cover-content{position:relative;z-index:1;}
+.cover-brand{
+  font-family:var(--serif);font-size:96px;font-weight:300;
+  line-height:.95;color:var(--ivory);letter-spacing:-0.02em;
+  margin-bottom:24px;
+}
+.cover-tagline{
+  font-size:14px;font-weight:300;letter-spacing:0.08em;
+  color:rgba(245,240,232,0.35);margin-bottom:64px;
+}
+.cover-meta{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border-top:1px solid rgba(245,240,232,0.1);
+  padding-top:40px;
+}
+.cover-meta-item{
+  padding:0 32px 0 0;
+  border-right:1px solid rgba(245,240,232,0.08);
+}
+.cover-meta-item:last-child{border-right:none;}
+.cover-meta-item label{
+  display:block;font-size:8px;letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(245,240,232,0.25);margin-bottom:8px;
+}
+.cover-meta-item span{font-size:12px;color:rgba(245,240,232,0.55);}
+
+/* ══ 章节通用 ══ */
+.section{
+  padding:100px 80px;
+  border-bottom:1px solid rgba(17,17,16,0.07);
+}
+.section:nth-child(odd){background:var(--off);}
+.section:nth-child(even){background:#fff;}
+
+.sec-header{margin-bottom:64px;}
+.sec-tag{
+  font-size:9px;letter-spacing:0.35em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.sec-tag::after{content:'';flex:0 0 32px;height:1px;background:var(--gold);opacity:.5;}
+.sec-title{
+  font-family:var(--serif);font-size:52px;font-weight:300;
+  line-height:1.1;color:var(--black);margin-bottom:12px;
+}
+.sec-desc{
+  font-size:14px;font-weight:300;color:var(--g3);
+  line-height:1.8;max-width:560px;
+}
+
+/* ══════════════════════════
+   01 色彩系统
+══════════════════════════ */
+.color-primary{
+  display:grid;grid-template-columns:2fr 2fr 1fr 1fr 1fr;
+  gap:3px;margin-bottom:3px;
+}
+.color-secondary{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:3px;margin-bottom:48px;
+}
+.swatch{
+  height:160px;padding:20px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  position:relative;overflow:hidden;
+}
+.swatch-sm{height:80px;padding:14px;}
+.swatch::after{
+  content:attr(data-name);
+  position:absolute;top:20px;left:20px;
+  font-size:9px;letter-spacing:0.2em;text-transform:uppercase;
+  font-weight:500;
+}
+.sw-dark::after,.sw-dark .sh,.sw-dark .sx{color:rgba(245,240,232,0.45);}
+.sw-light::after,.sw-light .sh,.sw-light .sx{color:rgba(17,17,16,0.45);}
+.sh{font-size:22px;font-weight:300;margin-bottom:4px;}
+.sx{font-size:11px;font-weight:300;font-family:var(--sans);}
+.swatch-sm .sh{font-size:15px;}
+.swatch-sm .sx{font-size:10px;}
+
+/* 配色组合 */
+.combo-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;margin-top:48px;
+}
+.combo{
+  border:1px solid rgba(17,17,16,0.08);
+  overflow:hidden;
+}
+.combo-preview{
+  height:100px;display:flex;align-items:center;justify-content:center;
+  gap:12px;
+}
+.combo-swatch{width:40px;height:40px;}
+.combo-info{padding:16px;}
+.combo-name{font-size:11px;font-weight:500;color:var(--black);margin-bottom:4px;}
+.combo-use{font-size:11px;color:var(--g3);line-height:1.6;}
+
+/* ══════════════════════════
+   02 字体系统
+══════════════════════════ */
+.font-showcase{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:3px;margin-bottom:48px;
+}
+.font-panel{
+  padding:56px 48px;
+}
+.font-panel-dark{background:var(--black);}
+.font-panel-light{background:var(--ivory);border:1px solid rgba(17,17,16,0.06);}
+.fp-tag{
+  font-size:8px;letter-spacing:0.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:32px;
+}
+.fp-en{
+  font-family:var(--serif);font-size:64px;font-weight:300;
+  line-height:.95;margin-bottom:8px;
+}
+.fp-en-it{
+  font-family:var(--serif);font-size:64px;font-weight:300;
+  font-style:italic;line-height:.95;margin-bottom:24px;
+}
+.fp-cn{
+  font-size:40px;font-weight:300;line-height:1.1;
+  margin-bottom:20px;
+}
+.fp-spec{
+  font-size:11px;font-weight:300;line-height:1.8;letter-spacing:0.04em;
+}
+.font-panel-dark .fp-en,.font-panel-dark .fp-en-it,.font-panel-dark .fp-cn{color:var(--ivory);}
+.font-panel-dark .fp-en-it{color:rgba(245,240,232,0.35);}
+.font-panel-dark .fp-spec{color:rgba(245,240,232,0.35);}
+.font-panel-light .fp-en,.font-panel-light .fp-cn{color:var(--black);}
+.font-panel-light .fp-en-it{color:rgba(17,17,16,0.25);}
+.font-panel-light .fp-spec{color:var(--g3);}
+
+/* ══════════════════════════
+   03 字体比例
+══════════════════════════ */
+.scale-table{width:100%;border-collapse:collapse;}
+.scale-table th{
+  text-align:left;padding:12px 24px;
+  font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:var(--g4);
+  border-bottom:2px solid rgba(17,17,16,0.1);
+  background:rgba(17,17,16,0.02);
+}
+.scale-table td{
+  padding:20px 24px;font-size:12px;color:var(--g3);
+  border-bottom:1px solid rgba(17,17,16,0.06);vertical-align:middle;
+}
+.scale-table tr:last-child td{border-bottom:none;}
+.scale-table td:first-child{font-size:13px;font-weight:500;color:var(--black);}
+.scale-table .preview-cell{
+  font-family:var(--serif);color:var(--black);line-height:1.1;
+  font-weight:300;
+}
+
+/* ══════════════════════════
+   04 海报模板
+══════════════════════════ */
+/* 固定宽度预览，不用 flex:1 */
+.poster-row{
+  display:flex;gap:24px;margin-bottom:48px;
+  align-items:flex-start;overflow-x:auto;
+  padding-bottom:8px;
+}
+.poster-col{flex-shrink:0;}
+.poster-label{
+  font-size:9px;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--g4);margin-bottom:12px;
+}
+
+.poster{
+  width:220px;
+  aspect-ratio:9/16;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:22px 20px;
+}
+.poster-a{background:var(--black);}
+.poster-a::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 80% 20%, rgba(107,30,42,0.18) 0%, transparent 60%);
+}
+.poster-b{background:var(--ivory);}
+.poster-c{background:var(--wine);}
+
+/* ── 带照片海报 ── */
+.poster-photo{background:var(--black);}
+.poster-photo .photo-bg{
+  position:absolute;top:0;left:0;right:0;height:62%;
+  background-image:url('wenwen-photo.jpg');
+  background-size:cover;background-position:center top;
+}
+.poster-photo .photo-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(17,17,16,0.08) 0%,
+    rgba(17,17,16,0.25) 50%,
+    rgba(17,17,16,0.92) 85%,
+    rgba(17,17,16,1) 100%);
+}
+.poster-photo-ivory{background:var(--ivory);}
+.poster-photo-ivory .photo-bg{
+  position:absolute;top:0;left:0;right:0;height:55%;
+  background-image:url('wenwen-photo.jpg');
+  background-size:cover;background-position:center top;
+}
+.poster-photo-ivory .photo-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(245,240,232,0) 0%,
+    rgba(245,240,232,0.15) 45%,
+    rgba(245,240,232,0.95) 80%,
+    rgba(245,240,232,1) 100%);
+}
+
+/* 全出血照片背景 */
+.poster-photo-full{background:var(--black);}
+.poster-photo-full .photo-bg{
+  position:absolute;inset:0;
+  background-image:url('wenwen-photo.jpg');
+  background-size:cover;background-position:center top;
+}
+.poster-photo-full .photo-bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(17,17,16,0.2) 0%,
+    rgba(17,17,16,0.1) 35%,
+    rgba(17,17,16,0.75) 70%,
+    rgba(17,17,16,0.97) 100%);
+}
+.poster-c::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 50% at 20% 20%, rgba(245,240,232,0.06) 0%, transparent 55%);
+}
+
+.p-tag{
+  position:absolute;top:18px;left:18px;
+  font-size:7px;letter-spacing:0.28em;text-transform:uppercase;
+}
+.p-h{
+  font-family:var(--serif);font-size:20px;font-weight:300;
+  line-height:1.15;margin-bottom:12px;position:relative;z-index:1;
+}
+.p-hr{width:20px;height:1.5px;margin-bottom:10px;position:relative;z-index:1;}
+.p-s{font-size:10px;font-weight:300;line-height:1.7;margin-bottom:18px;position:relative;z-index:1;}
+.p-f{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:12px;position:relative;z-index:1;
+}
+.p-fn{font-family:var(--serif);font-size:14px;font-weight:300;}
+.p-fr{font-size:7px;letter-spacing:0.2em;text-transform:uppercase;}
+
+/* Dark poster */
+.poster-a .p-tag{color:var(--gold);}
+.poster-a .p-h{color:var(--ivory);}
+.poster-a .p-h em{color:rgba(245,240,232,0.3);font-style:italic;}
+.poster-a .p-hr{background:var(--wine);}
+.poster-a .p-s{color:rgba(245,240,232,0.48);}
+.poster-a .p-s strong{color:var(--ivory);}
+.poster-a .p-f{border-top:1px solid rgba(245,240,232,0.1);}
+.poster-a .p-fn{color:var(--ivory);}
+.poster-a .p-fr{color:var(--gold);opacity:.6;}
+
+/* Light poster */
+.poster-b .p-tag{color:var(--gold);}
+.poster-b .p-h{color:var(--black);}
+.poster-b .p-h em{color:rgba(17,17,16,0.25);font-style:italic;}
+.poster-b .p-hr{background:var(--wine);opacity:.5;}
+.poster-b .p-s{color:var(--g3);}
+.poster-b .p-s strong{color:var(--black);}
+.poster-b .p-f{border-top:1px solid rgba(17,17,16,0.1);}
+.poster-b .p-fn{color:var(--black);}
+.poster-b .p-fr{color:var(--gold);}
+
+/* Wine poster */
+.poster-c .p-tag{color:rgba(245,240,232,0.45);}
+.poster-c .p-h{color:var(--ivory);}
+.poster-c .p-h em{color:rgba(245,240,232,0.28);font-style:italic;}
+.poster-c .p-hr{background:rgba(245,240,232,0.25);}
+.poster-c .p-s{color:rgba(245,240,232,0.5);}
+.poster-c .p-s strong{color:var(--ivory);}
+.poster-c .p-f{border-top:1px solid rgba(245,240,232,0.12);}
+.poster-c .p-fn{color:var(--ivory);}
+.poster-c .p-fr{color:rgba(245,240,232,0.35);}
+
+/* ── 版式 D：冲击力 / 钩子版 ── */
+.poster-d{background:var(--black);}
+.poster-d::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 35% at 50% 0%, rgba(184,149,74,0.15) 0%, transparent 55%);
+}
+/* 粗体大字钩子行 */
+.p-hook{
+  font-family:var(--heavy);
+  font-size:30px;font-weight:900;
+  line-height:1.15;letter-spacing:-0.01em;
+  margin-bottom:6px;position:relative;z-index:1;
+}
+.p-hook-sub{
+  font-family:var(--heavy);
+  font-size:18px;font-weight:400;
+  line-height:1.3;letter-spacing:0.01em;
+  margin-bottom:14px;position:relative;z-index:1;
+}
+.p-divider{
+  width:28px;height:2px;margin-bottom:12px;
+  position:relative;z-index:1;
+}
+.poster-d .p-tag{color:var(--gold);}
+.poster-d .p-hook{color:var(--ivory);}
+.poster-d .p-hook em{color:var(--gold);font-style:normal;}
+.poster-d .p-hook-sub{color:rgba(245,240,232,0.5);}
+.poster-d .p-divider{background:var(--wine);}
+.poster-d .p-s{color:rgba(245,240,232,0.4);}
+.poster-d .p-f{border-top:1px solid rgba(245,240,232,0.1);}
+.poster-d .p-fn{color:var(--ivory);}
+.poster-d .p-fr{color:var(--gold);opacity:.6;}
+
+/* 象牙底冲击力版 */
+.poster-e{background:var(--ivory);}
+.poster-e .p-tag{color:var(--gold);}
+.poster-e .p-hook{color:var(--black);}
+.poster-e .p-hook em{color:var(--wine);font-style:normal;}
+.poster-e .p-hook-sub{color:var(--g3);}
+.poster-e .p-divider{background:var(--wine);opacity:.5;}
+.poster-e .p-s{color:var(--g3);}
+.poster-e .p-f{border-top:1px solid rgba(17,17,16,0.1);}
+.poster-e .p-fn{color:var(--black);}
+.poster-e .p-fr{color:var(--gold);}
+
+/* 横版海报 */
+.poster-wide{
+  width:100%;aspect-ratio:16/9;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:48px 72px;background:var(--black);
+  margin-bottom:24px;
+}
+.poster-wide::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 45% 80% at 85% 50%, rgba(107,30,42,0.16) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 10% 30%, rgba(184,149,74,0.05) 0%, transparent 50%);
+}
+.pw-tag{font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;position:relative;z-index:1;}
+.pw-h{
+  font-family:var(--serif);font-size:clamp(32px,4vw,56px);font-weight:300;
+  line-height:1.1;color:var(--ivory);max-width:600px;margin-bottom:20px;position:relative;z-index:1;
+}
+.pw-h em{font-style:italic;color:rgba(245,240,232,0.3);}
+.pw-s{font-size:13px;font-weight:300;color:rgba(245,240,232,0.4);position:relative;z-index:1;}
+.pw-brand{
+  position:absolute;right:72px;bottom:40px;z-index:1;
+  font-family:var(--serif);font-size:13px;color:rgba(245,240,232,0.18);letter-spacing:0.1em;
+}
+
+/* 方形 */
+.poster-sq-row{display:flex;gap:24px;margin-top:24px;}
+.poster-sq{
+  width:220px;aspect-ratio:1/1;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:24px;
+}
+.poster-sq-dark{background:var(--black);}
+.poster-sq-light{background:var(--ivory);}
+.psq-top label{
+  font-size:8px;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:8px;display:block;
+}
+.psq-num{
+  font-family:var(--serif);font-size:52px;font-weight:300;line-height:1;
+}
+.psq-num sup{font-size:20px;}
+.psq-bottom label{
+  font-size:7px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:6px;display:block;
+}
+.psq-text{font-family:var(--serif);font-size:16px;font-weight:300;line-height:1.3;}
+.poster-sq-dark .psq-top label,.poster-sq-dark .psq-bottom label{color:var(--gold);}
+.poster-sq-dark .psq-num,.poster-sq-dark .psq-text{color:var(--ivory);}
+.poster-sq-dark .psq-num sup{color:rgba(245,240,232,0.35);}
+.poster-sq-light .psq-top label,.poster-sq-light .psq-bottom label{color:var(--gold);}
+.poster-sq-light .psq-num{color:var(--black);}
+.poster-sq-light .psq-num sup{color:var(--bronze);}
+.poster-sq-light .psq-text{color:var(--black);}
+
+/* ══════════════════════════
+   05 内容模板
+══════════════════════════ */
+.content-row{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:40px;align-items:flex-start;}
+
+.wx-cover{
+  width:100%;aspect-ratio:2.35/1;
+  background:var(--black);
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;padding:0 56px;
+  margin-bottom:24px;
+}
+.wx-cover::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 55% 80% at 78% 50%, rgba(107,30,42,0.18) 0%, transparent 58%);
+}
+.wxc{position:relative;z-index:1;max-width:460px;}
+.wxc-tag{font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.wxc-title{font-family:var(--serif);font-size:26px;font-weight:300;color:var(--ivory);line-height:1.2;margin-bottom:10px;}
+.wxc-sub{font-size:11px;color:rgba(245,240,232,0.35);letter-spacing:0.04em;}
+.wxc-brand{position:absolute;right:56px;bottom:28px;z-index:1;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.18);}
+
+.xhs-card{
+  width:200px;aspect-ratio:3/4;
+  background:var(--ivory);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:24px;
+  border:1px solid rgba(17,17,16,0.06);
+  flex-shrink:0;
+}
+.xhs-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:50%;
+  background:linear-gradient(180deg,var(--black) 0%,var(--black) 55%,transparent 100%);
+}
+.xhs-tag{
+  position:absolute;top:20px;left:20px;z-index:1;
+  font-size:7px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);
+}
+.xhs-title{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--black);line-height:1.3;margin-bottom:8px;position:relative;z-index:1;}
+.xhs-sub{font-size:10px;color:var(--g3);line-height:1.7;position:relative;z-index:1;}
+
+/* ══════════════════════════
+   06 间距系统
+══════════════════════════ */
+.spacing-list{max-width:680px;}
+.sp-row{
+  display:grid;grid-template-columns:80px 80px 1fr 200px;
+  align-items:center;gap:16px;
+  padding:16px 0;border-bottom:1px solid rgba(17,17,16,0.06);
+}
+.sp-row:last-child{border-bottom:none;}
+.sp-name{font-size:12px;font-weight:500;color:var(--black);}
+.sp-val{font-size:12px;color:var(--g3);font-family:'SF Mono','Consolas',monospace;}
+.sp-bar-wrap{height:6px;background:rgba(17,17,16,0.06);border-radius:1px;overflow:hidden;}
+.sp-bar{height:100%;background:var(--gold);opacity:.55;border-radius:1px;}
+.sp-use{font-size:11px;color:var(--g4);line-height:1.6;}
+
+/* ══════════════════════════
+   07 对错示范
+══════════════════════════ */
+.rule-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
+.rule-card{padding:40px;background:#fff;}
+.rule-ok{border-top:3px solid #2D6A4F;}
+.rule-no{border-top:3px solid #C1121F;}
+.rule-badge{font-size:9px;letter-spacing:0.22em;text-transform:uppercase;font-weight:600;margin-bottom:20px;}
+.rule-badge.ok{color:#2D6A4F;}
+.rule-badge.no{color:#C1121F;}
+.rule-example{padding:24px;background:rgba(17,17,16,0.03);margin-bottom:16px;min-height:120px;display:flex;align-items:center;}
+.rule-desc{font-size:12px;color:var(--g3);line-height:1.75;}
+
+/* ══════════════════════════
+   08 禁忌
+══════════════════════════ */
+.dont-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.dont-card{padding:28px 20px;background:#fff;border:1px solid rgba(17,17,16,0.07);border-top:3px solid #C1121F;}
+.dont-icon{font-size:18px;margin-bottom:12px;filter:grayscale(1);}
+.dont-title{font-size:11px;font-weight:600;color:var(--black);margin-bottom:8px;}
+.dont-desc{font-size:11px;color:var(--g4);line-height:1.65;}
+
+/* ══════════════════════════
+   09 场景速查
+══════════════════════════ */
+.quick-table{width:100%;border-collapse:collapse;}
+.quick-table th{
+  padding:12px 20px;text-align:left;
+  font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);
+  border-bottom:2px solid rgba(17,17,16,0.1);background:rgba(17,17,16,0.02);
+}
+.quick-table td{
+  padding:14px 20px;font-size:12px;color:var(--g3);
+  border-bottom:1px solid rgba(17,17,16,0.06);
+}
+.quick-table tr:last-child td{border-bottom:none;}
+.quick-table td:first-child{font-weight:500;color:var(--black);}
+.tag-pill{
+  display:inline-block;padding:3px 10px;
+  font-size:9px;letter-spacing:0.1em;border-radius:2px;
+  font-weight:500;
+}
+.tag-dark{background:var(--black);color:var(--ivory);}
+.tag-ivory{background:var(--ivory);color:var(--black);border:1px solid rgba(17,17,16,0.12);}
+.tag-wine{background:var(--wine);color:var(--ivory);}
+.tag-gold{background:rgba(184,149,74,0.15);color:var(--bronze);border:1px solid rgba(184,149,74,0.3);}
+</style>
+</head>
+<body>
+
+<!-- 左侧导航 -->
+<nav class="toc">
+  <div class="toc-brand">
+    <span>Brand VI · V2</span>
+    文文
+  </div>
+  <a class="toc-item active" href="#cover"><span class="toc-num">00</span>封面</a>
+  <a class="toc-item" href="#color"><span class="toc-num">01</span>色彩系统</a>
+  <a class="toc-item" href="#type"><span class="toc-num">02</span>字体系统</a>
+  <a class="toc-item" href="#scale"><span class="toc-num">03</span>字体比例</a>
+  <a class="toc-item" href="#poster"><span class="toc-num">04</span>海报模板</a>
+  <a class="toc-item" href="#content"><span class="toc-num">05</span>内容模板</a>
+  <a class="toc-item" href="#spacing"><span class="toc-num">06</span>间距系统</a>
+  <a class="toc-item" href="#rules"><span class="toc-num">07</span>对错示范</a>
+  <a class="toc-item" href="#donts"><span class="toc-num">08</span>禁忌清单</a>
+  <a class="toc-item" href="#quick"><span class="toc-num">09</span>场景速查</a>
+</nav>
+
+<div class="main">
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="cover-top">Brand Identity System · Visual Guidelines V2</div>
+  <div class="cover-num">VI</div>
+  <div class="cover-content">
+    <div class="cover-brand">文文</div>
+    <div class="cover-tagline">AI CULTURE · 品牌视觉规范手册 · V2.0 · 2026</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><label>品牌定位</label><span>AI 时代家庭认知升级</span></div>
+      <div class="cover-meta-item"><label>视觉气质</label><span>沉静权威 × 温暖智识 × 编辑极简</span></div>
+      <div class="cover-meta-item"><label>目标受众</label><span>高知都市父母 · 创业者 · 创作者</span></div>
+      <div class="cover-meta-item"><label>设计出品</label><span>抒云 · Shuyun Studio · 2026</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 色彩系统 -->
+<div class="section" id="color">
+  <div class="sec-header">
+    <div class="sec-tag">01 · Color System</div>
+    <div class="sec-title">色彩系统</div>
+    <div class="sec-desc">五色主系统 + 五阶灰度。核心原则：单个页面最多使用三种颜色，留白是系统的一部分。</div>
+  </div>
+
+  <!-- 主色块 -->
+  <div class="color-primary">
+    <div class="swatch sw-dark" style="background:#111110;" data-name="石墨黑">
+      <div class="sh" style="font-family:'Cormorant Garamond',serif;">Stone Black</div>
+      <div class="sx">#111110</div>
+    </div>
+    <div class="swatch sw-light" style="background:#F5F0E8;" data-name="暖象牙">
+      <div class="sh" style="font-family:'Cormorant Garamond',serif;color:rgba(17,17,16,0.6);">Warm Ivory</div>
+      <div class="sx" style="color:rgba(17,17,16,0.45);">#F5F0E8</div>
+    </div>
+    <div class="swatch sw-dark" style="background:#6B1E2A;" data-name="深酒红">
+      <div class="sh" style="font-family:'Cormorant Garamond',serif;">Wine Red</div>
+      <div class="sx">#6B1E2A</div>
+    </div>
+    <div class="swatch sw-dark" style="background:#4A3728;" data-name="深铜">
+      <div class="sh" style="font-family:'Cormorant Garamond',serif;">Dark Bronze</div>
+      <div class="sx">#4A3728</div>
+    </div>
+    <div class="swatch sw-dark" style="background:#B8954A;" data-name="哑金">
+      <div class="sh" style="font-family:'Cormorant Garamond',serif;">Muted Gold</div>
+      <div class="sx">#B8954A</div>
+    </div>
+  </div>
+  <!-- 灰阶 -->
+  <div class="color-secondary">
+    <div class="swatch swatch-sm sw-dark" style="background:#2A2A28;" data-name="Gray 90"><div class="sx">#2A2A28</div></div>
+    <div class="swatch swatch-sm sw-dark" style="background:#3E3E3C;" data-name="Gray 75"><div class="sx">#3E3E3C</div></div>
+    <div class="swatch swatch-sm sw-dark" style="background:#6E6E6A;" data-name="Gray 55"><div class="sx">#6E6E6A</div></div>
+    <div class="swatch swatch-sm sw-light" style="background:#9A9892;" data-name="Gray 35"><div class="sx" style="color:rgba(17,17,16,0.5);">#9A9892</div></div>
+    <div class="swatch swatch-sm sw-light" style="background:#C8C4BC;" data-name="Gray 20"><div class="sx" style="color:rgba(17,17,16,0.5);">#C8C4BC</div></div>
+  </div>
+
+  <!-- 配色组合 -->
+  <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--g4);margin-bottom:20px;">推荐配色组合</div>
+  <div class="combo-grid">
+    <div class="combo">
+      <div class="combo-preview" style="background:#111110;">
+        <div class="combo-swatch" style="background:#F5F0E8;"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#F5F0E8;font-weight:300;">文文</div>
+        <div class="combo-swatch" style="background:#B8954A;width:20px;height:20px;border-radius:50%;"></div>
+      </div>
+      <div class="combo-info">
+        <div class="combo-name">黑底 × 象牙 × 哑金点缀</div>
+        <div class="combo-use">主推组合。深色海报、封面、Hero 区。权威感最强。</div>
+      </div>
+    </div>
+    <div class="combo">
+      <div class="combo-preview" style="background:#F5F0E8;">
+        <div class="combo-swatch" style="background:#111110;"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#111110;font-weight:300;">文文</div>
+        <div class="combo-swatch" style="background:#B8954A;width:20px;height:20px;border-radius:50%;"></div>
+      </div>
+      <div class="combo-info">
+        <div class="combo-name">象牙底 × 黑字 × 哑金点缀</div>
+        <div class="combo-use">日间版、小红书浅色封面、PPT 内页。温暖不失高级感。</div>
+      </div>
+    </div>
+    <div class="combo">
+      <div class="combo-preview" style="background:#6B1E2A;">
+        <div class="combo-swatch" style="background:#F5F0E8;"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#F5F0E8;font-weight:300;">文文</div>
+        <div class="combo-swatch" style="background:rgba(245,240,232,0.3);width:20px;height:20px;border-radius:50%;"></div>
+      </div>
+      <div class="combo-info">
+        <div class="combo-name">酒红底 × 象牙 （仅两色）</div>
+        <div class="combo-use">强调版、宣言海报、活动封面。每月最多用 1–2 次，不能滥用。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 字体系统 -->
+<div class="section" id="type">
+  <div class="sec-header">
+    <div class="sec-tag">02 · Typography System</div>
+    <div class="sec-title">字体系统</div>
+    <div class="sec-desc">衬线体负责气质和情绪，无衬线体负责清晰和功能性。两者不混用于同一层级。</div>
+  </div>
+  <div class="font-showcase">
+    <div class="font-panel font-panel-dark">
+      <div class="fp-tag">Display · Serif · 优雅标题</div>
+      <div class="fp-en">Cormorant</div>
+      <div class="fp-en-it">Garamond</div>
+      <div class="fp-cn" style="font-family:'Noto Serif SC',serif;">思源宋体细体</div>
+      <div class="fp-spec">
+        EN: Cormorant Garamond Light 300 / Italic<br>
+        CN: Noto Serif SC Light · 思源宋体细体<br><br>
+        用途：封面大字、章节标题、海报主标题、金句引语<br>
+        <span style="color:var(--gold);">主品牌调性 · 大部分场景首选</span>
+      </div>
+    </div>
+    <div class="font-panel font-panel-light">
+      <div class="fp-tag">Body · Sans-Serif · 正文字体</div>
+      <div class="fp-en" style="font-family:'Inter',sans-serif;color:#111110;">Inter</div>
+      <div class="fp-en-it" style="font-family:'Inter',sans-serif;font-style:normal;font-weight:900;color:rgba(17,17,16,0.12);">Black</div>
+      <div class="fp-cn" style="font-family:'PingFang SC',sans-serif;color:#111110;">苹方</div>
+      <div class="fp-spec">
+        EN: Inter Light 300 / Regular 400 / Bold 700<br>
+        CN: PingFang SC · 苹方（Regular / Light）<br><br>
+        用途：正文段落、说明文字、标签、导航、UI 文案
+      </div>
+    </div>
+  </div>
+
+  <!-- 粗体冲击力展示 -->
+  <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--g4);margin:40px 0 16px;">Impact · Heavy · 冲击力字体 <span style="color:var(--wine);margin-left:12px;">▲ 高传播场景专用</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:40px;">
+    <div style="background:var(--black);padding:48px 40px;">
+      <div style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Hook · 黑底钩子标题</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:44px;font-weight:900;color:var(--ivory);line-height:1.1;margin-bottom:8px;">判断力</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:20px;font-weight:400;color:rgba(245,240,232,0.45);line-height:1.3;margin-bottom:20px;">AI 无法替代的唯一能力</div>
+      <div style="font-size:11px;color:rgba(245,240,232,0.3);line-height:1.8;">
+        CN: Noto Sans SC Black 900 / Regular 400<br>
+        组合：大字 900 + 副标题 400<br>
+        <span style="color:var(--gold);">用途：钩子海报 · 宣言 · 高传播内容</span>
+      </div>
+    </div>
+    <div style="background:var(--ivory);padding:48px 40px;border:1px solid rgba(17,17,16,0.06);">
+      <div style="font-size:8px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;">Hook · 象牙底冲击版</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:44px;font-weight:900;color:var(--black);line-height:1.1;margin-bottom:8px;"><span style="color:var(--wine);">父母</span>懂AI</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:20px;font-weight:400;color:var(--g3);line-height:1.3;margin-bottom:20px;">才是真正的起跑线</div>
+      <div style="font-size:11px;color:var(--g4);line-height:1.8;">
+        强调色用酒红（--wine），不超过 2 字<br>
+        底部落款切回衬线体，保持品牌温度<br>
+        <span style="color:var(--bronze);">每月使用 ≤ 总量 30%，避免审美疲劳</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 字体比例 -->
+<div class="section" id="scale">
+  <div class="sec-header">
+    <div class="sec-tag">03 · Type Scale</div>
+    <div class="sec-title">字体比例规范</div>
+    <div class="sec-desc">基于 8px 模数。同一设计中字号跨度不小于 1:2，层级清晰优先于风格统一。</div>
+  </div>
+  <table class="scale-table">
+    <thead>
+      <tr>
+        <th>层级</th><th>桌面字号</th><th>手机字号</th><th>字重</th><th>行高</th><th>字间距</th><th>主要用途</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:rgba(107,30,42,0.04);">
+        <td style="font-weight:700;">Impact 钩子<br><span style="font-size:10px;font-weight:400;color:var(--wine);">冲击力专用</span></td><td>64–96px</td><td>44–64px</td><td><strong>Black 900</strong></td><td>1.1</td><td>-0.01em</td>
+        <td><span style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:28px;font-weight:900;color:var(--black);">判断力</span></td>
+      </tr>
+      <tr>
+        <td>Display</td><td>72–120px</td><td>48–64px</td><td>Light 300</td><td>1.0</td><td>-0.02em</td>
+        <td><span class="preview-cell" style="font-size:36px;font-family:'Cormorant Garamond',serif;">封面大字</span></td>
+      </tr>
+      <tr>
+        <td>H1 主标题</td><td>48–72px</td><td>36–48px</td><td>Light 300</td><td>1.1</td><td>-0.01em</td>
+        <td><span class="preview-cell" style="font-size:28px;font-family:'Cormorant Garamond',serif;">AI 时代家庭认知</span></td>
+      </tr>
+      <tr>
+        <td>H2 副标题</td><td>32–48px</td><td>24–32px</td><td>Light 300</td><td>1.2</td><td>0</td>
+        <td><span class="preview-cell" style="font-size:22px;font-family:'Cormorant Garamond',serif;">认知升级先于工具学习</span></td>
+      </tr>
+      <tr>
+        <td>H3 小标题</td><td>20–28px</td><td>18–22px</td><td>Regular 400</td><td>1.3</td><td>0</td>
+        <td><span class="preview-cell" style="font-size:18px;">这才是真正的差异化</span></td>
+      </tr>
+      <tr>
+        <td>Body 正文</td><td>14–16px</td><td>14–15px</td><td>Light 300</td><td>1.85</td><td>0.02em</td>
+        <td><span style="font-size:13px;color:#6E6E6A;font-weight:300;line-height:1.85;">在 AI 重塑一切的时代，真正稀缺的是独立思考的判断力。</span></td>
+      </tr>
+      <tr>
+        <td>Caption 说明</td><td>11–12px</td><td>11px</td><td>Light 300</td><td>1.7</td><td>0.04em</td>
+        <td><span style="font-size:11px;color:#9A9892;letter-spacing:0.04em;">2026 年 · 上海 · 文文出品</span></td>
+      </tr>
+      <tr>
+        <td>Label 标签</td><td>9–10px</td><td>9px</td><td>Medium 500</td><td>1.5</td><td>0.28–0.35em</td>
+        <td><span style="font-size:9px;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:#B8954A;">AI Culture · 认知升级</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 04 海报模板 -->
+<div class="section" id="poster">
+  <div class="sec-header">
+    <div class="sec-tag">04 · Poster Templates</div>
+    <div class="sec-title">海报模板系统</div>
+    <div class="sec-desc">三套底色方案 × 三种尺寸。同一主题内容，三套底色各出一版，按平台和场景选用。</div>
+  </div>
+
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin-bottom:20px;">竖版 9:16 · 朋友圈 / 小红书 / Stories</div>
+  <div class="poster-row">
+    <div class="poster-col">
+      <div class="poster-label">版式 A · 深黑 · 主推</div>
+      <div class="poster poster-a">
+        <div class="p-tag">AI 时代 · 与孩子共同成长</div>
+        <div class="p-h">最危险的，<br>不是孩子<em>不会 AI</em><br>而是父母<em>不懂 AI</em></div>
+        <div class="p-hr"></div>
+        <div class="p-s">与其担心孩子<strong>用错</strong><br>不如陪他一起<strong>用对</strong></div>
+        <div class="p-f"><span class="p-fn">文文</span><span class="p-fr">AI 亲子群</span></div>
+      </div>
+    </div>
+    <div class="poster-col">
+      <div class="poster-label">版式 B · 象牙 · 日间版</div>
+      <div class="poster poster-b">
+        <div class="p-tag">AI 时代 · 与孩子共同成长</div>
+        <div class="p-h">最危险的，<br>不是孩子<em>不会 AI</em><br>而是父母<em>不懂 AI</em></div>
+        <div class="p-hr"></div>
+        <div class="p-s">与其担心孩子<strong>用错</strong><br>不如陪他一起<strong>用对</strong></div>
+        <div class="p-f"><span class="p-fn">文文</span><span class="p-fr">AI 亲子群</span></div>
+      </div>
+    </div>
+    <div class="poster-col">
+      <div class="poster-label">版式 C · 酒红 · 强调</div>
+      <div class="poster poster-c">
+        <div class="p-tag">Manifesto · 宣言</div>
+        <div class="p-h">慢下来，<br>才能<em>走得更远</em></div>
+        <div class="p-hr"></div>
+        <div class="p-s">Depth over velocity.<br>Always.</div>
+        <div class="p-f"><span class="p-fn">文文</span><span class="p-fr">AI Culture</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin:40px 0 8px;">冲击力版 · 钩子文案 / 高传播场景</div>
+  <div style="font-size:12px;color:var(--g3);margin-bottom:20px;line-height:1.7;">适用于大字钩子、宣言类内容。粗黑体标题 + 衬线落款，保持品牌调性的同时提升传播力。每月使用频率：不超过总发布量的 30%。</div>
+  <div class="poster-row">
+    <div class="poster-col">
+      <div class="poster-label">版式 D · 黑底冲击力</div>
+      <div class="poster poster-d">
+        <div class="p-tag">AI 时代 · 家庭认知</div>
+        <div class="p-hook">父母不懂AI<br><em>才是最大风险</em></div>
+        <div class="p-hook-sub">孩子会用，但你看不懂</div>
+        <div class="p-divider"></div>
+        <div class="p-s">认知升级，先于工具学习。</div>
+        <div class="p-f"><span class="p-fn" style="font-family:'Cormorant Garamond',serif;">文文</span><span class="p-fr">AI 亲子群</span></div>
+      </div>
+    </div>
+    <div class="poster-col">
+      <div class="poster-label">版式 E · 象牙冲击力</div>
+      <div class="poster poster-e">
+        <div class="p-tag">Manifesto</div>
+        <div class="p-hook"><em>判断力</em><br>不可替代</div>
+        <div class="p-hook-sub">AI 能做所有事，除了替你判断</div>
+        <div class="p-divider"></div>
+        <div class="p-s">这才是文文课程的底层逻辑。</div>
+        <div class="p-f"><span class="p-fn" style="font-family:'Cormorant Garamond',serif;">文文</span><span class="p-fr">AI Culture</span></div>
+      </div>
+    </div>
+    <div class="poster-col">
+      <div class="poster-label">对比：优雅版 vs 冲击版</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="background:var(--black);padding:16px 18px;width:220px;">
+          <div style="font-size:7px;letter-spacing:0.25em;color:var(--gold);margin-bottom:10px;text-transform:uppercase;">优雅版 · 品牌主调</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--ivory);line-height:1.2;">最危险的，<br>不是不会用 AI</div>
+        </div>
+        <div style="background:var(--black);padding:16px 18px;width:220px;">
+          <div style="font-size:7px;letter-spacing:0.25em;color:var(--gold);margin-bottom:10px;text-transform:uppercase;">冲击版 · 高传播</div>
+          <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:20px;font-weight:900;color:var(--ivory);line-height:1.2;">最大的风险<br><span style="color:var(--gold);">是父母不懂AI</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 带照片海报 -->
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin:48px 0 8px;">带照片版 · IP 人设强化 / 招募 / 课程推广</div>
+  <div style="font-size:12px;color:var(--g3);margin-bottom:20px;line-height:1.7;">照片放上方，文案在下方，人设感强。适合招募帖、课程推广、朋友圈宣言。</div>
+  <div class="poster-row">
+
+    <!-- 版式 F：照片上 + 黑底文案 -->
+    <div class="poster-col">
+      <div class="poster-label">版式 F · 照片上 / 优雅文案</div>
+      <div class="poster poster-photo">
+        <div class="photo-bg"></div>
+        <div class="p-tag" style="color:var(--gold);z-index:1;">AI 时代 · 家庭认知</div>
+        <div class="p-h" style="z-index:1;">最危险的，<br>不是孩子<em>不会 AI</em><br>而是父母<em>不懂 AI</em></div>
+        <div class="p-hr" style="background:var(--wine);z-index:1;"></div>
+        <div class="p-s" style="z-index:1;">认知升级，先于工具学习。</div>
+        <div class="p-f" style="border-top:1px solid rgba(245,240,232,0.1);z-index:1;">
+          <span class="p-fn" style="color:var(--ivory);">文文</span>
+          <span class="p-fr" style="color:var(--gold);opacity:.6;">AI 亲子群</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 版式 G：全出血照片 + 底部文案 -->
+    <div class="poster-col">
+      <div class="poster-label">版式 G · 全出血 / 冲击力</div>
+      <div class="poster poster-photo-full">
+        <div class="photo-bg"></div>
+        <div class="p-tag" style="color:var(--gold);z-index:1;">Manifesto</div>
+        <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;font-size:22px;font-weight:900;color:var(--ivory);line-height:1.2;margin-bottom:8px;position:relative;z-index:1;">
+          父母不懂AI<br><span style="color:var(--gold);">才是最大风险</span>
+        </div>
+        <div style="width:24px;height:2px;background:var(--wine);margin-bottom:10px;position:relative;z-index:1;"></div>
+        <div class="p-s" style="z-index:1;">认知升级，先于工具。</div>
+        <div class="p-f" style="border-top:1px solid rgba(245,240,232,0.1);z-index:1;">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--ivory);">文文</span>
+          <span class="p-fr" style="color:var(--gold);opacity:.6;">AI 亲子群</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 版式 H：象牙底 + 照片 -->
+    <div class="poster-col">
+      <div class="poster-label">版式 H · 象牙底 / 温暖感</div>
+      <div class="poster poster-photo-ivory">
+        <div class="photo-bg"></div>
+        <div class="p-tag" style="color:var(--gold);z-index:1;">课程推荐</div>
+        <div class="p-h" style="color:var(--black);z-index:1;">判断力，<br>才是给孩子<br><em style="color:rgba(17,17,16,0.28);">最好的礼物</em></div>
+        <div class="p-hr" style="background:var(--wine);opacity:.5;z-index:1;"></div>
+        <div class="p-s" style="color:var(--g3);z-index:1;">比工具更重要的是<strong style="color:var(--black);">独立判断力</strong></div>
+        <div class="p-f" style="border-top:1px solid rgba(17,17,16,0.1);z-index:1;">
+          <span class="p-fn" style="color:var(--black);">文文</span>
+          <span class="p-fr" style="color:var(--gold);">AI 亲子群</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin:40px 0 20px;">横版 16:9 · 公众号封面 / 课程首图 / PPT</div>
+  <div class="poster-wide">
+    <div class="pw-tag">文文 · AI Culture · 旗舰课程</div>
+    <div class="pw-h">AI 时代，<br>家庭认知升级指南。<br><em>12 周，重建判断力。</em></div>
+    <div class="pw-s">适合：希望带领家庭真正理解 AI 时代的父母</div>
+    <div class="pw-brand">文文 · yiwenwen.ai</div>
+  </div>
+
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin:0 0 20px;">方形 1:1 · 朋友圈辅图 / 小红书配图</div>
+  <div class="poster-sq-row">
+    <div class="poster-sq poster-sq-dark">
+      <div class="psq-top">
+        <label>已加入社群</label>
+        <div class="psq-num">2,400<sup>+</sup></div>
+      </div>
+      <div class="psq-bottom">
+        <label>AI 时代家庭认知升级</label>
+        <div class="psq-text">与同频家庭，<br>一起看清未来。</div>
+      </div>
+    </div>
+    <div class="poster-sq poster-sq-light">
+      <div class="psq-top">
+        <label style="color:var(--gold);">Core Belief</label>
+        <div class="psq-num" style="color:var(--black);font-size:40px;">判断<sup style="color:var(--bronze);">力</sup></div>
+      </div>
+      <div class="psq-bottom">
+        <label>AI 时代唯一不可替代的能力</label>
+        <div class="psq-text">The only skill<br>AI cannot replace.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 05 内容模板 -->
+<div class="section" id="content">
+  <div class="sec-header">
+    <div class="sec-tag">05 · Content Templates</div>
+    <div class="sec-title">内容模板</div>
+    <div class="sec-desc">公众号封面 / 小红书封面的标准版式。文案可替换，结构和配色保持一致。</div>
+  </div>
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin-bottom:16px;">公众号封面 · 900×383 / 2.35:1</div>
+  <div class="wx-cover">
+    <div class="wxc">
+      <div class="wxc-tag">课程推荐 · AI Culture</div>
+      <div class="wxc-title">当 AI 可以替代所有知识性工作，我们还应该让孩子学什么？</div>
+      <div class="wxc-sub">文文 · 深度专题 · 2026</div>
+    </div>
+    <div class="wxc-brand">文文</div>
+  </div>
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin:32px 0 8px;">小红书封面 · 优雅版 · 1080×1440 / 3:4</div>
+  <div style="font-size:11px;color:var(--g4);margin-bottom:16px;">衬线细体，品牌主调，日常选用</div>
+  <div class="content-row">
+    <div class="xhs-card">
+      <div class="xhs-tag">AI 时代 · 家庭认知</div>
+      <div class="xhs-title">判断力，才是给孩子最好的礼物</div>
+      <div class="xhs-sub">比工具更重要的是独立思考的能力</div>
+    </div>
+    <div class="xhs-card" style="background:var(--black);">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse 60% 50% at 70% 30%,rgba(184,149,74,0.08) 0%,transparent 60%);"></div>
+      <div class="xhs-tag" style="color:var(--gold);">Manifesto</div>
+      <div class="xhs-title" style="color:var(--ivory);">慢下来，才能走得更远</div>
+      <div class="xhs-sub" style="color:rgba(245,240,232,0.4);">Depth over velocity. Always.</div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--g4);margin:32px 0 8px;">小红书封面 · 冲击力版 · 高传播场景</div>
+  <div style="font-size:11px;color:var(--g4);margin-bottom:16px;">粗黑体钩子标题，适合观点型 / 钩子型内容，提升点击率</div>
+  <div class="content-row">
+    <!-- 黑底冲击力 -->
+    <div class="xhs-card" style="background:var(--black);justify-content:flex-end;">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;
+        background:radial-gradient(ellipse 80% 45% at 50% 0%, rgba(184,149,74,0.14) 0%, transparent 55%);"></div>
+      <div class="xhs-tag" style="color:var(--gold);">AI 时代 · 家庭认知</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;
+        font-size:22px;font-weight:900;color:var(--ivory);
+        line-height:1.2;margin-bottom:6px;position:relative;z-index:1;">
+        父母不懂AI<br><span style="color:var(--gold);">才是最大风险</span>
+      </div>
+      <div style="width:24px;height:2px;background:var(--wine);margin-bottom:10px;position:relative;z-index:1;"></div>
+      <div style="font-size:10px;color:rgba(245,240,232,0.4);line-height:1.6;position:relative;z-index:1;">
+        认知升级，先于工具学习
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;
+        border-top:1px solid rgba(245,240,232,0.1);padding-top:10px;margin-top:12px;position:relative;z-index:1;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--ivory);">文文</span>
+        <span style="font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:.6;">AI 亲子群</span>
+      </div>
+    </div>
+    <!-- 象牙底冲击力 -->
+    <div class="xhs-card" style="background:var(--ivory);border:1px solid rgba(17,17,16,0.08);justify-content:flex-end;">
+      <div style="position:absolute;top:0;left:0;right:0;height:45%;
+        background:linear-gradient(180deg,var(--black) 0%,rgba(17,17,16,0.85) 60%,transparent 100%);"></div>
+      <div class="xhs-tag" style="color:var(--gold);">Manifesto · 宣言</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;
+        font-size:22px;font-weight:900;color:var(--black);
+        line-height:1.2;margin-bottom:6px;position:relative;z-index:1;">
+        <span style="color:var(--wine);">判断力</span><br>不可替代
+      </div>
+      <div style="width:24px;height:2px;background:var(--wine);opacity:.5;margin-bottom:10px;position:relative;z-index:1;"></div>
+      <div style="font-size:10px;color:var(--g3);line-height:1.6;position:relative;z-index:1;">
+        AI 能做所有事，除了替你判断
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;
+        border-top:1px solid rgba(17,17,16,0.1);padding-top:10px;margin-top:12px;position:relative;z-index:1;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--black);">文文</span>
+        <span style="font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">AI Culture</span>
+      </div>
+    </div>
+    <!-- 酒红冲击力 -->
+    <div class="xhs-card" style="background:var(--wine);justify-content:flex-end;">
+      <div style="position:absolute;top:0;left:0;right:0;bottom:0;
+        background:radial-gradient(ellipse 70% 40% at 50% 0%, rgba(245,240,232,0.08) 0%, transparent 55%);"></div>
+      <div class="xhs-tag" style="color:rgba(245,240,232,0.5);">限量名额 · 旗舰课程</div>
+      <div style="font-family:'Noto Sans SC','PingFang SC',sans-serif;
+        font-size:22px;font-weight:900;color:var(--ivory);
+        line-height:1.2;margin-bottom:6px;position:relative;z-index:1;">
+        12 周<br>重建判断力
+      </div>
+      <div style="width:24px;height:2px;background:rgba(245,240,232,0.3);margin-bottom:10px;position:relative;z-index:1;"></div>
+      <div style="font-size:10px;color:rgba(245,240,232,0.5);line-height:1.6;position:relative;z-index:1;">
+        AI 时代家庭认知升级指南
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;
+        border-top:1px solid rgba(245,240,232,0.12);padding-top:10px;margin-top:12px;position:relative;z-index:1;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--ivory);">文文</span>
+        <span style="font-size:7px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(245,240,232,0.4);">每月≤2次</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 间距系统 -->
+<div class="section" id="spacing">
+  <div class="sec-header">
+    <div class="sec-tag">06 · Spacing System</div>
+    <div class="sec-title">间距系统</div>
+    <div class="sec-desc">基于 8px 模数。留白不是空缺，是视觉语言本身。宁可减少内容，不减少留白。</div>
+  </div>
+  <div class="spacing-list">
+    <div class="sp-row">
+      <div class="sp-name">XS</div><div class="sp-val">8px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:5%;"></div></div>
+      <div class="sp-use">图标与文字间距、badge 内边距</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-name">S</div><div class="sp-val">16px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:10%;"></div></div>
+      <div class="sp-use">列表项间距、小元素组合间距</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-name">M</div><div class="sp-val">24px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:15%;"></div></div>
+      <div class="sp-use">卡片内边距（紧凑）、段落间距</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-name">L</div><div class="sp-val">40px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:25%;"></div></div>
+      <div class="sp-use">卡片标准内边距、模块内间距</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-name">XL</div><div class="sp-val">64px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:40%;"></div></div>
+      <div class="sp-use">页面左右边距（桌面端）</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-name">2XL</div><div class="sp-val">100px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:63%;"></div></div>
+      <div class="sp-use">章节间距、海报内部上下留白</div>
+    </div>
+    <div class="sp-row">
+      <div class="sp-name">3XL</div><div class="sp-val">160px</div>
+      <div class="sp-bar-wrap"><div class="sp-bar" style="width:100%;"></div></div>
+      <div class="sp-use">大版块间距、网页 section 间</div>
+    </div>
+  </div>
+  <div style="margin-top:24px;font-size:12px;color:var(--g4);border-left:2px solid var(--gold);padding-left:16px;line-height:1.8;">
+    黄金留白法则：标题上方留白 = 下方留白 × 1.5。<br>
+    例：标题上 60px，下 40px。标题"归属感"更强，版面更稳定。
+  </div>
+</div>
+
+<!-- 07 对错示范 -->
+<div class="section" id="rules">
+  <div class="sec-header">
+    <div class="sec-tag">07 · Do &amp; Don't</div>
+    <div class="sec-title">排版对错示范</div>
+    <div class="sec-desc">适用于所有内容产出——海报、公众号、PPT、小红书。</div>
+  </div>
+  <div class="rule-grid">
+    <div class="rule-card rule-ok">
+      <div class="rule-badge ok">✓ 正确 · 大字 + 大留白 + 克制配色</div>
+      <div class="rule-example">
+        <div style="background:#111110;padding:32px 28px;width:100%;">
+          <div style="font-size:7px;letter-spacing:0.3em;color:#B8954A;margin-bottom:14px;text-transform:uppercase;">AI Culture</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:#F5F0E8;line-height:1.15;">判断力，<br>才是给孩子最好的礼物。</div>
+        </div>
+      </div>
+      <div class="rule-desc">两种颜色（黑+象牙），一个强调色（哑金标签）。大字号，留白充足，层级清晰，有气质。</div>
+    </div>
+    <div class="rule-card rule-no">
+      <div class="rule-badge no">✗ 错误 · 渐变 + 堆叠 + 描边</div>
+      <div class="rule-example">
+        <div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:20px;width:100%;text-align:center;">
+          <div style="font-size:8px;background:#fff;color:#667eea;padding:3px 8px;display:inline-block;margin-bottom:8px;border-radius:4px;">🔥 限时课程</div>
+          <div style="font-size:20px;font-weight:900;color:#fff;text-shadow:2px 2px 4px rgba(0,0,0,0.5);">【重磅】AI时代来了！</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-top:4px;">不学就落后！限时优惠！</div>
+        </div>
+      </div>
+      <div class="rule-desc">蓝紫渐变、描边阴影、emoji、感叹号、"限时"焦虑话术——五种错误同时出现。品牌信任感归零。</div>
+    </div>
+    <div class="rule-card rule-ok">
+      <div class="rule-badge ok">✓ 正确 · 清晰信息层级</div>
+      <div class="rule-example">
+        <div style="background:#F5F0E8;padding:28px 24px;width:100%;">
+          <div style="font-size:8px;letter-spacing:0.25em;text-transform:uppercase;color:#B8954A;margin-bottom:16px;">12 周旗舰课程</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:#111110;margin-bottom:10px;line-height:1.2;">AI 时代家庭认知地图</div>
+          <div style="font-size:12px;color:#6E6E6A;line-height:1.8;margin-bottom:16px;">帮助父母建立完整的认知框架，从底层逻辑到日常实践。</div>
+          <div style="font-size:10px;letter-spacing:0.1em;color:#4A3728;border-top:1px solid rgba(17,17,16,0.08);padding-top:12px;">¥ 3,980 · 立即加入 →</div>
+        </div>
+      </div>
+      <div class="rule-desc">标签 → 标题 → 正文 → CTA，四层递进。每层只用一种颜色，逻辑清晰，转化路径明确。</div>
+    </div>
+    <div class="rule-card rule-no">
+      <div class="rule-badge no">✗ 错误 · 五种颜色 + 字重混乱</div>
+      <div class="rule-example">
+        <div style="background:#fff;padding:20px;width:100%;border:2px solid #ff6b6b;">
+          <div style="font-size:20px;font-weight:900;color:#e63946;margin-bottom:4px;">🎯 12周旗舰课</div>
+          <div style="font-size:11px;color:#457b9d;font-weight:700;margin-bottom:6px;">★★★★★ 好评如潮 价值超10倍！</div>
+          <div style="font-size:15px;font-weight:800;color:#2d6a4f;">AI时代家庭认知地图</div>
+          <div style="font-size:9px;color:#f4a261;margin-top:8px;">⚡限时优惠 原价¥9800 仅需¥3980</div>
+        </div>
+      </div>
+      <div class="rule-desc">五种颜色、四种字重、emoji 堆叠、"限时"焦虑营销——这是典型的低端知识付费风格，定价和定位完全矛盾。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 08 禁忌 -->
+<div class="section" id="donts">
+  <div class="sec-header">
+    <div class="sec-tag">08 · Brand Don'ts</div>
+    <div class="sec-title">品牌禁忌</div>
+    <div class="sec-desc">以下任何一条出现，都会稀释品牌资产。不讨论，不商量。</div>
+  </div>
+  <div class="dont-grid">
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">彩色渐变背景</div><div class="dont-desc">蓝紫、橙黄等渐变。Startup SaaS 廉价感的标志，与品牌定位完全背离。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">Emoji 滥用</div><div class="dont-desc">正式内容一律不用 emoji。私聊互动场合可克制使用（每条不超过 1 个）。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">焦虑话术</div><div class="dont-desc">"不学就落后""限时""错过就没有"等恐慌型文案。品牌卖的是判断力，不是焦虑。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">卡通 AI 图形</div><div class="dont-desc">机器人、大脑回路、神经网络、星空粒子。这些是 2020 年代初的科技廉价符号。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">超过 3 种颜色</div><div class="dont-desc">单张设计最多 3 色。石墨黑 + 象牙白 + 哑金是最稳定的组合，永远不会错。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">版面拥挤</div><div class="dont-desc">宁可减少内容，也要保证呼吸空间。拥挤 = 不自信 = 低端感。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">文字描边/阴影</div><div class="dont-desc">任何文字描边、发光效果、投影。这是设计缺乏层次感的补救方案，本质是设计失败。</div></div>
+    <div class="dont-card"><div class="dont-icon">🚫</div><div class="dont-title">亲子卡通插画</div><div class="dont-desc">Q 版儿童图形、可爱插画。目标是高知都市父母，不是儿童教育品牌。</div></div>
+  </div>
+</div>
+
+<!-- 09 场景速查 -->
+<div class="section" id="quick">
+  <div class="sec-header">
+    <div class="sec-tag">09 · Quick Reference</div>
+    <div class="sec-title">场景速查表</div>
+    <div class="sec-desc">每次出内容前，先查这张表，确认尺寸、底色、字号不出错。</div>
+  </div>
+  <table class="quick-table">
+    <thead>
+      <tr><th>使用场景</th><th>尺寸</th><th>底色方案</th><th>标题字号</th><th>字体</th><th>适用版式</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>朋友圈海报</td><td>1080×1920</td><td><span class="tag-pill tag-dark">石墨黑</span></td><td>72–96px</td><td>衬线体</td><td>版式 A（黑底金字）</td></tr>
+      <tr><td>小红书封面</td><td>1080×1440</td><td><span class="tag-pill tag-ivory">象牙白</span> 或 <span class="tag-pill tag-dark">黑</span></td><td>52–72px</td><td>衬线体</td><td>版式 A / B 均可</td></tr>
+      <tr><td>公众号封面</td><td>900×383</td><td><span class="tag-pill tag-dark">石墨黑</span></td><td>40–52px</td><td>衬线体</td><td>横版模板</td></tr>
+      <tr><td>课程封面</td><td>1920×1080</td><td><span class="tag-pill tag-dark">石墨黑</span></td><td>64–88px</td><td>衬线体</td><td>横版模板</td></tr>
+      <tr><td>金句宣言海报</td><td>1080×1080</td><td><span class="tag-pill tag-wine">深酒红</span>（每月≤2次）</td><td>40–56px</td><td>衬线斜体</td><td>版式 C（酒红）</td></tr>
+      <tr><td>数据成就海报</td><td>1080×1920</td><td><span class="tag-pill tag-dark">石墨黑</span></td><td>数字 80–120px</td><td>衬线体数字</td><td>方形变体</td></tr>
+      <tr><td>PPT 首页</td><td>1920×1080</td><td><span class="tag-pill tag-dark">石墨黑</span></td><td>60–80px</td><td>衬线体</td><td>横版模板</td></tr>
+      <tr><td>PPT 内页</td><td>1920×1080</td><td><span class="tag-pill tag-ivory">象牙白</span></td><td>32–48px</td><td>无衬线 + 衬线混</td><td>标准卡片布局</td></tr>
+      <tr><td>活动邀请函</td><td>1080×1920</td><td><span class="tag-pill tag-wine">深酒红</span></td><td>56–72px</td><td>衬线体</td><td>版式 C（强调版）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// TOC active highlight on scroll
+const items = document.querySelectorAll('.toc-item');
+const sections = document.querySelectorAll('[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) cur = s.id;
+  });
+  items.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}, {passive:true});
+</script>
+</body>
+</html>

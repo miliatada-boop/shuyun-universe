@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>个人品牌诊断问卷 · 文字版</title>
+<style>
+:root {
+  --black: #0e0e0e;
+  --white: #f5f4f0;
+  --accent: #c8a97a;
+  --border: rgba(255,255,255,.1);
+  --serif: 'Georgia','Times New Roman',serif;
+  --sans: -apple-system,'PingFang SC','Helvetica Neue',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--black);color:var(--white);font-family:var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh;}
+
+/* ── LAYOUT ── */
+.wrap{max-width:760px;margin:0 auto;padding:80px 40px 120px;}
+@media(max-width:600px){.wrap{padding:48px 20px 80px;}}
+
+/* ── HEADER ── */
+.header{margin-bottom:72px;border-bottom:1px solid var(--border);padding-bottom:40px;}
+.eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+.main-title{font-family:var(--serif);font-size:clamp(28px,5vw,52px);font-weight:400;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px;}
+.main-sub{font-size:14px;color:rgba(255,255,255,.4);line-height:1.85;max-width:540px;}
+
+/* ── SECTION ── */
+.section{margin-bottom:64px;}
+.section-num{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+.section-title{font-family:var(--serif);font-size:clamp(17px,2.5vw,24px);font-weight:400;margin-bottom:6px;}
+.section-desc{font-size:12px;color:rgba(255,255,255,.3);line-height:1.7;margin-bottom:28px;}
+
+/* ── FIELDS ── */
+.field{margin-bottom:28px;}
+.field-label{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.06em;margin-bottom:8px;display:block;}
+.field-label b{color:rgba(255,255,255,.75);font-weight:500;}
+input[type=text], input[type=email], textarea, select{
+  width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  color:var(--white);font-family:var(--sans);font-size:14px;padding:14px 16px;
+  border-radius:2px;outline:none;transition:border-color .2s;resize:vertical;
+  -webkit-appearance:none;
+}
+input[type=text]:focus, input[type=email]:focus, textarea:focus, select:focus{border-color:rgba(200,169,122,.5);}
+input::placeholder, textarea::placeholder{color:rgba(255,255,255,.18);}
+select option{background:#1a1a1a;}
+textarea{min-height:90px;line-height:1.7;}
+
+/* ── RADIO / CHECKBOX ── */
+.choices{display:flex;flex-direction:column;gap:10px;}
+.choices.inline{flex-direction:row;flex-wrap:wrap;gap:8px;}
+.choice{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid rgba(255,255,255,.08);border-radius:2px;cursor:pointer;transition:all .2s;}
+.choice:hover{border-color:rgba(255,255,255,.2);}
+.choice input[type=radio],.choice input[type=checkbox]{
+  width:16px;height:16px;flex-shrink:0;margin-top:1px;accent-color:var(--accent);cursor:pointer;
+}
+.choice-text{font-size:13px;color:rgba(255,255,255,.65);line-height:1.5;}
+.choice-text b{color:#fff;font-weight:500;display:block;margin-bottom:2px;}
+.choice.tag{padding:8px 14px;border-radius:20px;}
+.choice.tag .choice-text{font-size:12px;}
+
+/* ── SCALE ── */
+.scale-row{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
+.scale-lbl{font-size:11px;color:rgba(255,255,255,.3);min-width:80px;}
+.scale-lbl.right{text-align:right;}
+.scale-dots{display:flex;gap:6px;flex:1;justify-content:center;}
+.scale-dot{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:transparent;cursor:pointer;transition:all .2s;font-size:10px;color:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;}
+.scale-dot:hover,.scale-dot.sel{background:var(--accent);border-color:var(--accent);color:#000;}
+
+/* ── DIVIDER ── */
+.divider{border:none;border-top:1px solid rgba(255,255,255,.06);margin:64px 0;}
+
+/* ── SUBMIT ── */
+.submit-area{text-align:center;padding-top:40px;border-top:1px solid var(--border);}
+.submit-title{font-family:var(--serif);font-size:22px;font-weight:400;margin-bottom:10px;}
+.submit-sub{font-size:13px;color:rgba(255,255,255,.3);margin-bottom:32px;line-height:1.7;}
+.btn-submit{display:inline-flex;align-items:center;gap:12px;padding:18px 56px;background:var(--white);color:var(--black);border:none;font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .3s;font-family:var(--sans);}
+.btn-submit:hover{background:var(--accent);gap:20px;}
+
+/* ── RESULT ── */
+#result{display:none;margin-top:64px;padding:48px;border:1px solid rgba(200,169,122,.2);border-radius:3px;text-align:center;}
+.result-ey{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.result-type{font-family:var(--serif);font-size:clamp(22px,4vw,40px);font-weight:400;margin-bottom:12px;}
+.result-tag{font-size:14px;color:rgba(255,255,255,.45);line-height:1.8;margin-bottom:32px;}
+.result-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:32px;}
+@media(max-width:600px){.result-grid{grid-template-columns:1fr;}}
+.result-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:20px;border-radius:2px;text-align:left;}
+.rc-lbl{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;}
+.rc-val{font-size:13px;color:rgba(255,255,255,.7);line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="header">
+    <p class="eyebrow">个人品牌诊断系统 · 完整版</p>
+    <h1 class="main-title">在开始之前，<br>先认识你自己的品牌</h1>
+    <p class="main-sub">这不是普通的问卷。<br>每一个问题都在帮你厘清：你是谁，你服务谁，以及你的品牌应该长什么样子。<br>请花 10–15 分钟认真作答，答得越具体，最终方向越精准。</p>
+  </div>
+
+  <form id="mainForm" onsubmit="return false;">
+
+  <!-- ── PART 1: 基本信息 ── -->
+  <div class="section">
+    <p class="section-num">Part 01</p>
+    <h2 class="section-title">基本信息</h2>
+    <p class="section-desc">让我们先了解你是谁，在做什么。</p>
+
+    <div class="field">
+      <label class="field-label"><b>你的名字 / 品牌名</b>（或你希望被如何称呼）</label>
+      <input type="text" id="f-name" placeholder="例：晓雨 / Xiaoyu Studio"/>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你目前在做什么？</b>用一句话描述</label>
+      <input type="text" id="f-biz" placeholder="例：独立平面设计师，服务中小品牌和创业公司"/>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你做这件事多久了？</b></label>
+      <div class="choices inline">
+        <label class="choice tag"><input type="radio" name="exp" value="0"> <span class="choice-text">刚开始 / 准备中</span></label>
+        <label class="choice tag"><input type="radio" name="exp" value="1"> <span class="choice-text">不到1年</span></label>
+        <label class="choice tag"><input type="radio" name="exp" value="2"> <span class="choice-text">1–3年</span></label>
+        <label class="choice tag"><input type="radio" name="exp" value="3"> <span class="choice-text">3–5年</span></label>
+        <label class="choice tag"><input type="radio" name="exp" value="4"> <span class="choice-text">5年以上</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>目前主要在哪个平台活跃？</b>（可多选）</label>
+      <div class="choices inline">
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">小红书</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">微信公众号</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">视频号</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">抖音</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">Instagram</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">播客</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">个人网站</span></label>
+        <label class="choice tag"><input type="checkbox" name="platform"> <span class="choice-text">暂时没有</span></label>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── PART 2: 你的受众 ── -->
+  <div class="section">
+    <p class="section-num">Part 02</p>
+    <h2 class="section-title">你的理想客户 / 受众</h2>
+    <p class="section-desc">品牌是一个磁铁——你必须先知道你在吸引谁。</p>
+
+    <div class="field">
+      <label class="field-label"><b>你最想服务的人是谁？</b>尽量具体</label>
+      <textarea id="f-audience" placeholder="例：28–38岁的女性创业者，正在建立自己的第一个个人品牌，有一定的审美但不知道如何系统化..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你的客户 / 读者通常在什么情况下找到你？</b></label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="trigger"> <span class="choice-text"><b>主动搜索解决方案</b>他们有一个明确问题，在主动找答案</span></label>
+        <label class="choice"><input type="radio" name="trigger"> <span class="choice-text"><b>被内容吸引</b>刷到我的文章 / 图片 / 视频，被打动后关注</span></label>
+        <label class="choice"><input type="radio" name="trigger"> <span class="choice-text"><b>口碑转介绍</b>朋友推荐才知道我的存在</span></label>
+        <label class="choice"><input type="radio" name="trigger"> <span class="choice-text"><b>线下相遇后进入线上</b>活动、课程、社群等场景</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你的受众最深层的焦虑是什么？</b></label>
+      <textarea id="f-pain" placeholder="例：做了很久但感觉没有辨识度，别人记不住自己；或者：不知道如何定价，怕显得太贵或太廉价..."></textarea>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── PART 3: 你的业务定位 ── -->
+  <div class="section">
+    <p class="section-num">Part 03</p>
+    <h2 class="section-title">你的业务与定位</h2>
+    <p class="section-desc">你卖的是什么，怎么卖，怎么定价——这直接决定你的品牌需要传递什么感觉。</p>
+
+    <div class="field">
+      <label class="field-label"><b>你目前的主要商业模式是？</b>（可多选）</label>
+      <div class="choices">
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>提供服务</b>一对一咨询、设计、写作、摄影等</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>出售课程 / 内容产品</b>录播课、训练营、电子书等</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>实物产品</b>自创品牌商品</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>会员制 / 社群</b>付费社群、订阅内容</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>广告 / 合作变现</b>带货、商单、联名</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>演讲 / 出版 / IP授权</b></span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你目前的客单价范围？</b></label>
+      <div class="choices inline">
+        <label class="choice tag"><input type="radio" name="price"> <span class="choice-text">免费 / 低于¥500</span></label>
+        <label class="choice tag"><input type="radio" name="price"> <span class="choice-text">¥500–2000</span></label>
+        <label class="choice tag"><input type="radio" name="price"> <span class="choice-text">¥2000–8000</span></label>
+        <label class="choice tag"><input type="radio" name="price"> <span class="choice-text">¥8000–30000</span></label>
+        <label class="choice tag"><input type="radio" name="price"> <span class="choice-text">¥30000 以上</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你希望客户 / 受众把你和谁相比较？</b>同领域里你尊敬的人或品牌</label>
+      <input type="text" id="f-ref" placeholder="例：国内某位知名品牌顾问，或某个你喜欢的海外创作者..."/>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你最不想被人如何描述？</b>写下1–2个你最抗拒的标签</label>
+      <input type="text" id="f-avoid" placeholder="例：接地气的、平价的、什么都做的、大众化的..."/>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── PART 4: 你的个性与风格 ── -->
+  <div class="section">
+    <p class="section-num">Part 04</p>
+    <h2 class="section-title">你的个性与美学倾向</h2>
+    <p class="section-desc">品牌个性不是你"想成为"的样子，而是你"本来就是"的样子被放大。</p>
+
+    <div class="field">
+      <label class="field-label"><b>选一个最像你内容风格的描述</b></label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="style"> <span class="choice-text"><b>克制、精准、极简</b>——每一个字都经过推敲，不废话，不解释</span></label>
+        <label class="choice"><input type="radio" name="style"> <span class="choice-text"><b>感性、温暖、叙事</b>——我在讲一个故事，读者会感受到情绪</span></label>
+        <label class="choice"><input type="radio" name="style"> <span class="choice-text"><b>系统、专业、权威</b>——我提供框架和方法，让人觉得信服</span></label>
+        <label class="choice"><input type="radio" name="style"> <span class="choice-text"><b>实验、打破规则、反叛</b>——我不想像任何人，我在探索边界</span></label>
+        <label class="choice"><input type="radio" name="style"> <span class="choice-text"><b>开放、探索、自由</b>——我记录自己的旅程，没有固定答案</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你的视觉美学倾向是？</b>（可多选2–3个）</label>
+      <div class="choices">
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>极简黑白</b>——干净、精准、没有多余元素</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>大地色系</b>——温暖、自然、质感强</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>高级灰调</b>——克制、冷感、知性</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>奶白暖调</b>——柔和、舒适、有温度</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>深色沉稳</b>——神秘、高端、夜间感</span></label>
+        <label class="choice"><input type="checkbox"> <span class="choice-text"><b>实验性配色</b>——大胆对比、不寻常、记忆点强</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>如果你的品牌是一个空间，它更像？</b></label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="space"> <span class="choice-text"><b>高端精品酒店大堂</b>——安静、克制、每一处细节都经过设计</span></label>
+        <label class="choice"><input type="radio" name="space"> <span class="choice-text"><b>独立艺术画廊</b>——大留白、强作品、不需要解释</span></label>
+        <label class="choice"><input type="radio" name="space"> <span class="choice-text"><b>温暖独立书店</b>——有故事、有温度、让人想停留</span></label>
+        <label class="choice"><input type="radio" name="space"> <span class="choice-text"><b>极客工作室</b>——功能优先、工具美学、系统感强</span></label>
+        <label class="choice"><input type="radio" name="space"> <span class="choice-text"><b>山间禅意建筑</b>——慢、自然、自洽</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>用3个词形容你希望品牌传递的气质</b></label>
+      <input type="text" id="f-vibe" placeholder="例：克制、有力量、值得信赖  /  温柔、深刻、有态度"/>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── PART 5: 内容与声音 ── -->
+  <div class="section">
+    <p class="section-num">Part 05</p>
+    <h2 class="section-title">你的内容与品牌声音</h2>
+    <p class="section-desc">你说什么，以及你怎么说——这两件事共同构成你的品牌声音。</p>
+
+    <div class="field">
+      <label class="field-label"><b>你输出内容最核心的3个主题是？</b></label>
+      <textarea id="f-topics" placeholder="例：品牌视觉策略 / 创作者的商业思维 / 个人成长中的审美积累&#10;每行一个，或用逗号分隔"></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你写内容 / 拍视频时，最自然的语气是？</b></label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="tone"> <span class="choice-text"><b>我在跟你讲</b>——直接对话，有温度，有亲近感</span></label>
+        <label class="choice"><input type="radio" name="tone"> <span class="choice-text"><b>我在分享观点</b>——有立场，有态度，但不说教</span></label>
+        <label class="choice"><input type="radio" name="tone"> <span class="choice-text"><b>我在做记录</b>——真实、朴素、不刻意</span></label>
+        <label class="choice"><input type="radio" name="tone"> <span class="choice-text"><b>我在教一件事</b>——结构清晰，步骤明确，让人有收获</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>有没有一段话或一句话，是你最想对受众说的？</b></label>
+      <textarea id="f-voice" placeholder="可以是你写过的内容里最喜欢的一句，或者一个你一直想表达但还没说出来的核心信念..."></textarea>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- ── PART 6: 目标与野心 ── -->
+  <div class="section">
+    <p class="section-num">Part 06</p>
+    <h2 class="section-title">你的目标与品牌野心</h2>
+    <p class="section-desc">你想去哪里，决定了你的品牌现在需要建设什么。</p>
+
+    <div class="field">
+      <label class="field-label"><b>12个月内，你最想实现的一件事是？</b></label>
+      <textarea id="f-goal" placeholder="例：建立稳定的付费私教业务，月收入达到5万；或者出一本书；或者在行业内有一定知名度..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>你目前品牌最大的问题是什么？</b></label>
+      <div class="choices">
+        <label class="choice"><input type="radio" name="problem"> <span class="choice-text"><b>没有辨识度</b>——别人不记得我，或者记错了</span></label>
+        <label class="choice"><input type="radio" name="problem"> <span class="choice-text"><b>定位模糊</b>——我自己也不清楚我到底是做什么的</span></label>
+        <label class="choice"><input type="radio" name="problem"> <span class="choice-text"><b>视觉不统一</b>——每个平台、每次内容看起来不像同一个人</span></label>
+        <label class="choice"><input type="radio" name="problem"> <span class="choice-text"><b>转化率低</b>——有流量，但粉丝不买单</span></label>
+        <label class="choice"><input type="radio" name="problem"> <span class="choice-text"><b>内容没声量</b>——内容质量不差，但传播不出去</span></label>
+        <label class="choice"><input type="radio" name="problem"> <span class="choice-text"><b>定价困难</b>——不知道如何定价，总觉得自己值得更多但开不了口</span></label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>如果你的品牌在3年后做到了最好的样子，它是什么样的？</b></label>
+      <textarea id="f-vision" placeholder="尽情描述那个画面——你在做什么，服务谁，被人如何评价，每天的工作是什么感觉..."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field-label"><b>还有什么你想让我们了解的？</b>任何你觉得重要的补充</label>
+      <textarea id="f-extra" placeholder="背景故事、特殊限制、已经做过的尝试、或者你最担心的事..."></textarea>
+    </div>
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-area">
+    <h2 class="submit-title">准备好了</h2>
+    <p class="submit-sub">提交后，我们将根据你的答案<br>为你生成个性化的品牌诊断方向。</p>
+    <button class="btn-submit" onclick="submitForm()">提交我的品牌档案 →</button>
+  </div>
+
+  </form>
+
+  <!-- RESULT -->
+  <div id="result">
+    <p class="result-ey">你的品牌诊断</p>
+    <h2 class="result-type" id="rType">—</h2>
+    <p class="result-tag" id="rTag">—</p>
+    <div class="result-grid">
+      <div class="result-card">
+        <div class="rc-lbl">核心方向</div>
+        <div class="rc-val" id="rDir">—</div>
+      </div>
+      <div class="result-card">
+        <div class="rc-lbl">你的受众共鸣点</div>
+        <div class="rc-val" id="rAud">—</div>
+      </div>
+      <div class="result-card">
+        <div class="rc-lbl">立即可以做的</div>
+        <div class="rc-val" id="rNext">—</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function submitForm(){
+  const name = document.getElementById('f-name').value.trim() || '你';
+  const biz  = document.getElementById('f-biz').value.trim();
+  const style= document.querySelector('input[name=style]:checked');
+  const space= document.querySelector('input[name=space]:checked');
+
+  const styleMap = {
+    0:{ type:'克制系创作者', tag:'你的品牌力量来自于"不说"。\n精准、极简、不解释，\n才是最高级的沟通方式。', dir:'减法策略：删掉所有解释性内容，让作品自己说话', aud:'追求品质、厌倦信息轰炸的精英客户', next:'写一篇不超过200字的品牌宣言，放到所有主页' },
+    1:{ type:'感性叙事者', tag:'你的品牌是一个正在发生的故事。\n读者不只是购买你的产品，\n他们在加入你的世界。', dir:'情感连接策略：用真实经历建立深度共鸣', aud:'渴望被理解、寻找归属感的同频群体', next:'记录一次真实的、有脆弱感的经历并发布' },
+    2:{ type:'专业权威型', tag:'你建立信任的方式是框架和系统。\n人们相信你，\n因为你让复杂变得清晰。', dir:'权威建立策略：输出方法论，占据细分领域话语权', aud:'需要明确指导、愿意为结果付费的执行者', next:'把你最核心的方法论整理成一个可视化框架图' },
+    3:{ type:'实验先锋者', tag:'你不属于任何已有的分类。\n你在创造一种\n之前不存在的可能性。', dir:'差异化策略：放大你最不寻常的部分，让不适应传统的人找到你', aud:'厌倦主流、寻找真正不同声音的探索者', next:'做一次你觉得"有点危险"但真实的内容实验' },
+    4:{ type:'自由探索者', tag:'你的品牌是一场正在进行的旅程。\n不确定性本身，\n就是你最吸引人的特质。', dir:'真实记录策略：过程即产品，探索的姿态就是品牌', aud:'同样在路上、需要同行者而非导师的探索者', next:'开始一个公开的"进行中"项目，带着读者一起走' },
+  };
+
+  const idx = style ? parseInt(style.closest('.choices').querySelectorAll('input').length > 0 ? Array.from(style.closest('.choices').querySelectorAll('input')).indexOf(style) : 0) : 0;
+  const data = styleMap[Math.min(idx,4)] || styleMap[0];
+
+  document.getElementById('rType').textContent = name + ' · ' + data.type;
+  document.getElementById('rTag').innerHTML = data.tag.replace(/\n/g,'<br>');
+  document.getElementById('rDir').textContent = data.dir;
+  document.getElementById('rAud').textContent = data.aud;
+  document.getElementById('rNext').textContent = data.next;
+
+  document.getElementById('mainForm').style.opacity = '.3';
+  document.getElementById('mainForm').style.pointerEvents = 'none';
+  const res = document.getElementById('result');
+  res.style.display='block';
+  res.scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

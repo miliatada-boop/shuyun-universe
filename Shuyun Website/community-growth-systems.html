@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh" data-lang="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社群与增长系统 · Community Growth Systems · Shuyun Universe</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="detail.css">
+<style>
+.cgs-hero {
+  min-height: 100vh;
+  background: linear-gradient(150deg, var(--abyssal) 0%, #243744 58%, #efe9df 58.2%, var(--chalk) 100%);
+  padding: 148px clamp(28px,5vw,80px) 112px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  gap: clamp(48px,7vw,104px);
+  align-items: end;
+  position: relative;
+  overflow: hidden;
+}
+.cgs-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 48% 52% at 18% 88%, rgba(184,149,90,0.09) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 45% at 85% 18%, rgba(123,142,130,0.1) 0%, transparent 58%);
+}
+.cgs-hero-body { position: relative; z-index: 1; max-width: 690px; justify-self: end; }
+.cgs-crumb {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(158,168,178,0.5); display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 72px;
+}
+.cgs-crumb a { color: inherit; transition: color 0.3s; }
+.cgs-crumb a:hover { color: var(--pale-gold); }
+.cgs-label {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--antique-gold); margin-bottom: 26px;
+}
+.cgs-title-en {
+  font-family: var(--serif); font-size: clamp(48px, 7vw, 92px); font-weight: 300;
+  color: var(--chalk); line-height: 0.98; letter-spacing: -0.015em; margin-bottom: 22px;
+}
+.cgs-title-cn {
+  font-family: var(--serif); font-size: clamp(30px, 3.6vw, 48px); font-weight: 400;
+  color: var(--pale-gold); line-height: 1.16; letter-spacing: 0.04em; margin-bottom: 42px;
+}
+.cgs-deck-cn {
+  font-family: var(--serif); font-size: clamp(18px, 1.75vw, 24px); font-weight: 400;
+  color: rgba(245,242,238,0.86); line-height: 1.85; letter-spacing: 0.02em; max-width: 580px;
+}
+.cgs-deck-en {
+  font-family: var(--sans); font-size: 13px; font-weight: 300;
+  color: rgba(158,168,178,0.76); line-height: 1.9; max-width: 560px; margin-top: 18px;
+}
+.cgs-hero-panel {
+  position: relative; z-index: 1; align-self: stretch;
+  background: rgba(245,242,238,0.82);
+  border: 1px solid rgba(196,180,154,0.42);
+  padding: clamp(34px,4vw,56px);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  min-height: 520px;
+}
+.cgs-panel-kicker {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--antique-gold); margin-bottom: 44px;
+}
+.cgs-panel-line {
+  font-family: var(--serif); font-size: clamp(26px,3vw,40px); font-weight: 300;
+  color: var(--abyssal); line-height: 1.24; margin-bottom: 28px;
+}
+.cgs-panel-note {
+  font-family: var(--sans); font-size: 13px; line-height: 1.9; color: rgba(74,92,107,0.72);
+}
+.cgs-inner { max-width: 1180px; margin: 0 auto; padding: 0 clamp(28px,5vw,80px); }
+.cgs-section { padding: 136px 0; }
+.cgs-section.sand { background: var(--sand-veil); }
+.cgs-section.dark { background: var(--abyssal); }
+.cgs-hd { margin-bottom: 72px; }
+.cgs-hd-en {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(74,92,107,0.38); display: flex; align-items: center; gap: 16px; margin-bottom: 12px;
+}
+.cgs-hd-en::after { content: ''; width: 88px; height: 1px; background: rgba(184,149,90,0.26); }
+.cgs-hd-en.light { color: rgba(184,149,90,0.48); }
+.cgs-hd-cn {
+  font-family: var(--serif); font-size: clamp(26px,3.2vw,42px); font-weight: 400;
+  color: var(--abyssal); line-height: 1.24; letter-spacing: 0.02em;
+}
+.cgs-hd-cn.light { color: var(--chalk); }
+.cgs-two { display: grid; grid-template-columns: 0.86fr 1.14fr; gap: clamp(52px,7vw,104px); align-items: start; }
+.cgs-lead-cn {
+  font-family: var(--serif); font-size: clamp(24px,2.7vw,36px); font-weight: 400;
+  line-height: 1.55; color: var(--abyssal); letter-spacing: 0.01em;
+}
+.cgs-body {
+  font-family: var(--sans); font-size: 15px; line-height: 1.95; color: var(--deep-current);
+}
+.cgs-body + .cgs-body { margin-top: 20px; }
+.cgs-body-cn {
+  font-family: var(--serif); font-size: 16px; line-height: 2.05; color: var(--deep-current);
+  letter-spacing: 0.035em; margin-top: 26px; padding-top: 24px; border-top: 1px solid rgba(196,180,154,0.32);
+}
+.cgs-problems { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(196,180,154,0.28); }
+.cgs-problem {
+  background: var(--chalk); padding: 44px 38px; min-height: 210px;
+  border-top: 3px solid transparent; transition: border-color 0.3s;
+}
+.cgs-problem:hover { border-top-color: var(--antique-gold); }
+.cgs-problem-num { font-family: var(--serif); font-size: 34px; color: rgba(184,149,90,0.32); margin-bottom: 20px; }
+.cgs-problem-cn { font-family: var(--serif); font-size: 21px; font-weight: 400; color: var(--abyssal); line-height: 1.34; margin-bottom: 12px; }
+.cgs-problem-en { font-family: var(--sans); font-size: 12px; line-height: 1.8; color: rgba(74,92,107,0.62); }
+.cgs-system { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.cgs-module {
+  background: rgba(74,92,107,0.12);
+  border: 1px solid rgba(158,168,178,0.12);
+  padding: 44px 34px 40px;
+}
+.cgs-module-num { font-family: var(--serif); font-size: 30px; color: rgba(184,149,90,0.34); margin-bottom: 20px; }
+.cgs-module-cn { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--chalk); line-height: 1.28; margin-bottom: 8px; }
+.cgs-module-en {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--antique-gold); margin-bottom: 24px;
+}
+.cgs-module ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.cgs-module li {
+  font-family: var(--serif); font-size: 14px; line-height: 1.75; color: rgba(232,226,216,0.68);
+  padding-left: 15px; position: relative;
+}
+.cgs-module li::before { content: '-'; position: absolute; left: 0; color: rgba(184,149,90,0.6); }
+.cgs-who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.cgs-who-item {
+  background: white; padding: 38px 34px; min-height: 160px;
+  border-bottom: 2px solid transparent; transition: border-color 0.3s;
+}
+.cgs-who-item:hover { border-bottom-color: var(--antique-gold); }
+.cgs-who-cn { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--abyssal); line-height: 1.35; margin-bottom: 10px; }
+.cgs-who-en { font-family: var(--sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(74,92,107,0.36); line-height: 1.6; }
+.cgs-deliverables { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(196,180,154,0.28); }
+.cgs-deliverable { background: var(--chalk); padding: 44px 42px; }
+.cgs-deliverable-cn { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--abyssal); margin-bottom: 10px; }
+.cgs-deliverable-body { font-family: var(--sans); font-size: 13px; line-height: 1.85; color: rgba(74,92,107,0.72); }
+.cgs-path-intro {
+  max-width: 760px;
+  margin: -36px 0 72px;
+}
+.cgs-path-cn {
+  font-family: var(--serif); font-size: clamp(22px,2.3vw,32px); line-height: 1.62;
+  color: var(--abyssal); letter-spacing: 0.02em; margin-bottom: 18px;
+}
+.cgs-path-en {
+  font-family: var(--sans); font-size: 13px; line-height: 1.9;
+  color: rgba(74,92,107,0.58); max-width: 560px;
+}
+.cgs-path {
+  position: relative;
+  display: grid;
+  gap: 34px;
+  padding-left: clamp(0px,2vw,34px);
+}
+.cgs-path::before {
+  content: '';
+  position: absolute;
+  left: clamp(0px,2vw,34px);
+  top: 18px;
+  bottom: 18px;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(184,149,90,0.14), rgba(184,149,90,0.48), rgba(184,149,90,0.12));
+}
+.cgs-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(180px,0.34fr) minmax(0,1fr);
+  gap: clamp(38px,6vw,86px);
+  padding: 0 0 0 clamp(34px,4vw,62px);
+}
+.cgs-stage::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 14px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--antique-gold);
+  background: var(--chalk);
+  border-radius: 50%;
+  z-index: 1;
+}
+.cgs-stage-meta {
+  padding-top: 2px;
+}
+.cgs-stage-num {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--antique-gold); margin-bottom: 22px;
+}
+.cgs-stage-verb {
+  font-family: var(--serif); font-size: clamp(34px,4vw,56px); font-weight: 300;
+  color: rgba(28,43,53,0.9); line-height: 1;
+}
+.cgs-stage-card {
+  background: rgba(245,242,238,0.72);
+  border-top: 1px solid rgba(196,180,154,0.44);
+  padding: clamp(36px,4.5vw,58px);
+}
+.cgs-stage-name {
+  font-family: var(--serif); font-size: clamp(27px,3vw,42px); font-weight: 300;
+  color: var(--abyssal); line-height: 1.08; margin-bottom: 8px;
+}
+.cgs-stage-cn {
+  font-family: var(--serif); font-size: 21px; color: var(--deep-current);
+  line-height: 1.3; margin-bottom: 30px;
+}
+.cgs-stage-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(30px,5vw,68px);
+  padding-top: 30px;
+  border-top: 1px solid rgba(196,180,154,0.28);
+}
+.cgs-stage-label {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(74,92,107,0.38); margin-bottom: 12px;
+}
+.cgs-stage-body {
+  font-family: var(--serif); font-size: 15px; line-height: 1.9;
+  color: rgba(28,43,53,0.76); letter-spacing: 0.02em;
+}
+.cgs-stage-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.cgs-stage-list li {
+  font-family: var(--serif); font-size: 15px; line-height: 1.68;
+  color: rgba(28,43,53,0.76); padding-left: 17px; position: relative;
+}
+.cgs-stage-list li::before { content: '-'; position: absolute; left: 0; color: var(--antique-gold); }
+.cgs-stage-facts {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: rgba(196,180,154,0.26);
+  margin-top: 38px;
+}
+.cgs-stage-fact {
+  background: var(--chalk);
+  padding: 24px 22px;
+}
+.cgs-stage-fact span {
+  display: block;
+  font-family: var(--sans); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(74,92,107,0.36); margin-bottom: 9px;
+}
+.cgs-stage-fact strong {
+  display: block;
+  font-family: var(--serif); font-size: 18px; font-weight: 400;
+  color: var(--abyssal); line-height: 1.35;
+}
+.cgs-stage-cta {
+  display: inline-block;
+  margin-top: 34px;
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--antique-gold); border-bottom: 1px solid rgba(184,149,90,0.44); padding-bottom: 7px;
+}
+.cgs-audit {
+  background: var(--abyssal); padding: 128px 0; text-align: center;
+  border-top: 1px solid rgba(184,149,90,0.16);
+}
+.cgs-audit-eye {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(184,149,90,0.52); margin-bottom: 44px;
+}
+.cgs-audit-cn {
+  font-family: var(--serif); font-size: clamp(30px,4.4vw,56px); font-weight: 300;
+  color: var(--chalk); line-height: 1.18; margin-bottom: 16px;
+}
+.cgs-audit-en {
+  font-family: var(--sans); font-size: 13px; line-height: 1.9; color: rgba(158,168,178,0.62);
+  max-width: 620px; margin: 0 auto 54px;
+}
+.cgs-audit-actions { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.cgs-primary {
+  font-family: var(--serif); font-size: 18px; color: var(--pale-gold);
+  border-bottom: 1px solid rgba(184,149,90,0.46); padding-bottom: 8px;
+}
+.cgs-secondary {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(158,168,178,0.62); border-bottom: 1px solid rgba(158,168,178,0.2); padding-bottom: 8px;
+}
+@media (max-width: 980px) {
+  .cgs-hero { grid-template-columns: 1fr; min-height: auto; background: var(--abyssal); }
+  .cgs-hero-body { justify-self: start; }
+  .cgs-hero-panel { min-height: auto; }
+  .cgs-two { grid-template-columns: 1fr; }
+  .cgs-problems, .cgs-system, .cgs-who { grid-template-columns: 1fr 1fr; }
+  .cgs-stage { grid-template-columns: 1fr; gap: 22px; }
+  .cgs-stage-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .cgs-problems, .cgs-system, .cgs-who, .cgs-deliverables { grid-template-columns: 1fr; }
+  .cgs-path::before { left: 0; }
+  .cgs-stage-facts { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">抒云 <span>|</span> SHUYUN</a>
+  <span class="nav-service-tag">Community Growth Systems</span>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-lang">
+      <span data-lang="cn" class="active">中文</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="en">EN</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="fr">FR</span>
+    </div>
+    <a href="index.html#services" class="nav-back">All Services</a>
+  </div>
+</nav>
+
+<section class="cgs-hero">
+  <div class="cgs-hero-body">
+    <div class="cgs-crumb">
+      <a href="index.html">Shuyun Universe</a>
+      <span>·</span>
+      <a href="index.html#services">Services</a>
+      <span>·</span>
+      Community Growth Systems
+    </div>
+    <div class="cgs-label">High-trust founder growth system</div>
+    <h1 class="cgs-title-en">Community<br>Growth Systems</h1>
+    <div class="cgs-title-cn">社群与增长系统</div>
+    <p class="cgs-deck-cn">帮助Founder与品牌，建立既能长期沉淀用户，又能持续产生高价值变现的增长系统。</p>
+    <p class="cgs-deck-en">Building high-trust growth systems that turn quality relationships into retention, premium offers, and long-term business structure.</p>
+  </div>
+  <aside class="cgs-hero-panel">
+    <div class="cgs-panel-kicker">Founder Operating System</div>
+    <div class="cgs-panel-line">不是帮你“做社群”。<br>是帮你建立长期用户关系与增长系统。</div>
+    <p class="cgs-panel-note">适合已经有用户基础、内容影响力或高信任服务能力，但私域混乱、转化路径不清、Founder 被日常运营消耗的人。</p>
+  </aside>
+</section>
+
+<section class="cgs-section">
+  <div class="cgs-inner">
+    <div class="cgs-hd">
+      <div class="cgs-hd-en">01 · The real problem</div>
+      <h2 class="cgs-hd-cn">问题不是没人关注，<br>而是关注没有变成长期关系。</h2>
+    </div>
+    <div class="cgs-two">
+      <p class="cgs-lead-cn">很多Founder已经有内容、有用户、有信任感。真正卡住的是：用户来了以后，没有清晰的沉淀路径、产品阶梯与团队执行系统。</p>
+      <div>
+        <p class="cgs-body">The work is not about adding another group, campaign, or content calendar. It is about building a relationship infrastructure that helps the right users stay, deepen trust, move through the right offers, and become part of a long-term business system.</p>
+        <p class="cgs-body">For high-trust founders, growth cannot be separated from credibility. The system has to protect the founder's time, maintain the quality of the community, and make the next step obvious for the user.</p>
+        <p class="cgs-body-cn">这不是“帮你拉群”，也不是“提高社群活跃”。真正要解决的是：用户如何被识别、被分层、被长期照顾，并在合适的时机进入合适的产品关系。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgs-section sand">
+  <div class="cgs-inner">
+    <div class="cgs-hd">
+      <div class="cgs-hd-en">02 · What this solves</div>
+      <h2 class="cgs-hd-cn">把零散关注，变成可持续的用户资产。</h2>
+    </div>
+    <div class="cgs-problems">
+      <div class="cgs-problem">
+        <div class="cgs-problem-num">01</div>
+        <div class="cgs-problem-cn">用户来了，但不知道如何留下</div>
+        <div class="cgs-problem-en">Audience attention does not become retention.</div>
+      </div>
+      <div class="cgs-problem">
+        <div class="cgs-problem-num">02</div>
+        <div class="cgs-problem-cn">私域有人，但关系很浅</div>
+        <div class="cgs-problem-en">Private traffic exists, but trust is thin.</div>
+      </div>
+      <div class="cgs-problem">
+        <div class="cgs-problem-num">03</div>
+        <div class="cgs-problem-cn">产品很多，但转化路径不清</div>
+        <div class="cgs-problem-en">Offers are scattered without a clear conversion path.</div>
+      </div>
+      <div class="cgs-problem">
+        <div class="cgs-problem-num">04</div>
+        <div class="cgs-problem-cn">Founder太累，事事亲自推动</div>
+        <div class="cgs-problem-en">The founder becomes the operating system.</div>
+      </div>
+      <div class="cgs-problem">
+        <div class="cgs-problem-num">05</div>
+        <div class="cgs-problem-cn">高价值用户没有被识别和维护</div>
+        <div class="cgs-problem-en">High-value users are not identified or nurtured.</div>
+      </div>
+      <div class="cgs-problem">
+        <div class="cgs-problem-num">06</div>
+        <div class="cgs-problem-cn">增长依赖灵感，而不是系统</div>
+        <div class="cgs-problem-en">Growth depends on bursts of effort instead of structure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgs-section dark">
+  <div class="cgs-inner">
+    <div class="cgs-hd">
+      <div class="cgs-hd-en light">03 · The system we build</div>
+      <h2 class="cgs-hd-cn light">四个关键模块，<br>把关系变成长期增长。</h2>
+    </div>
+    <div class="cgs-system">
+      <div class="cgs-module">
+        <div class="cgs-module-num">01</div>
+        <div class="cgs-module-cn">高价值用户关系</div>
+        <div class="cgs-module-en">High-value user relationships</div>
+        <ul>
+          <li>用户分层</li>
+          <li>信任升级路径</li>
+          <li>长期留存</li>
+        </ul>
+      </div>
+      <div class="cgs-module">
+        <div class="cgs-module-num">02</div>
+        <div class="cgs-module-cn">高信任变现路径</div>
+        <div class="cgs-module-en">High-trust monetization path</div>
+        <ul>
+          <li>高客单路径</li>
+          <li>会员体系</li>
+          <li>长期付费结构</li>
+        </ul>
+      </div>
+      <div class="cgs-module">
+        <div class="cgs-module-num">03</div>
+        <div class="cgs-module-cn">私域与社群增长系统</div>
+        <div class="cgs-module-en">Private domain growth system</div>
+        <ul>
+          <li>微信私域</li>
+          <li>内容节奏</li>
+          <li>用户沉淀</li>
+        </ul>
+      </div>
+      <div class="cgs-module">
+        <div class="cgs-module-num">04</div>
+        <div class="cgs-module-cn">Founder Growth System</div>
+        <div class="cgs-module-en">Founder growth system</div>
+        <ul>
+          <li>团队协作</li>
+          <li>SOP</li>
+          <li>长期增长机制</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgs-section">
+  <div class="cgs-inner">
+    <div class="cgs-hd">
+      <div class="cgs-hd-en">04 · Who this is for</div>
+      <h2 class="cgs-hd-cn">适合已经有信任基础，<br>但需要增长系统的人。</h2>
+    </div>
+    <div class="cgs-who">
+      <div class="cgs-who-item">
+        <div class="cgs-who-cn">已经拥有用户基础的Founder</div>
+        <div class="cgs-who-en">Founder with an existing audience</div>
+      </div>
+      <div class="cgs-who-item">
+        <div class="cgs-who-cn">疗愈 / 女性成长 / 高信任IP</div>
+        <div class="cgs-who-en">Healing, women's growth, high-trust personal brands</div>
+      </div>
+      <div class="cgs-who-item">
+        <div class="cgs-who-cn">小团队主理人</div>
+        <div class="cgs-who-en">Founder-led small teams</div>
+      </div>
+      <div class="cgs-who-item">
+        <div class="cgs-who-cn">社群型品牌</div>
+        <div class="cgs-who-en">Community-led brands</div>
+      </div>
+      <div class="cgs-who-item">
+        <div class="cgs-who-cn">高客单咨询与内容IP</div>
+        <div class="cgs-who-en">Premium advisory and content IPs</div>
+      </div>
+      <div class="cgs-who-item">
+        <div class="cgs-who-cn">想建立长期用户关系的人</div>
+        <div class="cgs-who-en">Builders seeking long-term user relationships</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgs-section sand">
+  <div class="cgs-inner">
+    <div class="cgs-hd">
+      <div class="cgs-hd-en">05 · Deliverables</div>
+      <h2 class="cgs-hd-cn">交付更清晰，<br>直接围绕用户、变现、私域与团队。</h2>
+    </div>
+    <div class="cgs-deliverables">
+      <div class="cgs-deliverable">
+        <div class="cgs-deliverable-cn">高价值用户关系</div>
+        <p class="cgs-deliverable-body">明确用户分层、信任升级路径与长期留存方式，让重要用户被看见、被维护、被沉淀。</p>
+      </div>
+      <div class="cgs-deliverable">
+        <div class="cgs-deliverable-cn">高信任变现路径</div>
+        <p class="cgs-deliverable-body">梳理高客单路径、会员体系与长期付费结构，让信任自然进入更高价值的合作关系。</p>
+      </div>
+      <div class="cgs-deliverable">
+        <div class="cgs-deliverable-cn">私域与社群增长系统</div>
+        <p class="cgs-deliverable-body">搭建微信私域、内容节奏与用户沉淀机制，让社群不只是热闹，而是长期关系资产。</p>
+      </div>
+      <div class="cgs-deliverable">
+        <div class="cgs-deliverable-cn">Founder Growth System</div>
+        <p class="cgs-deliverable-body">建立团队协作、SOP与长期增长机制，减少Founder反复亲自推动的消耗。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cgs-section">
+  <div class="cgs-inner">
+    <div class="cgs-hd">
+      <div class="cgs-hd-en">06 · Founder Growth Path</div>
+      <h2 class="cgs-hd-cn">创始人成长路径</h2>
+    </div>
+    <div class="cgs-path-intro">
+      <p class="cgs-path-cn">大多数Founder真正缺少的，不是更多方法。而是适合自己当前阶段的增长系统。</p>
+      <p class="cgs-path-en">Most founders don’t need more tactics. They need the right system for the stage they are currently in.</p>
+    </div>
+
+    <div class="cgs-path">
+      <article class="cgs-stage">
+        <div class="cgs-stage-meta">
+          <div class="cgs-stage-num">Stage 01</div>
+          <div class="cgs-stage-verb">Diagnose</div>
+        </div>
+        <div class="cgs-stage-card">
+          <h3 class="cgs-stage-name">Growth Audit</h3>
+          <div class="cgs-stage-cn">增长诊断</div>
+          <div class="cgs-stage-grid">
+            <div>
+              <div class="cgs-stage-label">Who this is for</div>
+              <p class="cgs-stage-body">适合已经有用户、内容或业务基础，但增长开始混乱、Founder长期消耗、不知道真正问题出在哪里的人。</p>
+            </div>
+            <div>
+              <div class="cgs-stage-label">Core value</div>
+              <ul class="cgs-stage-list">
+                <li>真正的增长瓶颈</li>
+                <li>用户关系问题</li>
+                <li>产品结构问题</li>
+                <li>Founder消耗来源</li>
+                <li>当前最需要优先建立的系统</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cgs-stage-facts">
+            <div class="cgs-stage-fact"><span>Format</span><strong>Audit Session + Strategic Review</strong></div>
+            <div class="cgs-stage-fact"><span>Timeline</span><strong>1-2 Weeks</strong></div>
+            <div class="cgs-stage-fact"><span>Investment</span><strong>¥15,000 – ¥50,000</strong></div>
+          </div>
+          <a href="mailto:hello@shuyun.universe?subject=Community Growth Systems — Growth Audit" class="cgs-stage-cta">Apply for Growth Audit</a>
+        </div>
+      </article>
+
+      <article class="cgs-stage">
+        <div class="cgs-stage-meta">
+          <div class="cgs-stage-num">Stage 02</div>
+          <div class="cgs-stage-verb">Build</div>
+        </div>
+        <div class="cgs-stage-card">
+          <h3 class="cgs-stage-name">System Build</h3>
+          <div class="cgs-stage-cn">增长系统搭建</div>
+          <div class="cgs-stage-grid">
+            <div>
+              <div class="cgs-stage-label">Who this is for</div>
+              <p class="cgs-stage-body">适合已经明确方向，准备正式建立私域、社群、产品阶梯、高客单路径与用户沉淀系统的Founder与品牌。</p>
+            </div>
+            <div>
+              <div class="cgs-stage-label">Core value</div>
+              <ul class="cgs-stage-list">
+                <li>用户关系结构</li>
+                <li>私域增长系统</li>
+                <li>产品与转化路径</li>
+                <li>SOP</li>
+                <li>长期增长机制</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cgs-stage-facts">
+            <div class="cgs-stage-fact"><span>Format</span><strong>Project-based Collaboration</strong></div>
+            <div class="cgs-stage-fact"><span>Timeline</span><strong>1-3 Months</strong></div>
+            <div class="cgs-stage-fact"><span>Investment</span><strong>¥150,000 – ¥500,000+</strong></div>
+          </div>
+          <a href="mailto:hello@shuyun.universe?subject=Community Growth Systems — System Build" class="cgs-stage-cta">Explore System Build</a>
+        </div>
+      </article>
+
+      <article class="cgs-stage">
+        <div class="cgs-stage-meta">
+          <div class="cgs-stage-num">Stage 03</div>
+          <div class="cgs-stage-verb">Partnership</div>
+        </div>
+        <div class="cgs-stage-card">
+          <h3 class="cgs-stage-name">Operating Partnership</h3>
+          <div class="cgs-stage-cn">增长合伙</div>
+          <div class="cgs-stage-grid">
+            <div>
+              <div class="cgs-stage-label">Who this is for</div>
+              <p class="cgs-stage-body">适合已经拥有团队与业务规模，但Founder开始被运营、增长、团队与用户系统长期消耗的人。</p>
+            </div>
+            <div>
+              <div class="cgs-stage-label">Core value</div>
+              <ul class="cgs-stage-list">
+                <li>长期增长结构</li>
+                <li>Founder Operating System</li>
+                <li>团队协作机制</li>
+                <li>用户长期沉淀</li>
+                <li>高价值用户关系系统</li>
+              </ul>
+            </div>
+          </div>
+          <div class="cgs-stage-facts">
+            <div class="cgs-stage-fact"><span>Format</span><strong>Retainer / Long-term Partnership</strong></div>
+            <div class="cgs-stage-fact"><span>Timeline</span><strong>3-12 Months</strong></div>
+            <div class="cgs-stage-fact"><span>Investment</span><strong>¥50,000 起 + 分成</strong></div>
+          </div>
+          <a href="mailto:hello@shuyun.universe?subject=Community Growth Systems — Operating Partnership" class="cgs-stage-cta">Apply for Partnership</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cgs-audit">
+  <div class="cgs-inner">
+    <div class="cgs-audit-eye">Apply for a Growth Audit</div>
+    <h2 class="cgs-audit-cn">先诊断，再搭系统。</h2>
+    <p class="cgs-audit-en">The first step is a focused growth audit: we look at your current audience, private domain, offers, and operating rhythm — then identify where trust is leaking and where the system should be rebuilt.</p>
+    <div class="cgs-audit-actions">
+      <a href="mailto:hello@shuyun.universe?subject=Community Growth Systems — Growth Audit" class="cgs-primary">申请增长诊断 →</a>
+      <a href="index.html#services" class="cgs-secondary">Back to Services</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const langBtns = document.querySelectorAll('.nav-lang [data-lang]');
+  const saved = localStorage.getItem('shuyun-lang') || 'cn';
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    localStorage.setItem('shuyun-lang', lang);
+    langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  }
+  setLang(saved);
+  langBtns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+})();
+</script>
+</body>
+</html>

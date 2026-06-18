@@ -1,0 +1,1696 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>创始人视觉诊断 V5 · 抒云 SHUYUN</title>
+  <link rel="preconnect" href="https://fonts.loli.net">
+  <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+  <link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --chalk:    #F5F2EE;
+      --sand:     #E8E2D8;
+      --warm:     #C4B49A;
+      --ink:      #1C1A17;
+      --ink-soft: #3A3632;
+      --mist:     #807A72;
+      --gold:     #C4A87A;
+      --gold-p:   #E0CBA8;
+      --gold-d:   #9A7D50;
+      --lacquer:  #6B2737;
+      --r: 6px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans','PingFang SC',sans-serif;
+      background: var(--chalk); color: var(--ink);
+      min-height: 100vh; font-size: 15px; line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* progress */
+    #prog { position:fixed;top:0;left:0;right:0;height:3px;background:var(--sand);z-index:100; }
+    #prog-fill { height:100%;background:var(--gold);width:0%;transition:width .4s ease; }
+    /* screens */
+    .screen { display:none;min-height:100vh;align-items:center;justify-content:center; }
+    .screen.active { display:flex; }
+    /* intro */
+    .intro-wrap {
+      max-width:580px;width:100%;padding:80px 32px;
+      display:flex;flex-direction:column;gap:24px;
+    }
+    .intro-label { font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist); }
+    .intro-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(34px,6vw,54px);font-weight:300;line-height:1.2;color:var(--ink);
+    }
+    .intro-title em { display:block;font-size:.48em;font-style:italic;color:var(--mist);margin-top:6px;letter-spacing:.04em; }
+    .intro-rule { width:40px;height:1px;background:var(--gold); }
+    .intro-promise {
+      padding:16px 20px;background:#fff;border:1px solid var(--sand);
+      border-radius:var(--r);font-size:13px;color:var(--mist);line-height:1.7;
+    }
+    .intro-promise strong { color:var(--gold-d); }
+    .intro-meta { display:flex;gap:12px;flex-wrap:wrap; }
+    .intro-meta span {
+      font-size:12px;letter-spacing:.04em;color:var(--mist);
+      padding:5px 12px;border:1px solid var(--warm);border-radius:2px;
+    }
+    .intro-name-label { font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-d);margin-bottom:8px;display:block; }
+    .intro-name-input {
+      width:100%;padding:12px 14px;border:1px solid var(--sand);border-radius:var(--r);
+      background:#fff;font-size:15px;color:var(--ink);font-family:'DM Sans',sans-serif;
+      outline:none;transition:border-color .2s;
+    }
+    .intro-name-input:focus { border-color:var(--gold); }
+    .intro-name-input::placeholder { color:rgba(128,122,114,.4); }
+    .btn-start {
+      align-self:flex-start;padding:14px 36px;background:var(--ink);color:var(--chalk);
+      border:none;cursor:pointer;font-size:13px;letter-spacing:.1em;
+      font-family:'DM Sans',sans-serif;text-transform:uppercase;border-radius:2px;transition:background .2s;
+    }
+    .btn-start:hover { background:var(--ink-soft); }
+    /* part intro */
+    .part-wrap {
+      max-width:540px;width:100%;padding:80px 32px;
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .part-num { font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase; }
+    .part-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(28px,5vw,46px);font-weight:300;line-height:1.2;color:var(--ink);
+    }
+    .part-title em { display:block;font-size:.5em;font-style:italic;color:var(--mist);margin-top:6px; }
+    .part-desc { font-size:14px;color:var(--mist);line-height:1.85;max-width:380px; }
+    .part-rule { width:32px;height:1px;background:var(--gold); }
+    .part-nav { display:flex;gap:12px;align-items:center;margin-top:8px; }
+    .btn-continue {
+      padding:12px 28px;background:transparent;border:1px solid var(--ink);color:var(--ink);
+      cursor:pointer;font-size:12px;letter-spacing:.12em;font-family:'DM Sans',sans-serif;
+      text-transform:uppercase;border-radius:2px;transition:all .2s;
+    }
+    .btn-continue:hover { background:var(--ink);color:var(--chalk); }
+    .btn-part-back {
+      padding:11px 18px;background:transparent;border:1px solid var(--sand);color:var(--mist);
+      cursor:pointer;font-size:12px;letter-spacing:.06em;font-family:'DM Sans',sans-serif;
+      border-radius:2px;transition:all .2s;
+    }
+    .btn-part-back:hover { border-color:var(--warm);color:var(--ink); }
+    /* question */
+    .q-wrap {
+      max-width:600px;width:100%;padding:64px 32px 80px;
+      display:flex;flex-direction:column;gap:26px;
+    }
+    .q-meta { display:flex;align-items:center;gap:16px; }
+    .q-idx { font-size:11px;letter-spacing:.15em;color:var(--gold); }
+    .q-rule { flex:1;height:1px;background:var(--sand); }
+    .q-cat { font-size:11px;letter-spacing:.1em;color:var(--mist);text-transform:uppercase; }
+    .q-text { font-family:'Cormorant Garamond',serif;font-size:clamp(22px,4vw,32px);font-weight:300;line-height:1.4;color:var(--ink); }
+    .q-hint { font-size:12px;color:var(--mist);letter-spacing:.04em; }
+    /* radio options */
+    .opts { display:flex;flex-direction:column;gap:10px; }
+    .opt {
+      display:flex;align-items:flex-start;gap:14px;padding:14px 18px;
+      border:1px solid var(--sand);border-radius:var(--r);cursor:pointer;
+      transition:border-color .2s,background .2s;background:#fff;
+    }
+    .opt:hover { border-color:var(--gold); }
+    .opt.selected { border-color:var(--gold);background:#FBF7F1; }
+    .opt-mark {
+      width:18px;height:18px;border-radius:50%;border:1.5px solid var(--warm);
+      flex-shrink:0;margin-top:3px;display:flex;align-items:center;justify-content:center;transition:all .2s;
+    }
+    .opt.selected .opt-mark { background:var(--gold);border-color:var(--gold); }
+    .opt-mark-sq {
+      width:18px;height:18px;border-radius:3px;border:1.5px solid var(--warm);
+      flex-shrink:0;margin-top:3px;transition:all .2s;
+    }
+    .opt.selected .opt-mark-sq { background:var(--gold);border-color:var(--gold); }
+    .opt-text { font-size:14px;color:var(--ink-soft);line-height:1.55; }
+    .opt-sub { font-size:12px;color:var(--mist);margin-top:2px; }
+    /* palette */
+    .palette-opts { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    .palette-opt {
+      border:1.5px solid var(--sand);border-radius:var(--r);cursor:pointer;overflow:hidden;
+      transition:border-color .2s;background:#fff;
+    }
+    .palette-opt:hover { border-color:var(--gold); }
+    .palette-opt.selected { border-color:var(--gold);box-shadow:0 0 0 1px var(--gold); }
+    .palette-swatches { display:flex;height:44px; }
+    .swatch { flex:1; }
+    .palette-name { padding:10px 12px;font-size:13px;color:var(--ink-soft);line-height:1.4; }
+    .palette-name em { display:block;font-size:11px;color:var(--mist);font-style:normal; }
+    /* text inputs */
+    .q-input {
+      width:100%;padding:14px 16px;border:1px solid var(--sand);border-radius:var(--r);
+      background:#fff;font-size:14px;color:var(--ink);font-family:'DM Sans','PingFang SC',sans-serif;
+      resize:none;outline:none;transition:border-color .2s;
+    }
+    .q-input:focus { border-color:var(--gold); }
+    .q-input::placeholder { color:rgba(128,122,114,.45);font-style:italic; }
+    /* type cards (Q3 typography) */
+    .type-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    .type-card { border:1.5px solid var(--sand);border-radius:var(--r);cursor:pointer;overflow:hidden;transition:border-color .2s,box-shadow .2s;background:#fff; }
+    .type-card:hover { border-color:var(--gold); }
+    .type-card.selected { border-color:var(--gold);box-shadow:0 0 0 1px var(--gold); }
+    .type-preview { padding:28px 20px 18px;min-height:108px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--chalk); }
+    .type-body { padding:10px 14px 14px;border-top:1px solid var(--sand); }
+    .type-tag { font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;margin-bottom:3px; }
+    .type-sub { font-size:11px;color:var(--mist);line-height:1.5; }
+    /* tags */
+    .tag-wrap { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px; }
+    .tag-btn {
+      padding:8px 16px;border:1px solid var(--sand);border-radius:20px;
+      background:#fff;color:var(--ink-soft);font-size:13px;cursor:pointer;
+      font-family:'DM Sans',sans-serif;transition:all .15s;
+    }
+    .tag-btn:hover { border-color:var(--warm); }
+    .tag-btn.selected { background:var(--ink);color:var(--chalk);border-color:var(--ink); }
+    .tag {
+      padding:7px 14px;border:1px solid var(--sand);border-radius:20px;cursor:pointer;
+      font-size:13px;color:var(--ink-soft);transition:all .2s;background:#fff;
+    }
+    .tag:hover { border-color:var(--gold); }
+    .tag.selected { border-color:var(--gold);background:#FBF7F1;color:var(--ink); }
+    /* nav */
+    .q-nav { display:flex;gap:14px;align-items:center;padding-top:8px; }
+    .btn-back {
+      padding:11px 20px;background:transparent;border:1px solid var(--sand);color:var(--mist);
+      cursor:pointer;font-size:12px;letter-spacing:.06em;font-family:'DM Sans',sans-serif;
+      border-radius:2px;transition:all .2s;
+    }
+    .btn-back:hover { border-color:var(--warm);color:var(--ink); }
+    .btn-next {
+      padding:12px 28px;background:var(--ink);color:var(--chalk);border:none;cursor:pointer;
+      font-size:12px;letter-spacing:.1em;font-family:'DM Sans',sans-serif;text-transform:uppercase;
+      border-radius:2px;transition:background .2s;
+    }
+    .btn-next:hover { background:var(--ink-soft); }
+    .btn-next:disabled { opacity:.3;cursor:not-allowed; }
+    /* calc */
+    .calc-wrap { max-width:420px;width:100%;padding:80px 32px;display:flex;flex-direction:column;gap:24px; }
+    .calc-label { font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase; }
+    .calc-title { font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--ink); }
+    .calc-dots { display:flex;gap:8px; }
+    .calc-dots span { width:6px;height:6px;border-radius:50%;background:var(--gold);animation:dot .9s infinite; }
+    .calc-dots span:nth-child(2) { animation-delay:.2s; }
+    .calc-dots span:nth-child(3) { animation-delay:.4s; }
+    @keyframes dot { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.4)} }
+    /* result */
+    .r-wrap { max-width:680px;width:100%;padding:64px 32px 100px; }
+    .r-header { margin-bottom:48px; }
+    .r-label { font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:12px; }
+    .r-title { font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,56px);font-weight:300;line-height:1.15;color:var(--ink); }
+    .r-title em { display:block;font-size:.48em;font-style:italic;color:var(--mist);margin-top:6px; }
+    .r-rule { width:40px;height:1px;background:var(--gold);margin-top:20px; }
+    .r-section { margin-bottom:40px; }
+    .r-section-label {
+      font-size:11px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;
+      margin-bottom:16px;display:flex;align-items:center;gap:12px;
+    }
+    .r-section-label::after { content:'';flex:1;height:1px;background:var(--sand); }
+    .r-palette-bar { display:flex;height:10px;border-radius:4px;overflow:hidden;margin-bottom:16px; }
+    .r-palette-swatch { flex:1; }
+    .r-desc { font-size:15px;color:var(--ink-soft);line-height:1.85;background:var(--sand);padding:24px;border-radius:var(--r); }
+    .r-traits { display:flex;flex-wrap:wrap;gap:8px;margin-top:16px; }
+    .r-trait { padding:6px 14px;border:1px solid var(--warm);border-radius:20px;font-size:12px;color:var(--ink-soft); }
+    /* vi grid */
+    .r-vi-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px; }
+    .r-vi-cell { background:#fff;border:1px solid var(--sand);border-radius:var(--r);padding:16px 18px; }
+    .r-vi-label { font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:6px; }
+    .r-vi-val { font-size:13px;color:var(--ink-soft);line-height:1.65; }
+    /* locked */
+    .r-locked {
+      background:var(--sand);border-radius:var(--r);padding:28px 32px;margin-bottom:28px;
+      display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+    }
+    .r-locked-left { flex:1;min-width:200px;display:flex;flex-direction:column;gap:10px; }
+    .r-locked-badge { font-size:10px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;padding:4px 10px;border:1px solid var(--gold);border-radius:2px;align-self:flex-start; }
+    .r-locked-title { font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--ink);line-height:1.2; }
+    .r-locked-desc { font-size:13px;color:var(--mist);line-height:1.7; }
+    .btn-unlock { flex-shrink:0;padding:14px 24px;background:var(--ink);color:var(--chalk);border:none;cursor:pointer;font-size:13px;letter-spacing:.06em;font-family:'DM Sans',sans-serif;white-space:nowrap;border-radius:2px;transition:background .2s; }
+    .btn-unlock:hover { background:var(--ink-soft); }
+    .r-pay-info { display:none;background:#fff;border:1px solid var(--warm);border-radius:var(--r);padding:28px;margin-bottom:28px; }
+    .r-pay-info h3 { font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300;color:var(--ink);margin-bottom:14px; }
+    .r-pay-info p { font-size:14px;color:var(--ink-soft);line-height:1.8;margin-bottom:10px; }
+    .r-pay-includes { list-style:none;margin:14px 0; }
+    .r-pay-includes li { font-size:13px;color:var(--ink-soft);padding:7px 0;border-bottom:1px solid var(--sand);display:flex;align-items:center;gap:10px; }
+    .r-pay-includes li::before { content:'—';color:var(--gold); }
+    .r-contact-box { background:var(--sand);border-radius:var(--r);padding:18px;margin-top:14px; }
+    .r-insight { font-size:14px;color:var(--ink-soft);line-height:1.85;padding:16px 20px;border-left:2px solid var(--gold);margin-top:20px;background:#fff; }
+    .r-pay-contact { margin-top:18px; }
+    .r-pay-contact p { margin-bottom:10px; }
+    .r-pay-contact-row { display:flex;gap:8px; }
+    .r-pay-contact-row input { flex:1;padding:10px 14px;border:1px solid var(--sand);border-radius:var(--r);font-size:14px;color:var(--ink);font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s; }
+    .r-pay-contact-row input:focus { border-color:var(--gold); }
+    .r-pay-contact-row button { padding:10px 20px;background:var(--ink);color:var(--chalk);border:none;cursor:pointer;font-size:12px;letter-spacing:.08em;font-family:'DM Sans',sans-serif;border-radius:2px;white-space:nowrap; }
+    .r-wechat-reveal { display:none;background:var(--sand);border-radius:var(--r);padding:18px;margin-top:14px; }
+    .r-pay-msg { font-size:12px;color:var(--gold);margin-top:8px; }
+    .btn-unlock-premium { flex-shrink:0;padding:14px 24px;background:var(--gold-d);color:#fff;border:none;cursor:pointer;font-size:13px;letter-spacing:.06em;font-family:'DM Sans',sans-serif;white-space:nowrap;border-radius:2px;transition:background .2s; }
+    .btn-unlock-premium:hover { background:var(--ink); }
+    .r-contact-box p { font-size:14px;color:var(--ink);margin-bottom:6px; }
+    /* archetype map */
+    .r-arcmap { margin-top:40px;padding-top:36px;border-top:1px solid var(--sand); }
+    .r-arcmap-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    .r-arcmap-card { border:1.5px solid var(--sand);border-radius:var(--r);overflow:hidden;background:#fff;opacity:.55;transition:opacity .2s; }
+    .r-arcmap-card.is-you { opacity:1;border-color:var(--gold);box-shadow:0 0 0 1px var(--gold); }
+    .r-arcmap-bar { display:flex;height:6px; }
+    .r-arcmap-body { padding:14px 14px 16px; }
+    .r-arcmap-badge { font-size:10px;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:6px; }
+    .r-arcmap-cn { font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:var(--ink);line-height:1.2; }
+    .r-arcmap-en { font-size:10px;letter-spacing:.12em;color:var(--mist);text-transform:uppercase;margin-top:3px;margin-bottom:10px; }
+    .r-arcmap-tags { display:flex;flex-wrap:wrap;gap:5px; }
+    .r-arcmap-tags span { font-size:11px;color:var(--mist);padding:3px 9px;border:1px solid var(--sand);border-radius:20px; }
+    .r-arcmap-card.is-you .r-arcmap-tags span { border-color:var(--warm);color:var(--ink-soft); }
+    /* share card */
+    .share-section { margin-top:56px;padding-top:40px;border-top:1px solid var(--sand); }
+    .share-label { font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);margin-bottom:20px; }
+    .share-card {
+      border:1px solid var(--warm);border-radius:var(--r);padding:44px 40px;
+      background:linear-gradient(135deg,#FAF7F2 0%,#F0EAE0 100%);
+      position:relative;overflow:hidden;
+    }
+    .share-card::before { content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-p),var(--gold)); }
+    .sc-eyebrow { font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--mist);margin-bottom:28px; }
+    .sc-type { font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,64px);font-weight:300;color:var(--ink);line-height:1;margin-bottom:4px; }
+    .sc-en { font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-d);margin-bottom:28px; }
+    .sc-rule { width:32px;height:1px;background:var(--gold);opacity:.5;margin-bottom:24px; }
+    .sc-palette { display:flex;gap:8px;margin-bottom:20px; }
+    .sc-swatch { width:28px;height:28px;border-radius:50%; }
+    .sc-traits { display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px; }
+    .sc-traits span { padding:5px 14px;border:1px solid var(--warm);font-size:11px;color:var(--mist);border-radius:40px;letter-spacing:.04em; }
+    .sc-footer { display:flex;justify-content:space-between;align-items:flex-end;padding-top:20px;border-top:1px solid var(--sand); }
+    .sc-brand { font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:400;letter-spacing:.1em;color:var(--mist); }
+    .sc-url { font-size:10px;letter-spacing:.08em;color:var(--warm); }
+    .share-actions { display:flex;gap:12px;margin-top:20px;flex-wrap:wrap; }
+    .btn-share {
+      padding:11px 22px;background:transparent;border:1px solid var(--sand);color:var(--ink-soft);
+      cursor:pointer;font-size:12px;letter-spacing:.08em;font-family:'DM Sans',sans-serif;
+      border-radius:2px;transition:all .22s;
+    }
+    .btn-share:hover { border-color:var(--gold);color:var(--ink); }
+    .btn-share.copied { border-color:var(--gold);color:var(--gold-d); }
+    /* email capture */
+    .r-email-section { background:var(--ink);border-radius:var(--r);padding:36px;margin-top:40px;color:var(--chalk); }
+    .r-email-section h3 { font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;margin-bottom:8px; }
+    .r-email-section p { font-size:13px;color:var(--warm);margin-bottom:20px;line-height:1.7; }
+    .r-email-row { display:flex;gap:12px;flex-wrap:wrap; }
+    .r-email-input { flex:1;min-width:200px;padding:12px 16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:2px;color:var(--chalk);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s; }
+    .r-email-input::placeholder { color:rgba(255,255,255,.3); }
+    .r-email-input:focus { border-color:var(--gold); }
+    .btn-submit { padding:12px 24px;background:var(--gold);color:var(--ink);border:none;cursor:pointer;font-size:12px;letter-spacing:.1em;font-family:'DM Sans',sans-serif;text-transform:uppercase;border-radius:2px;white-space:nowrap;transition:background .2s; }
+    .btn-submit:hover { background:var(--gold-p); }
+    .r-submit-msg { font-size:13px;color:var(--gold);margin-top:10px; }
+    /* responsive */
+    @media (max-width:560px) {
+      .intro-wrap,.part-wrap,.q-wrap,.r-wrap,.r-email-section { padding-left:20px;padding-right:20px; }
+      .palette-opts { grid-template-columns:1fr; }
+      .r-vi-grid { grid-template-columns:1fr; }
+      .r-arcmap-grid { grid-template-columns:1fr 1fr; }
+      .share-card { padding:32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="prog"><div id="prog-fill"></div></div>
+
+<!-- ══ INTRO ══ -->
+<div class="screen active" id="s-intro">
+  <div class="intro-wrap">
+    <div class="intro-label">Founder Visual Identity System · V5</div>
+    <h1 class="intro-title">
+      你很能干。<br>但你的品牌<br>还不够像你。
+      <em>Let's fix that.</em>
+    </h1>
+    <div class="intro-rule"></div>
+    <div class="intro-promise">
+      <strong>完成后你将免费获得：</strong>你的视觉原型档案 + 色彩系统 + 表达方向<br>
+      <span style="margin-top:4px;display:block">可选择解锁：完整品牌视觉语言定制服务</span>
+    </div>
+    <div class="intro-meta">
+      <span>6 个维度</span>
+      <span>24 道题</span>
+      <span>约 12 分钟</span>
+    </div>
+    <div>
+      <label class="intro-name-label">你的名字 / 品牌名</label>
+      <input class="intro-name-input" id="founderName" type="text" placeholder="让我知道如何称呼你" />
+    </div>
+    <button class="btn-start" id="startBtn">开始诊断 →</button>
+  </div>
+</div>
+
+<!-- ══ PART 1 INTRO: 视觉直觉 ══ -->
+<div class="screen" id="p1-intro">
+  <div class="part-wrap">
+    <div class="part-num">Part 01 · 06 — 视觉直觉</div>
+    <h2 class="part-title">你的眼睛<em>已经知道答案了</em></h2>
+    <div class="part-rule"></div>
+    <p class="part-desc">不要分析，不要选"应该"的那个。<br>跟着第一反应走。</p>
+    <div class="part-nav">
+      <button class="btn-continue" onclick="go('s-q1')">开始 →</button>
+      <button class="btn-part-back" onclick="go('s-intro')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q1: 空间直觉 ══ -->
+<div class="screen" id="s-q1">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">01 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">视觉直觉</span>
+    </div>
+    <div class="q-text">如果你的品牌是一个空间，它会是？</div>
+    <p class="q-hint">选第一眼感觉「对」的那个</p>
+    <div class="opts" id="opts-q1"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('p1-intro')">← 返回</button>
+      <button class="btn-next" id="n-q1" onclick="go('s-q2')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q2: 色彩倾向 ══ -->
+<div class="screen" id="s-q2">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">02 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">视觉直觉</span>
+    </div>
+    <div class="q-text">哪个色彩方向最像你的品牌感？</div>
+    <p class="q-hint">可选 1–2 组</p>
+    <div class="palette-opts" id="opts-q2"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q1')">← 返回</button>
+      <button class="btn-next" id="n-q2" onclick="savePalette();go('s-q3')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q3: 字体感觉 ══ -->
+<div class="screen" id="s-q3">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">03 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">视觉直觉</span>
+    </div>
+    <div class="q-text">你的品牌在字体上更倾向哪种感觉？</div>
+    <p class="q-hint">选一个最接近的</p>
+    <div class="opts" id="opts-q3"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q2')">← 返回</button>
+      <button class="btn-next" id="n-q3" onclick="go('s-q4')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q4: 视觉语言 ══ -->
+<div class="screen" id="s-q4">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">04 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">视觉直觉</span>
+    </div>
+    <div class="q-text">你更喜欢哪种视觉语言？</div>
+    <p class="q-hint">选最有共鸣的那个</p>
+    <div class="opts" id="opts-q4"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q3')">← 返回</button>
+      <button class="btn-next" id="n-q4" onclick="go('s-q5')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q5: 品牌关键词 ══ -->
+<div class="screen" id="s-q5">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">05 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">视觉直觉</span>
+    </div>
+    <div class="q-text">用 3–5 个词描述你想要的品牌气质</div>
+    <p class="q-hint">感觉词、风格词、甚至人名都可以</p>
+    <input class="q-input" id="a-q5" type="text" placeholder="例：克制、高级感、有质地、沉稳、精准……" />
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q4')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q5','a-q5');go('p2-intro')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PART 2 INTRO: 你的业务 ══ -->
+<div class="screen" id="p2-intro">
+  <div class="part-wrap">
+    <div class="part-num">Part 02 · 06 — 你的业务</div>
+    <h2 class="part-title">你在做<em>什么？</em></h2>
+    <div class="part-rule"></div>
+    <p class="part-desc">告诉我你在做什么，以及你的产品和定价。<br>这帮助我匹配适合你业务阶段的品牌方向。</p>
+    <div class="part-nav">
+      <button class="btn-continue" onclick="go('s-q6')">继续 →</button>
+      <button class="btn-part-back" onclick="go('s-q5')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q6: 业务描述 ══ -->
+<div class="screen" id="s-q6">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">06 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的业务</span>
+    </div>
+    <div class="q-text">用一两句话描述你在做什么</div>
+    <p class="q-hint">越具体越好，不需要精致，真实就行</p>
+    <textarea class="q-input" id="a-q6" rows="4" placeholder="例：我帮有一定基础的创业者找到自己的差异化定位 / 我做身心疗愈个案和工作坊……"></textarea>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('p2-intro')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q6','a-q6');go('s-q7')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q7: 平台 ══ -->
+<div class="screen" id="s-q7">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">07 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的业务</span>
+    </div>
+    <div class="q-text">你目前在哪些平台活跃？</div>
+    <p class="q-hint">可多选</p>
+    <div class="opts" id="opts-q7"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q6')">← 返回</button>
+      <button class="btn-next" id="n-q7" onclick="saveCheck('q7','opts-q7');go('s-q8')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q8: 产品结构 ══ -->
+<div class="screen" id="s-q8">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">08 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的业务</span>
+    </div>
+    <div class="q-text">你目前的产品 / 服务结构是？</div>
+    <p class="q-hint">选一个最接近的</p>
+    <div class="opts" id="opts-q8"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q7')">← 返回</button>
+      <button class="btn-next" id="n-q8" onclick="go('s-q9')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q9: 定价区间 ══ -->
+<div class="screen" id="s-q9">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">09 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的业务</span>
+    </div>
+    <div class="q-text">你主要产品 / 服务的定价区间？</div>
+    <p class="q-hint">选一个最接近的</p>
+    <div class="opts" id="opts-q9"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q8')">← 返回</button>
+      <button class="btn-next" id="n-q9" onclick="go('p3-intro')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PART 3 INTRO: 你的受众 ══ -->
+<div class="screen" id="p3-intro">
+  <div class="part-wrap">
+    <div class="part-num">Part 03 · 06 — 你的受众</div>
+    <h2 class="part-title">你在为<em>谁而做？</em></h2>
+    <div class="part-rule"></div>
+    <p class="part-desc">品牌视觉不只是「好看」，<br>它要精准地打动你最想服务的那群人。</p>
+    <div class="part-nav">
+      <button class="btn-continue" onclick="go('s-q10')">继续 →</button>
+      <button class="btn-part-back" onclick="go('s-q9')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q10: 理想客户 ══ -->
+<div class="screen" id="s-q10">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">10 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的受众</span>
+    </div>
+    <div class="q-text">你最理想的客户是谁？</div>
+    <p class="q-hint">描述他们的状态、职业、痛点或渴望都可以</p>
+    <textarea class="q-input" id="a-q10" rows="4" placeholder="例：30 岁以上，事业有基础，内心有困惑想突破 / 已经在做内容，但缺乏系统和记忆点……"></textarea>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('p3-intro')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q10','a-q10');go('s-q11')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q11: 目标客户收入 ══ -->
+<div class="screen" id="s-q11">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">11 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的受众</span>
+    </div>
+    <div class="q-text">你目标客户的年收入大概在？</div>
+    <p class="q-hint">帮助我们更准确地定位受众层级</p>
+    <div class="opts" id="opts-q11"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q10')">← 返回</button>
+      <button class="btn-next" id="n-q11" onclick="go('s-q-curinc')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q12: 当前客户收入 ══ -->
+<div class="screen" id="s-q-curinc">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">12 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的受众</span>
+    </div>
+    <div class="q-text">你当前客户的年收入大概在？</div>
+    <p class="q-hint">帮助我们了解你现有客群的层级</p>
+    <div class="opts" id="opts-q-curinc"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q11')">← 返回</button>
+      <button class="btn-next" id="n-q_curinc" onclick="go('s-q-city')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q13: 客户城市 ══ -->
+<div class="screen" id="s-q-city">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">13 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的受众</span>
+    </div>
+    <div class="q-text">你的客户主要在哪里？</div>
+    <p class="q-hint">可多选</p>
+    <div class="tag-wrap" id="tags-q-city"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q-curinc')">← 返回</button>
+      <button class="btn-next" onclick="saveCityTags();go('s-q12')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q14: 获客渠道 ══ -->
+<div class="screen" id="s-q12">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">14 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的受众</span>
+    </div>
+    <div class="q-text">客户通常从哪里找到你？</div>
+    <p class="q-hint">可多选</p>
+    <div class="opts" id="opts-q12"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q-city')">← 返回</button>
+      <button class="btn-next" id="n-q12" onclick="saveCheck('q12','opts-q12');go('p4-intro')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PART 4 INTRO: 你的声音 ══ -->
+<div class="screen" id="p4-intro">
+  <div class="part-wrap">
+    <div class="part-num">Part 04 · 06 — 你的声音</div>
+    <h2 class="part-title">你怎么<em>跟这个世界说话？</em></h2>
+    <div class="part-rule"></div>
+    <p class="part-desc">你的表达方式，就是你的品牌声音。<br>视觉语言和文字语言要一致，才有力量。</p>
+    <div class="part-nav">
+      <button class="btn-continue" onclick="go('s-q13')">继续 →</button>
+      <button class="btn-part-back" onclick="go('s-q12')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q13: 表达方式 ══ -->
+<div class="screen" id="s-q13">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">15 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的声音</span>
+    </div>
+    <div class="q-text">你说话 / 写内容的方式更像哪种？</div>
+    <p class="q-hint">选你最自然的那个</p>
+    <div class="opts" id="opts-q13"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('p4-intro')">← 返回</button>
+      <button class="btn-next" id="n-q13" onclick="go('s-q14')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q14: 核心竞争力 ══ -->
+<div class="screen" id="s-q14">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">16 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的声音</span>
+    </div>
+    <div class="q-text">客户选你而不是别人，最核心的原因是什么？</div>
+    <p class="q-hint">不是你觉得自己好在哪，而是客户真正为什么找你</p>
+    <textarea class="q-input" id="a-q14" rows="3" placeholder="例：我是少数能同时做策略和落地的人 / 我对人的感知特别准……"></textarea>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q13')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q14','a-q14');go('s-q-rhythm')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q17: 内容节奏 ══ -->
+<div class="screen" id="s-q-rhythm">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">17 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的声音</span>
+    </div>
+    <div class="q-text">你更喜欢哪种内容节奏？</div>
+    <p class="q-hint">选最符合你现在创作状态的那个</p>
+    <div class="opts" id="opts-q-rhythm"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q14')">← 返回</button>
+      <button class="btn-next" id="n-q_rhythm" onclick="go('s-q-topics')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q18: 话题领域 ══ -->
+<div class="screen" id="s-q-topics">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">18 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的声音</span>
+    </div>
+    <div class="q-text">你的内容通常围绕哪些话题？</div>
+    <p class="q-hint">可多选</p>
+    <div class="opts" id="opts-q-topics"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q-rhythm')">← 返回</button>
+      <button class="btn-next" id="n-q-topics" onclick="saveCheck('q_topics','opts-q-topics');go('s-q15')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q19: 品牌信念 ══ -->
+<div class="screen" id="s-q15">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">19 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的声音</span>
+    </div>
+    <div class="q-text">你最想让客户记住的一句话是？</div>
+    <p class="q-hint">你的品牌主张，或者你最常说的那个观点</p>
+    <textarea class="q-input" id="a-q15" rows="3" placeholder="例：真正的高端不是贵，是精准 / 你的差异化不是你有什么，是你是谁……"></textarea>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q-topics')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q15','a-q15');go('p5-intro')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PART 5 INTRO: 你的卡点 ══ -->
+<div class="screen" id="p5-intro">
+  <div class="part-wrap">
+    <div class="part-num">Part 05 · 06 — 你的卡点</div>
+    <h2 class="part-title">什么在<em>阻碍你？</em></h2>
+    <div class="part-rule"></div>
+    <p class="part-desc">说真话。卡点不是弱点，<br>是我们需要重点攻克的地方。</p>
+    <div class="part-nav">
+      <button class="btn-continue" onclick="go('s-q16')">继续 →</button>
+      <button class="btn-part-back" onclick="go('s-q15')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q16: 最不满意 ══ -->
+<div class="screen" id="s-q16">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">20 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的卡点</span>
+    </div>
+    <div class="q-text">你现在对自己的品牌最不满意的是什么？</div>
+    <p class="q-hint">可多选，选完还可以补充说明</p>
+    <div class="opts" id="opts-q16"></div>
+    <div style="margin-top:12px">
+      <label style="font-size:11px;color:var(--mist);letter-spacing:.04em;display:block;margin-bottom:6px">还想补充说明？（可选）</label>
+      <textarea class="q-input" id="a-q16-extra" rows="2" placeholder="可以更具体描述你的情况…"></textarea>
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('p5-intro')">← 返回</button>
+      <button class="btn-next" id="n-q16" onclick="saveCheckObjQ16();go('s-q17')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q17: 最想升级 ══ -->
+<div class="screen" id="s-q17">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">21 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的卡点</span>
+    </div>
+    <div class="q-text">如果这次做品牌视觉，你最想升级的是？</div>
+    <p class="q-hint">选一个最核心的</p>
+    <div class="opts" id="opts-q17"></div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q16')">← 返回</button>
+      <button class="btn-next" id="n-q17" onclick="go('s-q18')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q18: 最大障碍 ══ -->
+<div class="screen" id="s-q18">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">22 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的卡点</span>
+    </div>
+    <div class="q-text">目前最卡住你的，是哪些？</div>
+    <p class="q-hint">可多选</p>
+    <div class="opts" id="opts-q18"></div>
+    <div id="q18-other-wrap" style="display:none;margin-top:8px">
+      <input class="q-input" id="a-q18-other" type="text" placeholder="说说你目前的情况…" />
+    </div>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q17')">← 返回</button>
+      <button class="btn-next" id="n-q18" onclick="saveCheckObjQ18();go('p6-intro')" disabled>继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PART 6 INTRO: 你的野心 ══ -->
+<div class="screen" id="p6-intro">
+  <div class="part-wrap">
+    <div class="part-num">Part 06 · 06 — 你的野心</div>
+    <h2 class="part-title">你想去<em>哪里？</em></h2>
+    <div class="part-rule"></div>
+    <p class="part-desc">最后两道题。<br>好的品牌方向，要能承载你真正想去的地方。</p>
+    <div class="part-nav">
+      <button class="btn-continue" onclick="go('s-q19')">继续 →</button>
+      <button class="btn-part-back" onclick="go('s-q18')">← 返回</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q19: 12个月目标 ══ -->
+<div class="screen" id="s-q19">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">23 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的野心</span>
+    </div>
+    <div class="q-text">接下来 12 个月，你最想达到什么状态？</div>
+    <p class="q-hint">业务、收入、影响力层面都可以说</p>
+    <textarea class="q-input" id="a-q19" rows="3" placeholder="例：月收入稳定 5 万以上，有 3–5 个长期优质客户，内容开始自发传播……"></textarea>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('p6-intro')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q19','a-q19');go('s-q20')">继续 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Q20: 三年愿景 ══ -->
+<div class="screen" id="s-q20">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <span class="q-idx">24 / 24</span><div class="q-rule"></div>
+      <span class="q-cat">你的野心</span>
+    </div>
+    <div class="q-text">三年后，你希望别人怎么描述你和你的品牌？</div>
+    <p class="q-hint">品牌、影响力、生活方式都可以</p>
+    <textarea class="q-input" id="a-q20" rows="3" placeholder="例：一个让人觉得「终于遇到了」的品牌，做这个领域里最值得信赖的那种……"></textarea>
+    <div class="q-nav">
+      <button class="btn-back" onclick="go('s-q19')">← 返回</button>
+      <button class="btn-next" onclick="saveText('q20','a-q20');handleFinish()">查看我的诊断结果 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CALC ══ -->
+<div class="screen" id="s-calc">
+  <div class="calc-wrap">
+    <div class="calc-label">正在生成你的档案</div>
+    <div class="calc-title" id="calcMsg">分析视觉原型…</div>
+    <div class="calc-dots"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- ══ RESULT ══ -->
+<div class="screen" id="s-result">
+  <div class="r-wrap" id="rWrap"></div>
+</div>
+
+<script>
+/* ─── Archetype data ─── */
+const ARC = {
+  A: {
+    code:'A', cn:'清醒派', en:'THE SAGE',
+    color:'#9AA8B4',
+    palette:['#EDEAE4','#B8BEC4','#7E94A6','#2C2C2C'],
+    paletteName:'象牙白 · 冷灰 · 烟蓝 · 炭',
+    desc:'你的品牌有一种安静的清醒感。它不需要被所有人理解，但每一个真正看见它的人，都会感受到背后的分量。你的视觉语言偏向克制、精准、留白，像一本好书的封面——简单，但耐看。',
+    traits:['克制','精准','留白','知识型','高密度信息','不讨好'],
+    vi:{ colors:'象牙白打底，冷灰过渡，深炭主色，点缀烟蓝', fonts:'衬线标题（Cormorant / 宋体）+ 细无衬线正文', photo:'极简物件，阴天北欧光，冷调，大量留白', mood:'博物馆感 / 学术美 / 安静权威' }
+  },
+  B: {
+    code:'B', cn:'感知派', en:'THE LUMINARY',
+    color:'#C4A878',
+    palette:['#EDE4D4','#C4A878','#7A5C3C','#F5EDE0'],
+    paletteName:'燕麦米 · 旧金 · 深棕 · 奶白',
+    desc:'你的品牌像午后阳光透过薄纱——温暖、有层次、让人想靠近。你不需要大声说话，因为你的存在本身就有引力。视觉上你偏好有温度的自然色调，有手作感和人的痕迹，拒绝过度精致的距离感。',
+    traits:['温暖','感知力','有质地','仪式感','贴近人','真实'],
+    vi:{ colors:'燕麦米打底，旧金点缀，深棕收边，整体暖而克制', fonts:'手写风或衬线字体，中文用楷体系或圆润宋体', photo:'自然光，有温度，真实人物，植物和桌面场景', mood:'Aesop 感 / 文艺咖啡馆 / 温暖工作室' }
+  },
+  C: {
+    code:'C', cn:'力场派', en:'THE ARCHITECT',
+    color:'#7A2832',
+    palette:['#1C1C1C','#B8924A','#7A2832','#2E2A26'],
+    paletteName:'炭黑 · 暗金 · 酒红 · 深棕',
+    desc:'你的品牌有力量感和结构感。人们在你面前会感受到一种不需要解释的权威——不是强势，而是确定。你的视觉语言倾向深色调、强对比、精准排版，每一个细节都在说：我知道我在做什么。',
+    traits:['有力量','结构感','精准','深色调','强对比','不妥协'],
+    vi:{ colors:'深炭或纯黑为主，暗金点缀，酒红作为力量色', fonts:'强重量感无衬线或现代衬线，英文偏粗体', photo:'建筑感，强光影，黑白或低饱和，硬朗物件', mood:'Bottega 感 / 建筑师工作室 / 沉默权威' }
+  },
+  D: {
+    code:'D', cn:'流动派', en:'THE ALCHEMIST',
+    color:'#B8A8C4',
+    palette:['#E8C4BC','#B8A8C4','#F0EAE4','#C4D4C0'],
+    paletteName:'玫瑰米 · 雾紫 · 月光 · 薄荷',
+    desc:'你的品牌有一种流动的感知力——你不按常规出牌，但每次出现都让人记住。你的视觉美学介于感性与实验之间，色彩是柔的，但内核是独特的。你吸引的人是那些对「不一样」有渴望的灵魂。',
+    traits:['流动','感性','实验','诗意','独特','意象'],
+    vi:{ colors:'柔和粉紫系，雾感，不饱和，可加入意想不到的点缀色', fonts:'轻盈细体，可中英混排，允许不对称排版', photo:'氛围感优先，柔焦，有隐喻，光与影的实验', mood:'概念买手店 / Jacquemus 感 / 灵性工作室' }
+  }
+};
+
+/* ─── Question data ─── */
+const QD = {
+  q1: {
+    type:'radio', key:'q1', arc:true,
+    opts:[
+      {v:'A',t:'极简白色展厅',sub:'干净、克制、只有最重要的东西'},
+      {v:'B',t:'温暖的私人书房',sub:'木质、书香、午后阳光，让人想停留'},
+      {v:'C',t:'工业感的顶层阁楼',sub:'混凝土、钢铁、大窗，有力量感'},
+      {v:'D',t:'有机感的治愈场域',sub:'植物、天然材质、流动的光，充满感知'},
+      {v:'AB',t:'介于极简和温暖之间',sub:'干净但有温度，克制但不冷漠'},
+    ]
+  },
+  q3: {
+    type:'radio', key:'q3',
+    opts:[
+      {v:'serif',t:'衬线字体',sub:'经典、有重量、有历史感'},
+      {v:'sans',t:'现代无衬线',sub:'干净、国际化、当代感'},
+      {v:'light',t:'极细字体',sub:'轻盈、时尚、气质感'},
+      {v:'mixed',t:'中英混排、对比强烈',sub:'有个性、有视觉张力'},
+    ]
+  },
+  q4: {
+    type:'radio', key:'q4',
+    opts:[
+      {v:'photo-real',t:'真实摄影',sub:'人物、空间、物件，真实感第一'},
+      {v:'minimal',t:'极简排版',sub:'大留白，文字本身就是视觉'},
+      {v:'editorial',t:'杂志排版感',sub:'有层次、有规则、精致'},
+      {v:'organic',t:'自然有机感',sub:'植物、肌理、流动，有生命力'},
+    ]
+  },
+  q7: {
+    type:'check',
+    opts:['小红书','微博','公众号','视频号','直播','播客','个人网站','Instagram','线下活动','其他']
+  },
+  q8: {
+    type:'radio', key:'q8',
+    opts:[
+      {v:'1v1',t:'以个案 / 1v1 服务为主',sub:'深度咨询、陪跑、私教、疗愈'},
+      {v:'group',t:'以小组 / 社群为主',sub:'训练营、圈子、会员'},
+      {v:'course',t:'以课程 / 知识产品为主',sub:'录播、直播课、电子书'},
+      {v:'mixed',t:'混合模式'},
+      {v:'building',t:'还在搭建中，尚未成型'},
+    ]
+  },
+  q9: {
+    type:'radio', key:'q9',
+    opts:[
+      {v:'<3k',t:'3,000 以下'},
+      {v:'3k-1w',t:'3,000–10,000'},
+      {v:'1w-3w',t:'10,000–30,000'},
+      {v:'3w-10w',t:'30,000–100,000'},
+      {v:'>10w',t:'100,000 以上'},
+    ]
+  },
+  q11: {
+    type:'radio', key:'q11',
+    opts:[
+      {v:'<10w',t:'10 万以下'},
+      {v:'10-30w',t:'10–30 万'},
+      {v:'30-100w',t:'30–100 万'},
+      {v:'100-500w',t:'100–500 万'},
+      {v:'>500w',t:'500 万以上'},
+    ]
+  },
+  q12: {
+    type:'check',
+    opts:['熟人转介绍','小红书','微博','公众号','直播','播客','个人网站','线下活动','其他']
+  },
+  q13: {
+    type:'radio', key:'q13', arc:true,
+    opts:[
+      {v:'A',t:'精准克制',sub:'说三分，留七分，逻辑清晰，不废话'},
+      {v:'B',t:'温暖感知',sub:'像在讲故事，有情绪，有温度，让人感受到你'},
+      {v:'C',t:'直接有力',sub:'结论先行，观点明确，不拐弯'},
+      {v:'D',t:'流动诗意',sub:'跳跃、联想、有隐喻，喜欢用意象'},
+      {v:'AC',t:'精准 + 有力，兼而有之',sub:'理性和力量都有，场合不同风格切换'},
+      {v:'BD',t:'温暖 + 流动，两者都像',sub:'感性底色，但表达方式因人而异'},
+      {v:'BC',t:'温暖 + 有力，两者兼有',sub:'有温度，也有立场；让人感受到你，也能感受到力量'},
+    ]
+  },
+  q_curinc: {
+    type:'radio', key:'q_curinc',
+    opts:[
+      {v:'<10w',    t:'10 万以下'},
+      {v:'10-30w',  t:'10–30 万'},
+      {v:'30-100w', t:'30–100 万'},
+      {v:'100-500w',t:'100–500 万'},
+      {v:'>500w',   t:'500 万以上'},
+    ]
+  },
+  q_city: {
+    tags:['上海','北京','深圳','广州','杭州','成都','武汉','重庆','国内其他城市','海外华人']
+  },
+  q_rhythm: {
+    type:'radio', key:'q_rhythm',
+    opts:[
+      {v:'depth', t:'深度长文',  sub:'一篇万字抵十条朋友圈，思考型'},
+      {v:'short', t:'精炼短句',  sub:'一句话就能让人停下来，冲击型'},
+      {v:'story', t:'故事案例',  sub:'用真实经历传达观点，叙事型'},
+      {v:'flow',  t:'随性即兴',  sub:'状态好就发，不强求节奏'},
+    ]
+  },
+  q_topics: {
+    type:'check',
+    opts:['品牌 / 定位','内容创作','个人成长','商业思维','生活方式','情感 / 关系','精神 / 内在','创业 / 产品','其他']
+  },
+  q16: {
+    type:'check',
+    opts:[
+      {v:'fuzzy',    t:'品牌太模糊',     sub:'别人说不清我是谁，没有记忆点'},
+      {v:'messy',    t:'视觉不统一',     sub:'各平台风格乱，整体没有一致感'},
+      {v:'notprem',  t:'看起来不够高端', sub:'视觉配不上我的定价或定位'},
+      {v:'nomem',    t:'缺乏差异化',     sub:'和同行看起来差不多，没有独特辨识度'},
+      {v:'nofit',    t:'吸引不到理想客户',sub:'来的人不是我想服务的那种'},
+      {v:'noidea',   t:'不知道自己想要什么风格', sub:'有感觉但说不出来，做什么都觉得不对'},
+    ]
+  },
+  q17: {
+    type:'radio', key:'q17',
+    opts:[
+      {v:'clarity',t:'品牌清晰度',sub:'让人一眼看懂我是谁，我做什么'},
+      {v:'premium',t:'高端感 / 价格锚点',sub:'看上去值这个价格，甚至更贵'},
+      {v:'trust',t:'信任感 / 专业感',sub:'让陌生人感受到我的能力'},
+      {v:'attraction',t:'吸引力 / 记忆点',sub:'让人记得住，想主动找我'},
+    ]
+  },
+  q18: {
+    type:'check', key:'q18',
+    opts:[
+      {v:'unclear',t:'说不清楚自己是谁',sub:'有能力，但品牌形象模糊，别人记不住我'},
+      {v:'nosystem',t:'内容没有转化',sub:'发了很多，但留不住人，也带不来客户'},
+      {v:'pricing',t:'定价没有底气',sub:'想涨价，但总担心客户跑掉'},
+      {v:'traffic',t:'客源不稳定',sub:'全靠口碑介绍，没有主动吸引的能力'},
+      {v:'direction',t:'方向还有点散',sub:'业务在跑，但感觉什么都做，什么都不够精'},
+      {v:'other',t:'其他',sub:'单纯想要好的视觉，或有其他卡点'},
+    ]
+  }
+};
+
+/* ─── State ─── */
+const ANS = {};
+let userName = '';
+let recordId  = null;
+
+/* ─── Screen order for progress ─── */
+const ORDER = [
+  's-intro',
+  'p1-intro','s-q1','s-q2','s-q3','s-q4','s-q5',
+  'p2-intro','s-q6','s-q7','s-q8','s-q9',
+  'p3-intro','s-q10','s-q11','s-q-curinc','s-q-city','s-q12',
+  'p4-intro','s-q13','s-q14','s-q-rhythm','s-q-topics','s-q15',
+  'p5-intro','s-q16','s-q17','s-q18',
+  'p6-intro','s-q19','s-q20',
+  's-calc','s-result'
+];
+
+function go(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) { el.classList.add('active'); window.scrollTo(0,0); }
+  updateProgress(id);
+}
+
+function updateProgress(id) {
+  const idx = ORDER.indexOf(id);
+  const pct = idx <= 0 ? 0 : Math.min(100, Math.round((idx / (ORDER.length - 2)) * 100));
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+/* ─── Build helpers ─── */
+function buildRadio(containerId, opts, key) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  opts.forEach(o => {
+    const d = document.createElement('div');
+    d.className = 'opt' + (ANS[key] === o.v ? ' selected' : '');
+    d.dataset.v = o.v;
+    d.innerHTML = `<div class="opt-mark"></div>
+      <div><div class="opt-text">${o.t}</div>${o.sub ? `<div class="opt-sub">${o.sub}</div>` : ''}</div>`;
+    d.onclick = () => {
+      wrap.querySelectorAll('.opt').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+      ANS[key] = o.v;
+      if (key === 'q18') {
+        const ow = document.getElementById('q18-other-wrap');
+        if (ow) ow.style.display = o.v === 'other' ? 'block' : 'none';
+      }
+      const nb = document.getElementById('n-' + key);
+      if (nb) nb.disabled = false;
+    };
+    wrap.appendChild(d);
+  });
+}
+
+function buildTags(containerId, tags) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  tags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'tag-btn';
+    btn.textContent = tag;
+    btn.type = 'button';
+    btn.onclick = () => btn.classList.toggle('selected');
+    wrap.appendChild(btn);
+  });
+}
+
+function saveCityTags() {
+  const wrap = document.getElementById('tags-q-city');
+  if (!wrap) return;
+  const sel = [...wrap.querySelectorAll('.tag-btn.selected')].map(b => b.textContent);
+  ANS.q_city = sel.join('、');
+}
+
+function buildCheck(containerId, opts, key) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const sel = ANS[key] ? ANS[key].split('、') : [];
+  opts.forEach(o => {
+    const d = document.createElement('div');
+    d.className = 'opt' + (sel.includes(o) ? ' selected' : '');
+    d.dataset.v = o;
+    d.innerHTML = `<div class="opt-mark-sq"></div><div class="opt-text">${o}</div>`;
+    d.onclick = () => {
+      d.classList.toggle('selected');
+      const nb = document.getElementById('n-' + key);
+      if (nb) nb.disabled = false;
+    };
+    wrap.appendChild(d);
+  });
+}
+
+function buildPalette() {
+  const wrap = document.getElementById('opts-q2');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const sel = ANS.q2 ? ANS.q2.split('+').filter(Boolean) : [];
+  QD.q2_opts.forEach(o => {
+    const d = document.createElement('div');
+    d.className = 'palette-opt' + (sel.includes(o.v) ? ' selected' : '');
+    d.dataset.v = o.v;
+    const sw = o.colors.map(c => `<div class="swatch" style="background:${c}"></div>`).join('');
+    d.innerHTML = `<div class="palette-swatches">${sw}</div><div class="palette-name">${o.name}<em>${o.sub}</em></div>`;
+    d.onclick = () => {
+      d.classList.toggle('selected');
+      const cnt = wrap.querySelectorAll('.palette-opt.selected').length;
+      if (cnt > 2) d.classList.remove('selected');
+      const nb = document.getElementById('n-q2');
+      if (nb) nb.disabled = false;
+    };
+    wrap.appendChild(d);
+  });
+}
+
+/* ─── Save helpers ─── */
+function saveText(key, inputId) {
+  const el = document.getElementById(inputId);
+  if (el) ANS[key] = el.value.trim();
+}
+
+function saveCheck(key, containerId) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  ANS[key] = [...wrap.querySelectorAll('.opt.selected')].map(d => d.dataset.v).join('、');
+}
+
+function savePalette() {
+  const wrap = document.getElementById('opts-q2');
+  if (!wrap) return;
+  const vals = [...wrap.querySelectorAll('.palette-opt.selected')].map(d => d.dataset.v);
+  ANS.q2 = vals.join('+');
+}
+
+function saveRadioOther(key) {
+  if (ANS[key] === 'other') {
+    const inp = document.getElementById('a-' + key + '-other');
+    const txt = inp ? inp.value.trim() : '';
+    if (txt) ANS[key] = `其他：${txt}`;
+  }
+}
+
+/* build checkbox list with object opts (has v/t/sub) */
+function buildCheckObj(containerId, opts, key, otherWrapperId) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const sel = ANS[key] ? ANS[key].split('、') : [];
+  opts.forEach(o => {
+    const d = document.createElement('div');
+    d.className = 'opt' + (sel.includes(o.v) ? ' selected' : '');
+    d.dataset.v = o.v;
+    d.innerHTML = `<div class="opt-mark-sq"></div>
+      <div><div class="opt-text">${o.t}</div>${o.sub ? `<div class="opt-sub">${o.sub}</div>` : ''}</div>`;
+    d.onclick = () => {
+      d.classList.toggle('selected');
+      if (o.v === 'other' && otherWrapperId) {
+        const ow = document.getElementById(otherWrapperId);
+        if (ow) ow.style.display = d.classList.contains('selected') ? 'block' : 'none';
+      }
+      const nb = document.getElementById('n-' + key);
+      if (nb) nb.disabled = false;
+    };
+    wrap.appendChild(d);
+  });
+}
+
+function saveCheckObjQ16() {
+  const wrap = document.getElementById('opts-q16');
+  const vals = [...wrap.querySelectorAll('.opt.selected')].map(d => {
+    return QD.q16.opts.find(o => o.v === d.dataset.v)?.t || d.dataset.v;
+  });
+  const extra = (document.getElementById('a-q16-extra')?.value || '').trim();
+  ANS.q16 = vals.join('、') + (extra ? `（补充：${extra}）` : '');
+}
+
+function saveCheckObjQ18() {
+  const wrap = document.getElementById('opts-q18');
+  const vals = [...wrap.querySelectorAll('.opt.selected')].map(d => {
+    if (d.dataset.v === 'other') {
+      const inp = document.getElementById('a-q18-other');
+      const txt = inp ? inp.value.trim() : '';
+      return txt ? `其他：${txt}` : '其他';
+    }
+    return QD.q18.opts.find(o => o.v === d.dataset.v)?.t || d.dataset.v;
+  });
+  ANS.q18 = vals.join('、');
+}
+
+/* build typography preview cards for Q3 */
+function buildTypecards() {
+  const wrap = document.getElementById('opts-q3');
+  if (!wrap) return;
+  wrap.className = 'type-grid';
+  wrap.innerHTML = '';
+  const cards = [
+    {
+      v: 'serif',
+      preview: `<div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:400;color:var(--ink);line-height:1.2;letter-spacing:.01em">品牌<br>即人格</div><div style="font-family:'Cormorant Garamond',serif;font-size:12px;font-weight:400;font-style:italic;color:var(--mist);margin-top:10px;letter-spacing:.1em">Brand is Identity</div>`,
+      tag: '衬线字体', sub: '经典 · 有重量 · 历史感'
+    },
+    {
+      v: 'sans',
+      preview: `<div style="font-family:'DM Sans',sans-serif;font-size:22px;font-weight:300;color:var(--ink);line-height:1.35;letter-spacing:.04em">品牌即人格</div><div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:300;color:var(--mist);margin-top:10px;letter-spacing:.2em;text-transform:uppercase">BRAND IDENTITY</div>`,
+      tag: '现代无衬线', sub: '干净 · 国际化 · 当代感'
+    },
+    {
+      v: 'light',
+      preview: `<div style="font-family:'DM Sans',sans-serif;font-size:26px;font-weight:200;color:var(--ink);line-height:1.3;letter-spacing:.1em">品牌即人格</div><div style="font-family:'DM Sans',sans-serif;font-size:11px;font-weight:200;color:var(--mist);margin-top:10px;letter-spacing:.28em;text-transform:uppercase">BRAND IDENTITY</div>`,
+      tag: '极细字体', sub: '轻盈 · 时尚 · 气质感'
+    },
+    {
+      v: 'mixed',
+      preview: `<div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:var(--ink);line-height:1.15">品牌即人格</div><div style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;color:var(--gold-d);margin-top:8px;letter-spacing:.22em;text-transform:uppercase">BRAND · IDENTITY</div>`,
+      tag: '中英混排', sub: '有个性 · 视觉张力'
+    },
+  ];
+  const sel = ANS.q3 || '';
+  cards.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'type-card' + (sel === c.v ? ' selected' : '');
+    d.dataset.v = c.v;
+    d.innerHTML = `<div class="type-preview">${c.preview}</div>
+      <div class="type-body"><div class="type-tag">${c.tag}</div><div class="type-sub">${c.sub}</div></div>`;
+    d.onclick = () => {
+      wrap.querySelectorAll('.type-card').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+      ANS.q3 = c.v;
+      const nb = document.getElementById('n-q3');
+      if (nb) nb.disabled = false;
+    };
+    wrap.appendChild(d);
+  });
+}
+
+/* ─── Archetype calc ─── */
+function calcArchetype() {
+  const sc = {A:0, B:0, C:0, D:0};
+  // q1 space: weight 2
+  if (ANS.q1) {
+    if (ANS.q1 === 'AB') { sc.A += 1; sc.B += 1; }
+    else if (sc[ANS.q1] !== undefined) sc[ANS.q1] += 2;
+  }
+  // q2 palette: weight 2
+  if (ANS.q2) {
+    const vals = ANS.q2.split('+').filter(v => sc[v] !== undefined);
+    if (vals.length) { const pts = 2 / vals.length; vals.forEach(v => { sc[v] += pts; }); }
+  }
+  // q13 expression: weight 1
+  if (ANS.q13) {
+    if      (ANS.q13 === 'AC') { sc.A += 0.5; sc.C += 0.5; }
+    else if (ANS.q13 === 'BD') { sc.B += 0.5; sc.D += 0.5; }
+    else if (ANS.q13 === 'BC') { sc.B += 0.5; sc.C += 0.5; }
+    else if (sc[ANS.q13] !== undefined) sc[ANS.q13] += 1;
+  }
+  return Object.entries(sc).sort((a,b) => b[1]-a[1])[0][0];
+}
+
+/* ─── Finish ─── */
+function handleFinish() {
+  userName = document.getElementById('founderName')?.value.trim() || ANS.q1_name || '你';
+  go('s-calc');
+  const msgs = ['分析视觉原型…','整合品牌信息…','匹配色彩系统…','生成视觉语言框架…','档案即将就绪…'];
+  let i = 0;
+  const el = document.getElementById('calcMsg');
+  const iv = setInterval(() => {
+    if (i < msgs.length) { el.textContent = msgs[i++]; }
+    else { clearInterval(iv); buildResult(calcArchetype()); go('s-result'); }
+  }, 700);
+}
+
+/* ─── Build result ─── */
+function buildResult(arcCode) {
+  const arc = ARC[arcCode];
+  const name = userName || '你';
+  const wrap = document.getElementById('rWrap');
+
+  // Fix 1: dynamic pricing based on Q9
+  const isPremium = ['1w-3w','3w-10w','>10w'].includes(ANS.q9);
+  const priceLabel  = isPremium ? '查看旗舰合作方式 — ¥19,800 起' : '查看合作方式 — ¥3,980 起';
+  const priceTitle  = isPremium ? '创始人品牌视觉系统 · 旗舰定制' : '创始人品牌视觉系统 — 定制服务';
+  const priceDesc   = isPremium
+    ? '为年收入百万级创始人量身设计的完整品牌视觉体系，交付更深、迭代更长。'
+    : '解锁专为你的业务量身定制的完整视觉语言体系。';
+  const premiumExtra = isPremium
+    ? `<li>内容视觉应用示范 × 3 套</li><li>2 次深度沟通 + 完整档案交付</li><li>30 天品牌视觉顾问支持</li>`
+    : `<li>内容视觉应用示范</li><li>1 次深度沟通 + 完整档案交付</li>`;
+  const btnClass = isPremium ? 'btn-unlock-premium' : 'btn-unlock';
+
+  // Fix 2: personalized insight
+  const insight = buildPersonalInsight(arcCode);
+
+  wrap.innerHTML = `
+    <div class="r-header">
+      <div class="r-label">${name} 的视觉原型 · ${arcCode}</div>
+      <h1 class="r-title">${arc.cn}<em>${arc.en}</em></h1>
+      <div class="r-rule"></div>
+    </div>
+
+    <div class="r-section">
+      <div class="r-section-label">色彩系统</div>
+      <div class="r-palette-bar">
+        ${arc.palette.map(c=>`<div class="r-palette-swatch" style="background:${c}"></div>`).join('')}
+      </div>
+      <div style="font-size:13px;color:var(--mist);margin-bottom:20px">${arc.paletteName}</div>
+      <div class="r-desc">${arc.desc}</div>
+      <div class="r-traits">${arc.traits.map(t=>`<div class="r-trait">${t}</div>`).join('')}</div>
+      ${insight ? `<div class="r-insight">${insight}</div>` : ''}
+    </div>
+
+    <div class="r-section">
+      <div class="r-section-label">视觉语言方向（免费预览）</div>
+      <div class="r-vi-grid">
+        <div class="r-vi-cell"><div class="r-vi-label">色彩方向</div><div class="r-vi-val">${arc.vi.colors}</div></div>
+        <div class="r-vi-cell"><div class="r-vi-label">字体方向</div><div class="r-vi-val">${arc.vi.fonts}</div></div>
+        <div class="r-vi-cell"><div class="r-vi-label">摄影方向</div><div class="r-vi-val">${arc.vi.photo}</div></div>
+        <div class="r-vi-cell"><div class="r-vi-label">整体气质</div><div class="r-vi-val">${arc.vi.mood}</div></div>
+      </div>
+    </div>
+
+    <div class="r-section">
+      <div class="r-section-label">完整定制档案</div>
+      <div class="r-locked">
+        <div class="r-locked-left">
+          <div class="r-locked-badge">${isPremium ? '旗舰定制' : '可解锁'}</div>
+          <div class="r-locked-title">创始人品牌视觉系统</div>
+          <div class="r-locked-desc">${isPremium ? '完整色彩规范 · 字体系统 · 摄影指南 · 内容示范 × 3 套 · 2 次深度沟通' : '完整色彩规范 · 字体组合 · 摄影指南 · 排版规则 · 内容视觉示范 · 1 次深度沟通'}</div>
+        </div>
+        <button class="${btnClass}" onclick="showPayInfo()">${priceLabel}</button>
+      </div>
+    </div>
+
+    <div class="r-pay-info" id="rPayInfo">
+      <h3>${priceTitle}</h3>
+      <p>${priceDesc}</p>
+      <ul class="r-pay-includes">
+        <li>完整视觉色彩方案（主色 + 辅色 + 点缀色规范）</li>
+        <li>字体组合与排版规则（中英文系统）</li>
+        <li>摄影 / 图片方向指南 + MJ Prompt</li>
+        <li>品牌气质关键词库</li>
+        ${premiumExtra}
+      </ul>
+      <div class="r-pay-contact">
+        <p>留下联系方式，我发给你完整合作方案：</p>
+        <div class="r-pay-contact-row">
+          <input id="payContactInput" type="text" placeholder="微信号 或 邮箱" />
+          <button onclick="submitPayContact('${arcCode}')">获取 →</button>
+        </div>
+        <div class="r-pay-msg" id="payContactMsg"></div>
+      </div>
+      <div class="r-wechat-reveal" id="payWechatReveal">
+        <p style="font-size:14px;color:var(--ink-soft);margin-bottom:10px">已收到，48 小时内我来找你 ✓</p>
+        <p style="display:flex;align-items:center;gap:10px">
+          <strong>微信：Miezainali</strong>
+          <button onclick="copyWechat(this)" style="padding:4px 12px;font-size:11px;background:transparent;border:1px solid var(--warm);border-radius:2px;color:var(--mist);cursor:pointer;font-family:'DM Sans',sans-serif;">复制</button>
+        </p>
+        <p style="font-size:12px;color:var(--mist);margin-top:6px">备注「视觉档案」，发送你的原型码 <strong>${arcCode}</strong></p>
+      </div>
+    </div>
+
+    <div class="r-arcmap">
+      <div class="r-section-label" style="margin-bottom:20px">你在四种原型中的位置</div>
+      <div class="r-arcmap-grid">
+        ${Object.values(ARC).map(a=>`
+          <div class="r-arcmap-card ${a.code===arcCode?'is-you':''}">
+            <div class="r-arcmap-bar">${a.palette.map(c=>`<div style="flex:1;background:${c}"></div>`).join('')}</div>
+            <div class="r-arcmap-body">
+              ${a.code===arcCode?'<div class="r-arcmap-badge">你的原型</div>':''}
+              <div class="r-arcmap-cn">${a.cn}</div>
+              <div class="r-arcmap-en">${a.en}</div>
+              <div class="r-arcmap-tags">${a.traits.slice(0,3).map(t=>`<span>${t}</span>`).join('')}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <div style="margin-top:20px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--mist)">
+        你的朋友是哪种派？
+        <button onclick="copyQuizLink(this)" style="padding:7px 16px;background:transparent;border:1px solid var(--warm);border-radius:2px;color:var(--ink-soft);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .2s">发给 ta 测测 →</button>
+      </div>
+    </div>
+
+    <div class="share-section">
+      <div class="share-label">分享你的视觉原型</div>
+      <div class="share-card" id="shareCard">
+        <div class="sc-eyebrow">FOUNDER VISUAL IDENTITY · 视觉原型诊断 · 抒云 SHUYUN</div>
+        <div class="sc-type">${arc.cn}</div>
+        <div class="sc-en">${arc.en}</div>
+        <div class="sc-rule"></div>
+        <div class="sc-palette">${arc.palette.map(c=>`<div class="sc-swatch" style="background:${c}"></div>`).join('')}</div>
+        <div class="sc-traits">${arc.traits.map(t=>`<span>${t}</span>`).join('')}</div>
+        <div class="sc-footer">
+          <span class="sc-brand">抒云 · SHUYUN</span>
+          <span class="sc-url">shuyun-universe.pages.dev</span>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-share" onclick="copyShareText(this)">一键复制文字</button>
+        <button class="btn-share" onclick="document.getElementById('shareCard').scrollIntoView({behavior:'smooth'})">截图保存卡片 ↑</button>
+      </div>
+    </div>
+
+    <div class="r-email-section">
+      <h3>留下联系方式</h3>
+      <p>微信或邮箱，留一个就够。48 小时内我来找你。</p>
+      <div class="r-email-row">
+        <input class="r-email-input" id="rContact" type="text" placeholder="微信号 或 邮箱" />
+        <button class="btn-submit" onclick="submitContact('${arcCode}')">发送 →</button>
+      </div>
+      <div class="r-submit-msg" id="submitMsg"></div>
+    </div>
+  `;
+
+  // Fix 6: write to Feishu immediately on result arrival
+  writeInitialRecord(arcCode);
+}
+
+function copyShareText(btn) {
+  const arcCode = Object.keys(ARC).find(k => ARC[k].cn && document.querySelector('.sc-type')?.textContent === ARC[k].cn) || 'A';
+  const arc = Object.values(ARC).find(a => a.cn === document.querySelector('.sc-type')?.textContent) || ARC.A;
+  const name = userName || '我';
+  const text = `我刚做了抒云的 Founder 视觉诊断 🎨\n\n我的视觉原型是：${arc.cn} · ${arc.en}\n关键词：${arc.traits.slice(0,4).join(' · ')}\n色彩方向：${arc.paletteName}\n\n你是哪种派？来测测：shuyun-universe.pages.dev`;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ 已复制';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '一键复制文字'; btn.classList.remove('copied'); }, 2500);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✓ 已复制'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '一键复制文字'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
+function copyQuizLink(btn) {
+  const url = location.origin + location.pathname;
+  navigator.clipboard.writeText(url).then(() => {
+    btn.textContent = '链接已复制 ✓';
+    setTimeout(() => { btn.textContent = '发给 ta 测测 →'; }, 2000);
+  });
+}
+
+function copyWechat(btn) {
+  navigator.clipboard.writeText('Miezainali').then(() => {
+    btn.textContent = '已复制 ✓';
+    btn.style.color = 'var(--gold)';
+    setTimeout(() => { btn.textContent = '复制'; btn.style.color = ''; }, 2000);
+  });
+}
+
+function showPayInfo() {
+  const el = document.getElementById('rPayInfo');
+  if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+/* ─── Submit ─── */
+// Fix 5: soft validation — warn but allow dismiss
+async function submitContact(arcCode) {
+  const contact = document.getElementById('rContact')?.value.trim() || '';
+  const msg = document.getElementById('submitMsg');
+  if (!contact) {
+    if (msg) msg.textContent = '请填写微信号或邮箱，我才能来找你 ↑';
+    return;
+  }
+  if (msg) msg.textContent = '发送中…';
+  await _doSubmit(arcCode, contact, msg);
+}
+
+// Fix 4: pay-info contact submit → reveal WeChat
+async function submitPayContact(arcCode) {
+  const input = document.getElementById('payContactInput');
+  const msg   = document.getElementById('payContactMsg');
+  const contact = input?.value.trim() || '';
+  if (!contact) { if (msg) msg.textContent = '请填写微信号或邮箱'; return; }
+  if (msg) msg.textContent = '提交中…';
+  const ok = await _doSubmit(arcCode, contact, msg, true);
+  if (ok) {
+    document.getElementById('payContactMsg').textContent = '';
+    document.getElementById('payWechatReveal').style.display = 'block';
+    input.closest('.r-pay-contact').style.display = 'none';
+    // also fill & disable bottom form
+    const bottomInput = document.getElementById('rContact');
+    if (bottomInput) { bottomInput.value = contact; bottomInput.disabled = true; }
+    const bottomMsg = document.getElementById('submitMsg');
+    if (bottomMsg) bottomMsg.textContent = '已提交 ✓';
+  }
+}
+
+// collect ALL answer data into one payload object
+function _buildFullPayload(arcCode) {
+  const arc = ARC[arcCode];
+  const q1L = {A:'极简白色展厅',B:'温暖的私人书房',C:'工业感的顶层阁楼',D:'有机感的治愈场域',AB:'介于极简和温暖之间'};
+  const q3L = {serif:'衬线字体',sans:'现代无衬线',light:'极细字体',mixed:'中英混排对比强烈'};
+  const q4L = {'photo-real':'真实摄影',minimal:'极简排版',editorial:'杂志排版感',organic:'自然有机感'};
+  const cD  = {A:'冷静系',B:'暖润系',C:'强烈系',D:'柔幻系'};
+  return {
+    // archetype generated content (for 答题汇总 top section)
+    arcDesc:     arc.desc,
+    arcTraits:   arc.traits.join(' · '),
+    arcColors:   arc.vi.colors,
+    arcFonts:    arc.vi.fonts,
+    arcPhoto:    arc.vi.photo,
+    arcMood:     arc.vi.mood,
+    paletteName: arc.paletteName,
+    name:           userName || '匿名',
+    archetype:      arcCode,
+    keywords:       ANS.q5 || arc.traits.join('、'),
+    colorDir:       ANS.q2 ? ANS.q2.split('+').map(v=>cD[v]).filter(Boolean).join('+') : '',
+    mjPhoto:        `${arc.vi.photo}, ${arc.vi.mood}`,
+    mjLogo:         `${arc.vi.fonts}, ${arc.paletteName}`,
+    mjCopy:         QD.q13?.opts?.find(o=>o.v===ANS.q13)?.t || '',
+    bizDesc:        ANS.q6 || '',
+    targetCustomer: ANS.q10 || '',
+    brandFeel:      q4L[ANS.q4] || '',
+    productType:    QD.q8?.opts?.find(o=>o.v===ANS.q8)?.t || '',
+    pricing:        QD.q9?.opts?.find(o=>o.v===ANS.q9)?.t || '',
+    goal12m:        ANS.q19 || '',
+    vision3y:       ANS.q20 || '',
+    painPoints:     ANS.q16 || '',
+    obstacle:       ANS.q18 || '',
+    upgrade:        QD.q17?.opts?.find(o=>o.v===ANS.q17)?.t || '',
+    // additional fields for 答题汇总
+    spaceLabel:     q1L[ANS.q1] || '',
+    typoLabel:      q3L[ANS.q3] || '',
+    platforms:      ANS.q7 || '',
+    targetIncLabel: QD.q11?.opts?.find(o=>o.v===ANS.q11)?.t || '',
+    curIncLabel:    QD.q_curinc?.opts?.find(o=>o.v===ANS.q_curinc)?.t || '',
+    citys:          ANS.q_city || '',
+    channels:       ANS.q12 || '',
+    coreStrength:   ANS.q14 || '',
+    rhythmLabel:    QD.q_rhythm?.opts?.find(o=>o.v===ANS.q_rhythm)?.t || '',
+    topics:         ANS.q_topics || '',
+    belief:         ANS.q15 || '',
+  };
+}
+
+// shared submit logic
+async function _doSubmit(arcCode, contact, msgEl, silent = false) {
+  try {
+    let payload;
+    if (recordId) {
+      // initial record already written → just update contact
+      payload = { record_id: recordId, bizDesc: ANS.q6 || '', contact };
+    } else {
+      payload = { ..._buildFullPayload(arcCode), contact };
+    }
+    const res = await fetch('/api/quiz-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+    });
+    const j = await res.json();
+    if (!silent && msgEl) msgEl.textContent = j.ok ? '已收到，48小时内我来找你 ✓' : '提交遇到问题，请直接添加微信：Miezainali';
+    return j.ok;
+  } catch(e) {
+    if (!silent && msgEl) msgEl.textContent = '提交遇到问题，请直接添加微信：Miezainali';
+    return false;
+  }
+}
+
+// Fix 6: write initial record on result page load (no contact yet)
+async function writeInitialRecord(arcCode) {
+  if (recordId) return;
+  if (window._isPreview) return;
+  try {
+    const res = await fetch('/api/quiz-submit', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(_buildFullPayload(arcCode))
+    });
+    const j = await res.json();
+    if (j.record_id) recordId = j.record_id;
+  } catch(e) { /* silent */ }
+}
+
+// Fix 2: personalized insight based on business type + archetype
+function buildPersonalInsight(arcCode) {
+  const q8 = ANS.q8 || '';
+  const isPremium = ['1w-3w','3w-10w','>10w'].includes(ANS.q9);
+
+  const insights = {
+    A: {
+      'course':   '你的知识产品需要视觉传递「值得信任的深度」——读者在付费前，先要被你的视觉说服。',
+      '1v1':      '一对一服务的视觉核心是「让人感受到分量」——克制的设计往往比热闹的设计更能匹配高单价。',
+      'group':    '社群/训练营最需要「我懂你」的视觉质感，而不是吸引眼球的花哨设计。',
+      'default':  '你的视觉需要传递知识密度和可信度，让人愿意放慢下来读你的内容。',
+    },
+    B: {
+      'course':   '知识产品的视觉要让人感受到温度和陪伴——你传递的不只是信息，是一种连接。',
+      '1v1':      '一对一服务的视觉需要真实感和亲近感，让潜在客户在见你之前就感受到安全。',
+      'group':    '社群的视觉需要有温度的凝聚感——让人看到就想进来，进来了就不想走。',
+      'default':  '你的品牌视觉需要有温度的记忆点，让人在众多创作者中一眼认出是你。',
+    },
+    C: {
+      'course':   `知识产品定价${isPremium?'偏高端':'有一定梯度'}，视觉需要同时传递「我在你前面」和「我能帮你到达」两层信号。`,
+      '1v1':      `高客单价服务的视觉首先要匹配你的定价——看上去不值这个钱，是${isPremium?'高净值':'优质'}客户流失的第一原因。`,
+      'group':    '训练营/社群的视觉需要力量感和结果导向，让人一眼看到「跟着你走是对的」。',
+      'default':  `你的视觉需要清晰的权威感，让${isPremium?'高净值':'有判断力的'}客户第一眼就感受到匹配。`,
+    },
+    D: {
+      'course':   '你的知识产品有独特视角，视觉需要传递这种「不一样」——而不是跟着行业主流走。',
+      '1v1':      '你的一对一服务有独特的感知色彩，视觉要让人感受到「只有你能做到这件事」。',
+      'default':  '你的品牌天然有辨识度，视觉系统的作用是稳定输出这种感觉，而不是重新定义它。',
+    },
+  };
+
+  const map = insights[arcCode] || insights.A;
+  return map[q8] || map.default || '';
+}
+
+/* ─── Init ─── */
+document.addEventListener('DOMContentLoaded', () => {
+  // Palette data (stored here to keep QD cleaner)
+  QD.q2_opts = [
+    {v:'A',name:'冷静系',sub:'象牙白 · 冷灰 · 烟蓝',colors:['#EDEAE4','#B8BEC4','#7E94A6','#2C2C2C']},
+    {v:'B',name:'暖润系',sub:'燕麦米 · 旧金 · 深棕',colors:['#EDE4D4','#C4A878','#7A5C3C','#F5EDE0']},
+    {v:'C',name:'强烈系',sub:'炭黑 · 暗金 · 酒红',colors:['#1C1C1C','#B8924A','#7A2832','#2E2A26']},
+    {v:'D',name:'柔幻系',sub:'玫瑰米 · 雾紫 · 月光',colors:['#E8C4BC','#B8A8C4','#F0EAE4','#C4D4C0']},
+  ];
+
+  // URL preview
+  const p = new URLSearchParams(location.search);
+  const preview = p.get('preview');
+  if (preview && ARC[preview.toUpperCase()]) {
+    userName = 'Preview';
+    window._isPreview = true;
+    buildResult(preview.toUpperCase());
+    go('s-result');
+    return;
+  }
+
+  // Start button: require name
+  const nameInput = document.getElementById('founderName');
+  const startBtn = document.getElementById('startBtn');
+  startBtn.onclick = () => {
+    userName = nameInput.value.trim() || '';
+    go('p1-intro');
+  };
+
+  // Build all radio/check questions
+  buildRadio('opts-q1',  QD.q1.opts,  'q1');
+  buildTypecards();                               // Q3 typography visual cards
+  buildRadio('opts-q4',  QD.q4.opts,  'q4');
+  buildCheck('opts-q7',  QD.q7.opts,  'q7');
+  buildRadio('opts-q8',  QD.q8.opts,  'q8');
+  buildRadio('opts-q9',  QD.q9.opts,  'q9');
+  buildRadio('opts-q11',      QD.q11.opts,     'q11');
+  buildRadio('opts-q-curinc', QD.q_curinc.opts, 'q_curinc');
+  buildTags('tags-q-city',    QD.q_city.tags);
+  buildCheck('opts-q12',      QD.q12.opts,     'q12');
+  buildRadio('opts-q13',      QD.q13.opts,     'q13');
+  buildRadio('opts-q-rhythm', QD.q_rhythm.opts, 'q_rhythm');
+  buildCheck('opts-q-topics', QD.q_topics.opts, 'q_topics');
+  buildRadio('opts-q17',      QD.q17.opts,     'q17');
+  buildCheckObj('opts-q16', QD.q16.opts, 'q16');  // Q16 multi-select pain points
+  buildCheckObj('opts-q18', QD.q18.opts, 'q18', 'q18-other-wrap');  // Q18 multi-select
+  buildPalette();
+});
+</script>
+</body>
+</html>

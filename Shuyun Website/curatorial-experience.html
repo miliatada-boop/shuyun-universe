@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh" data-lang="cn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高端文化体验与场域设计 · Curatorial &amp; Experience Design · Shuyun Universe</title>
+<link href="https://fonts.loli.net/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="detail.css">
+<style>
+/* ── Curatorial & Experience Design Page ── */
+
+/* Hero — editorial split, light background */
+.ce-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.65fr);
+  gap: clamp(48px, 7vw, 96px);
+  align-items: center;
+  background: linear-gradient(160deg, #f8f5ef 0%, var(--chalk) 55%, #efe9df 100%);
+  padding: 148px clamp(28px,5vw,80px) 128px;
+  position: relative;
+  overflow: hidden;
+}
+.ce-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 50% 60% at 85% 55%, rgba(184,149,90,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ce-hero-body { position: relative; z-index: 1; max-width: 620px; justify-self: end; }
+.ce-hero-img {
+  width: min(100%, 480px);
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center top;
+  filter: saturate(0.75) brightness(0.97) contrast(0.95);
+  box-shadow: 0 28px 80px rgba(28,43,53,0.12);
+  justify-self: start;
+}
+.ce-hero-crumb {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(74,92,107,0.35); margin-bottom: 52px; display: flex; align-items: center; gap: 10px;
+}
+.ce-hero-crumb a { color: inherit; text-decoration: none; transition: color 0.3s; }
+.ce-hero-crumb a:hover { color: var(--antique-gold); }
+.ce-hero-crumb .sep { color: rgba(184,149,90,0.3); }
+.ce-hero-en {
+  font-family: var(--sans); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(74,92,107,0.38); margin-bottom: 14px;
+}
+.ce-hero-cn {
+  font-family: var(--serif); font-size: clamp(36px, 5vw, 62px); font-weight: 300;
+  color: var(--abyssal); line-height: 1.08; letter-spacing: -0.01em; margin-bottom: 28px;
+}
+.ce-hero-deck-cn {
+  font-family: var(--serif); font-size: clamp(16px,1.45vw,19px); color: rgba(74,92,107,0.7);
+  line-height: 1.85; max-width: 500px; margin-bottom: 14px; letter-spacing: 0.02em;
+}
+.ce-hero-deck-en {
+  font-family: var(--sans); font-size: 12px; font-weight: 200; color: rgba(74,92,107,0.38);
+  line-height: 1.75; max-width: 480px; margin-bottom: 40px;
+}
+.ce-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 0; }
+.ce-tag {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(74,92,107,0.45); padding: 6px 14px;
+  border: 1px solid rgba(196,180,154,0.35); border-radius: 2px;
+  transition: border-color 0.3s, color 0.3s;
+}
+.ce-tag:hover { border-color: var(--antique-gold); color: var(--antique-gold); }
+
+/* Section header — reusable */
+.ce-hd { margin-bottom: 64px; }
+.ce-hd-en {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(74,92,107,0.35); margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
+}
+.ce-hd-en::after { content: ''; flex: 1; height: 1px; background: rgba(196,180,154,0.2); max-width: 200px; }
+.ce-hd-en.light { color: rgba(184,149,90,0.4); }
+.ce-hd-en.light::after { background: rgba(184,149,90,0.12); }
+.ce-hd-cn { font-family: var(--serif); font-size: clamp(24px,2.8vw,36px); font-weight: 400; color: var(--abyssal); line-height: 1.2; margin-bottom: 8px; }
+.ce-hd-cn.light { color: var(--chalk); }
+.ce-hd-sub { font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(74,92,107,0.28); }
+.ce-hd-sub.light { color: rgba(158,168,178,0.3); }
+
+/* 01 What We Design — dark, 5 dimensions */
+.ce-dims { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: rgba(158,168,178,0.07); margin-top: 16px; }
+.ce-dim {
+  padding: 52px 36px; border-bottom: 2px solid transparent;
+  transition: border-color 0.3s; cursor: default;
+}
+.ce-dim:hover { border-color: var(--antique-gold); }
+.ce-dim-num {
+  font-family: var(--serif); font-size: 32px; font-weight: 300;
+  color: rgba(184,149,90,0.18); line-height: 1; margin-bottom: 24px;
+}
+.ce-dim-cn {
+  font-family: var(--serif); font-size: clamp(17px,1.5vw,20px); font-weight: 400;
+  color: var(--chalk); line-height: 1.3; margin-bottom: 8px;
+}
+.ce-dim-en {
+  font-family: var(--sans); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(158,168,178,0.3); margin-bottom: 20px;
+}
+.ce-dim-body {
+  font-family: var(--serif); font-size: 13px; color: rgba(158,168,178,0.52);
+  line-height: 1.85; letter-spacing: 0.03em;
+}
+
+/* 02 Suitable For — tag grid */
+.ce-suitable-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+.ce-suitable-item {
+  padding: 40px 36px; background: white;
+  border-bottom: 2px solid transparent; transition: border-color 0.3s;
+}
+.ce-suitable-item:hover { border-color: var(--antique-gold); }
+.ce-suitable-num { font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--antique-gold); margin-bottom: 14px; }
+.ce-suitable-cn { font-family: var(--serif); font-size: clamp(16px,1.5vw,20px); font-weight: 400; color: var(--abyssal); line-height: 1.3; margin-bottom: 5px; }
+.ce-suitable-en { font-family: var(--sans); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(74,92,107,0.3); }
+
+/* 03 What We Actually Help — two-col list */
+.ce-helps { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.ce-help {
+  padding: 44px 48px; background: white;
+  border-left: 2px solid transparent; transition: border-color 0.3s;
+}
+.ce-help:hover { border-color: var(--antique-gold); }
+.ce-help-num { font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--antique-gold); margin-bottom: 16px; }
+.ce-help-cn { font-family: var(--serif); font-size: clamp(18px,1.7vw,22px); font-weight: 400; color: var(--abyssal); line-height: 1.25; margin-bottom: 6px; }
+.ce-help-en { font-family: var(--sans); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(74,92,107,0.3); margin-bottom: 18px; }
+.ce-help-body { font-family: var(--serif); font-size: 14px; color: var(--deep-current); line-height: 1.85; }
+
+/* 04 Project Scale — dark */
+.ce-scale { padding: 96px 0; background: var(--abyssal); }
+.ce-scale-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(28px,5vw,80px); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.ce-scale-price {
+  font-family: var(--serif); font-size: clamp(40px,5.5vw,68px); font-weight: 300;
+  color: var(--pale-gold); line-height: 1; margin-bottom: 8px; letter-spacing: -0.01em;
+}
+.ce-scale-price-note { font-family: var(--sans); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(184,149,90,0.45); margin-bottom: 28px; }
+.ce-scale-cn { font-family: var(--serif); font-size: clamp(15px,1.4vw,18px); color: rgba(232,222,202,0.55); line-height: 1.9; letter-spacing: 0.03em; }
+.ce-scale-en { font-family: var(--sans); font-size: 12px; font-weight: 200; color: rgba(158,168,178,0.32); line-height: 1.75; margin-top: 14px; }
+.ce-scale-note { padding-top: 24px; border-top: 1px solid rgba(158,168,178,0.1); margin-top: 24px; font-family: var(--serif); font-size: 13px; color: rgba(158,168,178,0.35); line-height: 1.8; }
+
+/* 05 Selected Projects */
+.ce-projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.ce-project { display: block; text-decoration: none; position: relative; overflow: hidden; }
+.ce-project-img {
+  width: 100%; aspect-ratio: 3/4; object-fit: cover;
+  filter: saturate(0.62) brightness(0.9) contrast(0.95);
+  display: block; transition: filter 0.5s, transform 0.5s;
+}
+.ce-project:hover .ce-project-img { filter: saturate(0.75) brightness(0.95); transform: scale(1.02); }
+.ce-project-body { padding: 32px 28px 36px; background: white; }
+.ce-project-meta { font-family: var(--sans); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--antique-gold); margin-bottom: 12px; }
+.ce-project-cn { font-family: var(--serif); font-size: clamp(17px,1.6vw,21px); font-weight: 400; color: var(--abyssal); line-height: 1.25; margin-bottom: 5px; }
+.ce-project-en { font-family: var(--sans); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(74,92,107,0.32); margin-bottom: 14px; }
+.ce-project-desc { font-family: var(--serif); font-size: 14px; color: var(--deep-current); line-height: 1.8; letter-spacing: 0.02em; }
+.ce-project-link { font-family: var(--sans); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--antique-gold); margin-top: 16px; display: inline-block; border-bottom: 1px solid rgba(184,149,90,0.3); padding-bottom: 2px; transition: border-color 0.3s; }
+.ce-project:hover .ce-project-link { border-color: var(--antique-gold); }
+
+/* 06 What Changed — outcomes */
+.ce-outcomes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: rgba(196,180,154,0.2); }
+.ce-outcome {
+  padding: 48px 36px; background: var(--sand-veil);
+  border-bottom: 2px solid transparent; transition: border-color 0.3s;
+}
+.ce-outcome:hover { border-color: var(--antique-gold); }
+.ce-outcome-mark { font-family: var(--serif); font-size: 22px; color: rgba(184,149,90,0.4); margin-bottom: 18px; }
+.ce-outcome-cn { font-family: var(--serif); font-size: clamp(15px,1.4vw,18px); font-weight: 400; color: var(--abyssal); line-height: 1.4; }
+.ce-outcome-en { font-family: var(--sans); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(74,92,107,0.28); margin-top: 8px; }
+
+/* CTA */
+.ce-cta { background: var(--abyssal); padding: 120px 0; text-align: center; }
+.ce-cta-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(28px,5vw,80px); }
+.ce-cta-eye { font-family: var(--sans); font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(184,149,90,0.45); margin-bottom: 48px; }
+.ce-cta-cn { font-family: var(--serif); font-size: clamp(28px,4vw,50px); font-weight: 300; color: var(--chalk); line-height: 1.15; margin-bottom: 12px; }
+.ce-cta-en { font-family: var(--serif); font-size: clamp(14px,1.3vw,17px); font-style: italic; color: rgba(158,168,178,0.32); margin-bottom: 56px; }
+.ce-cta-links { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; }
+.ce-cta-link { font-family: var(--serif); font-size: clamp(14px,1.3vw,17px); color: rgba(158,168,178,0.55); text-decoration: none; padding: 0 28px; border-bottom: 1px solid rgba(158,168,178,0.16); transition: color 0.3s, border-color 0.3s; }
+.ce-cta-link:hover { color: var(--pale-gold); border-color: var(--pale-gold); }
+.ce-cta-link-cn { font-family: var(--serif); font-size: clamp(15px,1.4vw,18px); color: rgba(232,222,202,0.65); text-decoration: none; padding: 0 28px; border-bottom: 1px solid rgba(184,149,90,0.28); transition: color 0.3s, border-color 0.3s; }
+.ce-cta-link-cn:hover { color: var(--pale-gold); border-color: var(--pale-gold); }
+.ce-cta-sep { color: rgba(184,149,90,0.18); padding: 0 4px; font-family: var(--serif); font-size: 24px; line-height: 1; }
+.ce-cta-note { margin-top: 52px; font-family: var(--serif); font-size: 14px; font-style: italic; color: rgba(158,168,178,0.3); line-height: 1.75; }
+
+/* Shared */
+.ce-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(28px,5vw,80px); }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .ce-dims { grid-template-columns: 1fr 1fr; }
+  .ce-suitable-grid { grid-template-columns: 1fr 1fr; }
+  .ce-outcomes { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 960px) {
+  .ce-hero { grid-template-columns: 1fr; padding: 100px 28px 80px; }
+  .ce-hero-img { aspect-ratio: 16/9; width: 100%; max-width: 100%; order: -1; }
+  .ce-hero-body { justify-self: start; }
+  .ce-helps { grid-template-columns: 1fr; }
+  .ce-projects { grid-template-columns: 1fr; }
+  .ce-scale-inner { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 640px) {
+  .ce-dims { grid-template-columns: 1fr; }
+  .ce-suitable-grid { grid-template-columns: 1fr; }
+  .ce-outcomes { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">抒云 <span>|</span> SHUYUN</a>
+  <span class="nav-service-tag">高端文化体验与场域设计</span>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-lang">
+      <span data-lang="cn" class="active">中文</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="en">EN</span>
+      <span class="nav-lang-sep">·</span>
+      <span data-lang="fr">FR</span>
+    </div>
+    <a href="index.html#services" class="nav-back">All Services</a>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="ce-hero">
+  <div class="ce-hero-body">
+    <div class="ce-hero-crumb">
+      <a href="index.html">Shuyun Universe</a>
+      <span class="sep">·</span>
+      <a href="index.html#services">Services</a>
+      <span class="sep">·</span>
+      Curatorial &amp; Experience Design
+    </div>
+    <div class="ce-hero-en">Curatorial &amp; Experience Design</div>
+    <div class="ce-hero-cn">高端文化体验<br>与场域设计</div>
+    <p class="ce-hero-deck-cn">为品牌、社区与文化项目，打造具有长期记忆点的人群体验与空间叙事。</p>
+    <p class="ce-hero-deck-en">Designing high-end cultural experiences, spatial narratives, and audience journeys — for brands, communities, and cultural institutions that want to be remembered.</p>
+    <div class="ce-tags">
+      <span class="ce-tag">Brand Activations</span>
+      <span class="ce-tag">Cultural Exhibitions</span>
+      <span class="ce-tag">Retreat Experiences</span>
+      <span class="ce-tag">Creative Communities</span>
+      <span class="ce-tag">Spatial Experiences</span>
+      <span class="ce-tag">Lifestyle Events</span>
+      <span class="ce-tag">International Cultural Projects</span>
+    </div>
+  </div>
+  <img src="图片/projects/touch/hero.jpg" alt="Cultural space — editorial portrait" class="ce-hero-img">
+</section>
+
+<!-- ── 01 What We Design ── -->
+<section style="background:var(--abyssal);padding:120px 0;">
+  <div class="ce-inner">
+    <div class="ce-hd">
+      <div class="ce-hd-en light">01 · What We Design</div>
+      <div class="ce-hd-cn light">我们设计的不是活动</div>
+      <div class="ce-hd-sub light">What We Actually Design</div>
+    </div>
+    <div class="ce-dims">
+
+      <div class="ce-dim">
+        <div class="ce-dim-num">01</div>
+        <div class="ce-dim-cn">氛围与感知</div>
+        <div class="ce-dim-en">Atmosphere</div>
+        <p class="ce-dim-body">让人在进入空间的瞬间就感受到——不需要解释。光线、温度、气味、节奏，共同构成体验的情绪底色。</p>
+      </div>
+
+      <div class="ce-dim">
+        <div class="ce-dim-num">02</div>
+        <div class="ce-dim-cn">用户体验路径</div>
+        <div class="ce-dim-en">Audience Journey</div>
+        <p class="ce-dim-body">人在空间中如何移动、在哪里停留、与谁相遇——每一个时刻都是经过设计的，但感觉不像被设计。</p>
+      </div>
+
+      <div class="ce-dim">
+        <div class="ce-dim-num">03</div>
+        <div class="ce-dim-cn">空间叙事</div>
+        <div class="ce-dim-en">Spatial Narrative</div>
+        <p class="ce-dim-body">空间本身是叙事的媒介。我们让建筑、材质与陈设共同讲述一个故事——比任何文字都更直接地触达感官。</p>
+      </div>
+
+      <div class="ce-dim">
+        <div class="ce-dim-num">04</div>
+        <div class="ce-dim-cn">人群关系</div>
+        <div class="ce-dim-en">Community Dynamics</div>
+        <p class="ce-dim-body">谁在场、他们之间如何连接——我们策划的不只是嘉宾名单，而是一种让对的人自然相遇的场域条件。</p>
+      </div>
+
+      <div class="ce-dim">
+        <div class="ce-dim-num">05</div>
+        <div class="ce-dim-cn">文化感知与品牌气质</div>
+        <div class="ce-dim-en">Cultural Positioning</div>
+        <p class="ce-dim-body">一场体验结束后，品牌在人心中留下的印象——是否有质感、是否可信、是否值得再次接触。这才是真正的品牌资产。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 Suitable For ── -->
+<section style="background:var(--chalk);padding:120px 0;">
+  <div class="ce-inner">
+    <div class="ce-hd">
+      <div class="ce-hd-en">02 · Who this is for</div>
+      <div class="ce-hd-cn">用户类型</div>
+      <div class="ce-hd-sub">High-value experience clients</div>
+    </div>
+    <div class="ce-suitable-grid">
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">01</div>
+        <div class="ce-suitable-cn">高端生活方式品牌</div>
+        <div class="ce-suitable-en">Premium lifestyle brands</div>
+      </div>
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">02</div>
+        <div class="ce-suitable-cn">高净值社群</div>
+        <div class="ce-suitable-en">High-net-worth communities</div>
+      </div>
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">03</div>
+        <div class="ce-suitable-cn">Retreat / 酒店 / 空间</div>
+        <div class="ce-suitable-en">Retreats, hospitality &amp; spaces</div>
+      </div>
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">04</div>
+        <div class="ce-suitable-cn">国际文化项目</div>
+        <div class="ce-suitable-en">International cultural projects</div>
+      </div>
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">05</div>
+        <div class="ce-suitable-cn">城市文旅项目</div>
+        <div class="ce-suitable-en">Urban culture &amp; travel projects</div>
+      </div>
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">06</div>
+        <div class="ce-suitable-cn">高客单Founder</div>
+        <div class="ce-suitable-en">Premium founder-led businesses</div>
+      </div>
+
+      <div class="ce-suitable-item">
+        <div class="ce-suitable-num">07</div>
+        <div class="ce-suitable-cn">私享圈层与会员制品牌</div>
+        <div class="ce-suitable-en">Private circles &amp; membership brands</div>
+      </div>
+
+      <div class="ce-suitable-item" style="background:var(--sand-veil);border-left:2px solid rgba(184,149,90,0.25);">
+        <div class="ce-suitable-num" style="color:rgba(74,92,107,0.3);">共同点</div>
+        <div class="ce-suitable-cn" style="font-size:14px;color:var(--deep-current);line-height:1.7;">项目需要有质感、有记忆点、有后续沉淀——而不只是「办一场活动」。</div>
+        <div class="ce-suitable-en" style="margin-top:8px;">Quality of presence matters more than scale of attendance.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 What We Actually Help With ── -->
+<section style="background:var(--sand-veil);padding:120px 0;">
+  <div class="ce-inner">
+    <div class="ce-hd">
+      <div class="ce-hd-en">03 · Deliverables</div>
+      <div class="ce-hd-cn">我们具体会协助什么</div>
+      <div class="ce-hd-sub">What We Actually Help With</div>
+    </div>
+    <div class="ce-helps">
+
+      <div class="ce-help">
+        <div class="ce-help-num">01</div>
+        <div class="ce-help-cn">体验概念与主题方向</div>
+        <div class="ce-help-en">Experience Concept &amp; Thematic Direction</div>
+        <p class="ce-help-body">从品牌气质与目标人群出发，提炼出整个体验的核心概念与叙事主轴——让每一个细节都指向同一个方向。</p>
+      </div>
+
+      <div class="ce-help">
+        <div class="ce-help-num">02</div>
+        <div class="ce-help-cn">空间与氛围设计</div>
+        <div class="ce-help-en">Spatial &amp; Atmosphere Design</div>
+        <p class="ce-help-body">选址逻辑、光线设计、动线安排、气味与声音——将空间转变为一种可感知的情绪语境。</p>
+      </div>
+
+      <div class="ce-help">
+        <div class="ce-help-num">03</div>
+        <div class="ce-help-cn">用户体验结构与动线</div>
+        <div class="ce-help-en">Audience Journey Design</div>
+        <p class="ce-help-body">用户进入、停留、转移、离开的每一个节点——从第一步踏入到最后离场，都经过精心设计但不露痕迹。</p>
+      </div>
+
+      <div class="ce-help">
+        <div class="ce-help-num">04</div>
+        <div class="ce-help-cn">文化内容策划</div>
+        <div class="ce-help-en">Cultural Programming</div>
+        <p class="ce-help-body">演讲、表演、展陈、工坊——每一项内容都服务于整体体验，而不是独立存在的节目单。</p>
+      </div>
+
+      <div class="ce-help">
+        <div class="ce-help-num">05</div>
+        <div class="ce-help-cn">社群关系与后续沉淀</div>
+        <div class="ce-help-en">Community Integration &amp; Afterlife</div>
+        <p class="ce-help-body">一场好的体验不在活动当天结束。我们设计社群关系的延续：人与人、人与品牌之间的长期连接如何被体验点燃。</p>
+      </div>
+
+      <div class="ce-help">
+        <div class="ce-help-num">06</div>
+        <div class="ce-help-cn">品牌与资源协同</div>
+        <div class="ce-help-en">Strategic Collaboration &amp; Resource Matching</div>
+        <p class="ce-help-body">国际文化机构、艺术家、创意团队、场地与媒体——跨境资源整合，让项目从一开始就站在更宽的视野里。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 Project Scale ── -->
+<section class="ce-scale">
+  <div class="ce-scale-inner">
+    <div>
+      <div class="ce-scale-price">¥ 300,000<span style="font-size:0.45em;color:rgba(184,149,90,0.45);"> 起</span></div>
+      <div class="ce-scale-price-note">Project Scale · 合作规模</div>
+      <p class="ce-scale-cn">大部分项目合作预算从 20 万人民币起，根据项目规模与合作深度调整。</p>
+      <p class="ce-scale-en">Most collaborations begin from ¥300,000, depending on scale, duration, and scope of curatorial involvement.</p>
+      <div class="ce-scale-note">国际项目、跨城市执行与高端品牌合作，预算通常在 50 万以上。每年仅接受有限数量的项目合作。</div>
+    </div>
+    <div>
+      <div style="font-family:var(--sans);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(184,149,90,0.4);margin-bottom:28px;">What's Included · 合作范围参考</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="padding:18px 0;border-bottom:1px solid rgba(158,168,178,0.08);display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-family:var(--serif);font-size:15px;color:rgba(232,222,202,0.6);">体验概念与策展方向</span>
+          <span style="font-family:var(--sans);font-size:9px;letter-spacing:0.12em;color:rgba(158,168,178,0.3);">Concept</span>
+        </div>
+        <div style="padding:18px 0;border-bottom:1px solid rgba(158,168,178,0.08);display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-family:var(--serif);font-size:15px;color:rgba(232,222,202,0.6);">空间与氛围执行</span>
+          <span style="font-family:var(--sans);font-size:9px;letter-spacing:0.12em;color:rgba(158,168,178,0.3);">Spatial</span>
+        </div>
+        <div style="padding:18px 0;border-bottom:1px solid rgba(158,168,178,0.08);display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-family:var(--serif);font-size:15px;color:rgba(232,222,202,0.6);">人群策划与资源对接</span>
+          <span style="font-family:var(--sans);font-size:9px;letter-spacing:0.12em;color:rgba(158,168,178,0.3);">Audience</span>
+        </div>
+        <div style="padding:18px 0;border-bottom:1px solid rgba(158,168,178,0.08);display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-family:var(--serif);font-size:15px;color:rgba(232,222,202,0.6);">文化内容与现场执行</span>
+          <span style="font-family:var(--sans);font-size:9px;letter-spacing:0.12em;color:rgba(158,168,178,0.3);">Programme</span>
+        </div>
+        <div style="padding:18px 0;display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-family:var(--serif);font-size:15px;color:rgba(232,222,202,0.6);">后续社群沉淀建议</span>
+          <span style="font-family:var(--sans);font-size:9px;letter-spacing:0.12em;color:rgba(158,168,178,0.3);">Afterlife</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 Selected Projects ── -->
+<section style="background:var(--chalk);padding:120px 0;">
+  <div class="ce-inner">
+    <div class="ce-hd">
+      <div class="ce-hd-en">05 · Archive</div>
+      <div class="ce-hd-cn">精选项目</div>
+      <div class="ce-hd-sub">Selected Projects — Curated Archive</div>
+    </div>
+    <div class="ce-projects">
+
+      <a href="project-vosges.html" class="ce-project">
+        <img src="图片/mie/crops/vosges-art.jpg" alt="孚日广场行为艺术周 — Paris" class="ce-project-img">
+        <div class="ce-project-body">
+          <div class="ce-project-meta">Paris, France · 2024</div>
+          <div class="ce-project-cn">孚日广场行为艺术周</div>
+          <div class="ce-project-en">Paris Public Art Week</div>
+          <p class="ce-project-desc">将行为艺术带入巴黎最具历史感的广场，公共空间成为当代艺术与城市记忆的共同叙事场域。</p>
+          <span class="ce-project-link">View Project →</span>
+        </div>
+      </a>
+
+      <a href="project-inner-forest.html" class="ce-project">
+        <img src="图片/projects/touch/hero.jpg" alt="内境森林 — Paris" class="ce-project-img" style="object-position:center center;">
+        <div class="ce-project-body">
+          <div class="ce-project-meta">Paris, France · 2024</div>
+          <div class="ce-project-cn">内境森林</div>
+          <div class="ce-project-en">Touch Inner Forest</div>
+          <p class="ce-project-desc">以感官记忆为主轴设计的沉浸式展览，五个空间序列引导访客重新与自然、身体和当下建立连接。</p>
+          <span class="ce-project-link">View Project →</span>
+        </div>
+      </a>
+
+      <a href="project-coubertin.html" class="ce-project">
+        <img src="图片/mie/crops/coubertin.jpg" alt="顾拜旦基金会文化展 — Paris" class="ce-project-img">
+        <div class="ce-project-body">
+          <div class="ce-project-meta">Paris, France · 2024</div>
+          <div class="ce-project-cn">顾拜旦基金会文化展</div>
+          <div class="ce-project-en">Coubertin Foundation Exhibition</div>
+          <p class="ce-project-desc">奥运年在顾拜旦家族庄园内策划的东西方文化对话展，将历史档案与当代艺术并置于同一空间叙事中。</p>
+          <span class="ce-project-link">View Project →</span>
+        </div>
+      </a>
+
+    </div>
+    <div style="margin-top:40px;text-align:right;">
+      <a href="index.html#projects" style="font-family:var(--sans);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--antique-gold);text-decoration:none;border-bottom:1px solid rgba(184,149,90,0.25);padding-bottom:2px;">All Projects · 全部项目档案 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── 06 What Changed ── -->
+<section style="background:var(--sand-veil);padding:120px 0;">
+  <div class="ce-inner">
+    <div class="ce-hd">
+      <div class="ce-hd-en">06 · Impact</div>
+      <div class="ce-hd-cn">最终形成了什么</div>
+      <div class="ce-hd-sub">What a Well-Designed Experience Leaves Behind</div>
+    </div>
+    <div class="ce-outcomes">
+
+      <div class="ce-outcome">
+        <div class="ce-outcome-mark">○</div>
+        <div class="ce-outcome-cn">更长期的品牌记忆</div>
+        <div class="ce-outcome-en">Lasting Brand Memory</div>
+      </div>
+
+      <div class="ce-outcome">
+        <div class="ce-outcome-mark">○</div>
+        <div class="ce-outcome-cn">更强的人群连接</div>
+        <div class="ce-outcome-en">Stronger Community Bonds</div>
+      </div>
+
+      <div class="ce-outcome">
+        <div class="ce-outcome-mark">○</div>
+        <div class="ce-outcome-cn">更高质量的社群氛围</div>
+        <div class="ce-outcome-en">Higher-Quality Community Culture</div>
+      </div>
+
+      <div class="ce-outcome">
+        <div class="ce-outcome-mark">○</div>
+        <div class="ce-outcome-cn">更具文化感的体验结构</div>
+        <div class="ce-outcome-en">Culturally Resonant Experience</div>
+      </div>
+
+      <div class="ce-outcome">
+        <div class="ce-outcome-mark">○</div>
+        <div class="ce-outcome-cn">更有传播性的现场感知</div>
+        <div class="ce-outcome-en">Organic Word-of-Mouth Reach</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="ce-cta">
+  <div class="ce-cta-inner">
+    <div class="ce-cta-eye">Begin the conversation · 开始对话</div>
+    <div class="ce-cta-cn">发起合作沟通</div>
+    <div class="ce-cta-en">Every significant project begins with a conversation about what truly matters.</div>
+    <div class="ce-cta-links">
+      <a href="index.html#contact" class="ce-cta-link-cn">发起合作沟通 →</a>
+      <span class="ce-cta-sep">·</span>
+      <a href="index.html#contact" class="ce-cta-link">Request a Conversation</a>
+      <span class="ce-cta-sep">·</span>
+      <a href="index.html#projects" class="ce-cta-link">View Selected Projects</a>
+    </div>
+    <p class="ce-cta-note">我们每年仅接受有限数量的项目合作。<br>We work on a limited number of projects each year — quality of collaboration always over quantity.</p>
+  </div>
+</section>
+
+<footer class="dp-foot">
+  <div class="dp-foot-inner">
+    <a href="index.html" class="dp-foot-logo">抒云宇宙 · Shuyun Universe</a>
+    <nav class="dp-foot-links">
+      <a href="brand-strategy.html">Brand Strategy</a>
+      <a href="community-architecture.html">Community Architecture</a>
+      <a href="curatorial-experience.html">Curatorial &amp; Experience</a>
+      <a href="founder-advisory.html">Founder Advisory</a>
+    </nav>
+    <span class="dp-foot-copy">© 2024–2025 Shuyun Universe</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var b=document.querySelectorAll(".nav-lang [data-lang]");
+  var s=localStorage.getItem("shuyun-lang")||"cn";
+  function l(n){
+    document.documentElement.setAttribute("data-lang",n);
+    localStorage.setItem("shuyun-lang",n);
+    b.forEach(function(x){x.classList.toggle("active",x.dataset.lang===n);});
+  }
+  l(s);
+  b.forEach(function(x){x.addEventListener("click",function(){l(x.dataset.lang);});});
+}());
+</script>
+</body>
+</html>
