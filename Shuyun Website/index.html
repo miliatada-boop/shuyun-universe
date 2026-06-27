@@ -501,8 +501,9 @@ html.lang-en .cn-only { display: none; }
   background: var(--chalk);
   color: var(--abyssal);
 }
-#page-experience {
+#page-cooperation {
   background: var(--chalk);
+  color: var(--abyssal);
 }
 .services-inner {
   max-width: 1100px;
@@ -810,10 +811,10 @@ html.lang-en .cn-only { display: none; }
 
   /* Services 2-col → 1 col */
   .services-inner { padding: 48px 24px 64px; }
-  #page-collaboration .services-inner > div[style*="grid-template-columns:1fr 1fr"] {
-    display: flex !important;
-    flex-direction: column !important;
-    max-width: 100% !important;
+  /* Services + Cooperation 2-col grids → 1 col */
+  #page-collaboration .services-inner > div[style*="grid-template-columns"],
+  #page-cooperation .services-inner > div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
   }
 
   /* Cases */
@@ -850,7 +851,7 @@ html.lang-en .cn-only { display: none; }
     <button class="nav-tab" data-tab="home" onclick="switchTab('home')"><span class="cn-only">首页</span><span class="en-only">Home</span></button>
     <button class="nav-tab" data-tab="projects" onclick="switchTab('projects')"><span class="cn-only">案例</span><span class="en-only">Cases</span></button>
     <button class="nav-tab" data-tab="collaboration" onclick="switchTab('collaboration')"><span class="cn-only">服务</span><span class="en-only">Services</span></button>
-    <button class="nav-tab" data-tab="experience" onclick="switchTab('experience')"><span class="cn-only">体验</span><span class="en-only">Experiences</span></button>
+    <button class="nav-tab" data-tab="cooperation" onclick="switchTab('cooperation')"><span class="cn-only">合作</span><span class="en-only">Collaboration</span></button>
   </div>
 
   <div style="display:flex;align-items:center;gap:20px;flex-shrink:0;">
@@ -1060,27 +1061,28 @@ html.lang-en .cn-only { display: none; }
       <span class="en-only">I do two things: help founders and brands find the right value language and market position; and connect cultural resources, institutional networks and partners between China and France.</span>
     </div>
 
-    <!-- Two columns: each card + its own CTA block -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:840px;">
+    <!-- 云拍卖 + 战略价值鉴定会 — 2 columns -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:840px;">
 
-      <!-- LEFT: 云拍卖 + 战略价值鉴定会 -->
-      <div style="display:flex;flex-direction:column;gap:0;">
-        <a href="auction.html" class="offering-card" style="display:block;text-decoration:none;color:inherit;">
-          <div class="offering-num">01</div>
-          <div class="offering-type">价值定位与策展</div>
-          <div class="offering-cn">云拍卖</div>
-          <div class="offering-en">价值策展与市场定位</div>
-          <ul class="offering-items">
-            <li>价值鉴定与战略诊断</li>
-            <li>价值图录与叙事体系</li>
-            <li>进入高端市场渠道</li>
-          </ul>
-          <div class="offering-price">
-            <span class="offering-price-note">了解详情 →</span>
-          </div>
-        </a>
-        <!-- 战略价值鉴定会 — single column -->
-        <div style="background:var(--abyssal);border-top:3px solid var(--antique-gold);padding:36px 32px 40px;">
+      <!-- 左：云拍卖 -->
+      <a href="auction.html" class="offering-card" style="display:block;text-decoration:none;color:inherit;">
+        <div class="offering-num">01</div>
+        <div class="offering-type">价值定位与策展</div>
+        <div class="offering-cn">云拍卖</div>
+        <div class="offering-en">价值策展与市场定位</div>
+        <ul class="offering-items">
+          <li>价值鉴定与战略诊断</li>
+          <li>价值图录与叙事体系</li>
+          <li>进入高端市场渠道</li>
+        </ul>
+        <div class="offering-price">
+          <span class="offering-price-note">了解详情 →</span>
+        </div>
+      </a>
+
+      <!-- 右：战略价值鉴定会 -->
+      <div style="background:var(--abyssal);border-top:3px solid var(--antique-gold);padding:36px 32px 40px;display:flex;flex-direction:column;justify-content:space-between;">
+        <div>
           <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:18px;">入门 · First Step</div>
           <div style="font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);font-weight:300;color:var(--chalk);line-height:1.2;margin-bottom:16px;">战略价值<em style="font-style:italic;color:var(--antique-gold);">鉴定会</em></div>
           <div style="font-family:var(--serif);font-size:14px;color:rgba(158,168,178,0.65);line-height:1.9;letter-spacing:0.03em;margin-bottom:28px;">不确定从哪里开始？先从一次深度对话开始。3 小时，共同诊断你的价值位置。</div>
@@ -1094,65 +1096,20 @@ html.lang-en .cn-only { display: none; }
               <div style="font-family:var(--serif);font-size:16px;font-weight:300;color:var(--sand-veil);">1 对 1，线上或线下</div>
             </div>
           </div>
-          <a href="mailto:asfacparis@gmail.com?subject=战略价值鉴定会申请" style="font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--antique-gold);background:transparent;border:1px solid rgba(184,149,90,0.4);padding:12px 28px;display:inline-block;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(184,149,90,0.08)';this.style.borderColor='var(--antique-gold)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(184,149,90,0.4)'">预约鉴定会 →</a>
         </div>
-      </div>
-
-      <!-- RIGHT: 中法当代艺术协会 + 开始一次对话 -->
-      <div style="display:flex;flex-direction:column;gap:0;">
-        <div class="offering-card">
-          <div class="offering-num">02</div>
-          <div class="offering-type">国际文化与合作</div>
-          <div class="offering-cn">中法当代艺术协会</div>
-          <div class="offering-en">中法文化资源桥梁</div>
-          <ul class="offering-items">
-            <li>艺术驻留与国际展览</li>
-            <li>中法品牌跨境合作</li>
-            <li>文化项目策划与执行</li>
-          </ul>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:28px;padding-top:24px;border-top:1px solid rgba(196,180,154,0.2);">
-            <a href="ASFAC.pdf" target="_blank" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--abyssal);opacity:0.6;text-decoration:none;padding:9px 0;border-bottom:1px solid rgba(196,180,154,0.15);transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
-              <span>协会简介 · ASFAC</span><span style="font-size:10px;">↗</span>
-            </a>
-            <a href="Touch-Art-Party-Foret-interieure.pdf" target="_blank" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--abyssal);opacity:0.6;text-decoration:none;padding:9px 0;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
-              <span>Touch Art Party · Forêt intérieure</span><span style="font-size:10px;">↗</span>
-            </a>
-          </div>
-        </div>
-        <div style="background:var(--abyssal);border-top:1px solid rgba(184,149,90,0.1);padding:40px 40px 48px;flex:1;">
-          <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(184,149,90,0.55);margin-bottom:20px;">联系 · Reach Out</div>
-          <div style="font-family:var(--serif);font-size:clamp(22px,2.2vw,32px);font-weight:300;color:var(--chalk);margin-bottom:10px;">开始一次对话</div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <a href="mailto:asfacparis@gmail.com" style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:rgba(232,226,216,0.75);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--chalk)'" onmouseout="this.style.color='rgba(232,226,216,0.75)'">✦ asfacparis@gmail.com</a>
-            <div onclick="document.getElementById('wechat-modal').style.display='flex'" style="font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:rgba(232,226,216,0.42);cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='rgba(232,226,216,0.85)'" onmouseout="this.style.color='rgba(232,226,216,0.42)'">微信 · WeChat →</div>
-          </div>
-        </div>
+        <a href="mailto:asfacparis@gmail.com?subject=战略价值鉴定会申请" style="font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--antique-gold);background:transparent;border:1px solid rgba(184,149,90,0.4);padding:12px 28px;display:inline-block;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(184,149,90,0.08)';this.style.borderColor='var(--antique-gold)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(184,149,90,0.4)'">预约鉴定会 →</a>
       </div>
 
     </div>
 
   </div>
-</div>
-
-<!-- Bali Modal -->
-<div id="bali-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,24,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)this.style.display='none'">
-  <div style="position:relative;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;">
-    <button onclick="document.getElementById('bali-modal').style.display='none'" style="position:sticky;top:0;margin-left:auto;display:block;background:rgba(28,43,53,0.9);border:1px solid rgba(158,168,178,0.3);color:var(--chalk);font-family:var(--sans);font-size:11px;letter-spacing:0.2em;padding:8px 16px;cursor:pointer;z-index:10000;flex-basis:100%;text-align:right;margin-bottom:4px;">✕ CLOSE</button>
-    <img src="图片/retreats-bali-1.jpg" alt="巴厘岛艺术驻观" style="width:calc(50% - 4px);min-width:260px;flex:1;border-radius:2px;">
-    <img src="图片/retreats-bali-2.jpg" alt="巴厘岛行程亮点" style="width:calc(50% - 4px);min-width:260px;flex:1;border-radius:2px;">
-  </div>
-</div>
-
-
-<!-- ─── EXPERIENCE ─── -->
-<div id="page-experience" class="page">
 
   <!-- Cloud Circle -->
-  <div class="cc-section">
+  <div class="cc-section" style="border-top:1px solid rgba(196,180,154,0.2);">
     <div class="cc-inner">
       <div>
-        <div class="cc-label">体验 · Experiences</div>
-        <div class="cc-num">01</div>
+        <div class="cc-label">社群 · Community</div>
+        <div class="cc-num">02</div>
         <div class="cc-type">私享社群</div>
         <h2 class="cc-title">Cloud Circle</h2>
         <div class="cc-subtitle">私享圈层 · 创始人社群</div>
@@ -1176,7 +1133,7 @@ html.lang-en .cn-only { display: none; }
     <div class="rt-inner">
 
       <div class="rt-label">
-        <span>02</span>
+        <span>03</span>
         <div class="rt-label-dot"></div>
         <span class="rt-label-gold">旅修</span>
       </div>
@@ -1226,6 +1183,67 @@ html.lang-en .cn-only { display: none; }
 
 </div>
 
+<!-- Bali Modal -->
+<div id="bali-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,24,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="position:relative;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;">
+    <button onclick="document.getElementById('bali-modal').style.display='none'" style="position:sticky;top:0;margin-left:auto;display:block;background:rgba(28,43,53,0.9);border:1px solid rgba(158,168,178,0.3);color:var(--chalk);font-family:var(--sans);font-size:11px;letter-spacing:0.2em;padding:8px 16px;cursor:pointer;z-index:10000;flex-basis:100%;text-align:right;margin-bottom:4px;">✕ CLOSE</button>
+    <img src="图片/retreats-bali-1.jpg" alt="巴厘岛艺术驻观" style="width:calc(50% - 4px);min-width:260px;flex:1;border-radius:2px;">
+    <img src="图片/retreats-bali-2.jpg" alt="巴厘岛行程亮点" style="width:calc(50% - 4px);min-width:260px;flex:1;border-radius:2px;">
+  </div>
+</div>
+
+
+<!-- ─── COOPERATION ─── -->
+<div id="page-cooperation" class="page">
+  <div class="services-inner">
+
+    <div class="services-label" style="margin-bottom:20px;">合作 · Collaboration</div>
+
+    <div style="font-family:var(--serif);font-size:16px;line-height:2.05;color:rgba(28,43,53,0.55);letter-spacing:0.03em;max-width:700px;margin-bottom:52px;">
+      <span class="cn-only">连接中法两个世界的文化资源、机构网络与合作伙伴。我们相信，真正的跨文化项目需要深度的信任与共同的美学语言。</span>
+      <span class="en-only">Connecting cultural resources, institutional networks and partners between China and France. We believe that truly cross-cultural projects require deep trust and a shared aesthetic language.</span>
+    </div>
+
+    <!-- ASFAC + 开始一次对话 — 2 columns -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:840px;">
+
+      <!-- 左：ASFAC 卡片 -->
+      <div class="offering-card">
+        <div class="offering-num">01</div>
+        <div class="offering-type">国际文化与合作</div>
+        <div class="offering-cn">中法当代艺术协会</div>
+        <div class="offering-en">中法文化资源桥梁</div>
+        <ul class="offering-items">
+          <li>艺术驻留与国际展览</li>
+          <li>中法品牌跨境合作</li>
+          <li>文化项目策划与执行</li>
+        </ul>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:28px;padding-top:24px;border-top:1px solid rgba(196,180,154,0.2);">
+          <a href="ASFAC.pdf" target="_blank" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--abyssal);opacity:0.6;text-decoration:none;padding:9px 0;border-bottom:1px solid rgba(196,180,154,0.15);transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+            <span>协会简介 · ASFAC</span><span style="font-size:10px;">↗</span>
+          </a>
+          <a href="Touch-Art-Party-Foret-interieure.pdf" target="_blank" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--abyssal);opacity:0.6;text-decoration:none;padding:9px 0;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'">
+            <span>Touch Art Party · Forêt intérieure</span><span style="font-size:10px;">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 右：开始一次对话 -->
+      <div style="background:var(--abyssal);border-top:1px solid rgba(184,149,90,0.1);padding:40px 40px 48px;display:flex;flex-direction:column;justify-content:center;">
+        <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(184,149,90,0.55);margin-bottom:20px;">联系 · Reach Out</div>
+        <div style="font-family:var(--serif);font-size:clamp(22px,2.2vw,32px);font-weight:300;color:var(--chalk);margin-bottom:10px;">开始一次对话</div>
+        <div style="font-family:var(--serif);font-size:14px;color:rgba(158,168,178,0.55);line-height:1.9;margin-bottom:28px;letter-spacing:0.03em;">有合作想法，或想了解更多关于协会的资源与网络，欢迎联系。</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <a href="mailto:asfacparis@gmail.com" style="font-family:var(--mono);font-size:11px;letter-spacing:0.18em;color:rgba(232,226,216,0.75);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--chalk)'" onmouseout="this.style.color='rgba(232,226,216,0.75)'">✦ asfacparis@gmail.com</a>
+          <div onclick="document.getElementById('wechat-modal').style.display='flex'" style="font-family:var(--mono);font-size:10px;letter-spacing:0.18em;color:rgba(232,226,216,0.42);cursor:pointer;transition:color 0.2s;" onmouseover="this.style.color='rgba(232,226,216,0.85)'" onmouseout="this.style.color='rgba(232,226,216,0.42)'">微信 · WeChat →</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
 <!-- WeChat Modal -->
 <div id="wechat-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,18,24,0.88);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
   <div style="background:var(--abyssal);border:1px solid rgba(184,149,90,0.2);padding:56px 64px;text-align:center;max-width:400px;width:90%;position:relative;">
@@ -1257,7 +1275,7 @@ function switchTab(tabName) {
 // Handle initial load with hash
 (function() {
   const hash = location.hash.replace('#', '');
-  const valid = ['home','projects','collaboration','experience'];
+  const valid = ['home','projects','collaboration','cooperation'];
   if (hash && valid.includes(hash)) {
     switchTab(hash);
   }
