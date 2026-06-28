@@ -795,6 +795,32 @@ html.lang-en .cn-only { display: none; }
 }
 
 /* ═══════════════════════════════
+   SERVICES v15 · Timeline
+══════════════════════════════ */
+#page-collaboration { background: var(--chalk); color: var(--deep-current); }
+.svc-page { max-width: 680px; margin: 0 auto; padding: 96px 48px 140px; }
+.svc-intro-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(184,149,90,0.55); margin-bottom: 28px; }
+.svc-intro-h { font-family: var(--serif); font-size: clamp(22px,2.6vw,34px); font-weight: 300; line-height: 1.45; letter-spacing: 0.02em; color: var(--deep-current); margin-bottom: 20px; }
+.svc-intro-sub { font-family: var(--serif); font-size: 14px; font-style: italic; color: rgba(44,58,66,0.4); line-height: 1.9; margin-bottom: 96px; }
+.svc-tl { position: relative; padding-left: 44px; }
+.svc-tl::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 0; width: 1px; background: rgba(184,149,90,0.18); }
+.svc-step { position: relative; padding-bottom: 88px; }
+.svc-step:last-child { padding-bottom: 0; }
+.svc-step::before { content: ''; position: absolute; left: -44px; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: rgba(184,149,90,0.5); }
+.svc-step-ey { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(184,149,90,0.5); margin-bottom: 12px; }
+.svc-step-title { font-family: var(--serif); font-size: clamp(30px,3.5vw,46px); font-weight: 300; letter-spacing: 0.03em; color: var(--deep-current); line-height: 1; margin-bottom: 36px; }
+.svc-kws { display: flex; flex-direction: column; }
+.svc-kw { font-family: var(--serif); font-size: clamp(15px,1.5vw,18px); font-weight: 300; letter-spacing: 0.03em; color: rgba(44,58,66,0.65); padding: 13px 0; border-bottom: 1px solid rgba(44,58,66,0.07); display: flex; align-items: center; justify-content: space-between; text-decoration: none; }
+.svc-kw:first-child { border-top: 1px solid rgba(44,58,66,0.07); }
+.svc-kw:hover { color: var(--deep-current); }
+.svc-kw-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(184,149,90,0.55); flex-shrink: 0; }
+.svc-kws-sep { margin-top: 36px; }
+.svc-kw-aside { font-style: italic; color: rgba(44,58,66,0.38); }
+.svc-cta { margin-top: 96px; padding-top: 44px; border-top: 1px solid rgba(44,58,66,0.08); display: flex; align-items: center; justify-content: space-between; gap: 28px; flex-wrap: wrap; }
+.svc-cta-text { font-family: var(--serif); font-size: clamp(15px,1.5vw,18px); font-weight: 300; color: rgba(44,58,66,0.42); line-height: 1.75; }
+.svc-cta-btn { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--deep-current); border: 1px solid rgba(44,58,66,0.2); padding: 14px 32px; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+
+/* ═══════════════════════════════
    MOBILE RESPONSIVE
 ══════════════════════════════ */
 @media (max-width: 768px) {
@@ -810,20 +836,30 @@ html.lang-en .cn-only { display: none; }
   .home-content { align-items: center; }
 
   /* Services 2-col → 1 col */
-  .services-inner { padding: 48px 24px 64px; }
-  /* Services + Cooperation 2-col grids → 1 col */
+  .services-inner { padding: 40px 20px 56px; }
   #page-collaboration .services-inner > div[style*="grid-template-columns"],
   #page-cooperation .services-inner > div[style*="grid-template-columns"] {
     grid-template-columns: 1fr !important;
   }
+  /* Services CTA block — stack vertically on mobile */
+  #page-collaboration .services-inner > div[style*="grid-template-columns"] ~ div {
+    flex-direction: column !important;
+    gap: 20px !important;
+    padding: 28px 20px !important;
+    align-items: flex-start !important;
+  }
 
-  /* Cases */
+  /* Cases — lot-wide: stack photo above text */
   .lot-grid { grid-template-columns: 1fr !important; }
   .lot-wide, .lot-card { grid-column: auto !important; }
+  .lot-wide { flex-direction: column !important; }
+  .lot-wide .lc-vis-wrap { width: 100% !important; height: 240px !important; }
+  .lot-wide .lc-info { border-left: none !important; border-top: 1px solid rgba(0,0,0,0.05); padding: 24px 20px 28px !important; }
+  .lot-wide .lc-title { font-size: 22px !important; }
   .gh { flex-direction: column; gap: 8px; }
   .projects-inner { padding: 40px 20px 64px; }
 
-  /* Experience */
+  /* Community + Retreats */
   .cc-inner { grid-template-columns: 1fr !important; gap: 40px; }
   .cc-section { padding: 48px 24px; }
   .rt-card { grid-template-columns: 1fr !important; min-height: auto !important; }
@@ -832,12 +868,29 @@ html.lang-en .cn-only { display: none; }
 
   /* Offering cards */
   .offering-cards { grid-template-columns: 1fr !important; }
+
+  /* Services v15 · Timeline */
+  .svc-page { padding: 56px 24px 100px; }
+  .svc-tl { padding-left: 28px; }
+  .svc-step::before { left: -28px; }
+  .svc-tl::before { left: 4px; }
 }
 
 @media (max-width: 480px) {
   .nav-tab { font-size: 11px; padding: 10px 8px; }
-  .nav-lang { font-size: 10px; padding: 5px 8px; }
-  .nav-cta { padding: 5px 10px; font-size: 8px; letter-spacing: 0.08em; }
+  .nav-lang { display: none !important; }
+  .nav-cta { display: none !important; }
+
+  /* Home — credential lines: tighter on small screens */
+  .home-content { padding: 0 !important; }
+
+  /* Services — CTA block stack */
+  #page-collaboration .services-inner > div[style*="grid-template-columns"] ~ div {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding: 24px 20px !important;
+  }
 }
 </style>
 </head>
@@ -869,16 +922,16 @@ html.lang-en .cn-only { display: none; }
     <!-- Logo top -->
     <div style="padding:52px 0 0;text-align:center;">
       <div class="gilded-text" style="font-family:var(--serif);font-size:clamp(34px,4.2vw,64px);font-weight:300;letter-spacing:0.12em;line-height:1;">抒云</div>
-      <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;align-items:center;max-width:540px;">
-        <div style="font-family:var(--sans);font-size:14px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.06em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);">
+      <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px;align-items:center;max-width:540px;width:calc(100% - 48px);padding:0 24px;box-sizing:border-box;">
+        <div style="font-family:var(--sans);font-size:13px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.05em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);line-height:1.7;">
           <span class="cn-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">中法当代艺术协会会长</em> · Association sino-française d'art contemporain</span>
-          <span class="en-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">President, Sino-French Contemporary Art Association</em> · Association sino-française d'art contemporain</span>
+          <span class="en-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">President, Sino-French Contemporary Art Association</em></span>
         </div>
-        <div style="font-family:var(--sans);font-size:14px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.06em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);">
+        <div style="font-family:var(--sans);font-size:13px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.05em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);line-height:1.7;">
           <span class="cn-only">旅法 <em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">8 年</em> · MIE Art &amp; Culture 合作人 · Paris–Shanghai</span>
           <span class="en-only"><em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">8 years in France</em> · MIE Art &amp; Culture Partner · Paris–Shanghai</span>
         </div>
-        <div style="font-family:var(--sans);font-size:14px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.06em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);">
+        <div style="font-family:var(--sans);font-size:13px;font-weight:300;color:rgba(232,226,216,0.32);letter-spacing:0.05em;text-align:center;text-shadow:0 1px 8px rgba(10,16,22,0.75);line-height:1.7;">
           <span class="cn-only">发起 <em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">30+ 跨文化项目</em> · Founder · 独立品牌 · 国际机构</span>
           <span class="en-only">Initiated <em style="font-family:var(--serif);font-style:italic;color:rgba(232,226,216,0.48);">30+ cross-cultural projects</em> · Founder · Independent Brand · International</span>
         </div>
@@ -887,10 +940,10 @@ html.lang-en .cn-only { display: none; }
 
     <!-- Identity center -->
     <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 48px;text-align:center;">
-      <div style="font-family:var(--serif);font-size:clamp(44px,5.8vw,76px);font-weight:300;font-style:italic;color:var(--antique-gold);letter-spacing:0.04em;line-height:1.05;margin-bottom:20px;">Value Editor</div>
-      <div style="font-family:var(--serif);font-size:clamp(15px,1.65vw,21px);font-weight:300;color:rgba(232,226,216,0.62);letter-spacing:0.05em;line-height:1.9;max-width:580px;">
-        <span class="cn-only">帮创始人和品牌，找到真正属于自己的市场语言与位置。</span>
-        <span class="en-only">Helping founders and brands find their true market language and position.</span>
+      <div style="font-family:var(--mono);font-size:clamp(10px,1.1vw,13px);font-weight:400;letter-spacing:0.28em;text-transform:uppercase;color:rgba(184,149,90,0.7);margin-bottom:16px;">品牌与资源战略顾问</div>
+      <div style="font-family:var(--serif);font-size:clamp(20px,2.4vw,32px);font-weight:300;font-style:italic;color:var(--chalk);letter-spacing:0.04em;line-height:1.4;margin-bottom:16px;max-width:560px;">
+        <span class="cn-only">帮助已经优秀的品牌和创始人，<br>在更高的平台完成价值升级。</span>
+        <span class="en-only">Helping exceptional founders and brands<br>achieve the recognition they deserve.</span>
       </div>
     </div>
 
@@ -1052,54 +1105,71 @@ html.lang-en .cn-only { display: none; }
 
 <!-- ─── SERVICES ─── -->
 <div id="page-collaboration" class="page">
-  <div class="services-inner">
 
-    <div class="services-label" style="margin-bottom:20px;">服务 · Services</div>
+  <div class="svc-page">
 
-    <div style="font-family:var(--serif);font-size:16px;line-height:2.05;color:rgba(28,43,53,0.55);letter-spacing:0.03em;max-width:700px;margin-bottom:52px;">
-      <span class="cn-only">我做两件事：帮助创始人和品牌找到正确的价值语言与市场位置；连接中法两个世界的文化资源、机构网络与合作伙伴。</span>
-      <span class="en-only">I do two things: help founders and brands find the right value language and market position; and connect cultural resources, institutional networks and partners between China and France.</span>
-    </div>
+    <!-- 导语 -->
+    <div class="svc-intro-label">服务 · Services</div>
+    <div class="svc-intro-h">帮助已经拥有价值的品牌、<br>创作者与文化项目，完成价值升级。</div>
+    <div class="svc-intro-sub">不知道从哪里开始？从一次价值诊断开始。</div>
 
-    <!-- 云拍卖 + 战略价值鉴定会 — 2 columns -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:840px;">
+    <!-- Timeline -->
+    <div class="svc-tl">
 
-      <!-- 左：云拍卖 -->
-      <a href="auction.html" class="offering-card" style="display:block;text-decoration:none;color:inherit;">
-        <div class="offering-num">01</div>
-        <div class="offering-type">价值定位与策展</div>
-        <div class="offering-cn">云拍卖</div>
-        <div class="offering-en">价值策展与市场定位</div>
-        <ul class="offering-items">
-          <li>价值鉴定与战略诊断</li>
-          <li>价值图录与叙事体系</li>
-          <li>进入高端市场渠道</li>
-        </ul>
-        <div class="offering-price">
-          <span class="offering-price-note">了解详情 →</span>
+      <!-- 01 看清价值 -->
+      <div class="svc-step">
+        <div class="svc-step-ey">01 · Value Assessment</div>
+        <div class="svc-step-title">看清价值</div>
+        <div class="svc-kws">
+          <a href="测试增长瓶颈founder-audit.html" class="svc-kw">
+            增长瓶颈诊断
+            <span class="svc-kw-tag">免费</span>
+          </a>
+          <a href="mailto:asfacparis@gmail.com?subject=战略价值鉴定会申请" class="svc-kw">
+            战略价值鉴定会
+            <span class="svc-kw-tag">付费</span>
+          </a>
+          <a href="valuation-questionnaire.html" class="svc-kw">
+            作品价值鉴定
+            <span class="svc-kw-tag">申请制</span>
+          </a>
         </div>
-      </a>
-
-      <!-- 右：战略价值鉴定会 -->
-      <div style="background:var(--abyssal);border-top:3px solid var(--antique-gold);padding:36px 32px 40px;display:flex;flex-direction:column;justify-content:space-between;">
-        <div>
-          <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.28em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:18px;">入门 · First Step</div>
-          <div style="font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);font-weight:300;color:var(--chalk);line-height:1.2;margin-bottom:16px;">战略价值<em style="font-style:italic;color:var(--antique-gold);">鉴定会</em></div>
-          <div style="font-family:var(--serif);font-size:14px;color:rgba(158,168,178,0.65);line-height:1.9;letter-spacing:0.03em;margin-bottom:28px;">不确定从哪里开始？先从一次深度对话开始。3 小时，共同诊断你的价值位置。</div>
-          <div style="display:flex;gap:32px;margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid rgba(184,149,90,0.12);">
-            <div>
-              <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:6px;">时长</div>
-              <div style="font-family:var(--serif);font-size:16px;font-weight:300;color:var(--sand-veil);">3 小时</div>
-            </div>
-            <div>
-              <div style="font-family:var(--mono);font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--antique-gold);margin-bottom:6px;">形式</div>
-              <div style="font-family:var(--serif);font-size:16px;font-weight:300;color:var(--sand-veil);">1 对 1，线上或线下</div>
-            </div>
-          </div>
-        </div>
-        <a href="mailto:asfacparis@gmail.com?subject=战略价值鉴定会申请" style="font-family:var(--mono);font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--antique-gold);background:transparent;border:1px solid rgba(184,149,90,0.4);padding:12px 28px;display:inline-block;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(184,149,90,0.08)';this.style.borderColor='var(--antique-gold)'" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(184,149,90,0.4)'">预约鉴定会 →</a>
       </div>
 
+      <!-- 02 设计未来 -->
+      <div class="svc-step">
+        <div class="svc-step-ey">02 · Value Growth Strategy</div>
+        <div class="svc-step-title">设计未来</div>
+        <div class="svc-kws">
+          <div class="svc-kw">品牌战略</div>
+          <div class="svc-kw">品牌叙事</div>
+          <div class="svc-kw">创始人定位</div>
+          <div class="svc-kw">官网与视觉表达</div>
+          <div class="svc-kw">策展与发布</div>
+          <a href="auction.html" class="svc-kw">云拍卖价值策划</a>
+        </div>
+      </div>
+
+      <!-- 03 进入市场 -->
+      <div class="svc-step">
+        <div class="svc-step-ey">03 · Value Execution</div>
+        <div class="svc-step-title">进入市场</div>
+        <div class="svc-kws">
+          <a href="auction.html" class="svc-kw">云拍卖</a>
+          <a href="mailto:asfacparis@gmail.com?subject=国际合作咨询" class="svc-kw">国际合作 · 国际发布</a>
+          <a href="community-architecture.html" class="svc-kw">Cloud Circle · 圈层链接</a>
+        </div>
+        <div class="svc-kws svc-kws-sep">
+          <a href="founder-advisory.html" class="svc-kw svc-kw-aside">长期顾问</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="svc-cta">
+      <div class="svc-cta-text">不确定是否适合？<br>先聊 15 分钟。</div>
+      <a href="mailto:asfacparis@gmail.com?subject=初次咨询" class="svc-cta-btn">开始一次对话 →</a>
     </div>
 
   </div>
