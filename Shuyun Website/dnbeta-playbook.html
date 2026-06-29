@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNBeta 社区手册</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sidebar-w: 240px;
+  --accent: #111;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --bg: #fff;
+  --hover: #f9fafb;
+  --tag-bg: #f3f4f6;
+}
+
+body {
+  font-family: 'DM Sans', 'PingFang SC', sans-serif;
+  background: var(--bg);
+  color: #111;
+  display: flex;
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  padding: 32px 0 40px;
+  background: #fff;
+  z-index: 100;
+}
+
+.sidebar-brand {
+  padding: 0 24px 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.sidebar-brand .logo {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #111;
+}
+
+.sidebar-brand .sub {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin-top: 2px;
+}
+
+.nav-section {
+  padding: 4px 0;
+}
+
+.nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #9ca3af;
+  padding: 8px 24px 4px;
+  text-transform: uppercase;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 24px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 0.12s;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+.nav-item:hover { background: var(--hover); color: #111; }
+
+.nav-item.active {
+  color: #111;
+  font-weight: 500;
+  background: #f3f4f6;
+}
+
+.nav-num {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+  width: 18px;
+  flex-shrink: 0;
+}
+
+.nav-item.active .nav-num { color: #111; }
+
+.nav-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 24px;
+}
+
+/* ── Main content ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 0 48px 80px;
+  max-width: 860px;
+}
+
+/* ── Section ── */
+.section { display: none; padding-top: 56px; }
+.section.active { display: block; }
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.section-lead {
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.75;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 40px 0;
+}
+
+/* ── Content blocks ── */
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 12px;
+  margin-top: 36px;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 8px;
+  margin-top: 24px;
+  letter-spacing: 0.02em;
+}
+
+p {
+  color: #374151;
+  margin-bottom: 16px;
+  line-height: 1.75;
+}
+
+ul, ol {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+li {
+  color: #374151;
+  margin-bottom: 6px;
+  line-height: 1.65;
+}
+
+/* ── Cards ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  background: #fff;
+}
+
+.card-icon {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Highlight box ── */
+.highlight {
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.highlight p { margin: 0; color: #374151; }
+
+.highlight-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ── Quote ── */
+.quote {
+  border-left: 3px solid #111;
+  padding: 4px 0 4px 20px;
+  margin: 24px 0;
+  font-size: 16px;
+  color: #111;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ── Checklist ── */
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  color: #374151;
+  font-size: 14px;
+}
+
+.checklist li:last-child { border-bottom: none; }
+
+.check-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Facility cards ── */
+.facility-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.facility-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.facility-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: #111;
+  border-radius: 6px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.facility-content h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.facility-content p {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Tag ── */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--tag-bg);
+  color: #374151;
+  border-radius: 20px;
+  padding: 3px 12px;
+  margin: 3px 3px 3px 0;
+}
+
+/* ── Steps ── */
+.steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.steps li {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  counter-increment: step;
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-content h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.step-content p {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── Art installation grid ── */
+.install-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.install-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.install-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.install-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 2px;
+}
+
+.install-artist {
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+/* ── FAQ ── */
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+}
+
+.faq-q {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 10px;
+}
+
+.faq-a {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Onboarding week cards ── */
+.week-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.week-header {
+  background: #111;
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.week-title { font-size: 14px; font-weight: 600; }
+.week-tag { font-size: 11px; opacity: 0.6; letter-spacing: 0.08em; }
+
+.week-body { padding: 16px 20px; }
+
+.week-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.week-body li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  font-size: 13.5px;
+  color: #374151;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.week-body li:last-child { border-bottom: none; }
+
+.bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #111;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 24px 20px 60px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .install-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo">DNBeta</div>
+    <div style="display:flex;gap:4px;margin-top:12px;">
+      <a href="dnbeta-community-model.html" style="font-size:12px;font-weight:500;color:#6b7280;padding:4px 10px;border-radius:6px;text-decoration:none;transition:background 0.12s;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='transparent'">管理者驾驶舱</a>
+      <a href="dnbeta-playbook.html" style="font-size:12px;font-weight:600;color:#111;padding:4px 10px;border-radius:6px;background:#f3f4f6;text-decoration:none;">社区手册</a>
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">新人指南</div>
+    <a class="nav-item active" data-tab="onboarding" href="#">
+      <span class="nav-num">↗</span> 新人 Onboarding
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-label">章节</div>
+    <a class="nav-item" data-tab="vision" href="#">
+      <span class="nav-num">01</span> 我们是谁
+    </a>
+    <a class="nav-item" data-tab="boundary" href="#">
+      <span class="nav-num">02</span> 社区边界
+    </a>
+    <a class="nav-item" data-tab="operation" href="#">
+      <span class="nav-num">03</span> 社区运行
+    </a>
+    <a class="nav-item" data-tab="information" href="#">
+      <span class="nav-num">04</span> 信息在哪里
+    </a>
+    <a class="nav-item" data-tab="principles" href="#">
+      <span class="nav-num">05</span> 工作原则
+    </a>
+    <a class="nav-item" data-tab="growth" href="#">
+      <span class="nav-num">06</span> 成长路径
+    </a>
+    <div class="nav-divider"></div>
+    <a class="nav-item" data-tab="faq" href="#">
+      <span class="nav-num">07</span> FAQ
+    </a>
+  </div>
+
+  <div class="nav-divider"></div>
+
+  <div class="nav-section">
+    <div class="nav-label">工具</div>
+    <a class="nav-item" href="dnbeta-community-model.html" style="color:#6b7280;">
+      <span class="nav-num">⊞</span> 管理者驾驶舱
+    </a>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- 01 Vision -->
+  <section class="section" id="tab-vision">
+    <div class="section-eyebrow">01 · Vision</div>
+    <h1 class="section-title">我们是谁</h1>
+    <p class="section-lead">DNBeta是由数字游民共建的可无限迭代的创新社区。我们用数字游民精神重新定义工作与生活的边界。</p>
+
+    <div class="quote">"当创造不再受时空限制，旅居式自由生活成为可能。"</div>
+
+    <h2>DNBeta 的命名</h2>
+    <p>DN 代表 Digital Nomad，即数字游民。β 既与古文字"阳"同形，也象征迭代、升级与持续的创新。它指向一个由数字游民共建的可以无限迭代的创新社区，甚至城市。</p>
+
+    <div class="highlight">
+      <div class="highlight-title">核心使命</div>
+      <p>DNBeta 将代表资阳这座年轻的城市，去发声，去链接全球有才华的游民群体。社区为数字游民提供共享办公、住宿及其他优质共享生活设施，打造可信赖的友好共居环境，并为渴望旅居式生活的数字生态能力者创造一个创新孵化场域。</p>
+    </div>
+
+    <h2>我们的社区成员</h2>
+    <p>数字游民平均年龄 32 岁，普遍高技能、高收入、高学历，工作内容包括但不限于编程、艺术、设计、写作、咨询等。他们以知识和技能作为核心生产力，不受地理位置和时间限制，将旅行、居住、工作融合在一起。</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <div class="card-title">引领型数字游民</div>
+        <p class="card-desc">创业者、自由职业者，具备维持可持续数字游民生活方式的能力，是社区的意见领袖。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">探索型数字游民</div>
+        <p class="card-desc">正在摸索和实验如何成为游民的新兴人群，在 DNBeta 找到方向和同伴。</p>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="highlight-title">全球趋势</div>
+      <p>截至 2022 年，全球数字游民总数已达 3500 万人，54 个国家提供数字游民签证。预计到 2035 年将达 10 亿人。在中国，76.4% 的 00 后愿意成为数字游民。</p>
+    </div>
+
+    <h2>第一个社区点位 · 云起山丘</h2>
+    <p>坐落于四川资阳临空经济区仁里村，距天府国际机场 30 分钟车程，距成都市区 1 小时。典型丘陵地貌，自然山丘里的数字游民母港。</p>
+    <p>"云"代表数字游民，"山丘"是游民群体云集的基地，"起"寓意创新孵化的新起点。</p>
+  </section>
+
+  <!-- 02 Boundary -->
+  <section class="section" id="tab-boundary">
+    <div class="section-eyebrow">02 · Boundary</div>
+    <h1 class="section-title">社区边界</h1>
+    <p class="section-lead">清晰的边界让社区有质量地生长。我们是谁，不是谁，做什么，不做什么。</p>
+
+    <div class="divider"></div>
+
+    <h2>我们接纳</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">有生产力的创作者</div>
+        <p class="card-desc">以知识、技能、创意为核心生产力，能够独立完成交付的个体。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">探索旅居的先行者</div>
+        <p class="card-desc">对数字游民生活方式持开放态度，愿意在社区共同实验与成长。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">跨界协作者</div>
+        <p class="card-desc">具备跨文化、跨领域合作意愿，为社区生态带来增量价值。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">在地贡献者</div>
+        <p class="card-desc">不只是使用社区设施，而是愿意为社区生态注入内容与活力。</p>
+      </div>
+    </div>
+
+    <h2>我们不是</h2>
+    <ul>
+      <li>短租民宿或酒店（我们是共居共创社区）</li>
+      <li>单纯的共享办公空间（我们有完整的生活生态）</li>
+      <li>封闭式企业孵化器（我们是开放的游民网络）</li>
+      <li>传统社区或居委会管理模式</li>
+    </ul>
+
+    <div class="highlight">
+      <div class="highlight-title">核心价值观</div>
+      <p>休闲共创 · 不倦也不躺 · 边工作边度假 · 多元共生 · 持续迭代</p>
+    </div>
+
+    <h2>社区氛围准则</h2>
+    <ul>
+      <li>尊重每个人的工作时间与专注状态</li>
+      <li>共享空间保持整洁，使用后归位</li>
+      <li>不在公共区域进行高音量通话或会议</li>
+      <li>鼓励分享但不强迫社交</li>
+      <li>对不同工作模式和生活节律保持包容</li>
+    </ul>
+  </section>
+
+  <!-- 03 Operation -->
+  <section class="section" id="tab-operation">
+    <div class="section-eyebrow">03 · Operation</div>
+    <h1 class="section-title">社区如何运行</h1>
+    <p class="section-lead">DNBeta 由主理人统筹，团队协作运营，顾问生态支持，成员共建。</p>
+
+    <div class="divider"></div>
+
+    <h2>运营架构</h2>
+    <p>社区采用"主理人 + 功能组 + 顾问"的扁平化结构，强调执行效率与灵活协作。</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">社区统筹</div>
+        <p class="card-desc">统筹日常运营，协调各功能组，把控整体节奏与社区氛围。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">政务对接 & 人力资源</div>
+        <p class="card-desc">处理社区与政府的合作事务，负责人才引进、入驻对接。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">社区服务组</div>
+        <p class="card-desc">负责日常成员服务，设施维护，入住体验管理。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">内容运营组</div>
+        <p class="card-desc">社区内容生产、品牌传播、活动策划与记录。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">资源组</div>
+        <p class="card-desc">对外资源对接，合作伙伴管理，生态网络建设。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">品牌顾问</div>
+        <p class="card-desc">为社区品牌发展和战略方向提供顾问支持与外部视角。</p>
+      </div>
+    </div>
+
+    <h2>日常运营节奏</h2>
+    <ul>
+      <li><strong>每日</strong>：空间维护、成员服务响应、内容记录</li>
+      <li><strong>每周</strong>：运营周会、活动统筹、数据复盘</li>
+      <li><strong>每月</strong>：成员 Review、内容发布、生态更新</li>
+      <li><strong>季度</strong>：社区迭代规划、人才计划评估</li>
+    </ul>
+
+    <h2>人才计划</h2>
+    <div class="facility-list">
+      <div class="facility-item">
+        <div class="facility-badge">Genius β</div>
+        <div class="facility-content">
+          <h4>优秀人才创业新物种孵化</h4>
+          <p>为引领型数字游民提供创业孵化支持，构建新物种企业生态。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">Art β</div>
+        <div class="facility-content">
+          <h4>国际驻留创作</h4>
+          <p>邀请全球艺术家驻留创作，以艺术语言丰富社区文化底蕴。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">Prize β</div>
+        <div class="facility-content">
+          <h4>48小时马拉松竞赛</h4>
+          <p>定期举办创新竞赛，激活社区创造力，链接本地与全球资源。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Information -->
+  <section class="section" id="tab-information">
+    <div class="section-eyebrow">04 · Information</div>
+    <h1 class="section-title">信息在哪里</h1>
+    <p class="section-lead">信息不只是存放在某处。它需要被设计、被使用、被持续维护。</p>
+
+    <div class="divider"></div>
+
+    <!-- Slogan -->
+    <div style="background:#111;border-radius:14px;padding:24px 28px;margin-bottom:32px;">
+      <div style="color:#fff;font-size:15px;font-weight:600;line-height:1.6;margin-bottom:8px;">Don't ask where the file is.<br>Learn how the organization thinks.</div>
+      <div style="color:rgba(255,255,255,0.45);font-size:12px;line-height:1.7;">不要只记住文件放在哪里，而要理解这个组织是如何思考信息的。<br>工具会变，但信息流动的逻辑不会变。</div>
+    </div>
+
+    <!-- 01 Information Map -->
+    <div style="margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:4px;">01 · Information Map</div>
+      <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:8px;">认识整个信息系统</div>
+      <p style="font-size:13.5px;color:#6b7280;margin:0 0 16px;line-height:1.7;">先建立全局认知——社区的信息按层级分布，权限越高看到的越多。</p>
+      <div style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:130px 1fr 1fr;background:#f9fafb;border-bottom:1px solid #e5e7eb;">
+          <div style="padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;">层级</div>
+          <div style="padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;border-left:1px solid #e5e7eb;">存放位置</div>
+          <div style="padding:10px 16px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;border-left:1px solid #e5e7eb;">包含内容</div>
+        </div>
+        <div style="display:grid;grid-template-columns:130px 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+          <div style="padding:13px 16px;display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#e5e7eb;flex-shrink:0;"></div><span style="font-size:13px;color:#9ca3af;">公开信息</span></div>
+          <div style="padding:13px 16px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">社区手册 · 官网</div>
+          <div style="padding:13px 16px;font-size:12px;color:#9ca3af;border-left:1px solid #f3f4f6;">社区介绍 · 申请方式 · 活动预告</div>
+        </div>
+        <div style="display:grid;grid-template-columns:130px 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+          <div style="padding:13px 16px;display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#6b7280;flex-shrink:0;"></div><span style="font-size:13px;color:#374151;">成员信息</span></div>
+          <div style="padding:13px 16px;font-size:12.5px;color:#374151;border-left:1px solid #f3f4f6;">飞书日历 · 飞书知识库</div>
+          <div style="padding:13px 16px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;">活动日历 · 成员名录 · 公开知识库</div>
+        </div>
+        <div style="display:grid;grid-template-columns:130px 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+          <div style="padding:13px 16px;display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#374151;flex-shrink:0;"></div><span style="font-size:13px;color:#111;">运营信息</span></div>
+          <div style="padding:13px 16px;font-size:12.5px;color:#374151;border-left:1px solid #f3f4f6;">飞书多维表格 · 知识库内部区</div>
+          <div style="padding:13px 16px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;">SOP · 任务 · 项目 · 会议纪要</div>
+        </div>
+        <div style="display:grid;grid-template-columns:130px 1fr 1fr;">
+          <div style="padding:13px 16px;display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;border-radius:50%;background:#111;flex-shrink:0;"></div><span style="font-size:13px;font-weight:600;color:#111;">管理信息</span></div>
+          <div style="padding:13px 16px;font-size:12.5px;color:#374151;border-left:1px solid #f3f4f6;">飞书（管理员权限）</div>
+          <div style="padding:13px 16px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;">财务 · 合同 · 战略文件 · 人事</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 Information Access -->
+    <div style="margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:4px;">02 · Information Access</div>
+      <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:8px;">你能看到什么</div>
+      <p style="font-size:13.5px;color:#6b7280;margin:0 0 16px;line-height:1.7;">你的身份决定你能访问哪一层。入住成员默认拥有成员层权限。</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div style="border:1.5px solid #111;border-radius:10px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#111;margin-bottom:10px;">✓ 默认可见</div>
+          <div style="font-size:13px;color:#374151;line-height:2.1;">社区手册全文<br>活动日历<br>空间使用规范<br>社区公告<br>成员名录（基本）</div>
+        </div>
+        <div style="border:1px solid #d1d5db;border-radius:10px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#6b7280;margin-bottom:10px;">○ 参与后可见</div>
+          <div style="font-size:13px;color:#6b7280;line-height:2.1;">活动复盘记录<br>知识库（公开区）<br>项目进展（公开）<br>会议纪要（公开）</div>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;background:#f9fafb;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:10px;">— 需申请权限</div>
+          <div style="font-size:13px;color:#9ca3af;line-height:2.1;">运营内部文件<br>财务数据<br>合同文件<br>核心 SOP</div>
+        </div>
+      </div>
+      <div style="margin-top:10px;padding:12px 16px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb;">
+        <span style="font-size:12.5px;color:#6b7280;">需要某个文件的权限？联系 <strong style="color:#374151;">社区运营</strong>，说明你的角色和用途即可。</span>
+      </div>
+    </div>
+
+    <!-- 03 Information Navigation -->
+    <div style="margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:4px;">03 · Information Navigation</div>
+      <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:8px;">怎么找到信息</div>
+      <p style="font-size:13.5px;color:#6b7280;margin:0 0 16px;line-height:1.7;">找信息有顺序，按顺序来。直接问人是最后一步，不是第一步。</p>
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:48px 1fr;border-bottom:1px solid #f3f4f6;">
+          <div style="background:#111;display:flex;align-items:center;justify-content:center;min-height:64px;"><span style="font-size:13px;font-weight:700;color:#fff;">1</span></div>
+          <div style="padding:14px 20px;"><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:3px;">查社区手册</div><div style="font-size:12.5px;color:#9ca3af;">规范、流程、常见问题，大部分答案在这里</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:48px 1fr;border-bottom:1px solid #f3f4f6;">
+          <div style="background:#374151;display:flex;align-items:center;justify-content:center;"><span style="font-size:13px;font-weight:700;color:#fff;">2</span></div>
+          <div style="padding:14px 20px;"><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:3px;">搜飞书知识库</div><div style="font-size:12.5px;color:#9ca3af;">关键词搜索，文件按分类归档</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:48px 1fr;border-bottom:1px solid #f3f4f6;">
+          <div style="background:#6b7280;display:flex;align-items:center;justify-content:center;"><span style="font-size:13px;font-weight:700;color:#fff;">3</span></div>
+          <div style="padding:14px 20px;"><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:3px;">找对应 Owner</div><div style="font-size:12.5px;color:#9ca3af;">每类信息都有负责人，找对人问对问题</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:48px 1fr;">
+          <div style="background:#f3f4f6;display:flex;align-items:center;justify-content:center;"><span style="font-size:13px;font-weight:700;color:#9ca3af;">4</span></div>
+          <div style="padding:14px 20px;"><div style="font-size:13.5px;font-weight:600;color:#374151;margin-bottom:3px;">反馈信息缺口</div><div style="font-size:12.5px;color:#9ca3af;">找不到 → 告诉运营团队 → 补充文档 → 下一个人不需要再问</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 Information Contribution -->
+    <div style="margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:4px;">04 · Information Contribution</div>
+      <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:8px;">如何贡献信息</div>
+      <p style="font-size:13.5px;color:#6b7280;margin:0 0 16px;line-height:1.7;">你产生的内容不只属于你。活动、照片、决策、经验——都需要在你离开后还能被找到。</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#6366f1;margin-bottom:10px;">活动记录 · 复盘</div>
+          <div style="font-size:13px;color:#374151;line-height:1.9;">活动结束 7 天内完成复盘<br>上传至飞书知识库 → 活动归档<br>命名：<span style="font-family:monospace;font-size:11px;background:#f3f4f6;padding:1px 6px;border-radius:4px;">EVENT-名称-YYYYMMDD</span></div>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#10b981;margin-bottom:10px;">照片 · 视频素材</div>
+          <div style="font-size:13px;color:#374151;line-height:1.9;">活动后 3 天内提交给品牌负责人<br>不要自行发布到对外渠道<br>经授权后方可使用</div>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#f59e0b;margin-bottom:10px;">会议纪要</div>
+          <div style="font-size:13px;color:#374151;line-height:1.9;">会议当天完成，发至对应频道<br>同步至飞书知识库项目文件夹<br>必须包含：决策 · 待办 · 负责人</div>
+        </div>
+        <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#ef4444;margin-bottom:10px;">经验 · 知识贡献</div>
+          <div style="font-size:13px;color:#374151;line-height:1.9;">写成文档，注明作者和日期<br>提交给对应 Owner 审核<br>通过后发布至知识库公开区</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;border:1px solid #fecaca;background:#fff5f5;border-radius:10px;padding:14px 20px;display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#ef4444;white-space:nowrap;padding-top:1px;">注意</div>
+        <div style="font-size:13px;color:#374151;line-height:1.7;">不要把重要信息只存在个人手机或电脑里。你离开社区时，这些内容会跟着你走，社区就损失了一份记忆。</div>
+      </div>
+    </div>
+
+    <!-- 05 Information Culture -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:4px;">05 · Information Culture</div>
+      <div style="font-size:18px;font-weight:700;color:#111;margin-bottom:8px;">信息文化</div>
+      <p style="font-size:13.5px;color:#6b7280;margin:0 0 16px;line-height:1.7;">工具会变，但这几条原则不会变。</p>
+      <div style="display:flex;flex-direction:column;gap:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+        <div style="padding:16px 22px;border-bottom:1px solid #f3f4f6;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#111;margin-top:8px;flex-shrink:0;"></div>
+          <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:2px;">信息属于组织，不属于个人</div><div style="font-size:12.5px;color:#9ca3af;">你产生的内容是社区的资产，不是你的私人收藏。</div></div>
+        </div>
+        <div style="padding:16px 22px;border-bottom:1px solid #f3f4f6;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#111;margin-top:8px;flex-shrink:0;"></div>
+          <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:2px;">找不到先搜索，搜不到再问人</div><div style="font-size:12.5px;color:#9ca3af;">直接问人是在消耗别人的时间，文档是为了让你不需要问人。</div></div>
+        </div>
+        <div style="padding:16px 22px;border-bottom:1px solid #f3f4f6;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#111;margin-top:8px;flex-shrink:0;"></div>
+          <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:2px;">产生信息，立即归档</div><div style="font-size:12.5px;color:#9ca3af;">拖延归档 = 永远不归档。事后整理的成本是当下的10倍。</div></div>
+        </div>
+        <div style="padding:16px 22px;border-bottom:1px solid #f3f4f6;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#111;margin-top:8px;flex-shrink:0;"></div>
+          <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:2px;">一个信息只有一个唯一位置</div><div style="font-size:12.5px;color:#9ca3af;">复制 = 过期 = 混乱。如果一份文件出现在两个地方，它迟早会不一致。</div></div>
+        </div>
+        <div style="padding:16px 22px;border-bottom:1px solid #f3f4f6;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#111;margin-top:8px;flex-shrink:0;"></div>
+          <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:2px;">流程更新，SOP 同步更新</div><div style="font-size:12.5px;color:#9ca3af;">过期的文档比没有文档更危险，它会让人做出错误的决定。</div></div>
+        </div>
+        <div style="padding:16px 22px;display:flex;gap:14px;align-items:flex-start;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#111;margin-top:8px;flex-shrink:0;"></div>
+          <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:2px;">让后来的人比今天的你更轻松</div><div style="font-size:12.5px;color:#9ca3af;">你整理的每一份文档，都是在给下一个人省时间。这是最小的，也是最持久的贡献。</div></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- 05 Principles -->
+  <section class="section" id="tab-principles">
+    <div class="section-eyebrow">05 · Principles</div>
+    <h1 class="section-title">工作原则</h1>
+    <p class="section-lead">这些是我们做决定时反复用到的判断框架。</p>
+
+    <div class="divider"></div>
+
+    <h2>核心原则</h2>
+
+    <h3>① 迭代优于完美</h3>
+    <p>β 的精神就是持续升级。我们不等待完美方案，先跑一个版本，快速获得反馈，再迭代。每一次不完美都是下一个版本的起点。</p>
+
+    <h3>② 体验优于规则</h3>
+    <p>社区的规则服务于成员体验，而不是相反。当规则与体验产生冲突时，先想"成员会有什么感受"，再考虑流程合规性。</p>
+
+    <h3>③ 轻量化运作</h3>
+    <p>用最少的人力和工具完成最核心的事。避免为了"显得专业"而制造不必要的流程、会议、文档。</p>
+
+    <h3>④ 透明度是信任的基础</h3>
+    <p>团队内部信息尽量开放，让每个人知道为什么做、做了什么、结果怎样。透明不是晒成绩，而是让协作更顺畅。</p>
+
+    <h3>⑤ 异步优先</h3>
+    <p>不是所有问题都需要立刻开会解决。先在飞书文档里写清楚背景、问题、选项，给对方时间思考，再同步讨论更高效。</p>
+
+    <h3>⑥ 游民精神</h3>
+    <p>保持好奇心，拥抱不确定性，在流动中找到自己的节奏。这不只是对社区成员的期待，也是对我们运营团队的要求。</p>
+
+    <div class="highlight">
+      <div class="highlight-title">决策时自问</div>
+      <p>这个决定，三个月后的我们会觉得对吗？它是在为用户创造价值，还是在自我感动？</p>
+    </div>
+  </section>
+
+  <!-- 06 Growth -->
+  <section class="section" id="tab-growth">
+    <div class="section-eyebrow">06 · Growth</div>
+    <h1 class="section-title">成长路径</h1>
+    <p class="section-lead">在 DNBeta，每个人都有自己的成长轨迹。社区为不同阶段的游民提供对应的支持。</p>
+
+    <div class="divider"></div>
+
+    <h2>成员成长层级</h2>
+
+    <div class="facility-list">
+      <div class="facility-item">
+        <div class="facility-badge">访客</div>
+        <div class="facility-content">
+          <h4>探索体验</h4>
+          <p>参与开放活动、参观社区、了解数字游民生活方式。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">短居成员</div>
+        <div class="facility-content">
+          <h4>旅居入驻（1-4 周）</h4>
+          <p>使用共享办公和公寓，参与社区日常，感受旅居生活节奏。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">常驻成员</div>
+        <div class="facility-content">
+          <h4>长期驻留（1 个月以上）</h4>
+          <p>深度融入社区，建立稳定工作节奏，参与社区共建项目。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">种子人才</div>
+        <div class="facility-content">
+          <h4>引领型游民</h4>
+          <p>参与人才计划（Genius β / Art β / Prize β），成为社区生态建设者。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">共建者</div>
+        <div class="facility-content">
+          <h4>社区核心</h4>
+          <p>主动贡献内容、资源、人脉，参与社区决策，推动社区迭代。</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>能力成长支持</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">培训与工作坊</div>
+        <p class="card-desc">定期组织行业主题培训、技能工作坊、跨界交流会。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">导师对接</div>
+        <p class="card-desc">为有需要的成员匹配行业顾问、先行游民进行一对一指导。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">项目协作机会</div>
+        <p class="card-desc">社区内部项目对成员开放，提供真实的跨界协作场景。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">网络链接</div>
+        <p class="card-desc">通过社区生态链接全球游民网络、资源方与合作品牌。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 FAQ -->
+  <section class="section" id="tab-faq">
+    <div class="section-eyebrow">07 · FAQ</div>
+    <h1 class="section-title">常见问题</h1>
+    <p class="section-lead">最常被问到的问题，统一解答在这里。</p>
+
+    <div class="divider"></div>
+
+    <div class="faq-item">
+      <div class="faq-q">入住 DNBeta 需要什么条件？</div>
+      <p class="faq-a">我们欢迎任何以知识和技能为核心生产力的独立工作者，包括设计师、程序员、作家、艺术家、咨询师、创业者等。需要有稳定的工作收入来源，认同数字游民生活方式与社区价值观。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">最短可以住多久？</div>
+      <p class="faq-a">最短 7 天，支持按周、按月灵活预订。长期成员（3个月以上）享有优先床位保留和社区共建权益。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">共享办公的开放时间？</div>
+      <p class="faq-a">共享办公区域 24 小时开放，成员可根据自己的工作节奏灵活使用。会议室和直播间需提前通过线上系统预约。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">从成都市区怎么来？</div>
+      <p class="faq-a">距成都市区约 1 小时车程，距天府国际机场约 30 分钟。社区提供接送服务，具体时刻表见飞书成员群。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">可以带宠物入住吗？</div>
+      <p class="faq-a">社区接受小型宠物（10kg以下），需提前告知并缴纳宠物保证金。公共区域需使用牵引绳。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">网络速度如何？</div>
+      <p class="faq-a">社区配备千兆光纤宽带，覆盖所有办公区和公寓区域。提供独立工位和公共区域双频 WiFi。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">如何参与社区活动？</div>
+      <p class="faq-a">所有活动会提前发布在飞书成员群和社区日历中。部分活动对访客开放，成员优先享有报名权和折扣。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">我可以在 DNBeta 举办自己的活动吗？</div>
+      <p class="faq-a">可以。常驻成员可以申请使用多功能室、户外空间举办工作坊、沙龙、展览等活动。联系运营团队提交申请即可。</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">如何加入种子人才计划？</div>
+      <p class="faq-a">种子人才计划面向引领型数字游民定向邀请，同时也接受自我推荐。提交个人简介、作品集或项目案例，由主理人团队评估。</p>
+    </div>
+  </section>
+
+  <!-- Onboarding -->
+  <section class="section active" id="tab-onboarding">
+    <div class="section-eyebrow">新人 Onboarding</div>
+    <h1 class="section-title">欢迎来到 DNBeta</h1>
+    <p class="section-lead">你已经在这里了。接下来 30 分钟，把这份指南看完，你就知道一切需要知道的事。</p>
+
+    <!-- 六阶段学习路径 -->
+    <div style="margin: 32px 0 40px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;text-transform:uppercase;margin-bottom:20px;">你将经历的 6 个阶段</div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+
+        <div style="display:flex;gap:0;align-items:stretch;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#111;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+            <div style="width:1.5px;flex:1;background:#e5e7eb;"></div>
+          </div>
+          <div style="padding:0 0 24px 16px;flex:1;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:15px;font-weight:700;color:#111;">我在哪？</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#fff;background:#111;border-radius:4px;padding:2px 8px;">Identity</span>
+            </div>
+            <p style="font-size:13px;color:#6b7280;margin:0 0 8px;line-height:1.6;">解决：安全感 · 身份认同</p>
+            <div style="font-size:12.5px;color:#374151;line-height:1.7;">这是什么社区？为什么存在？和别的社区有什么不同？我们相信什么？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0;align-items:stretch;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#374151;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+            <div style="width:1.5px;flex:1;background:#e5e7eb;"></div>
+          </div>
+          <div style="padding:0 0 24px 16px;flex:1;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:15px;font-weight:700;color:#111;">我属于哪里？</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#fff;background:#374151;border-radius:4px;padding:2px 8px;">Role</span>
+            </div>
+            <p style="font-size:13px;color:#6b7280;margin:0 0 8px;line-height:1.6;">解决：角色定位</p>
+            <div style="font-size:12.5px;color:#374151;line-height:1.7;">我是管理员还是志愿者？我负责什么？我和谁协作？我不需要管什么？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0;align-items:stretch;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#4b5563;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+            <div style="width:1.5px;flex:1;background:#e5e7eb;"></div>
+          </div>
+          <div style="padding:0 0 24px 16px;flex:1;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:15px;font-weight:700;color:#111;">我要干什么？</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#fff;background:#4b5563;border-radius:4px;padding:2px 8px;">Task</span>
+            </div>
+            <p style="font-size:13px;color:#6b7280;margin:0 0 8px;line-height:1.6;">解决：任务清晰</p>
+            <div style="font-size:12.5px;color:#374151;line-height:1.7;">每天做什么？一周做什么？什么时候汇报？什么时候复盘？什么时候开会？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0;align-items:stretch;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#6b7280;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+            <div style="width:1.5px;flex:1;background:#e5e7eb;"></div>
+          </div>
+          <div style="padding:0 0 24px 16px;flex:1;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:15px;font-weight:700;color:#111;">我怎么做好？</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#fff;background:#6b7280;border-radius:4px;padding:2px 8px;">Method</span>
+            </div>
+            <p style="font-size:13px;color:#6b7280;margin:0 0 8px;line-height:1.6;">解决：方法与工具</p>
+            <div style="font-size:12.5px;color:#374151;line-height:1.7;">SOP 在哪里？用什么工具？有没有模板？遇到问题找谁？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0;align-items:stretch;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#9ca3af;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+            <div style="width:1.5px;flex:1;background:#e5e7eb;"></div>
+          </div>
+          <div style="padding:0 0 24px 16px;flex:1;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:15px;font-weight:700;color:#111;">我怎么成长？</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#fff;background:#9ca3af;border-radius:4px;padding:2px 8px;">Growth</span>
+            </div>
+            <p style="font-size:13px;color:#6b7280;margin:0 0 8px;line-height:1.6;">解决：发展路径</p>
+            <div style="font-size:12.5px;color:#374151;line-height:1.7;">从新人到负责人怎么走？有没有晋升标准？有没有导师？有没有项目机会？</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:0;align-items:stretch;">
+          <div style="display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0;">
+            <div style="width:28px;height:28px;border-radius:50%;background:#d1d5db;color:#111;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</div>
+          </div>
+          <div style="padding:0 0 0 16px;flex:1;">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+              <span style="font-size:15px;font-weight:700;color:#111;">我如何影响组织？</span>
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;color:#111;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:4px;padding:2px 8px;">Influence</span>
+            </div>
+            <p style="font-size:13px;color:#6b7280;margin:0 0 8px;line-height:1.6;">解决：开放权力</p>
+            <div style="font-size:12.5px;color:#374151;line-height:1.7;">我可以提建议吗？我可以修改 SOP 吗？我可以发起新项目吗？还是只能执行？</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="highlight">
+      <div class="highlight-title">你在哪里</div>
+      <p>四川资阳 · 仁里村 · DNBeta 云起山丘 — 距天府国际机场 30 分钟，距成都市区 1 小时。这片离蓝天白云很近的自然山丘，是你接下来工作与生活的基地。</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>社区五大空间</h2>
+    <p>你可以在入住后 48 小时内完成一次完整的空间探索。</p>
+
+    <div class="facility-list">
+      <div class="facility-item">
+        <div class="facility-badge">共享办公</div>
+        <div class="facility-content">
+          <h4>身在田野，数连世界</h4>
+          <p>2000+ 平米，包含开放式办公岛、直播间、会议室、创作区、咖啡洽谈区。24 小时开放，会议室需提前预约。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">共享食堂</div>
+        <div class="facility-content">
+          <h4>四方食事，不过一碗人间烟火</h4>
+          <p>下楼即用餐，天府美食文化融入日常。既是用餐空间，也是成员自然相聚的社交场所。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">共享公寓</div>
+        <div class="facility-content">
+          <h4>自成岛屿，岛岛相通</h4>
+          <p>入户即独享的私人空间，出门即连接的公共活动区。比邻匹配服务，帮你找到旅居路上的精神"搭子"。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">山顶观景台</div>
+        <div class="facility-content">
+          <h4>日沐阳光，夜摘星辰</h4>
+          <p>社区制高点，咖啡工厂体验 + 手工窑烤面包。新媒体艺术装置《咫尺星河》在此驻留，入夜后不要错过。</p>
+        </div>
+      </div>
+      <div class="facility-item">
+        <div class="facility-badge">文化体验中心</div>
+        <div class="facility-content">
+          <h4>用体验引发向往</h4>
+          <p>"创造 · 链接 · 快乐 · 关爱"四大板块，全方位展示数字游民文化，也是社区对外开放的窗口。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>10 大艺术装置导览</h2>
+    <p>社区内分布着 10 件国际艺术家创作的艺术装置，散落在山丘各处。建议用一个下午完成一次完整漫游。</p>
+
+    <div class="install-grid">
+      <div class="install-card">
+        <div class="install-num">数字景观</div>
+        <div class="install-name">咫尺星河</div>
+        <div class="install-artist">刘佳玉</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">花朵装置</div>
+        <div class="install-name">Blooming 绽放</div>
+        <div class="install-artist">Tan Zi Xi</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">公共雕塑</div>
+        <div class="install-name">Endless 无尽</div>
+        <div class="install-artist">孟畅</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">风动装置</div>
+        <div class="install-name">旷野无束</div>
+        <div class="install-artist">殷丽玮 / 降雨</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">疗愈装置</div>
+        <div class="install-name">Pet Therapy</div>
+        <div class="install-artist">Atelier Biagetti</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">声音装置</div>
+        <div class="install-name">Another World</div>
+        <div class="install-artist">Ronnie Deelen</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">灯光装置</div>
+        <div class="install-name">丘林回响</div>
+        <div class="install-artist">张红雷</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">户外装置</div>
+        <div class="install-name">Fantasy Evolution</div>
+        <div class="install-artist">直林</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">屏幕装置</div>
+        <div class="install-name">涌·石</div>
+        <div class="install-artist">刘佳玉</div>
+      </div>
+      <div class="install-card">
+        <div class="install-num">IP 装置</div>
+        <div class="install-name">嘭嘭</div>
+        <div class="install-artist">社区吉祥物</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>前三天行动清单</h2>
+
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title">第一天 · 安顿</div>
+        <div class="week-tag">Day 1</div>
+      </div>
+      <div class="week-body">
+        <ul>
+          <li><div class="bullet"></div>完成入住手续，领取门禁卡和 WiFi 密码</li>
+          <li><div class="bullet"></div>加入飞书成员群，开启通知</li>
+          <li><div class="bullet"></div>探索公寓区域，认识左邻右舍</li>
+          <li><div class="bullet"></div>去共享食堂吃第一顿饭</li>
+          <li><div class="bullet"></div>傍晚去山顶观景台看一次日落</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title">第二天 · 探索</div>
+        <div class="week-tag">Day 2</div>
+      </div>
+      <div class="week-body">
+        <ul>
+          <li><div class="bullet"></div>参观共享办公区，选定自己常用的工位</li>
+          <li><div class="bullet"></div>在飞书系统上完成第一次会议室预约</li>
+          <li><div class="bullet"></div>浏览社区活动日历，标记感兴趣的活动</li>
+          <li><div class="bullet"></div>完成艺术装置漫游（建议下午3点后光线最好）</li>
+          <li><div class="bullet"></div>在成员群里做一个简单的自我介绍</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="week-card">
+      <div class="week-header">
+        <div class="week-title">第三天 · 连接</div>
+        <div class="week-tag">Day 3</div>
+      </div>
+      <div class="week-body">
+        <ul>
+          <li><div class="bullet"></div>和运营团队预约一次 15 分钟的 Check-in</li>
+          <li><div class="bullet"></div>了解正在进行的社区项目，看是否有参与机会</li>
+          <li><div class="bullet"></div>探索文化体验中心</li>
+          <li><div class="bullet"></div>尝试在观景台咖啡工厂点一杯 DNBeta 特调</li>
+          <li><div class="bullet"></div>确定你在这里的工作目标（哪怕只有一件）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>重要联系方式</h2>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">日常服务</div>
+        <p class="card-desc">飞书群 @社区服务组，响应时间工作日 9:00–21:00</p>
+      </div>
+      <div class="card">
+        <div class="card-title">设施报修</div>
+        <p class="card-desc">飞书群 @设施维护，紧急问题 24 小时响应</p>
+      </div>
+      <div class="card">
+        <div class="card-title">活动与资源</div>
+        <p class="card-desc">飞书群 @资源组，合作与活动申请</p>
+      </div>
+      <div class="card">
+        <div class="card-title">主理人直线</div>
+        <p class="card-desc">重大问题或建议，可直接在成员群 @ 主理人</p>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top: 32px;">
+      <div class="highlight-title">最后一句话</div>
+      <p>你不只是来这里工作的。你来这里找到一种工作与生活都值得的节奏。嘭嘭在村口等你——去找它合个影吧。</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+document.querySelectorAll('.nav-item[data-tab]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const tab = link.dataset.tab;
+
+    document.querySelectorAll('.nav-item').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+
+    window.scrollTo(0, 0);
+  });
+});
+</script>
+
+</body>
+</html>

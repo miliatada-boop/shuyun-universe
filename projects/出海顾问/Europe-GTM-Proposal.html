@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>France Go-to-Market Proposal</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #ECEAE4;
+  --white:    #FFFFFF;
+  --offwhite: #F7F6F2;
+  --border:   #DDDBD3;
+  --light:    #A09D95;
+  --mid:      #5C5A55;
+  --dark:     #1C1B18;
+  --blue:     #2E4E8F;
+  --blue-bg:  #EDF1F9;
+  --blue-mid: #3B5BA5;
+  --sans: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  padding: 56px 24px 80px;
+}
+
+/* ── Slide Shell ── */
+.slide {
+  width: 1160px;
+  margin: 0 auto 52px;
+  background: var(--white);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.slide::after {
+  content: attr(data-num);
+  position: absolute;
+  top: 36px;
+  right: 44px;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--light);
+  text-transform: uppercase;
+}
+
+/* blue left rule */
+.slide::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--blue);
+  opacity: 0.18;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 1 — COVER
+══════════════════════════════════════ */
+.s1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.s1-body {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  padding: 80px 88px 60px;
+  gap: 40px;
+  align-items: center;
+  flex: 1;
+}
+
+.s1-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--blue-mid);
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+
+.s1-title-en {
+  font-size: 58px;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.s1-title-cn {
+  font-size: 19px;
+  font-weight: 300;
+  color: var(--light);
+  letter-spacing: 0.05em;
+  margin-bottom: 36px;
+}
+
+.s1-rule {
+  width: 36px;
+  height: 1.5px;
+  background: var(--blue);
+  margin-bottom: 20px;
+}
+
+.s1-sub {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 24px;
+}
+
+.s1-tagline {
+  font-size: 16px;
+  color: var(--mid);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 380px;
+}
+
+/* Path diagram */
+.s1-path {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.path-node {
+  width: 172px;
+  padding: 11px 0;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  color: var(--mid);
+  background: var(--offwhite);
+}
+
+.path-node.on {
+  background: var(--blue-bg);
+  border-color: var(--blue-mid);
+  color: var(--blue);
+}
+
+.path-stem {
+  width: 1px;
+  height: 26px;
+  background: var(--border);
+  position: relative;
+}
+
+.path-stem::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--border);
+}
+
+/* Footer bar */
+.s1-footer {
+  border-top: 1px solid var(--border);
+  background: var(--offwhite);
+  display: flex;
+  padding: 0 88px;
+}
+
+.s1-fi {
+  flex: 1;
+  padding: 22px 0;
+  border-right: 1px solid var(--border);
+  padding-right: 36px;
+}
+
+.s1-fi + .s1-fi {
+  padding-left: 36px;
+  padding-right: 36px;
+}
+
+.s1-fi:last-child {
+  border-right: none;
+}
+
+.fi-label {
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--light);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.fi-val {
+  font-size: 14px;
+  color: var(--dark);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 2 — MARKET VALIDATION
+══════════════════════════════════════ */
+.s2 {
+  padding: 72px 88px 56px;
+}
+
+.sh-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--blue-mid);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.sh-title {
+  font-size: 40px;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+.sh-sub {
+  font-size: 14px;
+  color: var(--light);
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.card {
+  background: var(--white);
+  padding: 30px 26px 28px;
+}
+
+.card.shade { background: var(--offwhite); }
+
+.c-num {
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  color: var(--light);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.c-title {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--blue-mid);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.c-q {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--dark);
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.c-ul {
+  list-style: none;
+}
+
+.c-ul li {
+  font-size: 12px;
+  color: var(--mid);
+  padding: 3px 0;
+}
+
+.c-ul li::before {
+  content: '—';
+  margin-right: 8px;
+  color: var(--border);
+}
+
+.rec-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.rec-tag {
+  font-size: 11px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  color: var(--mid);
+  letter-spacing: 0.04em;
+}
+
+.flow-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.flow-item {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+.flow-sep {
+  color: var(--border);
+  font-size: 12px;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 3 — COLLABORATION MODELS
+══════════════════════════════════════ */
+.s3 {
+  padding: 72px 88px 60px;
+}
+
+.opt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 44px;
+}
+
+.opt {
+  border: 1px solid var(--border);
+  padding: 36px 28px 28px;
+  position: relative;
+}
+
+.opt.featured {
+  border-color: var(--blue-mid);
+  background: var(--blue-bg);
+}
+
+.opt-label {
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-bottom: 10px;
+}
+
+.opt-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.opt-fit {
+  font-size: 12px;
+  color: var(--light);
+  margin-bottom: 22px;
+  line-height: 1.55;
+}
+
+.opt-rule {
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 20px;
+}
+
+.opt.featured .opt-rule {
+  background: var(--blue-mid);
+}
+
+.opt-ul {
+  list-style: none;
+}
+
+.opt-ul li {
+  font-size: 12px;
+  color: var(--mid);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.01em;
+}
+
+.opt-ul li:last-child { border-bottom: none; }
+
+.opt-ul li::before {
+  content: '✓';
+  color: var(--blue-mid);
+  font-size: 10px;
+  margin-right: 10px;
+}
+
+.opt-foot {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--mid);
+  font-weight: 500;
+}
+
+.opt.featured .opt-foot { color: var(--blue); }
+
+.s3-note {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--light);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ── Pre-Phase ── */
+.pre-phase {
+  margin-top: 40px;
+  border: 1px solid var(--blue-mid);
+  background: var(--offwhite);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.pre-phase-left { flex: 1.2; }
+
+.pre-phase-tag {
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--blue-mid);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.pre-phase-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.pre-phase-desc {
+  font-size: 12px;
+  color: var(--light);
+  line-height: 1.6;
+}
+
+.pre-phase-mid {
+  flex: 1.4;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pre-phase-note {
+  font-size: 12px;
+  color: var(--mid);
+  letter-spacing: 0.02em;
+}
+
+.pre-phase-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.pre-phase-price {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--blue);
+  letter-spacing: -0.01em;
+}
+
+.pre-phase-duration {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin-top: 3px;
+}
+
+.pre-phase-arrow {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+  text-align: center;
+  padding: 14px 0 0;
+}
+
+/* ── Journey Grid (4 phases) ── */
+.journey-grid {
+  display: flex;
+  align-items: stretch;
+  margin-top: 40px;
+  gap: 0;
+}
+
+.journey-grid .phase {
+  flex: 1;
+  min-width: 0;
+}
+
+.gate-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  flex-shrink: 0;
+  gap: 4px;
+  padding-bottom: 56px;
+}
+
+.gate-arrow {
+  font-size: 16px;
+  color: var(--border);
+  line-height: 1;
+}
+
+.gate-label {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+  white-space: nowrap;
+}
+
+/* ── Phase Grid ── */
+.phase-grid {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: 44px;
+}
+
+.phase {
+  flex: 1;
+  border: 1px solid var(--border);
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.phase.featured {
+  border-color: var(--blue-mid);
+  background: var(--blue-bg);
+}
+
+.phase-arrow {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 20px;
+  color: var(--border);
+  flex-shrink: 0;
+  margin-top: -20px;
+}
+
+.phase-num {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--light);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.phase.featured .phase-num { color: var(--blue-mid); }
+
+.phase-title {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+  margin-bottom: 5px;
+}
+
+.phase.featured .phase-title { color: var(--blue); }
+
+.phase-cn {
+  font-size: 12px;
+  color: var(--light);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.phase-rule {
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 20px;
+}
+
+.phase.featured .phase-rule { background: var(--blue-mid); }
+
+.phase-ul {
+  list-style: none;
+  flex: 1;
+}
+
+.phase-ul li {
+  font-size: 12px;
+  color: var(--mid);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.phase-ul li:last-child { border-bottom: none; }
+
+.phase-ul li::before {
+  content: '✓';
+  color: var(--blue-mid);
+  font-size: 10px;
+  margin-right: 10px;
+}
+
+.phase-meta {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.phase-duration {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+.phase-price {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.phase.featured .phase-price { color: var(--blue); }
+
+.phase-commission {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--mid);
+  letter-spacing: 0.02em;
+}
+
+/* ── Funnel Table ── */
+.funnel-table {
+  margin-top: 40px;
+  border: 1px solid var(--border);
+}
+
+.funnel-header {
+  display: grid;
+  grid-template-columns: 72px 1fr 130px 180px;
+  background: var(--offwhite);
+  border-bottom: 1px solid var(--border);
+}
+
+.funnel-header > div {
+  padding: 10px 24px;
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--light);
+  font-weight: 500;
+}
+
+.funnel-header > div:not(:last-child) {
+  border-right: 1px solid var(--border);
+}
+
+.funnel-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 130px 180px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
+.funnel-row:last-child { border-bottom: none; }
+
+.funnel-row.active { background: var(--blue-bg); }
+.funnel-row.muted  { background: var(--offwhite); }
+
+.f-level {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid var(--border);
+  align-self: stretch;
+}
+
+.f-level span {
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--mid);
+}
+
+.funnel-row.active .f-level span {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+.f-name {
+  padding: 20px 28px;
+  border-right: 1px solid var(--border);
+}
+
+.f-product {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--dark);
+  margin-bottom: 3px;
+  letter-spacing: -0.005em;
+}
+
+.funnel-row.active .f-product { font-weight: 500; color: var(--blue); }
+
+.f-desc {
+  font-size: 11px;
+  color: var(--light);
+  letter-spacing: 0.02em;
+}
+
+.f-duration {
+  padding: 20px 24px;
+  font-size: 12px;
+  color: var(--mid);
+  border-right: 1px solid var(--border);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.f-price {
+  padding: 20px 28px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--dark);
+  text-align: right;
+}
+
+.funnel-row.active .f-price { color: var(--blue); }
+
+.f-tag {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--light);
+  font-weight: 400;
+}
+
+/* ══════════════════════════════════════
+   SLIDE 4 — WHY WORK WITH ME
+══════════════════════════════════════ */
+.s4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 80px 88px;
+}
+
+.s4-title {
+  font-size: 44px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--dark);
+  margin-bottom: 28px;
+}
+
+.s4-tagline {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--mid);
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+}
+
+.cred-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.cred {
+  background: var(--white);
+  padding: 18px 18px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mid);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.cred::before {
+  content: '✓';
+  color: var(--blue-mid);
+  margin-right: 8px;
+  font-size: 10px;
+}
+
+@media print {
+  body { background: white; padding: 0; }
+  .slide { margin: 0; box-shadow: none; width: 100%; page-break-after: always; }
+  .slide::after { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SLIDE 1 ── -->
+<div class="slide s1" data-num="01 / 04">
+  <div class="s1-body">
+    <div>
+      <div class="s1-eyebrow">France Go-to-Market Proposal</div>
+      <div class="s1-title-en">European<br>Market Entry</div>
+      <div class="s1-title-cn">法国市场进入合作方案</div>
+      <div class="s1-rule"></div>
+      <div class="s1-sub">From Market Validation to Go-to-Market Strategy</div>
+      <div class="s1-tagline">帮助品牌快速验证法国市场，<br>建立进入欧洲的第一条增长路径。</div>
+    </div>
+    <div class="s1-path">
+      <div class="path-node on">France</div>
+      <div class="path-stem"></div>
+      <div class="path-node">Europe</div>
+      <div class="path-stem"></div>
+      <div class="path-node">Product</div>
+      <div class="path-stem"></div>
+      <div class="path-node">Distribution</div>
+      <div class="path-stem"></div>
+      <div class="path-node">Customer</div>
+    </div>
+  </div>
+  <div class="s1-footer">
+    <div class="s1-fi">
+      <div class="fi-label">Duration</div>
+      <div class="fi-val">7–10 Days</div>
+    </div>
+    <div class="s1-fi">
+      <div class="fi-label">Location</div>
+      <div class="fi-val">France → Europe</div>
+    </div>
+    <div class="s1-fi">
+      <div class="fi-label">Deliverable</div>
+      <div class="fi-val">Market Validation Report</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SLIDE 2 ── -->
+<div class="slide s2" data-num="02 / 04">
+  <div class="sh-eyebrow">Phase One</div>
+  <div class="sh-title">Market Validation</div>
+  <div class="sh-sub">我们将回答的核心问题</div>
+  <div class="card-grid">
+    <div class="card">
+      <div class="c-num">01</div>
+      <div class="c-title">Market</div>
+      <div class="c-q">法国市场是否值得进入？</div>
+      <ul class="c-ul">
+        <li>需求是否真实</li>
+        <li>是否存在窗口期</li>
+        <li>竞争格局</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="c-num">02</div>
+      <div class="c-title">Customer</div>
+      <div class="c-q">客户是谁？</div>
+      <ul class="c-ul">
+        <li>家庭</li>
+        <li>Airbnb</li>
+        <li>酒店</li>
+        <li>办公室</li>
+        <li>安装商</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="c-num">03</div>
+      <div class="c-title">Compliance</div>
+      <div class="c-q">产品是否符合欧洲要求？</div>
+      <ul class="c-ul">
+        <li>CE</li>
+        <li>ERP</li>
+        <li>Energy Label</li>
+        <li>F-Gas</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="c-num">04</div>
+      <div class="c-title">Channel</div>
+      <div class="c-q">最佳销售路径</div>
+      <ul class="c-ul">
+        <li>Amazon</li>
+        <li>ManoMano</li>
+        <li>Distributor</li>
+        <li>B2B</li>
+        <li>Chinese Community</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="c-num">05</div>
+      <div class="c-title">Financial</div>
+      <div class="c-q">商业模型</div>
+      <ul class="c-ul">
+        <li>售价</li>
+        <li>利润率</li>
+        <li>预算</li>
+        <li>ROI</li>
+      </ul>
+    </div>
+    <div class="card shade">
+      <div class="c-num">06</div>
+      <div class="c-title">Recommendation</div>
+      <div class="c-q">最终建议</div>
+      <div class="rec-tags">
+        <div class="rec-tag">✔ 进入</div>
+        <div class="rec-tag">✔ 测试</div>
+        <div class="rec-tag">✔ 等待</div>
+        <div class="rec-tag">✔ 放弃</div>
+      </div>
+    </div>
+  </div>
+  <div class="flow-row">
+    <span class="flow-item">Information</span>
+    <span class="flow-sep">→</span>
+    <span class="flow-item">Strategy</span>
+    <span class="flow-sep">→</span>
+    <span class="flow-item">Decision</span>
+  </div>
+</div>
+
+<!-- ── SLIDE 3 ── -->
+<div class="slide s3" data-num="03 / 04">
+  <div class="sh-eyebrow">合作路径</div>
+  <div class="sh-title">Market Entry Journey</div>
+  <div class="sh-sub">验证先行，可行再执行 &ensp;·&ensp; 每一步均设 Go / No Go 决策点</div>
+
+  <div class="journey-grid">
+
+    <div class="phase">
+      <div class="phase-num">01</div>
+      <div class="phase-title">Discovery</div>
+      <div class="phase-cn">初步对话 · 机会识别</div>
+      <div class="phase-rule"></div>
+      <ul class="phase-ul">
+        <li>信息收集问卷 + 60 分钟深度对话</li>
+        <li>项目可行性 + 产品定位 初判</li>
+        <li>核心问题与市场方向梳理</li>
+      </ul>
+      <div class="phase-meta">
+        <div class="phase-duration">预约制</div>
+        <div class="phase-price">¥9,800</div>
+      </div>
+    </div>
+
+    <div class="gate-col">
+      <div class="gate-arrow">→</div>
+      <div class="gate-label">Go / No Go</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">02</div>
+      <div class="phase-title">Market Entry Blueprint</div>
+      <div class="phase-cn">市场进入策略蓝图</div>
+      <div class="phase-rule"></div>
+      <ul class="phase-ul">
+        <li>法国市场进入策略</li>
+        <li>渠道选择与风险分析</li>
+        <li>法国渠道引荐（结果不担保）</li>
+        <li>交付完整策略蓝图</li>
+      </ul>
+      <div class="phase-meta">
+        <div class="phase-duration">1–2 周</div>
+        <div class="phase-price">¥28,000</div>
+      </div>
+    </div>
+
+    <div class="gate-col">
+      <div class="gate-arrow">→</div>
+      <div class="gate-label">Go / No Go</div>
+    </div>
+
+    <div class="phase featured">
+      <div class="phase-num">03</div>
+      <div class="phase-title">Market Validation</div>
+      <div class="phase-cn">法国实地市场验证</div>
+      <div class="phase-rule"></div>
+      <ul class="phase-ul">
+        <li>实地渠道开拓与合作伙伴接触</li>
+        <li>产品适配性与定价验证</li>
+        <li>第一批客户 / 渠道 / 合作伙伴</li>
+        <li>第一轮销售测试与数据收集</li>
+      </ul>
+      <div class="phase-meta">
+        <div class="phase-duration">8–12 周</div>
+        <div class="phase-price">¥98,000</div>
+      </div>
+    </div>
+
+    <div class="gate-col">
+      <div class="gate-arrow">→</div>
+      <div class="gate-label">Go / No Go</div>
+    </div>
+
+    <div class="phase">
+      <div class="phase-num">04</div>
+      <div class="phase-title">Go-to-Market Build</div>
+      <div class="phase-cn">市场搭建 · 长期增长</div>
+      <div class="phase-rule"></div>
+      <ul class="phase-ul">
+        <li>渠道开拓 / 团队搭建 / 销售体系</li>
+        <li>Strategic Resource Matching</li>
+        <li>战略顾问 + 资源对接陪跑</li>
+      </ul>
+      <div class="phase-meta">
+        <div class="phase-duration">3–6 个月</div>
+        <div class="phase-price" style="font-size:13px;">项目预算 8–12% <span class="phase-commission">+ 资源成交提成</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="s3-note">
+    每一阶段结束均设 Go / No Go 决策点 &ensp;·&ensp; 长期合作（年度战略顾问）另议
+  </div>
+</div>
+
+<!-- ── SLIDE 4 ── -->
+<div class="slide s4" data-num="04 / 04">
+  <div>
+    <div class="sh-eyebrow">Why Work With Me</div>
+    <div class="s4-title">Built on<br>the ground.<br>Not on slides.</div>
+    <div class="s4-tagline">
+      Build first.<br>
+      Scale second.<br>
+      Invest last.
+    </div>
+  </div>
+  <div class="cred-grid">
+    <div class="cred">France Local Experience</div>
+    <div class="cred">European Business Network</div>
+    <div class="cred">Cross-border Strategy</div>
+    <div class="cred">Brand &amp; Community Growth</div>
+    <div class="cred">Go-to-Market Design</div>
+    <div class="cred">Business Model Thinking</div>
+  </div>
+</div>
+
+</body>
+</html>

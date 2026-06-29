@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Pipeline</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #ECEAE4;
+  --white:    #FFFFFF;
+  --offwhite: #F7F6F2;
+  --border:   #DDDBD3;
+  --light:    #A09D95;
+  --mid:      #5C5A55;
+  --dark:     #1C1B18;
+  --blue:     #2E4E8F;
+  --blue-bg:  #EDF1F9;
+  --blue-mid: #3B5BA5;
+  --red:      #C0392B;
+  --red-bg:   #FDF0EF;
+  --green:    #27674A;
+  --green-bg: #EDF5F0;
+  --sans: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── Layout ── */
+.header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+}
+
+.header-sub {
+  font-size: 11px;
+  color: var(--light);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.btn {
+  padding: 8px 18px;
+  font-size: 12px;
+  font-family: var(--sans);
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.btn:hover { opacity: 0.8; }
+
+.btn-primary {
+  background: var(--blue);
+  color: white;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--mid);
+}
+
+/* ── Stats bar ── */
+.stats {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+  padding: 0 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.stat {
+  padding: 16px 28px 16px 0;
+  margin-right: 28px;
+  border-right: 1px solid var(--border);
+}
+
+.stat:last-child { border-right: none; }
+
+.stat-val {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--dark);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--light);
+}
+
+/* ── Filters ── */
+.toolbar {
+  padding: 16px 48px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 5px 14px;
+  font-size: 11px;
+  font-family: var(--sans);
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--mid);
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.15s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+/* ── Table ── */
+.table-wrap {
+  padding: 0 48px 60px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  font-size: 13px;
+}
+
+thead th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--light);
+  font-weight: 500;
+  background: var(--offwhite);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.1s;
+}
+
+tbody tr:hover { background: var(--offwhite); }
+tbody tr:last-child { border-bottom: none; }
+
+td {
+  padding: 14px 16px;
+  color: var(--mid);
+  vertical-align: middle;
+}
+
+td.name {
+  color: var(--dark);
+  font-weight: 500;
+}
+
+td.company {
+  color: var(--mid);
+  font-size: 12px;
+}
+
+/* Level badge */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  color: var(--mid);
+}
+
+.level-badge.l0 { background: var(--offwhite); }
+.level-badge.l1 { border-color: #B0BED9; color: #3B5BA5; background: var(--blue-bg); }
+.level-badge.l2 { border-color: #B0BED9; color: #3B5BA5; background: var(--blue-bg); }
+.level-badge.l3 { border-color: var(--blue); color: white; background: var(--blue); }
+.level-badge.l4 { border-color: var(--green); color: white; background: var(--green); }
+.level-badge.l5 { border-color: var(--dark); color: white; background: var(--dark); }
+
+/* Status tag */
+.status-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.status-active   { background: var(--blue-bg);  color: var(--blue-mid); }
+.status-stalled  { background: #FFF8EC;          color: #9A6A00; }
+.status-lost     { background: var(--red-bg);    color: var(--red); }
+.status-won      { background: var(--green-bg);  color: var(--green); }
+
+/* Drop-off badge */
+.dropoff {
+  font-size: 11px;
+  color: var(--light);
+  font-style: italic;
+}
+
+/* Source tag */
+.source-tag {
+  font-size: 11px;
+  color: var(--light);
+  background: var(--offwhite);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  display: inline-block;
+}
+
+/* action icons */
+.row-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+tbody tr:hover .row-actions { opacity: 1; }
+
+.action-btn {
+  padding: 4px 8px;
+  font-size: 10px;
+  font-family: var(--sans);
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--mid);
+  cursor: pointer;
+}
+
+.action-btn:hover { background: var(--offwhite); }
+.action-del { color: var(--red); border-color: #F0C0BC; }
+.action-del:hover { background: var(--red-bg); }
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--light);
+}
+
+.empty-title {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.empty-sub { font-size: 13px; }
+
+/* ── Modal ── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(28,27,24,0.5);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--white);
+  width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  padding: 28px 32px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--dark);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--light);
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.modal-body {
+  padding: 24px 32px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full { grid-column: 1 / -1; }
+
+label {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--light);
+  font-weight: 500;
+}
+
+input, select, textarea {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--dark);
+  background: var(--offwhite);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--blue-mid);
+  background: white;
+}
+
+textarea { resize: vertical; min-height: 72px; }
+
+.modal-footer {
+  padding: 16px 32px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  border-top: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div>
+      <div class="header-title">Client Pipeline</div>
+      <div class="header-sub">European Market Entry</div>
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="openModal()">+ 新增客户</button>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-val" id="stat-total">0</div>
+    <div class="stat-label">总客户</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val" id="stat-active">0</div>
+    <div class="stat-label">跟进中</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val" id="stat-won">0</div>
+    <div class="stat-label">已成交</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val" id="stat-lost">0</div>
+    <div class="stat-label">已流失</div>
+  </div>
+  <div class="stat">
+    <div class="stat-val" id="stat-revenue">¥0</div>
+    <div class="stat-label">成交总额</div>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+  <button class="filter-btn active" onclick="setFilter('all', this)">全部</button>
+  <button class="filter-btn" onclick="setFilter('active', this)">跟进中</button>
+  <button class="filter-btn" onclick="setFilter('stalled', this)">停滞</button>
+  <button class="filter-btn" onclick="setFilter('won', this)">已成交</button>
+  <button class="filter-btn" onclick="setFilter('lost', this)">已流失</button>
+</div>
+
+<!-- Table -->
+<div class="table-wrap">
+  <table id="pipeline-table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>姓名</th>
+        <th>公司 / 品牌</th>
+        <th>行业</th>
+        <th>来源</th>
+        <th>首次接触</th>
+        <th>状态</th>
+        <th>停留层级</th>
+        <th>流失原因</th>
+        <th>成交金额</th>
+        <th>下一步</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+  <div class="empty" id="empty-state" style="display:none;">
+    <div class="empty-title">暂无客户数据</div>
+    <div class="empty-sub">点击右上角「新增客户」开始记录</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">新增客户</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>姓名 *</label>
+        <input type="text" id="f-name" placeholder="客户姓名">
+      </div>
+      <div class="form-group">
+        <label>公司 / 品牌</label>
+        <input type="text" id="f-company" placeholder="公司名称">
+      </div>
+      <div class="form-group">
+        <label>行业 / 产品</label>
+        <input type="text" id="f-industry" placeholder="如：空调 / 消费品">
+      </div>
+      <div class="form-group">
+        <label>目标市场</label>
+        <select id="f-market">
+          <option value="">请选择</option>
+          <option>法国</option>
+          <option>欧洲（其他）</option>
+          <option>法国 + 欧洲</option>
+          <option>待定</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>来源渠道</label>
+        <select id="f-source">
+          <option value="">请选择</option>
+          <option>微信介绍</option>
+          <option>朋友圈</option>
+          <option>LinkedIn</option>
+          <option>活动 / 展会</option>
+          <option>官网 / 内容</option>
+          <option>其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>首次接触日期</label>
+        <input type="date" id="f-date">
+      </div>
+      <div class="form-group">
+        <label>当前 Level</label>
+        <select id="f-level">
+          <option value="0">Level 0 — Discovery Call</option>
+          <option value="1">Level 1 — Strategy Session</option>
+          <option value="2">Level 2 — Entry Strategy Proposal</option>
+          <option value="3" selected>Level 3 — Market Validation Sprint</option>
+          <option value="4">Level 4 — Go-to-Market Build</option>
+          <option value="5">Level 5 — Strategic Partnership</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>状态</label>
+        <select id="f-status">
+          <option value="active">跟进中</option>
+          <option value="stalled">停滞</option>
+          <option value="won">已成交</option>
+          <option value="lost">已流失</option>
+        </select>
+      </div>
+      <div class="form-group" id="group-dropoff">
+        <label>停留层级（流失时填）</label>
+        <select id="f-dropoff">
+          <option value="">—</option>
+          <option>Level 0 → 1 之间</option>
+          <option>Level 1 → 2 之间</option>
+          <option>Level 2 → 3 之间</option>
+          <option>Level 3 → 4 之间</option>
+          <option>Level 4 → 5 之间</option>
+        </select>
+      </div>
+      <div class="form-group" id="group-reason">
+        <label>流失原因</label>
+        <select id="f-reason">
+          <option value="">—</option>
+          <option>预算不足</option>
+          <option>时机未到</option>
+          <option>信任未建立</option>
+          <option>需求不匹配</option>
+          <option>无回应</option>
+          <option>选择竞争对手</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>成交金额（¥）</label>
+        <input type="number" id="f-amount" placeholder="0">
+      </div>
+      <div class="form-group full">
+        <label>客户核心痛点</label>
+        <input type="text" id="f-pain" placeholder="一句话描述">
+      </div>
+      <div class="form-group full">
+        <label>下一步行动</label>
+        <input type="text" id="f-next" placeholder="例：发送 Level 2 方案">
+      </div>
+      <div class="form-group full">
+        <label>备注</label>
+        <textarea id="f-notes" placeholder="其他信息..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary" onclick="saveClient()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const LEVEL_NAMES = {
+  0: 'Discovery Call',
+  1: 'Strategy Session',
+  2: 'Entry Strategy Proposal',
+  3: 'Market Validation Sprint',
+  4: 'Go-to-Market Build',
+  5: 'Strategic Partnership'
+};
+
+const STATUS_LABELS = {
+  active:  '跟进中',
+  stalled: '停滞',
+  won:     '已成交',
+  lost:    '已流失'
+};
+
+let clients = JSON.parse(localStorage.getItem('clients') || '[]');
+let editingId = null;
+let currentFilter = 'all';
+
+function save() {
+  localStorage.setItem('clients', JSON.stringify(clients));
+}
+
+function genId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  render();
+}
+
+function filtered() {
+  if (currentFilter === 'all') return clients;
+  return clients.filter(c => c.status === currentFilter);
+}
+
+function render() {
+  const list = filtered();
+  const tbody = document.getElementById('table-body');
+  const empty = document.getElementById('empty-state');
+  const table = document.getElementById('pipeline-table');
+
+  // Stats (always over all clients)
+  document.getElementById('stat-total').textContent = clients.length;
+  document.getElementById('stat-active').textContent = clients.filter(c => c.status === 'active').length;
+  document.getElementById('stat-won').textContent = clients.filter(c => c.status === 'won').length;
+  document.getElementById('stat-lost').textContent = clients.filter(c => c.status === 'lost').length;
+  const revenue = clients.filter(c => c.amount).reduce((s, c) => s + (+c.amount || 0), 0);
+  document.getElementById('stat-revenue').textContent = revenue ? '¥' + revenue.toLocaleString() : '¥0';
+
+  if (list.length === 0) {
+    table.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  table.style.display = '';
+  empty.style.display = 'none';
+
+  tbody.innerHTML = list.map(c => `
+    <tr>
+      <td><span class="level-badge l${c.level}">${c.level}</span></td>
+      <td class="name">${esc(c.name)}</td>
+      <td class="company">${esc(c.company || '—')}</td>
+      <td>${esc(c.industry || '—')}</td>
+      <td>${c.source ? `<span class="source-tag">${esc(c.source)}</span>` : '—'}</td>
+      <td>${c.date || '—'}</td>
+      <td><span class="status-tag status-${c.status}">${STATUS_LABELS[c.status]}</span></td>
+      <td class="dropoff">${esc(c.dropoff || '—')}</td>
+      <td class="dropoff">${esc(c.reason || '—')}</td>
+      <td>${c.amount ? '¥' + (+c.amount).toLocaleString() : '—'}</td>
+      <td style="font-size:12px;max-width:180px;">${esc(c.next || '—')}</td>
+      <td>
+        <div class="row-actions">
+          <button class="action-btn" onclick="editClient('${c.id}')">编辑</button>
+          <button class="action-btn action-del" onclick="deleteClient('${c.id}')">删除</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function openModal(id) {
+  editingId = id || null;
+  const modal = document.getElementById('modal');
+  const title = document.getElementById('modal-title');
+
+  if (id) {
+    const c = clients.find(x => x.id === id);
+    title.textContent = '编辑客户';
+    document.getElementById('f-name').value = c.name || '';
+    document.getElementById('f-company').value = c.company || '';
+    document.getElementById('f-industry').value = c.industry || '';
+    document.getElementById('f-market').value = c.market || '';
+    document.getElementById('f-source').value = c.source || '';
+    document.getElementById('f-date').value = c.date || '';
+    document.getElementById('f-level').value = c.level ?? 3;
+    document.getElementById('f-status').value = c.status || 'active';
+    document.getElementById('f-dropoff').value = c.dropoff || '';
+    document.getElementById('f-reason').value = c.reason || '';
+    document.getElementById('f-amount').value = c.amount || '';
+    document.getElementById('f-pain').value = c.pain || '';
+    document.getElementById('f-next').value = c.next || '';
+    document.getElementById('f-notes').value = c.notes || '';
+  } else {
+    title.textContent = '新增客户';
+    ['f-name','f-company','f-industry','f-pain','f-next','f-notes','f-amount'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-market').value = '';
+    document.getElementById('f-source').value = '';
+    document.getElementById('f-date').value = new Date().toISOString().slice(0,10);
+    document.getElementById('f-level').value = '3';
+    document.getElementById('f-status').value = 'active';
+    document.getElementById('f-dropoff').value = '';
+    document.getElementById('f-reason').value = '';
+  }
+
+  modal.classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  editingId = null;
+}
+
+function saveClient() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { alert('请填写客户姓名'); return; }
+
+  const data = {
+    id:       editingId || genId(),
+    name,
+    company:  document.getElementById('f-company').value.trim(),
+    industry: document.getElementById('f-industry').value.trim(),
+    market:   document.getElementById('f-market').value,
+    source:   document.getElementById('f-source').value,
+    date:     document.getElementById('f-date').value,
+    level:    +document.getElementById('f-level').value,
+    status:   document.getElementById('f-status').value,
+    dropoff:  document.getElementById('f-dropoff').value,
+    reason:   document.getElementById('f-reason').value,
+    amount:   document.getElementById('f-amount').value,
+    pain:     document.getElementById('f-pain').value.trim(),
+    next:     document.getElementById('f-next').value.trim(),
+    notes:    document.getElementById('f-notes').value.trim(),
+  };
+
+  if (editingId) {
+    clients = clients.map(c => c.id === editingId ? data : c);
+  } else {
+    clients.unshift(data);
+  }
+
+  save();
+  closeModal();
+  render();
+}
+
+function editClient(id) {
+  openModal(id);
+}
+
+function deleteClient(id) {
+  if (!confirm('确认删除这条记录？')) return;
+  clients = clients.filter(c => c.id !== id);
+  save();
+  render();
+}
+
+// Close modal on overlay click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+render();
+</script>
+</body>
+</html>

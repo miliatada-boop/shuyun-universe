@@ -1,0 +1,2425 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNBeta 社区操作系统</title>
+<link href="https://fonts.loli.net/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  background: #fff;
+  color: #111827;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 56px;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ══ NAV ══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+}
+.nav-logo {
+  font-size: 15px; font-weight: 600; color: #111827; letter-spacing: -0.01em;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 4px;
+}
+.nav-link {
+  font-size: 14px; font-weight: 500;
+  color: #6b7280;
+  padding: 6px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-link:hover { background: #f3f4f6; color: #111827; }
+.nav-link.active { background: #f3f4f6; color: #111827; }
+
+/* ══ HERO ══ */
+.hero {
+  padding: 96px 40px 56px;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-bottom: 1px solid #e5e7eb;
+}
+.hero-inner { max-width: 1080px; margin: 0 auto; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 11px; font-weight: 500; color: #6b7280;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: #6366f1; }
+.hero-h1 {
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 700; color: #111827;
+  letter-spacing: -0.03em; line-height: 1.15;
+  margin-bottom: 12px;
+}
+.hero-sub {
+  font-size: 15px; font-weight: 400; color: #6b7280;
+  line-height: 1.65; max-width: 480px;
+}
+
+/* ══ TAB BAR ══ */
+.tab-bar {
+  position: sticky; top: 56px; z-index: 90;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  padding: 0 40px;
+}
+.tab-btn {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 13px; font-weight: 400; color: #9ca3af;
+  background: none; border: none; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  padding: 14px 0; margin-right: 28px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.tab-btn:hover { color: #374151; }
+.tab-btn.active { color: #111827; border-bottom-color: #111827; font-weight: 600; }
+
+/* ══ SECTION ══ */
+.section { background: #f9fafb; padding: 36px 40px 72px; min-height: calc(100vh - 120px); }
+.section-label { padding-top: 8px; }
+.inner { max-width: 1080px; margin: 0 auto; }
+
+.section-label {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #9ca3af; margin-bottom: 36px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: #e5e7eb; max-width: 100px; }
+
+/* ══ COMMUNITY MODEL ══ */
+.fw-layout { display: flex; gap: 16px; align-items: flex-start; }
+.fw-sidebar { width: 136px; flex-shrink: 0; padding-top: 52px; }
+.fw-sidebar-label { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #9ca3af; margin-bottom: 8px; }
+.fw-layer { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 11px 13px; }
+.fw-layer-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; letter-spacing: -0.01em; }
+.fw-layer-name.c { color: #059669; }
+.fw-layer-name.e { color: #d97706; }
+.fw-layer-name.s { color: #dc2626; }
+.fw-layer-desc { font-size: 10px; color: #9ca3af; margin-bottom: 7px; }
+.fw-layer-divider { height: 1px; background: #f3f4f6; margin-bottom: 7px; }
+.fw-layer-tags { display: flex; flex-wrap: wrap; gap: 3px; }
+.fw-layer-tag { font-size: 9.5px; color: #6b7280; background: #f9fafb; padding: 1px 6px; border-radius: 4px; border: 1px solid #e5e7eb; }
+.fw-connector { text-align: center; padding: 4px 0; font-size: 11px; color: #d1d5db; }
+
+.fw-columns { flex: 1; display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
+.fw-col { flex: 1; min-width: 0; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+.fw-col-header { padding: 16px 14px 12px; border-bottom: 1px solid #f3f4f6; }
+.fw-col-badge {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
+  margin-bottom: 8px; border-radius: 6px;
+}
+.fw-col-badge .dot { width: 5px; height: 5px; border-radius: 50%; }
+.fw-col-title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3px; color: #111827; }
+.fw-col-goal { font-size: 11px; color: #9ca3af; line-height: 1.5; }
+
+.fw-col.s .fw-col-badge { background: #fef2f2; color: #dc2626; }
+.fw-col.s .fw-col-badge .dot { background: #dc2626; }
+.fw-col.e .fw-col-badge { background: #fffbeb; color: #d97706; }
+.fw-col.e .fw-col-badge .dot { background: #d97706; }
+.fw-col.c .fw-col-badge { background: #ecfdf5; color: #059669; }
+.fw-col.c .fw-col-badge .dot { background: #059669; }
+
+.fw-col-body { padding: 12px 13px 14px; display: flex; flex-direction: column; gap: 9px; }
+.fw-cat { display: flex; flex-direction: column; gap: 4px; }
+.fw-cat-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; display: inline-block; padding: 2px 7px; border-radius: 4px; width: fit-content; }
+.fw-col.s .fw-cat-label { background: #fef2f2; color: #dc2626; }
+.fw-col.e .fw-cat-label { background: #fffbeb; color: #d97706; }
+.fw-col.c .fw-cat-label { background: #ecfdf5; color: #059669; }
+.fw-items { display: flex; flex-wrap: wrap; gap: 0 10px; padding-left: 2px; }
+.fw-item { font-size: 11px; color: #4b5563; line-height: 1.75; }
+.fw-item::before { content: "· "; color: #d1d5db; }
+.fw-divider { height: 1px; background: #f3f4f6; margin: 2px 0; }
+.fw-rule-block { margin-top: 2px; padding: 9px 11px; background: #f9fafb; border-left: 2px solid #e5e7eb; border-radius: 0 6px 6px 0; }
+.fw-col.s .fw-rule-block { border-left-color: #dc2626; }
+.fw-col.e .fw-rule-block { border-left-color: #d97706; }
+.fw-col.c .fw-rule-block { border-left-color: #059669; }
+.fw-rule-label { font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; color: #9ca3af; margin-bottom: 5px; }
+.fw-rule-item { font-size: 11px; color: #1f2937; line-height: 1.8; display: flex; align-items: baseline; gap: 5px; }
+.fw-rule-item::before { content: "✓"; font-size: 9px; flex-shrink: 0; }
+.fw-col.s .fw-rule-item::before { color: #dc2626; }
+.fw-col.e .fw-rule-item::before { color: #d97706; }
+.fw-col.c .fw-rule-item::before { color: #059669; }
+
+/* ══ IA DIAGRAM ══ */
+.ia-org-wrap { display: flex; flex-direction: column; align-items: center; }
+.ia-org-node { background: #111827; border-radius: 10px; padding: 10px 32px; }
+.ia-org-label { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+.ia-org-sub { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #9ca3af; text-align: center; margin-top: 6px; }
+.ia-v-line { width: 1px; height: 22px; background: #e5e7eb; margin: 0 auto; }
+.ia-h-bridge { position: relative; display: flex; justify-content: center; }
+.ia-h-bridge::before { content: ''; position: absolute; top: 0; left: calc(12.5% + 6px); right: calc(12.5% + 6px); height: 1px; background: #e5e7eb; }
+.ia-columns { display: flex; gap: 10px; }
+.ia-col { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+.ia-col-drop { width: 1px; height: 22px; background: #e5e7eb; }
+.ia-card { width: 100%; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+.ia-card-head { padding: 13px 14px 11px; border-bottom: 1px solid #f3f4f6; }
+.ia-card-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; margin-bottom: 6px; border-radius: 6px; }
+.ia-card-badge .bdot { width: 5px; height: 5px; border-radius: 50%; }
+.ia-card-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3px; color: #111827; }
+.ia-card-question { font-size: 10px; color: #9ca3af; line-height: 1.5; }
+.ia-card-body { padding: 9px 14px 0; }
+.ia-list { list-style: none; }
+.ia-list li { font-size: 12px; color: #374151; padding: 4px 0; border-bottom: 1px solid #f9fafb; display: flex; align-items: center; gap: 7px; }
+.ia-list li:last-child { border-bottom: none; }
+.ia-ldot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+.ia-output { margin: 7px 14px 13px; padding: 8px 10px; border-left: 2px solid; border-radius: 0 6px 6px 0; }
+.ia-output-label { font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 5px; }
+.ia-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.ia-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
+
+.ia-v .ia-card-badge { background: #f5f3ff; color: #7c3aed; }
+.ia-v .ia-card-badge .bdot, .ia-v .ia-ldot { background: #7c3aed; }
+.ia-v .ia-output { border-left-color: #7c3aed; background: #faf5ff; }
+.ia-v .ia-output-label { color: #7c3aed; }
+.ia-v .ia-tag { background: #ede9fe; color: #6d28d9; }
+
+.ia-i .ia-card-badge { background: #eff6ff; color: #2563eb; }
+.ia-i .ia-card-badge .bdot, .ia-i .ia-ldot { background: #2563eb; }
+.ia-i .ia-output { border-left-color: #2563eb; background: #eff6ff; }
+.ia-i .ia-output-label { color: #2563eb; }
+.ia-i .ia-tag { background: #dbeafe; color: #1d4ed8; }
+
+.ia-e .ia-card-badge { background: #ecfdf5; color: #059669; }
+.ia-e .ia-card-badge .bdot, .ia-e .ia-ldot { background: #059669; }
+.ia-e .ia-output { border-left-color: #059669; background: #ecfdf5; }
+.ia-e .ia-output-label { color: #059669; }
+.ia-e .ia-tag { background: #d1fae5; color: #047857; }
+
+.ia-x .ia-card-badge { background: #fffbeb; color: #d97706; }
+.ia-x .ia-card-badge .bdot, .ia-x .ia-ldot { background: #d97706; }
+.ia-x .ia-output { border-left-color: #d97706; background: #fffbeb; }
+.ia-x .ia-output-label { color: #d97706; }
+.ia-x .ia-tag { background: #fef3c7; color: #b45309; }
+
+/* ══ ORG CHART ══ */
+.oc-legend { display: flex; gap: 24px; margin-bottom: 32px; }
+.oc-legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #6b7280; }
+.oc-line-solid { width: 28px; height: 1.5px; background: #6b7280; }
+.oc-line-dashed { width: 28px; height: 0; border-top: 1.5px dashed #9ca3af; }
+
+.oc-box {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 14px; border-radius: 9px;
+  font-size: 12.5px; font-weight: 500; text-align: center; line-height: 1.4;
+  white-space: nowrap;
+}
+.oc-box.blue { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+.oc-box.purple-dashed { background: #faf5ff; color: #5b21b6; border: 1.5px dashed #a78bfa; white-space: normal; max-width: 240px; padding: 12px 14px; line-height: 1.55; }
+.oc-box.label { background: #fff; color: #374151; border: 1px solid #e5e7eb; font-weight: 500; font-size: 12px; }
+.oc-box.gray { background: #f9fafb; color: #374151; border: 1px solid #e5e7eb; font-size: 12px; padding: 7px 10px; white-space: normal; text-align: center; }
+.oc-sub { font-size: 10px; color: #9ca3af; display: block; }
+
+.oc-outer { display: flex; align-items: flex-start; gap: 0; overflow-x: auto; padding-bottom: 8px; }
+.oc-tree-wrap { flex-shrink: 0; }
+.oc-dash-connector {
+  flex-shrink: 0; width: 56px; height: 1.5px; margin-top: 33px;
+  background: repeating-linear-gradient(to right, #9ca3af 0, #9ca3af 4px, transparent 4px, transparent 9px);
+}
+.oc-advisor-col { flex-shrink: 0; padding-top: 8px; }
+.oc-advisor-label { font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7c3aed; margin-bottom: 6px; }
+
+/* Classic CSS tree */
+.oc-tree ul {
+  text-align: center; font-size: 0;
+  padding-top: 20px; position: relative;
+}
+.oc-tree li {
+  display: inline-block; vertical-align: top;
+  font-size: 14px; list-style: none;
+  position: relative; padding: 20px 6px 0; text-align: center;
+}
+.oc-tree li::before, .oc-tree li::after {
+  content: ''; position: absolute; top: 0; right: 50%;
+  border-top: 1.5px solid #9ca3af;
+  width: 50%; height: 20px;
+}
+.oc-tree li::after {
+  right: auto; left: 50%;
+  border-left: 1.5px solid #9ca3af;
+}
+.oc-tree li:only-child::before,
+.oc-tree li:only-child::after { display: none; }
+.oc-tree li:only-child { padding-top: 0; }
+.oc-tree li:first-child::before,
+.oc-tree li:last-child::after { border: none; }
+.oc-tree li:last-child::before { border-right: 1.5px solid #9ca3af; border-radius: 0 4px 0 0; }
+.oc-tree li:first-child::after { border-radius: 4px 0 0 0; }
+.oc-tree ul ul::before {
+  content: ''; position: absolute; top: 0; left: 50%;
+  border-left: 1.5px solid #9ca3af;
+  width: 0; height: 20px;
+}
+
+/* Dept card — members embedded, no separate leaf nodes */
+.oc-dept-card {
+  display: inline-block; text-align: left;
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 9px;
+  padding: 9px 12px; min-width: 112px;
+  vertical-align: top;
+}
+.oc-dept-name {
+  font-size: 11.5px; font-weight: 600; color: #111827;
+  padding-bottom: 6px; margin-bottom: 6px;
+  border-bottom: 1px solid #f3f4f6; white-space: nowrap;
+}
+.oc-member-list { display: flex; flex-direction: column; gap: 3px; }
+.oc-member {
+  font-size: 11px; color: #6b7280;
+  display: flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+}
+.oc-member::before {
+  content: ''; width: 3px; height: 3px; border-radius: 50%;
+  background: #d1d5db; flex-shrink: 0;
+}
+.oc-member .ext { color: #9ca3af; font-size: 9.5px; }
+
+/* 品牌顾问 — indirect, shown below tree with dashed separator */
+.oc-indirect-section {
+  margin-top: 28px; padding-top: 24px;
+  border-top: 1.5px dashed #d1d5db;
+  display: flex; align-items: center; gap: 20px;
+}
+.oc-indirect-tag {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: #7c3aed; white-space: nowrap;
+}
+.oc-advisor-card {
+  background: #faf5ff; border: 1.5px dashed #a78bfa; border-radius: 9px;
+  padding: 10px 16px;
+}
+.oc-advisor-name { font-size: 13px; font-weight: 600; color: #5b21b6; margin-bottom: 3px; }
+.oc-advisor-desc { font-size: 11px; color: #7c3aed; }
+
+.oc-cocreate-outer { margin-top: 28px; }
+.oc-cocreate {
+  background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 10px;
+  padding: 14px 0; display: flex; width: 100%;
+}
+.oc-cc-item {
+  flex: 1; text-align: center; font-size: 12px; color: #4338ca;
+  padding: 0 24px; border-right: 1px solid #ddd6fe;
+}
+.oc-cc-item:last-child { border-right: none; }
+.oc-cc-item strong { display: block; font-weight: 600; margin-bottom: 2px; }
+
+/* Advisor node inside CSS tree */
+.oc-advisor-node {
+  display: inline-flex; flex-direction: column; align-items: flex-start;
+  background: #faf5ff; border: 1.5px solid #a78bfa; border-radius: 9px;
+  padding: 10px 14px; max-width: 220px;
+}
+.oc-adv-title { font-size: 12.5px; font-weight: 600; color: #5b21b6; white-space: nowrap; }
+.oc-adv-desc { font-size: 11px; color: #7c3aed; margin-top: 4px; line-height: 1.45; white-space: normal; }
+
+/* ══ OCCUPANCY FORMULA ══ */
+.occ-main-formula {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 12px;
+  padding: 22px 28px; margin-bottom: 32px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.occ-f-result { font-size: 20px; font-weight: 700; color: #111827; letter-spacing: -0.02em; }
+.occ-f-eq { font-size: 18px; color: #9ca3af; font-weight: 300; padding: 0 4px; }
+.occ-f-term {
+  font-size: 14px; font-weight: 500; color: #374151;
+  background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 7px; padding: 5px 12px;
+}
+.occ-f-note { font-size: 11px; color: #9ca3af; margin-left: 4px; flex-basis: 100%; margin-top: 6px; }
+
+.occ-paths { display: flex; gap: 16px; margin-bottom: 24px; }
+.occ-path { flex: 1; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+.occ-path-head { padding: 13px 18px 12px; border-bottom: 1px solid #f3f4f6; }
+.occ-path-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 5px; display: inline-block; margin-bottom: 5px;
+}
+.occ-path.p-new .occ-path-badge { background: #dbeafe; color: #1d4ed8; }
+.occ-path.p-renew .occ-path-badge { background: #d1fae5; color: #047857; }
+.occ-path-title { font-size: 14px; font-weight: 600; color: #111827; }
+.occ-path-body { padding: 14px 18px 16px; }
+.occ-flow { display: flex; flex-direction: column; gap: 0; }
+.occ-flow-step { display: flex; flex-direction: column; align-items: flex-start; }
+.occ-flow-node {
+  background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 7px;
+  padding: 8px 12px; font-size: 12.5px; font-weight: 500; color: #111827;
+  white-space: nowrap;
+}
+.occ-path.p-new .occ-flow-node.final { background: #dbeafe; border-color: #bfdbfe; color: #1e40af; }
+.occ-path.p-renew .occ-flow-node.final { background: #d1fae5; border-color: #6ee7b7; color: #065f46; }
+.occ-flow-op {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0 5px 14px;
+  font-size: 11px; color: #6b7280;
+}
+.occ-flow-op::before { content: ''; width: 1px; height: 14px; background: #e5e7eb; }
+.occ-flow-op .mult { font-weight: 600; color: #9ca3af; font-size: 12px; margin-right: 3px; }
+
+.occ-levers { display: flex; gap: 12px; }
+.occ-lever {
+  flex: 1; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+  padding: 14px 16px;
+}
+.occ-lever-title {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: #9ca3af; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 7px;
+}
+.occ-lever-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.occ-lever-item {
+  font-size: 12px; color: #374151; line-height: 1.85;
+  display: flex; align-items: baseline; gap: 6px;
+}
+.occ-lever-item::before { content: '→'; color: #d1d5db; font-size: 10px; flex-shrink: 0; }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 900px) {
+  nav { padding: 0 16px; }
+  .nav-links { gap: 2px; }
+  .nav-link { font-size: 13px; padding: 5px 10px; }
+  .tab-bar {
+    padding: 0 16px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn { font-size: 13px; margin-right: 20px; padding: 12px 0; }
+  .section { padding: 28px 16px 56px; }
+  .fw-layout { flex-direction: column; }
+  .fw-sidebar { width: 100%; padding-top: 0; }
+  .fw-columns { flex-direction: column; }
+  .ia-columns { flex-direction: column; }
+  .ia-h-bridge::before { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <div class="nav-logo">DNBeta</div>
+  <div class="nav-links">
+    <a href="dnbeta-community-model.html" class="nav-link active">管理者驾驶舱</a>
+    <a href="dnbeta-playbook.html" class="nav-link">社区手册</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+
+<!-- ══ TAB BAR ══ -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-tab="ecosystem">社区生态图</button>
+  <button class="tab-btn" data-tab="community">社区边界模型</button>
+  <button class="tab-btn" data-tab="growth">成员成长设计</button>
+  <button class="tab-btn" data-tab="org">运营架构</button>
+  <button class="tab-btn" data-tab="info">信息架构</button>
+  <button class="tab-btn" data-tab="ops">运营系统</button>
+  <button class="tab-btn" data-tab="gov">治理</button>
+  <button class="tab-btn" data-tab="feedback">反馈系统</button>
+</div>
+
+<!-- ══ TAB 1: Community Boundary Model ══ -->
+<div id="tab-community" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label">Community Boundary Model · 组织边界框架</div>
+  <div class="fw-layout">
+    <div class="fw-sidebar">
+      <div class="fw-sidebar-label">DNBeta</div>
+      <div class="fw-layer">
+        <div class="fw-layer-name c">Culture</div>
+        <div class="fw-layer-desc">社区自然生长层</div>
+        <div class="fw-layer-divider"></div>
+        <div class="fw-layer-tags">
+          <span class="fw-layer-tag">自发活动</span><span class="fw-layer-tag">关系</span>
+          <span class="fw-layer-tag">合作</span><span class="fw-layer-tag">创造</span>
+          <span class="fw-layer-tag">信任</span><span class="fw-layer-tag">文化</span>
+        </div>
+      </div>
+      <div class="fw-connector">↑</div>
+      <div class="fw-layer">
+        <div class="fw-layer-name e">Experience</div>
+        <div class="fw-layer-desc">社区体验层</div>
+        <div class="fw-layer-divider"></div>
+        <div class="fw-layer-tags">
+          <span class="fw-layer-tag">Welcome</span><span class="fw-layer-tag">连接</span>
+          <span class="fw-layer-tag">工具</span><span class="fw-layer-tag">信息</span>
+          <span class="fw-layer-tag">支持</span><span class="fw-layer-tag">记录</span>
+        </div>
+      </div>
+      <div class="fw-connector">↑</div>
+      <div class="fw-layer">
+        <div class="fw-layer-name s">Structure</div>
+        <div class="fw-layer-desc">组织管理层</div>
+        <div class="fw-layer-divider"></div>
+        <div class="fw-layer-tags">
+          <span class="fw-layer-tag">财务</span><span class="fw-layer-tag">规则</span>
+          <span class="fw-layer-tag">安全</span><span class="fw-layer-tag">排班</span>
+          <span class="fw-layer-tag">合作</span><span class="fw-layer-tag">执行</span>
+        </div>
+      </div>
+    </div>
+    <div class="fw-columns">
+      <div class="fw-col s">
+        <div class="fw-col-header">
+          <div class="fw-col-badge"><span class="dot"></span>Structure · 必须管理</div>
+          <div class="fw-col-title">Management</div>
+          <div class="fw-col-goal">目标：保证社区稳定运行</div>
+        </div>
+        <div class="fw-col-body">
+          <div class="fw-cat"><span class="fw-cat-label">空间管理</span><div class="fw-items"><span class="fw-item">卫生</span><span class="fw-item">安全</span><span class="fw-item">设施维护</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">财务</span><div class="fw-items"><span class="fw-item">收支</span><span class="fw-item">预算</span><span class="fw-item">报销</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">住宿管理</span><div class="fw-items"><span class="fw-item">入住</span><span class="fw-item">退房</span><span class="fw-item">床位安排</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">社区规则</span><div class="fw-items"><span class="fw-item">公约</span><span class="fw-item">冲突处理</span><span class="fw-item">安全规范</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">人员管理</span><div class="fw-items"><span class="fw-item">值班</span><span class="fw-item">排班</span><span class="fw-item">岗位职责</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">外部合作</span><div class="fw-items"><span class="fw-item">政府合作</span><span class="fw-item">品牌合作</span><span class="fw-item">商务合作</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">项目执行</span><div class="fw-items"><span class="fw-item">时间节点</span><span class="fw-item">任务推进</span><span class="fw-item">项目复盘</span></div></div>
+          <div class="fw-divider"></div>
+          <div class="fw-rule-block">
+            <div class="fw-rule-label">KPI 标准</div>
+            <div class="fw-rule-item">有负责人</div><div class="fw-rule-item">有流程</div>
+            <div class="fw-rule-item">有标准</div><div class="fw-rule-item">有考核</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-col e">
+        <div class="fw-col-header">
+          <div class="fw-col-badge"><span class="dot"></span>Experience · 应该运营</div>
+          <div class="fw-col-title">Operation</div>
+          <div class="fw-col-goal">目标：降低参与成本，创造连接</div>
+        </div>
+        <div class="fw-col-body">
+          <div class="fw-cat"><span class="fw-cat-label">新人欢迎</span><div class="fw-items"><span class="fw-item">Welcome</span><span class="fw-item">社区介绍</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">信息同步</span><div class="fw-items"><span class="fw-item">活动日历</span><span class="fw-item">公告</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">内容记录</span><div class="fw-items"><span class="fw-item">摄影</span><span class="fw-item">采访</span><span class="fw-item">社媒记录</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">社区工具</span><div class="fw-items"><span class="fw-item">飞书</span><span class="fw-item">地图</span><span class="fw-item">公共文档</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">资源连接</span><div class="fw-items"><span class="fw-item">人才匹配</span><span class="fw-item">项目匹配</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">用户反馈</span><div class="fw-items"><span class="fw-item">建议收集</span><span class="fw-item">体验优化</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">发起支持</span><div class="fw-items"><span class="fw-item">帮助组织活动</span><span class="fw-item">提供资源</span></div></div>
+          <div class="fw-divider"></div>
+          <div class="fw-rule-block">
+            <div class="fw-rule-label">运营原则</div>
+            <div class="fw-rule-item">提供支持</div><div class="fw-rule-item">不替别人完成</div>
+          </div>
+        </div>
+      </div>
+      <div class="fw-col c">
+        <div class="fw-col-header">
+          <div class="fw-col-badge"><span class="dot"></span>Culture · 自然生长</div>
+          <div class="fw-col-title">Community</div>
+          <div class="fw-col-goal">目标：让社区拥有生命力</div>
+        </div>
+        <div class="fw-col-body">
+          <div class="fw-cat"><span class="fw-cat-label">人际关系</span><div class="fw-items"><span class="fw-item">聊天</span><span class="fw-item">交朋友</span><span class="fw-item">恋爱</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">日常生活</span><div class="fw-items"><span class="fw-item">一起吃饭</span><span class="fw-item">散步</span><span class="fw-item">喝咖啡</span><span class="fw-item">桌游</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">创造力</span><div class="fw-items"><span class="fw-item">创作</span><span class="fw-item">灵感讨论</span><span class="fw-item">分享</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">自发合作</span><div class="fw-items"><span class="fw-item">共创项目</span><span class="fw-item">创业合作</span><span class="fw-item">技能交换</span></div></div>
+          <div class="fw-cat"><span class="fw-cat-label">自发活动</span><div class="fw-items"><span class="fw-item">临时聚会</span><span class="fw-item">兴趣活动</span><span class="fw-item">自发 Workshop</span></div></div>
+          <div class="fw-divider"></div>
+          <div class="fw-rule-block">
+            <div class="fw-rule-label">社区原则</div>
+            <div class="fw-rule-item">不设 KPI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ══ TAB 2: Information Architecture ══ -->
+<!-- ══ TAB: Community Ecosystem Map ══ -->
+<div id="tab-ecosystem">
+<div class="section">
+<div class="inner">
+  <div class="section-label" style="margin-bottom:8px;">DNBeta Future Ecosystem · 未来数字游民生态</div>
+  <p style="font-size:13px;color:#9ca3af;margin:0 0 6px;letter-spacing:0.04em;">The Long-term Infrastructure for the Digital Nomad Economy</p>
+  <p style="font-size:12px;color:#b0b7c3;margin:0 0 32px;letter-spacing:0.06em;">资源 → 网络 → 数据 → 系统 → 平台 → 全球生态</p>
+
+
+  <!-- Strategic Statement -->
+  <div style="background:#111;border-radius:14px;padding:22px 28px;margin-bottom:40px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;">
+    <div style="color:rgba(255,255,255,0.3);font-size:10px;font-weight:700;letter-spacing:0.14em;white-space:nowrap;padding-top:4px;">STRATEGIC POSITION</div>
+    <div style="flex:1;min-width:280px;">
+      <div id="strategy-text" style="color:#fff;font-size:15px;font-weight:600;line-height:1.65;margin-bottom:0;">从社区，到连接城市、数字人才、企业的开放式国际数字游民组织平台。</div>
+    </div>
+  </div>
+
+  <!-- Network Diagram -->
+  <div style="overflow-x:auto;margin:0 -20px 0;">
+  <div style="position:relative;width:1200px;height:1020px;margin:0 auto;">
+  <canvas id="matrix-canvas" style="position:absolute;top:0;left:0;width:1200px;height:1020px;pointer-events:none;border-radius:0;opacity:0.18;z-index:1;"></canvas>
+
+  <svg viewBox="0 0 1200 1020" style="position:absolute;top:0;left:0;width:1200px;height:1020px;pointer-events:none;overflow:visible;">
+    <!-- Ring guides -->
+    <circle cx="600" cy="510" r="130" fill="none" stroke="#d1fae5" stroke-width="1" stroke-dasharray="3 5"/>
+    <circle cx="600" cy="510" r="240" fill="none" stroke="#dbeafe" stroke-width="1" stroke-dasharray="3 5"/>
+    <circle cx="600" cy="510" r="345" fill="none" stroke="#fef3c7" stroke-width="1" stroke-dasharray="3 6"/>
+    <circle cx="600" cy="510" r="440" fill="none" stroke="#ede9fe" stroke-width="0.5" stroke-dasharray="2 8"/>
+
+    <!-- Flow arcs (5 colors, low opacity) -->
+    <path d="M 730,510 C 860,410 970,380 945,510" fill="none" stroke="#10b981" stroke-width="2.5" stroke-dasharray="7 4" opacity="0.28"/>
+    <path d="M 640,386 C 690,260 710,140 600,75" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="7 4" opacity="0.28"/>
+    <path d="M 495,434 C 370,390 240,460 255,510" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="7 4" opacity="0.28"/>
+    <path d="M 495,586 C 380,710 400,820 427,808" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-dasharray="7 4" opacity="0.28"/>
+    <path d="M 730,510 C 910,610 990,690 977,727" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="7 4" opacity="0.28"/>
+
+    <!-- Center to L1 -->
+    <line x1="600" y1="510" x2="730" y2="510" stroke="#d1d5db" stroke-width="1"/>
+    <line x1="600" y1="510" x2="640" y2="386" stroke="#d1d5db" stroke-width="1"/>
+    <line x1="600" y1="510" x2="495" y2="434" stroke="#d1d5db" stroke-width="1"/>
+    <line x1="600" y1="510" x2="495" y2="586" stroke="#d1d5db" stroke-width="1"/>
+    <line x1="600" y1="510" x2="640" y2="634" stroke="#d1d5db" stroke-width="1"/>
+
+    <!-- L1 to L2 -->
+    <line x1="730" y1="510" x2="818" y2="390" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="730" y1="510" x2="818" y2="630" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="640" y1="386" x2="818" y2="390" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="640" y1="386" x2="600" y2="270" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="495" y1="434" x2="600" y2="270" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="495" y1="434" x2="382" y2="390" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="495" y1="586" x2="382" y2="390" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="495" y1="586" x2="382" y2="630" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="640" y1="634" x2="382" y2="630" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="640" y1="634" x2="600" y2="750" stroke="#e5e7eb" stroke-width="1"/>
+    <line x1="640" y1="634" x2="818" y2="630" stroke="#e5e7eb" stroke-width="1"/>
+
+    <!-- L2 to L3 -->
+    <line x1="818" y1="390" x2="945" y2="510" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="818" y1="390" x2="773" y2="212" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="600" y1="270" x2="773" y2="212" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="600" y1="270" x2="427" y2="212" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="382" y1="390" x2="427" y2="212" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="382" y1="390" x2="255" y2="510" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="382" y1="630" x2="255" y2="510" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="382" y1="630" x2="427" y2="808" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="600" y1="750" x2="427" y2="808" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="600" y1="750" x2="773" y2="808" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="818" y1="630" x2="773" y2="808" stroke="#f0f0f0" stroke-width="1"/>
+    <line x1="818" y1="630" x2="945" y2="510" stroke="#f0f0f0" stroke-width="1"/>
+
+    <!-- L3 to L4 -->
+    <line x1="945" y1="510" x2="983" y2="293" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="945" y1="510" x2="983" y2="727" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="773" y1="212" x2="983" y2="293" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="773" y1="212" x2="600" y2="75" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="427" y1="212" x2="600" y2="75" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="427" y1="212" x2="217" y2="293" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="255" y1="510" x2="217" y2="293" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="255" y1="510" x2="217" y2="727" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="427" y1="808" x2="217" y2="727" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="427" y1="808" x2="600" y2="945" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="773" y1="808" x2="600" y2="945" stroke="#f5f5f5" stroke-width="1"/>
+    <line x1="773" y1="808" x2="983" y2="727" stroke="#f5f5f5" stroke-width="1"/>
+  </svg>
+
+  <!-- CENTER -->
+  <div style="position:absolute;left:600px;top:510px;transform:translate(-50%,-50%);z-index:10;text-align:center;">
+    <div style="width:72px;height:72px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;margin:0 auto 6px;">
+      <span style="font-size:10px;font-weight:800;color:#fff;letter-spacing:0.01em;">DNBeta</span>
+    </div>
+    <div style="font-size:9px;color:#9ca3af;white-space:nowrap;letter-spacing:0.06em;">Infrastructure</div>
+  </div>
+
+  <!-- L1: Physical Nodes -->
+  <div style="position:absolute;left:730px;top:510px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1.5px solid #111;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:700;color:#111;">成都</div>
+    <div style="font-size:10px;color:#6b7280;">Chengdu</div>
+  </div>
+  <div style="position:absolute;left:640px;top:386px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1.5px solid #111;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:700;color:#111;">巴黎</div>
+    <div style="font-size:10px;color:#6b7280;">Paris</div>
+  </div>
+  <div style="position:absolute;left:495px;top:434px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1.5px solid #111;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:700;color:#111;">巴厘岛</div>
+    <div style="font-size:10px;color:#6b7280;">Bali</div>
+  </div>
+  <div style="position:absolute;left:495px;top:586px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1.5px solid #111;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:700;color:#111;">东京</div>
+    <div style="font-size:10px;color:#6b7280;">Tokyo</div>
+  </div>
+  <div style="position:absolute;left:640px;top:634px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1.5px solid #111;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:700;color:#111;">首尔</div>
+    <div style="font-size:10px;color:#6b7280;">Seoul</div>
+  </div>
+
+  <!-- L2: Community Network -->
+  <div style="position:absolute;left:818px;top:390px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1px solid #374151;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#374151;">数字游民</div>
+    <div style="font-size:10px;color:#9ca3af;">Digital Nomads</div>
+  </div>
+  <div style="position:absolute;left:600px;top:270px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1px solid #374151;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#374151;">共创活动</div>
+    <div style="font-size:10px;color:#9ca3af;">Co-creation</div>
+  </div>
+  <div style="position:absolute;left:382px;top:390px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1px solid #374151;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#374151;">企业合作</div>
+    <div style="font-size:10px;color:#9ca3af;">Enterprise</div>
+  </div>
+  <div style="position:absolute;left:382px;top:630px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1px solid #374151;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#374151;">高校合作</div>
+    <div style="font-size:10px;color:#9ca3af;">University</div>
+  </div>
+  <div style="position:absolute;left:600px;top:750px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1px solid #374151;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#374151;">地方政府</div>
+    <div style="font-size:10px;color:#9ca3af;">Government</div>
+  </div>
+  <div style="position:absolute;left:818px;top:630px;transform:translate(-50%,-50%);z-index:10;background:#fff;border:1px solid #374151;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#374151;">品牌合作</div>
+    <div style="font-size:10px;color:#9ca3af;">Brand Partners</div>
+  </div>
+
+  <!-- L3: Digital Network -->
+  <div style="position:absolute;left:945px;top:510px;transform:translate(-50%,-50%);z-index:10;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#065f46;">人才数据库</div>
+    <div style="font-size:10px;color:#6b7280;">Talent Pool</div>
+  </div>
+  <div style="position:absolute;left:773px;top:212px;transform:translate(-50%,-50%);z-index:10;background:#eff6ff;border:1px solid #93c5fd;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#1e40af;">项目库</div>
+    <div style="font-size:10px;color:#6b7280;">Project Pool</div>
+  </div>
+  <div style="position:absolute;left:427px;top:212px;transform:translate(-50%,-50%);z-index:10;background:#fefce8;border:1px solid #fde047;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#713f12;">技能库</div>
+    <div style="font-size:10px;color:#6b7280;">Skills Map</div>
+  </div>
+  <div style="position:absolute;left:255px;top:510px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #d8b4fe;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">AI 智能匹配</div>
+    <div style="font-size:10px;color:#6b7280;">AI Matching</div>
+  </div>
+  <div style="position:absolute;left:427px;top:808px;transform:translate(-50%,-50%);z-index:10;background:#fff7ed;border:1px solid #fdba74;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#9a3412;">数字身份</div>
+    <div style="font-size:10px;color:#6b7280;">Digital ID</div>
+  </div>
+  <div style="position:absolute;left:773px;top:808px;transform:translate(-50%,-50%);z-index:10;background:#f0fdf4;border:1px solid #6ee7b7;border-radius:20px;padding:5px 13px;text-align:center;white-space:nowrap;">
+    <div style="font-size:11px;font-weight:600;color:#065f46;">数据沉淀</div>
+    <div style="font-size:10px;color:#6b7280;">Data Layer</div>
+  </div>
+
+  <!-- L4: Platform -->
+  <div style="position:absolute;left:983px;top:293px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #c084fc;border-radius:20px;padding:5px 14px;text-align:center;white-space:nowrap;opacity:0.9;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">AI Agent</div>
+    <div style="font-size:10px;color:#9ca3af;">Platform</div>
+  </div>
+  <div style="position:absolute;left:600px;top:75px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #c084fc;border-radius:20px;padding:5px 14px;text-align:center;white-space:nowrap;opacity:0.9;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">城市运营后台</div>
+    <div style="font-size:10px;color:#9ca3af;">City OS</div>
+  </div>
+  <div style="position:absolute;left:217px;top:293px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #c084fc;border-radius:20px;padding:5px 14px;text-align:center;white-space:nowrap;opacity:0.9;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">会员系统</div>
+    <div style="font-size:10px;color:#9ca3af;">Member System</div>
+  </div>
+  <div style="position:absolute;left:217px;top:727px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #c084fc;border-radius:20px;padding:5px 14px;text-align:center;white-space:nowrap;opacity:0.9;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">企业服务平台</div>
+    <div style="font-size:10px;color:#9ca3af;">Enterprise SaaS</div>
+  </div>
+  <div style="position:absolute;left:600px;top:945px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #c084fc;border-radius:20px;padding:5px 14px;text-align:center;white-space:nowrap;opacity:0.9;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">数据分析平台</div>
+    <div style="font-size:10px;color:#9ca3af;">Analytics</div>
+  </div>
+  <div style="position:absolute;left:983px;top:727px;transform:translate(-50%,-50%);z-index:10;background:#fdf4ff;border:1px solid #c084fc;border-radius:20px;padding:5px 14px;text-align:center;white-space:nowrap;opacity:0.9;">
+    <div style="font-size:11px;font-weight:600;color:#6b21a8;">开放 API</div>
+    <div style="font-size:10px;color:#9ca3af;">Open Platform</div>
+  </div>
+
+  </div>
+  </div>
+
+  <!-- Layer + Flow Legend -->
+  <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;margin-top:28px;padding:20px 24px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:12px;">NETWORK LAYERS · 网络层级</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;border:2px solid #10b981;display:flex;align-items:center;justify-content:center;background:#f0fdf4;flex-shrink:0;">
+            <span style="font-size:9px;font-weight:800;color:#10b981;">L1</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#065f46;">物理节点</div>
+            <div style="font-size:11px;color:#9ca3af;">Physical Nodes</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;border:2px solid #3b82f6;display:flex;align-items:center;justify-content:center;background:#eff6ff;flex-shrink:0;">
+            <span style="font-size:9px;font-weight:800;color:#3b82f6;">L2</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#1e40af;">社区网络</div>
+            <div style="font-size:11px;color:#9ca3af;">Community Network</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;background:#fefce8;flex-shrink:0;">
+            <span style="font-size:9px;font-weight:800;color:#f59e0b;">L3</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#713f12;">数字网络</div>
+            <div style="font-size:11px;color:#9ca3af;">Digital Network</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:28px;height:28px;border-radius:50%;border:2px solid #8b5cf6;display:flex;align-items:center;justify-content:center;background:#fdf4ff;flex-shrink:0;">
+            <span style="font-size:9px;font-weight:800;color:#8b5cf6;">L4</span>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:#6b21a8;">平台层</div>
+            <div style="font-size:11px;color:#9ca3af;">Platform Layer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="width:1px;background:#e5e7eb;align-self:stretch;"></div>
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:12px;">FLOW TYPES · 流动类型</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:#10b981;border-radius:2px;"></div><span style="font-size:12px;color:#374151;font-weight:500;">人才流</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:#3b82f6;border-radius:2px;"></div><span style="font-size:12px;color:#374151;font-weight:500;">知识流</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:#f59e0b;border-radius:2px;"></div><span style="font-size:12px;color:#374151;font-weight:500;">项目流</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:#8b5cf6;border-radius:2px;"></div><span style="font-size:12px;color:#374151;font-weight:500;">数据流</span></div>
+        <div style="display:flex;align-items:center;gap:6px;"><div style="width:20px;height:2.5px;background:#ef4444;border-radius:2px;"></div><span style="font-size:12px;color:#374151;font-weight:500;">资金流</span></div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>
+</div>
+
+<!-- ══ TAB: Member Growth Path ══ -->
+<div id="tab-growth" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label" style="margin-bottom:20px;">Member Development · 成员成长设计</div>
+  <p style="font-size:14px;color:#6b7280;margin:0 0 40px;max-width:620px;line-height:1.7;">两张图，两个维度。Ladder 回答「你能成长为什么」，Journey 回答「你是怎么一步步走到那里的」。放在一起，才构成完整的成员成长设计。</p>
+
+  <!-- ── PART 1: MEMBER LADDER ── -->
+  <div style="margin-bottom:56px;">
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">MEMBER LADDER · 成长路径</div>
+      <div style="font-size:11px;color:#d1d5db;">身份演进 — 你能成长为什么</div>
+    </div>
+    <div style="font-size:12px;color:#d1d5db;margin-bottom:20px;">帮助管理层设计长期人才培养体系</div>
+    <div style="display:flex;align-items:center;gap:0;overflow-x:auto;padding-bottom:4px;">
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#f3f4f6;border:1.5px solid #e5e7eb;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#9ca3af;font-weight:700;">①</div>
+        <div style="font-size:11.5px;font-weight:700;color:#9ca3af;">Visitor</div><div style="font-size:10px;color:#d1d5db;">访客</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:14px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#e9eaec;border:1.5px solid #d1d5db;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#6b7280;font-weight:700;">②</div>
+        <div style="font-size:11.5px;font-weight:700;color:#6b7280;">Member</div><div style="font-size:10px;color:#9ca3af;">成员</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:14px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#d4d5d8;border:1.5px solid #c4c5c8;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#4b5563;font-weight:700;">③</div>
+        <div style="font-size:11.5px;font-weight:700;color:#4b5563;">Contributor</div><div style="font-size:10px;color:#9ca3af;">贡献者</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:14px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#9ca3af;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#fff;font-weight:700;">④</div>
+        <div style="font-size:11.5px;font-weight:700;color:#374151;">Host</div><div style="font-size:10px;color:#9ca3af;">活动主理</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:14px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#6b7280;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#fff;font-weight:700;">⑤</div>
+        <div style="font-size:11.5px;font-weight:700;color:#374151;">City Builder</div><div style="font-size:10px;color:#9ca3af;">城市建设者</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:14px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#374151;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#fff;font-weight:700;">⑥</div>
+        <div style="font-size:11.5px;font-weight:700;color:#374151;">Partner</div><div style="font-size:10px;color:#9ca3af;">合作伙伴</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:14px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:40px;height:40px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:10px;color:#fff;font-weight:700;">⑦</div>
+        <div style="font-size:11.5px;font-weight:700;color:#111;">Mentor</div><div style="font-size:10px;color:#9ca3af;">导师</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PART 2: MEMBER JOURNEY ── -->
+  <div style="margin-bottom:16px;">
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">MEMBER JOURNEY · 成员旅程</div>
+      <div style="font-size:11px;color:#d1d5db;">体验与行为演进 — 他是怎么一步步走过去的</div>
+    </div>
+    <div style="font-size:12px;color:#d1d5db;margin-bottom:20px;">帮助管理层设计每一个关键触点的体验</div>
+
+    <!-- Journey Table -->
+    <div style="overflow-x:auto;margin:0 -4px;">
+    <div style="min-width:820px;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+
+      <!-- Header row -->
+      <div style="display:grid;grid-template-columns:80px repeat(5,1fr);background:#f9fafb;border-bottom:1px solid #e5e7eb;">
+        <div style="padding:12px 14px;font-size:10px;font-weight:700;color:#9ca3af;letter-spacing:0.06em;border-right:1px solid #e5e7eb;display:flex;align-items:center;">阶段</div>
+        <div style="padding:12px 14px;border-right:1px solid #e5e7eb;">
+          <div style="font-size:11px;font-weight:700;color:#9ca3af;margin-bottom:1px;">① Visitor</div>
+          <div style="font-size:10px;color:#d1d5db;">访客</div>
+        </div>
+        <div style="padding:12px 14px;border-right:1px solid #e5e7eb;">
+          <div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:1px;">② Member</div>
+          <div style="font-size:10px;color:#9ca3af;">成员</div>
+        </div>
+        <div style="padding:12px 14px;border-right:1px solid #e5e7eb;">
+          <div style="font-size:11px;font-weight:700;color:#4b5563;margin-bottom:1px;">③ Contributor</div>
+          <div style="font-size:10px;color:#9ca3af;">贡献者</div>
+        </div>
+        <div style="padding:12px 14px;border-right:1px solid #e5e7eb;">
+          <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:1px;">④ Host</div>
+          <div style="font-size:10px;color:#9ca3af;">活动主理</div>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:1px;">⑤ City Builder</div>
+          <div style="font-size:10px;color:#9ca3af;">城市建设者</div>
+        </div>
+      </div>
+
+      <!-- Row 1: Behavior -->
+      <div style="display:grid;grid-template-columns:80px repeat(5,1fr);border-bottom:1px solid #e5e7eb;">
+        <div style="padding:14px 14px;background:#111;display:flex;align-items:flex-start;border-right:1px solid #222;">
+          <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.7);">行为 Behavior</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="font-size:11.5px;color:#374151;line-height:1.8;">听说 DNBeta<br>产生兴趣<br>搜索了解<br>报名参观</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="font-size:11.5px;color:#374151;line-height:1.8;">第一次到访<br>参加活动<br>住进社区<br>认识朋友</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="font-size:11.5px;color:#374151;line-height:1.8;">第一次主动帮忙<br>分享资源<br>写文章或教程<br>影响他人</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="font-size:11.5px;color:#374151;line-height:1.8;">第一次策划活动<br>招募参与者<br>现场执行<br>活动复盘</div>
+        </div>
+        <div style="padding:14px 14px;background:#fff;">
+          <div style="font-size:11.5px;color:#374151;line-height:1.8;">建立城市节点<br>招募本地成员<br>联动多城活动<br>对外代表 DNBeta</div>
+        </div>
+      </div>
+
+      <!-- Row 2: Emotion -->
+      <div style="display:grid;grid-template-columns:80px repeat(5,1fr);border-bottom:1px solid #e5e7eb;">
+        <div style="padding:14px 14px;background:#374151;display:flex;align-items:flex-start;border-right:1px solid #4b5563;">
+          <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.7);">感受 Emotion</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fafafa;">
+          <div style="font-size:11.5px;color:#6b7280;line-height:1.8;font-style:italic;">「好奇……<br>靠谱吗？<br>适合我吗？<br>值得尝试？」</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fafafa;">
+          <div style="font-size:11.5px;color:#6b7280;line-height:1.8;font-style:italic;">「有点紧张……<br>能融入吗？<br>有人认识我吗？」</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fafafa;">
+          <div style="font-size:11.5px;color:#6b7280;line-height:1.8;font-style:italic;">「我是不是<br>有价值的？<br>有人注意到了吗？」</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fafafa;">
+          <div style="font-size:11.5px;color:#6b7280;line-height:1.8;font-style:italic;">「有压力……<br>怕搞砸<br>怕大家失望」</div>
+        </div>
+        <div style="padding:14px 14px;background:#fafafa;">
+          <div style="font-size:11.5px;color:#6b7280;line-height:1.8;font-style:italic;">「责任感<br>使命感<br>我在建造<br>一件真实的事」</div>
+        </div>
+      </div>
+
+      <!-- Row 3: Community Action -->
+      <div style="display:grid;grid-template-columns:80px repeat(5,1fr);">
+        <div style="padding:14px 14px;background:#111;display:flex;align-items:flex-start;border-right:1px solid #222;">
+          <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;font-weight:700;letter-spacing:0.06em;color:rgba(255,255,255,0.7);">组织动作 Action</div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <span style="font-size:11px;background:#111;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">官网 + 故事</span>
+            <span style="font-size:11px;background:#111;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">成员案例</span>
+            <span style="font-size:11px;background:#111;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">低门槛体验</span>
+          </div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <span style="font-size:11px;background:#374151;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">欢迎仪式</span>
+            <span style="font-size:11px;background:#374151;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">破冰活动</span>
+            <span style="font-size:11px;background:#374151;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">介绍三个朋友</span>
+          </div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <span style="font-size:11px;background:#4b5563;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">及时公开认可</span>
+            <span style="font-size:11px;background:#4b5563;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">给予反馈</span>
+            <span style="font-size:11px;background:#4b5563;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">提供机会</span>
+          </div>
+        </div>
+        <div style="padding:14px 14px;border-right:1px solid #e5e7eb;background:#fff;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <span style="font-size:11px;background:#6b7280;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">培训 + 模板</span>
+            <span style="font-size:11px;background:#6b7280;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">复盘机制</span>
+            <span style="font-size:11px;background:#6b7280;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">陪跑支持</span>
+          </div>
+        </div>
+        <div style="padding:14px 14px;background:#fff;">
+          <div style="display:flex;flex-direction:column;gap:5px;">
+            <span style="font-size:11px;background:#9ca3af;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">正式授权</span>
+            <span style="font-size:11px;background:#9ca3af;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">跨城资源</span>
+            <span style="font-size:11px;background:#9ca3af;color:#fff;border-radius:4px;padding:2px 8px;width:fit-content;">多城协调</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ══ TAB: Operations Architecture ══ -->
+<div id="tab-org" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label" style="margin-bottom:20px;">Operations Architecture · 社区运营架构图</div>
+
+  <!-- Organizational Stage Indicator -->
+  <div style="margin-bottom:32px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:16px;padding:20px 24px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;text-transform:uppercase;">Organizational Stage · 当前阶段</div>
+    </div>
+    <div style="display:flex;gap:0;align-items:stretch;">
+      <!-- Stage 1 -->
+      <div style="flex:1;padding:14px 16px;border-radius:10px 0 0 10px;background:#fff;border:1px solid #e5e7eb;border-right:none;opacity:0.45;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;color:#9ca3af;margin-bottom:6px;">01 · SEED</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;margin-bottom:4px;">种子期</div>
+        <div style="font-size:11px;color:#9ca3af;line-height:1.5;">验证模型<br>核心圈子形成</div>
+      </div>
+      <!-- Stage 2 — ACTIVE -->
+      <div style="flex:1;padding:14px 16px;background:#111;border:1px solid #111;position:relative;">
+        <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-size:9px;font-weight:700;letter-spacing:0.08em;padding:2px 10px;border-radius:0 0 8px 8px;">当前</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;color:#9ca3af;margin-bottom:6px;">02 · BUILD</div>
+        <div style="font-size:12px;font-weight:600;color:#fff;margin-bottom:4px;">建设期</div>
+        <div style="font-size:11px;color:#9ca3af;line-height:1.5;">标准化运营<br>多城节点扩展</div>
+      </div>
+      <!-- Stage 3 -->
+      <div style="flex:1;padding:14px 16px;background:#fff;border:1px solid #e5e7eb;border-left:none;opacity:0.45;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;color:#9ca3af;margin-bottom:6px;">03 · SCALE</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;margin-bottom:4px;">规模期</div>
+        <div style="font-size:11px;color:#9ca3af;line-height:1.5;">生态自运转<br>品牌对外影响</div>
+      </div>
+      <!-- Stage 4 -->
+      <div style="flex:1;padding:14px 16px;border-radius:0 10px 10px 0;background:#fff;border:1px solid #e5e7eb;border-left:none;opacity:0.45;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;color:#9ca3af;margin-bottom:6px;">04 · ECOSYSTEM</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;margin-bottom:4px;">生态期</div>
+        <div style="font-size:11px;color:#9ca3af;line-height:1.5;">去中心化<br>社区自我演化</div>
+      </div>
+    </div>
+    <!-- Stage focus -->
+    <div style="margin-top:14px;padding:12px 16px;background:#fff;border-radius:8px;border:1px solid #e5e7eb;display:flex;gap:24px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:flex-start;gap:8px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.06em;color:#111;padding-top:1px;white-space:nowrap;">BUILD 阶段核心任务</div>
+        <div style="font-size:11px;color:#6b7280;line-height:1.6;">建立可复制的城市节点 SOP · 稳定招募渠道 · 形成第一批自驱贡献者 · 完善信息与反馈系统</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="oc-legend">
+    <div class="oc-legend-item"><div class="oc-line-solid"></div><span>直接管理</span></div>
+    <div class="oc-legend-item"><div class="oc-line-dashed"></div><span>横向协作</span></div>
+  </div>
+
+  <!-- Outer wrapper: position:relative so SVG can span tree + cocreate -->
+  <div style="position:relative;" id="oc-wrap">
+  <svg id="oc-peer-svg" style="position:absolute;top:0;left:0;pointer-events:none;overflow:visible;z-index:10"></svg>
+
+  <div style="overflow-x:auto;" id="oc-chart">
+    <div class="oc-tree">
+      <ul>
+        <li>
+          <div class="oc-box blue">主理人</div>
+          <ul>
+            <li>
+              <div class="oc-box blue" id="oc-n-gov">政务对接&amp;人力资源</div>
+            </li>
+            <li>
+              <div class="oc-box blue" id="oc-n-mgr">社区统筹</div>
+              <ul>
+                <li>
+                  <div class="oc-dept-card" id="oc-n-svc">
+                    <div class="oc-dept-name">社区服务组</div>
+                    <div class="oc-member-list">
+                      <span class="oc-member">项目执行</span>
+                      <span class="oc-member">村宝</span>
+                      <span class="oc-member">社区活动落地</span>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="oc-dept-card" id="oc-n-res">
+                    <div class="oc-dept-name">资源组</div>
+                    <div class="oc-member-list">
+                      <span class="oc-member">村长</span>
+                      <span class="oc-member">BD玉林</span>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="oc-dept-card" id="oc-n-cnt">
+                    <div class="oc-dept-name">内容运营组</div>
+                    <div class="oc-member-list">
+                      <span class="oc-member">新媒体/文案 <span class="ext">外包</span></span>
+                      <span class="oc-member">拍摄剪辑</span>
+                      <span class="oc-member">美工 <span class="ext">外包</span></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <div class="oc-advisor-node" id="oc-n-adv">
+                <div class="oc-adv-title">品牌顾问</div>
+                <div class="oc-adv-desc">机制、体系、品牌、舆论技术支持</div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div><!-- end oc-chart -->
+
+  <div class="oc-cocreate-outer" style="margin-top:28px" id="oc-cocreate-bar">
+    <div class="oc-cocreate">
+      <div class="oc-cc-item"><strong>社区共创</strong>活动、村宝</div>
+      <div class="oc-cc-item"><strong>内容共创</strong>拍摄、剪辑</div>
+      <div class="oc-cc-item"><strong>资源共创</strong>外部合作</div>
+    </div>
+  </div>
+
+  </div><!-- end oc-wrap -->
+
+  <!-- 信息架构图 -->
+  <div style="margin-top:56px;">
+    <div class="section-label" style="margin-bottom:24px;">Organization System · 组织系统</div>
+    <div class="ia-org-wrap">
+      <div class="ia-org-node"><div class="ia-org-label">组织 · Organization</div></div>
+      <div class="ia-org-sub">Organization System</div>
+      <div class="ia-v-line"></div>
+    </div>
+    <div class="ia-h-bridge">
+      <div class="ia-columns">
+        <div class="ia-col ia-v">
+          <div class="ia-col-drop"></div>
+          <div class="ia-card">
+            <div class="ia-card-head">
+              <div class="ia-card-badge"><span class="bdot"></span>① Value</div>
+              <div class="ia-card-title">创造价值</div>
+              <div class="ia-card-question">谁直接创造用户价值？</div>
+            </div>
+            <div class="ia-card-body">
+              <ul class="ia-list">
+                <li><span class="ia-ldot"></span>社区运营</li>
+                <li><span class="ia-ldot"></span>驻地主理人</li>
+                <li><span class="ia-ldot"></span>活动负责人</li>
+                <li><span class="ia-ldot"></span>品牌项目</li>
+                <li><span class="ia-ldot"></span>内容团队</li>
+              </ul>
+            </div>
+            <div class="ia-output">
+              <div class="ia-output-label">Output</div>
+              <div class="ia-tags"><span class="ia-tag">用户体验</span><span class="ia-tag">收入</span><span class="ia-tag">社区活跃</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ia-col ia-i">
+          <div class="ia-col-drop"></div>
+          <div class="ia-card">
+            <div class="ia-card-head">
+              <div class="ia-card-badge"><span class="bdot"></span>② Infrastructure</div>
+              <div class="ia-card-title">提供基础设施</div>
+              <div class="ia-card-question">谁让整个组织跑得更快？</div>
+            </div>
+            <div class="ia-card-body">
+              <ul class="ia-list">
+                <li><span class="ia-ldot"></span>飞书</li>
+                <li><span class="ia-ldot"></span>Notion</li>
+                <li><span class="ia-ldot"></span>网站</li>
+                <li><span class="ia-ldot"></span>AI Agent</li>
+                <li><span class="ia-ldot"></span>SOP</li>
+                <li><span class="ia-ldot"></span>数据系统</li>
+                <li><span class="ia-ldot"></span>品牌素材库</li>
+              </ul>
+            </div>
+            <div class="ia-output">
+              <div class="ia-output-label">Output</div>
+              <div class="ia-tags"><span class="ia-tag">工具</span><span class="ia-tag">标准</span><span class="ia-tag">流程</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ia-col ia-e">
+          <div class="ia-col-drop"></div>
+          <div class="ia-card">
+            <div class="ia-card-head">
+              <div class="ia-card-badge"><span class="bdot"></span>③ Enable</div>
+              <div class="ia-card-title">提升能力</div>
+              <div class="ia-card-question">谁帮助别人成长？</div>
+            </div>
+            <div class="ia-card-body">
+              <ul class="ia-list">
+                <li><span class="ia-ldot"></span>培训</li>
+                <li><span class="ia-ldot"></span>顾问</li>
+                <li><span class="ia-ldot"></span>教练</li>
+                <li><span class="ia-ldot"></span>AI 导师</li>
+                <li><span class="ia-ldot"></span>Onboarding</li>
+              </ul>
+            </div>
+            <div class="ia-output">
+              <div class="ia-output-label">Output</div>
+              <div class="ia-tags"><span class="ia-tag">能力</span><span class="ia-tag">方法</span><span class="ia-tag">思维</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ia-col ia-x">
+          <div class="ia-col-drop"></div>
+          <div class="ia-card">
+            <div class="ia-card-head">
+              <div class="ia-card-badge"><span class="bdot"></span>④ Expert</div>
+              <div class="ia-card-title">提供专业能力</div>
+              <div class="ia-card-question">谁解决别人不会的问题？</div>
+            </div>
+            <div class="ia-card-body">
+              <ul class="ia-list">
+                <li><span class="ia-ldot"></span>法律</li>
+                <li><span class="ia-ldot"></span>财税</li>
+                <li><span class="ia-ldot"></span>摄影</li>
+                <li><span class="ia-ldot"></span>设计</li>
+                <li><span class="ia-ldot"></span>技术</li>
+                <li><span class="ia-ldot"></span>翻译</li>
+                <li><span class="ia-ldot"></span>医疗</li>
+              </ul>
+            </div>
+            <div class="ia-output">
+              <div class="ia-output-label">Output</div>
+              <div class="ia-tags"><span class="ia-tag">专业成果</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ══ TAB 3B: Information Architecture ══ -->
+<!-- ══ TAB 3B: Information Architecture ══ -->
+<div id="tab-info" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label">Information Architecture · 信息架构系统</div>
+  <p style="font-size:14px;color:#6b7280;margin:0 0 40px;max-width:600px;line-height:1.7;">信息系统的目标不是整理文件，而是降低组织运行成本。<br>让任何人在任何阶段都能不靠提问找到他需要的信息。</p>
+
+  <!-- DESIGN PRINCIPLE -->
+  <div style="background:#111;border-radius:12px;padding:20px 24px;margin-bottom:48px;display:flex;gap:32px;flex-wrap:wrap;">
+    <div style="color:rgba(255,255,255,0.4);font-size:11px;font-weight:700;letter-spacing:0.12em;white-space:nowrap;padding-top:3px;">DESIGN PRINCIPLE</div>
+    <div style="flex:1;min-width:200px;">
+      <div style="color:#fff;font-size:15px;font-weight:600;margin-bottom:10px;">Information should reduce organizational complexity.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        <span style="font-size:12px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;">↓ 沟通成本</span>
+        <span style="font-size:12px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;">↓ 学习成本</span>
+        <span style="font-size:12px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;">↓ 管理成本</span>
+        <span style="font-size:12px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;">↓ 协作成本</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 1: Information Domain -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">01</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Information Domain · 信息分类</div>
+      <div style="font-size:12px;color:#9ca3af;">组织有哪些信息？</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#6366f1;margin-bottom:6px;">① IDENTITY</div>
+        <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:8px;">身份与文化</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.8;">愿景 · 价值观<br>品牌规范 · 社区故事<br>对外介绍</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#10b981;margin-bottom:6px;">② PEOPLE</div>
+        <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:8px;">成员与角色</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.8;">成员名录 · 角色定义<br>团队结构 · 权限分配<br>入住记录</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#f59e0b;margin-bottom:6px;">③ OPERATIONS</div>
+        <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:8px;">运营与流程</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.8;">SOP · 任务 · 项目<br>活动计划 · 会议纪要<br>日历 · 工单</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#3b82f6;margin-bottom:6px;">④ KNOWLEDGE</div>
+        <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:8px;">知识与经验</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.8;">最佳实践 · 指南<br>模板 · 培训材料<br>复盘沉淀</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#ef4444;margin-bottom:6px;">⑤ DATA</div>
+        <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:8px;">数据与指标</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.8;">入住率 · 活跃度<br>财务数据 · 增长报告<br>成员反馈</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 18px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:#8b5cf6;margin-bottom:6px;">⑥ RESOURCES</div>
+        <div style="font-size:14px;font-weight:600;color:#111;margin-bottom:8px;">资源与工具</div>
+        <div style="font-size:12px;color:#9ca3af;line-height:1.8;">工具清单 · 空间资产<br>合同 · 预算<br>合作伙伴</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2: Information Flow -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">02</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Information Flow · 信息生命周期</div>
+      <div style="font-size:12px;color:#9ca3af;">不同信息的不同流转路径</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:0;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#f9fafb;border-right:1px solid #e5e7eb;padding:14px 16px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;font-weight:700;color:#9ca3af;text-align:center;letter-spacing:0.06em;">通用路径</span>
+        </div>
+        <div style="padding:14px 18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;background:#111;color:#fff;padding:4px 12px;border-radius:20px;">Create</span>
+          <span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:4px 12px;border-radius:20px;color:#374151;">Review</span>
+          <span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:4px 12px;border-radius:20px;color:#374151;">Publish</span>
+          <span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:4px 12px;border-radius:20px;color:#374151;">Use</span>
+          <span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:4px 12px;border-radius:20px;color:#374151;">Update</span>
+          <span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:4px 12px;border-radius:20px;color:#6b7280;">Archive</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:0;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#fef3c7;border-right:1px solid #e5e7eb;padding:14px 16px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;font-weight:700;color:#92400e;text-align:center;letter-spacing:0.06em;">活动</span>
+        </div>
+        <div style="padding:14px 18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#374151;">策划草稿</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">对外发布</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">执行</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">复盘</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#6b7280;">归档（保留经验）</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:0;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#ede9fe;border-right:1px solid #e5e7eb;padding:14px 16px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;font-weight:700;color:#5b21b6;text-align:center;letter-spacing:0.06em;">SOP</span>
+        </div>
+        <div style="padding:14px 18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#374151;">起草</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">审核</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">发布 v1.0</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">季度更新</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#6b7280;">废弃标注</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:0;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#fee2e2;border-right:1px solid #e5e7eb;padding:14px 16px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;font-weight:700;color:#991b1b;text-align:center;letter-spacing:0.06em;">合同</span>
+        </div>
+        <div style="padding:14px 18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#374151;">起草</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">法律审核</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">签署</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">履行监控</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#6b7280;">永久归档（7年）</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:80px 1fr;gap:0;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#dcfce7;border-right:1px solid #e5e7eb;padding:14px 16px;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;font-weight:700;color:#166534;text-align:center;letter-spacing:0.06em;">数据</span>
+        </div>
+        <div style="padding:14px 18px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;color:#374151;">自动采集</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">处理清洗</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">月度报告</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#374151;">决策参考</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;color:#6b7280;">年度归档</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3: Information Access -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">03</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Information Access · 信息权限</div>
+      <div style="font-size:12px;color:#9ca3af;">不同身份看到什么</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:120px 1fr 100px;border-bottom:1px solid #e5e7eb;">
+        <div style="background:#111;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#fff;flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">管理者</div>
+        </div>
+        <div style="padding:12px 18px;font-size:12.5px;color:#374151;line-height:1.8;">全部 Identity · People · Operations · Knowledge · Data · Resources<br>含战略文件 · 财务数据 · 合同 · 人事信息</div>
+        <div style="padding:12px 16px;display:flex;align-items:center;justify-content:center;border-left:1px solid #e5e7eb;"><span style="font-size:11px;color:#9ca3af;letter-spacing:0.08em;">Management</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:120px 1fr 100px;border-bottom:1px solid #e5e7eb;">
+        <div style="background:#374151;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.6);flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">运营团队</div>
+        </div>
+        <div style="padding:12px 18px;font-size:12.5px;color:#374151;line-height:1.8;">SOP · 任务 · 项目 · 活动 · 会议纪要 · 成员数据<br>不含：敏感合同 · 核心财务 · 主理人决策层</div>
+        <div style="padding:12px 16px;display:flex;align-items:center;justify-content:center;border-left:1px solid #e5e7eb;"><span style="font-size:11px;color:#9ca3af;letter-spacing:0.08em;">Team</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:120px 1fr 100px;border-bottom:1px solid #e5e7eb;">
+        <div style="background:#6b7280;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.5);flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:700;color:#fff;">入住成员</div>
+        </div>
+        <div style="padding:12px 18px;font-size:12.5px;color:#374151;line-height:1.8;">空间使用指南 · 活动日历 · 成员服务<br>知识库（公开部分）· 社区公告</div>
+        <div style="padding:12px 16px;display:flex;align-items:center;justify-content:center;border-left:1px solid #e5e7eb;"><span style="font-size:11px;color:#9ca3af;letter-spacing:0.08em;">Member</span></div>
+      </div>
+      <div style="display:grid;grid-template-columns:120px 1fr 100px;">
+        <div style="background:#f3f4f6;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+          <div style="width:8px;height:8px;border-radius:50%;background:#9ca3af;flex-shrink:0;"></div>
+          <div style="font-size:13px;font-weight:700;color:#9ca3af;">公众</div>
+        </div>
+        <div style="padding:12px 18px;font-size:12.5px;color:#9ca3af;line-height:1.8;">社区介绍 · 活动预告 · 申请入住</div>
+        <div style="padding:12px 16px;display:flex;align-items:center;justify-content:center;border-left:1px solid #e5e7eb;"><span style="font-size:11px;color:#9ca3af;letter-spacing:0.08em;">Public</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 4: Information Navigation -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">04</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Information Navigation · 信息导航</div>
+      <div style="font-size:12px;color:#9ca3af;">30秒找到任何信息</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#6366f1;margin-bottom:8px;">单一入口原则</div>
+        <div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:6px;">每类信息只有一个家</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.7;">不允许同一份信息放在多个位置。复制 = 过期 = 混乱。<br>只维护一份「Source of Truth」。</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#10b981;margin-bottom:8px;">命名规范</div>
+        <div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:6px;">Domain · Type · Date · Version</div>
+        <div style="font-size:12px;color:#6b7280;font-family:monospace;line-height:1.9;background:#f9fafb;padding:8px 10px;border-radius:6px;">OPS-SOP-2026Q1-v2<br>EVENT-活动复盘-20260601<br>BRAND-VIS-Logo-v3</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#f59e0b;margin-bottom:8px;">成员找信息路径</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">① 看导航页（社区手册）<br>② 搜索关键词<br>③ 问 AI 助手<br>④ 找 Information Owner<br>⑤ 仍找不到 → 反馈缺口 → 补充文档</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#3b82f6;margin-bottom:8px;">Findability 原则</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">✓ 标签比文件夹更重要<br>✓ 标题能被搜索<br>✓ 每份文档有「一句话描述」<br>✓ 导航页每季度更新<br>✗ 不靠记忆找文件</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 5: Information Management -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">05</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Information Management · 信息维护</div>
+      <div style="font-size:12px;color:#9ca3af;">管理者如何维护整个系统</div>
+    </div>
+    <div style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #e5e7eb;background:#f9fafb;">
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;">信息类型</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;border-left:1px solid #e5e7eb;">Owner</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;border-left:1px solid #e5e7eb;">更新频率</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.08em;color:#6b7280;border-left:1px solid #e5e7eb;">归档规则</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:12px 14px;font-size:12.5px;color:#111;">SOP / 流程</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">运营负责人</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">每季度审查</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">版本标注废弃</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:12px 14px;font-size:12.5px;color:#111;">活动 / 项目</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">活动负责人</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">活动结束后7天</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">复盘后归档</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:12px 14px;font-size:12.5px;color:#111;">品牌素材</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">品牌负责人</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">重大更新时</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">旧版本标注 DEPRECATED</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:12px 14px;font-size:12.5px;color:#111;">数据 / 报告</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">数据分析</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">每月生成</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">按年归档永久保留</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;">
+        <div style="padding:12px 14px;font-size:12.5px;color:#111;">合同 / 法律</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">主理人</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">签署后锁定</div>
+        <div style="padding:12px 14px;font-size:12.5px;color:#6b7280;border-left:1px solid #f3f4f6;">永久归档（7年）</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#6b7280;margin-bottom:10px;">QUARTERLY HEALTH CHECK · 季度健康检查</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <span style="font-size:12.5px;color:#374151;">✓ 所有 SOP 是否仍然有效？</span>
+        <span style="font-size:12.5px;color:#374151;">✓ 是否有信息孤岛？</span>
+        <span style="font-size:12.5px;color:#374151;">✓ Owner 是否已离开？</span>
+        <span style="font-size:12.5px;color:#374151;">✓ 过去3个月最多被问什么问题？</span>
+        <span style="font-size:12.5px;color:#374151;">✓ 哪些文档从未被访问？</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 6: Knowledge Management -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">06</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Knowledge Management · 知识管理</div>
+      <div style="font-size:12px;color:#9ca3af;">让组织不靠提问运转</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;">
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#6366f1;margin-bottom:8px;">新人 Onboarding</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">Day 1 → 社区手册导读<br>Week 1 → 核心工具权限<br>Week 2 → 找到所属 Domain<br>Month 1 → 独立完成第一个任务</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#10b981;margin-bottom:8px;">信息贡献规范</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">每人可贡献 Knowledge Domain<br>必须：标题 + 一句话 + Owner<br>不允许：匿名 · 无日期 · 无分类<br>贡献后通知对应 Owner 审核</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#ef4444;margin-bottom:8px;">交接协议</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">离开前 14 天启动<br>转移文档 · 权限 · 联系人<br>新 Owner 书面确认<br>完成前不得删除权限</div>
+      </div>
+    </div>
+    <div style="border:1px solid #fecaca;background:#fff5f5;border-radius:10px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#ef4444;white-space:nowrap;padding-top:2px;">ANTI-PATTERN</div>
+      <div style="font-size:12.5px;color:#374151;line-height:1.7;">
+        「这个文件在哪？」出现超过3次 = 信息架构缺口，必须新增文档并更新导航。<br>
+        「我问一下 XXX」= 信息没有沉淀，需要把答案写进系统。这是组织知识的损耗，不是正常现象。
+      </div>
+    </div>
+  </div>
+
+  <!-- SCALABILITY CHECK -->
+  <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:24px 28px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:16px;">SCALABILITY CHECK · 可扩展性验证</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:6px;">10,000 成员</div>
+        <div style="font-size:12px;color:#6b7280;line-height:1.7;">✓ 分层权限无需手动管理<br>✓ 自助找信息，不靠问人<br>✓ Onboarding 完全文档化</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:6px;">100 管理员</div>
+        <div style="font-size:12px;color:#6b7280;line-height:1.7;">✓ 每人有明确 Domain<br>✓ Owner 机制防止孤岛<br>✓ 季度检查维护系统健康</div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:6px;">10 城市</div>
+        <div style="font-size:12px;color:#6b7280;line-height:1.7;">✓ 统一命名规范可复制<br>✓ 城市层信息独立运营<br>✓ 核心 Identity 全球统一</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ══ TAB 5: Operation System ══ -->
+<div id="tab-ops" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label" style="margin-bottom:20px;">Operation System · 运营系统</div>
+  <p style="font-size:14px;color:#6b7280;margin:0 0 32px;max-width:560px;line-height:1.7;">谁在做什么？什么时候做？做到什么标准？<br>运营系统让社区不靠个人记忆，而靠结构运转。</p>
+
+  <!-- Operating Principles (top) -->
+  <div style="margin-bottom:40px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;margin-bottom:16px;">OPERATING PRINCIPLES · 运营原则</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="border:1.5px solid #111;border-radius:10px;padding:16px 20px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">DEFAULT TO ASYNC</div>
+        <div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:5px;">默认异步，会议是例外</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.7;">能写下来的不开会。所有决定留书面记录。会议必须有 Agenda 和 Action Items。</div>
+      </div>
+      <div style="border:1.5px solid #111;border-radius:10px;padding:16px 20px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">DOCUMENT EVERYTHING</div>
+        <div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:5px;">做过的事必须留痕</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.7;">没有记录的执行等于没有执行。任何重复超过两次的事情，必须写成 SOP。</div>
+      </div>
+      <div style="border:1.5px solid #111;border-radius:10px;padding:16px 20px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">SINGLE OWNER</div>
+        <div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:5px;">每件事只有一个负责人</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.7;">多个负责人 = 没有负责人。协作者可以有多个，但 Owner 只能有一个。</div>
+      </div>
+      <div style="border:1.5px solid #111;border-radius:10px;padding:16px 20px;">
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">CLOSE THE LOOP</div>
+        <div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:5px;">每件事必须有结果</div>
+        <div style="font-size:12.5px;color:#6b7280;line-height:1.7;">任务不是完成就结束。需要通知相关人、更新状态、归档记录。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 1: Operation Rhythm -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">01</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Operation Rhythm · 运营节奏</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+      <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#111;padding:12px 16px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.5);margin-bottom:3px;">DAILY</div>
+          <div style="font-size:14px;font-weight:600;color:#fff;">每日</div>
+        </div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>空间开放检查</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>成员消息回复</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>当日活动执行</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>入住/退住处理</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>突发情况响应</div>
+        </div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#374151;padding:12px 16px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.5);margin-bottom:3px;">WEEKLY</div>
+          <div style="font-size:14px;font-weight:600;color:#fff;">每周</div>
+        </div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>团队周会（周一）</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>本周活动预告</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>入住率数据更新</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>新成员 Onboarding</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>任务进度同步</div>
+        </div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#6b7280;padding:12px 16px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.5);margin-bottom:3px;">MONTHLY</div>
+          <div style="font-size:14px;font-weight:600;color:#fff;">每月</div>
+        </div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>月度数据报告</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>成员满意度调研</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>合作伙伴沟通</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>财务对账</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>下月活动规划</div>
+        </div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;">
+        <div style="background:#9ca3af;padding:12px 16px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.6);margin-bottom:3px;">QUARTERLY</div>
+          <div style="font-size:14px;font-weight:600;color:#fff;">每季度</div>
+        </div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>季度战略复盘</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>SOP 健康检查</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>信息系统审查</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>团队角色调整</div>
+          <div style="font-size:12.5px;color:#374151;display:flex;gap:8px;align-items:flex-start;"><span style="color:#d1d5db;flex-shrink:0;">·</span>扩城评估</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2: Core Process Map -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">02</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Core Process Map · 核心流程</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;">
+        <div style="font-size:12px;font-weight:700;color:#111;letter-spacing:0.04em;">成员入住</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;background:#111;color:#fff;padding:3px 10px;border-radius:20px;">申请</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">审核（48h）</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">合同签署</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">权限开通</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">Onboarding Day1</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;background:#f3f4f6;padding:3px 10px;border-radius:20px;color:#6b7280;">Week1 跟进</span>
+        </div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;">
+        <div style="font-size:12px;font-weight:700;color:#111;letter-spacing:0.04em;">活动策划</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;background:#111;color:#fff;padding:3px 10px;border-radius:20px;">提案</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">审批（3天前）</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">对外发布</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">执行</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;background:#f3f4f6;padding:3px 10px;border-radius:20px;color:#6b7280;">复盘归档（7天内）</span>
+        </div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;">
+        <div style="font-size:12px;font-weight:700;color:#111;letter-spacing:0.04em;">成员退住</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;background:#111;color:#fff;padding:3px 10px;border-radius:20px;">提前14天通知</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">交接文档</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">退款结算</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">权限关闭</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;background:#f3f4f6;padding:3px 10px;border-radius:20px;color:#6b7280;">关系维护</span>
+        </div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;">
+        <div style="font-size:12px;font-weight:700;color:#111;letter-spacing:0.04em;">危机处理</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <span style="font-size:12px;background:#ef4444;color:#fff;padding:3px 10px;border-radius:20px;">发现问题</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">1h内通报负责人</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">评估影响范围</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;border:1px solid #e5e7eb;padding:3px 10px;border-radius:20px;color:#374151;">处置行动</span><span style="color:#d1d5db;font-size:12px;">→</span>
+          <span style="font-size:12px;background:#f3f4f6;padding:3px 10px;border-radius:20px;color:#6b7280;">复盘 + 修改 SOP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 3: Role-Task Matrix -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">03</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Role × Task Matrix · 角色任务矩阵</div>
+    </div>
+    <div style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid #e5e7eb;background:#f9fafb;">
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:0.06em;">任务领域</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:0.06em;border-left:1px solid #e5e7eb;text-align:center;">主理人</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:0.06em;border-left:1px solid #e5e7eb;text-align:center;">运营</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:0.06em;border-left:1px solid #e5e7eb;text-align:center;">活动</div>
+        <div style="padding:10px 14px;font-size:11px;font-weight:700;color:#6b7280;letter-spacing:0.06em;border-left:1px solid #e5e7eb;text-align:center;">志愿者</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:11px 14px;font-size:12.5px;color:#374151;">成员关系管理</div>
+        <div style="padding:11px 14px;font-size:12px;color:#111;font-weight:700;border-left:1px solid #f3f4f6;text-align:center;">主导</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">执行</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:11px 14px;font-size:12.5px;color:#374151;">活动策划执行</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">审批</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">协调</div>
+        <div style="padding:11px 14px;font-size:12px;color:#111;font-weight:700;border-left:1px solid #f3f4f6;text-align:center;">主导</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">支持</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:11px 14px;font-size:12.5px;color:#374151;">空间日常运维</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+        <div style="padding:11px 14px;font-size:12px;color:#111;font-weight:700;border-left:1px solid #f3f4f6;text-align:center;">主导</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">协助</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:11px 14px;font-size:12.5px;color:#374151;">合作伙伴开发</div>
+        <div style="padding:11px 14px;font-size:12px;color:#111;font-weight:700;border-left:1px solid #f3f4f6;text-align:center;">主导</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">支持</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;">
+        <div style="padding:11px 14px;font-size:12.5px;color:#374151;">数据与报告</div>
+        <div style="padding:11px 14px;font-size:12px;color:#6b7280;border-left:1px solid #f3f4f6;text-align:center;">审阅</div>
+        <div style="padding:11px 14px;font-size:12px;color:#111;font-weight:700;border-left:1px solid #f3f4f6;text-align:center;">主导</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+        <div style="padding:11px 14px;font-size:12px;color:#d1d5db;border-left:1px solid #f3f4f6;text-align:center;">—</div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+</div>
+</div>
+
+<!-- ══ TAB 6: Governance ══ -->
+<div id="tab-gov" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label" style="margin-bottom:20px;">Governance · 社区治理</div>
+  <p style="font-size:14px;color:#6b7280;margin:0 0 40px;max-width:560px;line-height:1.7;">我们不靠权力运转，而靠规则和信任运转。<br>治理的目标是让社区在没有主理人盯着的情况下，依然能做出好的决定。</p>
+
+  <!-- Part 1: Decision Framework -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">01</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Decision Framework · 决策框架</div>
+      <div style="font-size:12px;color:#9ca3af;">谁决定什么</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:140px 1fr 160px;border-bottom:1px solid #e5e7eb;">
+        <div style="background:#111;padding:16px 18px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:3px;">LEVEL 1</div>
+          <div style="font-size:14px;font-weight:700;color:#fff;">自主决定</div>
+        </div>
+        <div style="padding:14px 18px;">
+          <div style="font-size:12.5px;color:#374151;line-height:1.8;">自己职责范围内的日常执行决定<br>活动细节安排 · 内容发布 · 日常沟通方式</div>
+        </div>
+        <div style="padding:14px 16px;border-left:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;color:#9ca3af;text-align:center;">任何团队成员<br>无需审批</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:140px 1fr 160px;border-bottom:1px solid #e5e7eb;">
+        <div style="background:#374151;padding:16px 18px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:3px;">LEVEL 2</div>
+          <div style="font-size:14px;font-weight:700;color:#fff;">团队共识</div>
+        </div>
+        <div style="padding:14px 18px;">
+          <div style="font-size:12.5px;color:#374151;line-height:1.8;">影响多人或跨部门的决定<br>新 SOP 制定 · 合作提案 · 成员纠纷处理 · 活动预算</div>
+        </div>
+        <div style="padding:14px 16px;border-left:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;color:#9ca3af;text-align:center;">相关团队成员<br>讨论后记录</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:140px 1fr 160px;">
+        <div style="background:#6b7280;padding:16px 18px;">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(255,255,255,0.5);margin-bottom:3px;">LEVEL 3</div>
+          <div style="font-size:14px;font-weight:700;color:#fff;">主理人决定</div>
+        </div>
+        <div style="padding:14px 18px;">
+          <div style="font-size:12.5px;color:#374151;line-height:1.8;">影响社区方向或有法律/财务风险的决定<br>城市扩张 · 重大合同 · 成员开除 · 品牌授权 · 战略转型</div>
+        </div>
+        <div style="padding:14px 16px;border-left:1px solid #e5e7eb;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:11px;color:#9ca3af;text-align:center;">主理人<br>最终拍板</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2: Authority Matrix -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">02</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Authority Matrix · 权限矩阵</div>
+    </div>
+    <div style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;border-bottom:1px solid #e5e7eb;background:#f9fafb;">
+        <div style="padding:10px 16px;font-size:11px;font-weight:700;color:#6b7280;">决策事项</div>
+        <div style="padding:10px 8px;font-size:11px;font-weight:700;color:#6b7280;border-left:1px solid #e5e7eb;text-align:center;">主理人</div>
+        <div style="padding:10px 8px;font-size:11px;font-weight:700;color:#6b7280;border-left:1px solid #e5e7eb;text-align:center;">运营</div>
+        <div style="padding:10px 8px;font-size:11px;font-weight:700;color:#6b7280;border-left:1px solid #e5e7eb;text-align:center;">活动</div>
+        <div style="padding:10px 8px;font-size:11px;font-weight:700;color:#6b7280;border-left:1px solid #e5e7eb;text-align:center;">志愿者</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:10px 16px;font-size:12.5px;color:#374151;">成员录取/拒绝</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#111;font-weight:700;">✓</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#9ca3af;">建议</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:10px 16px;font-size:12.5px;color:#374151;">活动预算审批（&lt;500元）</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#111;font-weight:700;">✓</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:10px 16px;font-size:12.5px;color:#374151;">活动预算审批（&gt;500元）</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#111;font-weight:700;">✓</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#9ca3af;">申请</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:10px 16px;font-size:12.5px;color:#374151;">对外合作签约</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#111;font-weight:700;">✓</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#9ca3af;">建议</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;border-bottom:1px solid #f3f4f6;">
+        <div style="padding:10px 16px;font-size:12.5px;color:#374151;">SOP 发布与修改</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#111;font-weight:700;">✓</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;">
+        <div style="padding:10px 16px;font-size:12.5px;color:#374151;">成员警告/开除</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#111;font-weight:700;">✓</div>
+        <div style="padding:10px 8px;font-size:12px;text-align:center;border-left:1px solid #f3f4f6;color:#9ca3af;">报告</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+        <div style="padding:10px 8px;font-size:11px;text-align:center;border-left:1px solid #f3f4f6;color:#d1d5db;">—</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 3: Conflict Resolution -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">03</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Conflict Resolution · 冲突解决</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:flex-start;padding:14px 18px;border:1px solid #e5e7eb;border-radius:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#6b7280;flex-shrink:0;">1</div>
+        <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:3px;">当事人直接沟通</div><div style="font-size:12.5px;color:#6b7280;">48小时内尝试当面或书面沟通解决，双方各表达诉求</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:flex-start;padding:14px 18px;border:1px solid #e5e7eb;border-radius:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#e9eaec;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#4b5563;flex-shrink:0;">2</div>
+        <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:3px;">运营负责人介入调解</div><div style="font-size:12.5px;color:#6b7280;">48小时未解决，运营负责人作为中立方介入，组织三方谈话</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:flex-start;padding:14px 18px;border:1px solid #e5e7eb;border-radius:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#d4d5d8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#374151;flex-shrink:0;">3</div>
+        <div><div style="font-size:13.5px;font-weight:600;color:#111;margin-bottom:3px;">主理人最终裁定</div><div style="font-size:12.5px;color:#6b7280;">仍未解决，主理人基于社区价值观和规则做出最终决定，书面通知</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:32px 1fr;gap:12px;align-items:flex-start;padding:14px 18px;border:1px solid #fecaca;border-radius:10px;background:#fff5f5;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#ef4444;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0;">!</div>
+        <div><div style="font-size:13.5px;font-weight:600;color:#ef4444;margin-bottom:3px;">零容忍红线</div><div style="font-size:12.5px;color:#6b7280;">歧视、骚扰、欺诈、破坏社区财产——直接进入第3步，无需前两步</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 4: Community Rules Enforcement -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">04</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Rules Enforcement · 规则执行</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:0;overflow-x:auto;">
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fef3c7;border:1.5px solid #f59e0b;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:16px;">⚠️</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;">书面提醒</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">首次违规</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:18px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fff7ed;border:1.5px solid #f97316;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:16px;">📋</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;">正式谈话</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">再次违规</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:18px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#fef2f2;border:1.5px solid #ef4444;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:16px;">🚫</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;">暂停权限</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">第三次或严重违规</div>
+      </div>
+      <div style="color:#e5e7eb;font-size:18px;flex-shrink:0;">→</div>
+      <div style="flex-shrink:0;text-align:center;padding:0 12px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:#111;border:1.5px solid #111;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:16px;">🚪</div>
+        <div style="font-size:12px;font-weight:600;color:#374151;">开除</div>
+        <div style="font-size:11px;color:#9ca3af;margin-top:2px;">无法改正 / 红线</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 5: Multi-City Governance -->
+  <div style="margin-bottom:16px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">05</div>
+      <div style="font-size:16px;font-weight:700;color:#111;">Multi-City Governance · 多城市治理</div>
+      <div style="font-size:12px;color:#9ca3af;">面向未来 10 个城市设计</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">GLOBAL · 全球统一</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">✓ 品牌 · Logo · 视觉规范<br>✓ 社区价值观与文化<br>✓ 成员资格标准<br>✓ 核心 SOP 框架<br>✓ 数据报告格式</div>
+      </div>
+      <div style="border:1px solid #e5e7eb;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">LOCAL · 城市自治</div>
+        <div style="font-size:12.5px;color:#374151;line-height:1.9;">✓ 活动内容与频率<br>✓ 本地合作伙伴<br>✓ 空间运营细节<br>✓ 城市语言与文化适配<br>✓ 本地定价策略</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:14px 18px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#9ca3af;margin-bottom:8px;">COORDINATION PROTOCOL · 协调机制</div>
+      <div style="display:flex;gap:24px;flex-wrap:wrap;">
+        <span style="font-size:12.5px;color:#374151;">每月城市主理人例会</span>
+        <span style="font-size:12.5px;color:#374151;">跨城市成员共享权益</span>
+        <span style="font-size:12.5px;color:#374151;">统一数据看板</span>
+        <span style="font-size:12.5px;color:#374151;">全球活动日历共享</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ══ TAB 4: Occupancy Formula ══ -->
+<div id="tab-feedback" style="display:none">
+<div class="section">
+<div class="inner">
+  <div class="section-label" style="margin-bottom:20px;">Feedback System · 组织反馈系统</div>
+
+  <!-- Core Principle -->
+  <div style="border-left:3px solid #111;padding:14px 20px;margin-bottom:48px;background:#fafafa;border-radius:0 8px 8px 0;max-width:680px;">
+    <div style="font-size:13.5px;color:#374151;line-height:1.8;font-style:italic;">好的指标，不是告诉你谁做错了；</div>
+    <div style="font-size:13.5px;color:#374151;line-height:1.8;font-style:italic;margin-bottom:8px;">好的指标，是帮助你发现组织设计在哪里阻碍了人的成长和价值创造。</div>
+    <div style="font-size:11px;color:#9ca3af;letter-spacing:0.06em;">指标服务的不是考核，而是组织进化。</div>
+  </div>
+
+  <!-- System Loop -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">SYSTEM LOOP</div>
+      <div style="font-size:13px;color:#6b7280;">任何生命系统必须有反馈，没有反馈，系统就死了</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;">
+      <div style="flex-shrink:0;background:#111;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;color:#fff;">行为</div>
+      <div style="flex-shrink:0;font-size:14px;color:#d1d5db;">↓</div>
+      <div style="flex-shrink:0;border:1px solid #e5e7eb;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;color:#374151;">产生结果</div>
+      <div style="flex-shrink:0;font-size:14px;color:#d1d5db;">↓</div>
+      <div style="flex-shrink:0;border:1px solid #e5e7eb;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;color:#374151;">得到反馈</div>
+      <div style="flex-shrink:0;font-size:14px;color:#d1d5db;">↓</div>
+      <div style="flex-shrink:0;border:1px solid #111;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:600;color:#111;">调整行为</div>
+      <div style="flex-shrink:0;font-size:12px;color:#9ca3af;padding-left:8px;">（循环）</div>
+    </div>
+  </div>
+
+  <!-- 5 Health Layers -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">COMMUNITY HEALTH</div>
+      <div style="font-size:13px;color:#6b7280;">五层组织健康指标</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <!-- Layer 1 -->
+      <div style="border:1.5px solid #111;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:200px 1fr;min-height:100px;">
+          <div style="background:#111;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:4px;">LAYER 01 · LEADING</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">组织生命力</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);">Organizational Vitality</div>
+            </div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.7);margin-top:12px;line-height:1.6;">社区还活着吗？</div>
+          </div>
+          <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;align-content:start;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">每月主动发起活动人数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">成员发起 ≠ 运营发布。<br>这是最早的衰败信号。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">每月主动贡献内容人数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">内容贡献者比例下降<br>= 生态能量减弱。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">首次贡献人数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">「第一次」是最难的一步，<br>也是最关键的。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">贡献者占在住人数比</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">低于15%需要警惕。<br>超过30%是健康社区标志。</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #1f2937;background:#18181b;padding:9px 20px;">
+          <span style="font-size:11px;color:#6b7280;">信号解读：</span><span style="font-size:11px;color:#9ca3af;">这层指标下降 → 不是成员不积极，而是成长路径或活动机制出了问题</span>
+        </div>
+      </div>
+
+      <!-- Layer 2 -->
+      <div style="border:1.5px solid #374151;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:200px 1fr;min-height:100px;">
+          <div style="background:#374151;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:4px;">LAYER 02 · LEADING</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">成员成长</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);">Member Growth</div>
+            </div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.7);margin-top:12px;line-height:1.6;">有没有人在升级？</div>
+          </div>
+          <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;align-content:start;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">每月角色晋升人数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">访客→成员→贡献者→<br>主理→建设者 各层流量。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">成长路径完成率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">哪个阶段卡了最多人？<br>那里就是设计漏洞。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">入住→首次贡献平均天数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">越短越好。超过30天<br>需要检查 Onboarding。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">老成员流失率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">社区真正创造的是人，<br>不是活动。</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #4b5563;background:#2d3748;padding:9px 20px;">
+          <span style="font-size:11px;color:#9ca3af;">信号解读：</span><span style="font-size:11px;color:#9ca3af;">连续3个月无人晋升 → 不是积极性问题，是成长路径断了</span>
+        </div>
+      </div>
+
+      <!-- Layer 3 -->
+      <div style="border:1px solid #d1d5db;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:200px 1fr;min-height:100px;">
+          <div style="background:#6b7280;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.4);margin-bottom:4px;">LAYER 03 · LEADING</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">信息健康</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.5);">Information Health</div>
+            </div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.7);margin-top:12px;line-height:1.6;">知识在流动吗？</div>
+          </div>
+          <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;align-content:start;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">重复提问次数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">高频重复提问 = 信息架构<br>有问题，不是新人笨。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">知识库使用率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">文档有人看 vs 只有<br>运营自己知道在哪。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">SOP 更新次数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">长期不更新 = 运营靠<br>人记忆在跑，很脆弱。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">信息同步及时率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">决定发布 → 成员知道<br>的平均时间。</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #e5e7eb;background:#f9fafb;padding:9px 20px;">
+          <span style="font-size:11px;color:#6b7280;">信号解读：</span><span style="font-size:11px;color:#9ca3af;">大家一直问「飞书在哪里」→ 不是新人笨，是信息架构有问题</span>
+        </div>
+      </div>
+
+      <!-- Layer 4 -->
+      <div style="border:1px solid #d1d5db;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:200px 1fr;min-height:100px;">
+          <div style="background:#9ca3af;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.5);margin-bottom:4px;">LAYER 04 · LEADING</div>
+              <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:3px;">协作健康</div>
+              <div style="font-size:11px;color:rgba(255,255,255,0.6);">Collaboration Health</div>
+            </div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.8);margin-top:12px;line-height:1.6;">团队在配合吗？</div>
+          </div>
+          <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;align-content:start;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">跨组协作次数</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">活动 × 运营 × 内容团队<br>是否真正在交叉配合。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">平均响应时间</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">成员消息 → 团队回复<br>超过24h需要检查机制。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">项目完成率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">启动的项目最终落地<br>的比例。低说明决策太多。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">项目复盘率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">做过的事有没有沉淀。<br>不复盘 = 永远不进化。</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #e5e7eb;background:#f9fafb;padding:9px 20px;">
+          <span style="font-size:11px;color:#6b7280;">信号解读：</span><span style="font-size:11px;color:#9ca3af;">大家一直找你 → 不是员工能力差，是决策权没有下放</span>
+        </div>
+      </div>
+
+      <!-- Layer 5 -->
+      <div style="border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+        <div style="display:grid;grid-template-columns:200px 1fr;min-height:100px;">
+          <div style="background:#d1d5db;padding:18px 20px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(0,0,0,0.3);margin-bottom:4px;">LAYER 05 · LAGGING</div>
+              <div style="font-size:15px;font-weight:700;color:#374151;margin-bottom:3px;">社区影响力</div>
+              <div style="font-size:11px;color:rgba(0,0,0,0.4);">Community Influence</div>
+            </div>
+            <div style="font-size:11.5px;color:#6b7280;margin-top:12px;line-height:1.6;">外部认可我们吗？</div>
+          </div>
+          <div style="padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;align-content:start;">
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">自然邀请率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">成员主动邀请朋友的<br>比例，不靠运营推动。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">NPS 净推荐值</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">「你会向朋友推荐 DNBeta 吗？」<br>超过50分是健康线。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">续住率</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">当期在住 × 到期续签比例<br>× 平均续住时长。</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;color:#111;margin-bottom:4px;">合作伙伴数量</div>
+              <div style="font-size:11px;color:#6b7280;line-height:1.5;">外部愿意主动合作的<br>机构 / 品牌 / 专家数量。</div>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid #e5e7eb;background:#f9fafb;padding:9px 20px;">
+          <span style="font-size:11px;color:#6b7280;">注意：</span><span style="font-size:11px;color:#9ca3af;">这是结果指标（Lagging）。它变好是前四层共同作用的滞后反映，不要只盯它。</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Monthly Meeting Questions -->
+  <div style="margin-bottom:48px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">MONTHLY REVIEW</div>
+      <div style="font-size:13px;color:#6b7280;">管理层月度必问 5 个问题</div>
+    </div>
+    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:20px 24px;">
+      <div style="font-size:12px;color:#9ca3af;margin-bottom:16px;letter-spacing:0.04em;">不要先问「本月办了多少活动？」而是依次问：</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;">
+          <div style="font-size:11px;font-weight:700;color:#111;background:#e5e7eb;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+          <div><span style="font-size:13px;font-weight:600;color:#111;">本月有没有更多人开始主动贡献？</span><span style="font-size:12px;color:#9ca3af;margin-left:8px;">· 组织生命力</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;">
+          <div style="font-size:11px;font-weight:700;color:#fff;background:#374151;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+          <div><span style="font-size:13px;font-weight:600;color:#111;">有没有人从参与者成长为负责人？</span><span style="font-size:12px;color:#9ca3af;margin-left:8px;">· 成员成长</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;">
+          <div style="font-size:11px;font-weight:700;color:#fff;background:#6b7280;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+          <div><span style="font-size:13px;font-weight:600;color:#111;">哪些地方大家还在重复问、重复做？</span><span style="font-size:12px;color:#9ca3af;margin-left:8px;">· 信息健康</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;">
+          <div style="font-size:11px;font-weight:700;color:#fff;background:#9ca3af;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+          <div><span style="font-size:13px;font-weight:600;color:#111;">哪些团队之间开始协作困难？</span><span style="font-size:12px;color:#9ca3af;margin-left:8px;">· 协作健康</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:24px 1fr;gap:12px;align-items:baseline;">
+          <div style="font-size:11px;font-weight:700;color:#6b7280;background:#e5e7eb;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+          <div><span style="font-size:13px;font-weight:600;color:#111;">外部是否开始自然传播和推荐我们？</span><span style="font-size:12px;color:#9ca3af;margin-left:8px;">· 社区影响力</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Design Philosophy -->
+  <div style="margin-bottom:16px;">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#9ca3af;">DESIGN PHILOSOPHY</div>
+      <div style="font-size:13px;color:#6b7280;">看到指标异常时，第一反应应该是</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="border:1px solid #fecaca;border-radius:10px;padding:16px 20px;background:#fff5f5;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#ef4444;margin-bottom:8px;">❌ 传统思维</div>
+        <div style="font-size:13px;color:#6b7280;line-height:1.8;">「是谁的问题？」<br>「大家不积极」<br>「员工能力不行」<br>「新人太笨了」</div>
+      </div>
+      <div style="border:1px solid #bbf7d0;border-radius:10px;padding:16px 20px;background:#f0fdf4;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.08em;color:#16a34a;margin-bottom:8px;">✓ 组织设计者思维</div>
+        <div style="font-size:13px;color:#374151;line-height:1.8;">「组织哪个环节出了问题？」<br>「成长路径是不是断了？」<br>「决策权有没有下放？」<br>「信息架构是不是有问题？」</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;border:1px solid #e5e7eb;border-radius:10px;padding:16px 20px;background:#fafafa;">
+      <div style="font-size:12px;color:#6b7280;line-height:1.8;text-align:center;">管理的对象不是人，而是系统。<br>指标服务的不是考核，而是<strong style="color:#111;">组织进化</strong>。</div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<script>
+  const TABS = ['ecosystem','community','growth','org','info','ops','gov','feedback'];
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      TABS.forEach(id => {
+        document.getElementById('tab-' + id).style.display = id === tab ? '' : 'none';
+      });
+      if (tab === 'org') requestAnimationFrame(drawOcPeerArrows);
+    });
+  });
+
+  function drawOcPeerArrows() {
+    const wrap = document.getElementById('oc-wrap');
+    const svg = document.getElementById('oc-peer-svg');
+    if (!wrap || !svg) return;
+    const cr = wrap.getBoundingClientRect();
+
+    function pos(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const r = el.getBoundingClientRect();
+      return {
+        left: r.left - cr.left, right: r.right - cr.left,
+        top: r.top - cr.top, bottom: r.bottom - cr.top,
+        cx: r.left - cr.left + r.width / 2,
+        cy: r.top - cr.top + r.height / 2
+      };
+    }
+
+    /* horizontal peer pairs */
+    const hPairs = [
+      ['oc-n-gov','oc-n-mgr'],
+      ['oc-n-mgr','oc-n-adv'],
+      ['oc-n-svc','oc-n-res'],
+      ['oc-n-res','oc-n-cnt'],
+    ];
+
+    let s = `<defs>
+      <marker id="pa-s" markerWidth="5" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+        <path d="M1,0 L5,2.5 L1,5 z" fill="#94a3b8"/>
+      </marker>
+      <marker id="pa-e" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+        <path d="M1,0 L5,2.5 L1,5 z" fill="#94a3b8"/>
+      </marker>
+      <marker id="pa-arr" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+        <path d="M1,0 L5,2.5 L1,5 z" fill="#94a3b8"/>
+      </marker>
+    </defs>`;
+
+    /* horizontal peer arrows (dashed, bidirectional) */
+    for (const [a, b] of hPairs) {
+      const ra = pos(a), rb = pos(b);
+      if (!ra || !rb) continue;
+      const y = (ra.cy + rb.cy) / 2;
+      s += `<line x1="${ra.right + 6}" y1="${y}" x2="${rb.left - 6}" y2="${y}"
+        stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4"
+        marker-start="url(#pa-s)" marker-end="url(#pa-e)"/>`;
+    }
+
+    /* 政务对接 → 共创 (solid, direct management) */
+    const gov = pos('oc-n-gov');
+    const bar = pos('oc-cocreate-bar');
+    if (gov && bar) {
+      s += `<line x1="${gov.cx}" y1="${gov.bottom + 4}" x2="${gov.cx}" y2="${bar.top - 4}"
+        stroke="#9ca3af" stroke-width="1.5" marker-end="url(#pa-arr)"/>`;
+    }
+
+    /* 品牌顾问 → 共创 (dashed, advisory) */
+    const adv = pos('oc-n-adv');
+    if (adv && bar) {
+      s += `<line x1="${adv.cx}" y1="${adv.bottom + 4}" x2="${adv.cx}" y2="${bar.top - 4}"
+        stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#pa-arr)"/>`;
+    }
+
+    svg.innerHTML = s;
+    svg.setAttribute('height', wrap.offsetHeight);
+    svg.setAttribute('width', wrap.offsetWidth);
+  }
+
+  /* ── Text Scramble ── */
+  class TextScramble {
+    constructor(el) {
+      this.el = el;
+      this.chars = '日月火水木金土あいうえおアイウエオ01アβ#@&%';
+      this.update = this.update.bind(this);
+    }
+    setText(newText) {
+      const old = this.el.innerText;
+      const len = newText.length;
+      const promise = new Promise(res => this.resolve = res);
+      this.queue = [];
+      for (let i = 0; i < len; i++) {
+        const from = old[i] || '';
+        const to = newText[i];
+        const start = Math.floor(Math.random() * 10);
+        const end = start + Math.floor(Math.random() * 14);
+        this.queue.push({ from, to, start, end });
+      }
+      cancelAnimationFrame(this.frameReq);
+      this.frame = 0;
+      this.update();
+      return promise;
+    }
+    update() {
+      let output = '';
+      let complete = 0;
+      for (let i = 0, n = this.queue.length; i < n; i++) {
+        let { from, to, start, end, char } = this.queue[i];
+        if (this.frame >= end) {
+          complete++;
+          output += `<span style="color:#fff">${to}</span>`;
+        } else if (this.frame >= start) {
+          if (!char || Math.random() < 0.28) {
+            char = this.randomChar();
+            this.queue[i].char = char;
+          }
+          output += `<span style="color:rgba(255,255,255,0.35)">${char}</span>`;
+        } else {
+          output += `<span style="color:rgba(255,255,255,0.15)">${from}</span>`;
+        }
+      }
+      this.el.innerHTML = output;
+      if (complete === this.queue.length) {
+        this.resolve();
+      } else {
+        this.frameReq = requestAnimationFrame(this.update);
+        this.frame++;
+      }
+    }
+    randomChar() { return this.chars[Math.floor(Math.random() * this.chars.length)]; }
+  }
+
+  /* ── Matrix Rain ── */
+  function startMatrix() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
+    canvas.width = 1200;
+    canvas.height = 1020;
+    const ctx = canvas.getContext('2d');
+    const fontSize = 13;
+    const cols = Math.floor(canvas.width / fontSize);
+    const drops = Array(cols).fill(1);
+    const chars = '01アイウエオカキクケコ数字人才城市社区平台10DNβ';
+    function draw() {
+      ctx.fillStyle = 'rgba(0,0,0,0.04)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#6ee7b7';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const ch = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    if (window._matrixInterval) clearInterval(window._matrixInterval);
+    window._matrixInterval = setInterval(draw, 45);
+  }
+
+  /* ── Trigger on ecosystem tab ── */
+  const _origShowTab = showTab;
+  function showTab(id) {
+    _origShowTab(id);
+    if (id === 'ecosystem') {
+      startMatrix();
+      const el = document.getElementById('strategy-text');
+      if (el) {
+        const original = el.innerText;
+        const fx = new TextScramble(el);
+        setTimeout(() => fx.setText(original), 300);
+      }
+    } else {
+      if (window._matrixInterval) { clearInterval(window._matrixInterval); window._matrixInterval = null; }
+    }
+  }
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      showTab(btn.dataset.tab);
+    };
+  });
+  /* Auto-fire on load if ecosystem is default tab */
+  window.addEventListener('load', () => {
+    startMatrix();
+    const el = document.getElementById('strategy-text');
+    if (el) { const fx = new TextScramble(el); setTimeout(() => fx.setText(el.innerText), 600); }
+  });
+</script>
+</body>
+</html>
