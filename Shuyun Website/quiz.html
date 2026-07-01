@@ -463,7 +463,7 @@
     </div>
     <div class="q-text">用一两句话描述你在做什么</div>
     <p class="q-hint">越具体越好，不需要精致，真实就行</p>
-    <textarea class="q-input" id="a-q6" rows="4" placeholder="例：我帮有一定基础的创业者找到自己的差异化定位 / 我做身心疗愈个案和工作坊……"></textarea>
+    <textarea class="q-input" id="a-q6" rows="4" placeholder="例：我帮有一定基础的创业者找到自己的差异化定位 / 我做身心疗愈个案和工作坊 / 我有多年行业经验，想把专业知识转化为高价值顾问服务……"></textarea>
     <div class="q-nav">
       <button class="btn-back" onclick="go('p2-intro')">← 返回</button>
       <button class="btn-next" onclick="saveText('q6','a-q6');go('s-q7')">继续 →</button>
@@ -927,7 +927,7 @@ const QD = {
   },
   q7: {
     type:'check',
-    opts:['小红书','微博','公众号','视频号','直播','播客','个人网站','Instagram','线下活动','其他']
+    opts:['小红书','微博','公众号','视频号','直播','播客','个人网站','Instagram','知识星球','企业微信','私教/圈子','线下活动','其他']
   },
   q8: {
     type:'radio', key:'q8',
@@ -936,6 +936,7 @@ const QD = {
       {v:'group',t:'以小组 / 社群为主',sub:'训练营、圈子、会员'},
       {v:'course',t:'以课程 / 知识产品为主',sub:'录播、直播课、电子书'},
       {v:'mixed',t:'混合模式'},
+      {v:'advisory',t:'长期顾问 / 战略合作',sub:'对接企业决策层，陪跑式深度合作'},
       {v:'building',t:'还在搭建中，尚未成型'},
     ]
   },
@@ -946,7 +947,9 @@ const QD = {
       {v:'3k-1w',t:'3,000–10,000'},
       {v:'1w-3w',t:'10,000–30,000'},
       {v:'3w-10w',t:'30,000–100,000'},
-      {v:'>10w',t:'100,000 以上'},
+      {v:'10w-30w',t:'10–30 万'},
+      {v:'30w-100w',t:'30–100 万'},
+      {v:'>100w',t:'100 万以上'},
     ]
   },
   q11: {
@@ -1315,7 +1318,7 @@ function buildResult(arcCode) {
   const wrap = document.getElementById('rWrap');
 
   // Fix 1: dynamic pricing based on Q9
-  const isPremium = ['1w-3w','3w-10w','>10w'].includes(ANS.q9);
+  const isPremium = ['1w-3w','3w-10w','10w-30w','30w-100w','>100w'].includes(ANS.q9);
   const priceLabel  = isPremium ? '查看旗舰合作方式 — ¥19,800 起' : '查看合作方式 — ¥3,980 起';
   const priceTitle  = isPremium ? '创始人品牌视觉系统 · 旗舰定制' : '创始人品牌视觉系统 — 定制服务';
   const priceDesc   = isPremium
@@ -1366,6 +1369,9 @@ function buildResult(arcCode) {
           <div class="r-locked-desc">${isPremium ? '完整色彩规范 · 字体系统 · 摄影指南 · 内容示范 × 3 套 · 2 次深度沟通' : '完整色彩规范 · 字体组合 · 摄影指南 · 排版规则 · 内容视觉示范 · 1 次深度沟通'}</div>
         </div>
         <button class="${btnClass}" onclick="showPayInfo()">${priceLabel}</button>
+      </div>
+      <div style="margin-top:16px;text-align:center">
+        <a href="mailto:asfacparis@gmail.com?subject=视觉诊断结果·想聊聊" style="font-size:12px;color:var(--mist);letter-spacing:.06em;text-decoration:none;border-bottom:1px solid var(--warm);padding-bottom:2px;">还没确定？先约一次 15 分钟对话 →</a>
       </div>
     </div>
 
@@ -1611,7 +1617,7 @@ async function writeInitialRecord(arcCode) {
 // Fix 2: personalized insight based on business type + archetype
 function buildPersonalInsight(arcCode) {
   const q8 = ANS.q8 || '';
-  const isPremium = ['1w-3w','3w-10w','>10w'].includes(ANS.q9);
+  const isPremium = ['1w-3w','3w-10w','10w-30w','30w-100w','>100w'].includes(ANS.q9);
 
   const insights = {
     A: {
